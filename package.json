@@ -8,14 +8,15 @@
     "build": "next build",
     "start": "next start",
     "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname",
-    "buildColors": "node ../../node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/gen3/colors.json --out=config/",
-    "bundleIcons": "node ../../node_modules/@gen3/toolsff/dist/bundleIcons.esm.js --inpath=config/icons --outpath=config/icons",
-    "getSchema": "node ../../node_modules/@gen3/toolsff/dist/getSchema.esm.js --out=config/",
-    "getDRSToHostname": "node ../../node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/"
+    "buildColors": "node ./node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/gen3/colors.json --out=config/",
+    "bundleIcons": "node ./node_modules/@gen3/toolsff/dist/bundleIcons.esm.js --inpath=config/icons --outpath=config/icons",
+    "getSchema": "node ./node_modules/@gen3/toolsff/dist/getSchema.esm.js --out=config/",
+    "getDRSToHostname": "node ./node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/"
   },
   "dependencies": {
     "@gen3/core": "^0.1.0",
     "@gen3/frontend": "^0.20.01",
+    "@gen3/toolsff": "^0.1.1",
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.1",
@@ -25,7 +26,6 @@
     "react-responsive-carousel": "^3.2.23"
   },
   "devDependencies": {
-    "@gen3/toolsff": "^0.1.0",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "next": "13.5.6",
