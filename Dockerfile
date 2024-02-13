@@ -48,7 +48,6 @@ COPY ./config ./config
 COPY ./styles ./styles
 COPY ./next.config.js ./
 COPY ./tsconfig.json ./
-COPY ./tsconfig.build.json ./
 COPY ./.env.development ./
 COPY ./.env.production ./
 COPY ./tailwind.config.js ./
