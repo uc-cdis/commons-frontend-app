@@ -41,7 +41,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN  addgroup --system --gid 1001 nextjs && adduser --system --uid 1001 nextjs
 COPY ./package.json ./package-lock.json ./
+COPY ./package-lock.json ./
 COPY ./src ./src
+COPY ./public ./public
+COPY ./config ./config
+COPY ./styles ./styles
+COPY ./next.config.js ./
+COPY ./tsconfig.json ./
+COPY ./tsconfig.build.json ./
+COPY ./.env.development ./
+COPY ./.env.production ./
+COPY ./tailwind.config.js ./
+COPY ./postcss.config.js ./
 RUN npm ci
 RUN npm install \
     "@swc/core" \
