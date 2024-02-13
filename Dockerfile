@@ -45,7 +45,6 @@ COPY ./package-lock.json ./
 COPY ./src ./src
 COPY ./public ./public
 COPY ./config ./config
-COPY ./styles ./styles
 COPY ./next.config.js ./
 COPY ./tsconfig.json ./
 COPY ./.env.development ./
