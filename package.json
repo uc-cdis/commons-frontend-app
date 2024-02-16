@@ -21,7 +21,7 @@
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.1",
     "@types/mdx": "^2.0.9",
-    "cookies-next": "^4.0.0",
+    "cookies-next": "^4.1.1",
     "jose": "^4.15.4",
     "react-responsive-carousel": "^3.2.23"
   },
