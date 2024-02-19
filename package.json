@@ -1,7 +1,11 @@
 {
   "name": "@gen3/commons-portal-app-base",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "engines" : {
+    "npm" : ">=10.2.3",
+    "node" : ">=20.11.0"
+  },
   "scripts": {
     "lint": "next lint",
     "dev": "next dev",
@@ -21,9 +25,8 @@
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.1",
     "@types/mdx": "^2.0.9",
-    "cookies-next": "^4.0.0",
-    "jose": "^4.15.4",
-    "react-responsive-carousel": "^3.2.23"
+    "cookies-next": "^4.1.0",
+    "jose": "^4.15.4"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
