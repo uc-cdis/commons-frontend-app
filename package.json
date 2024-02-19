@@ -25,7 +25,8 @@
     "@next/mdx": "^14.0.1",
     "@types/mdx": "^2.0.9",
     "cookies-next": "^4.1.0",
-    "jose": "^4.15.4"
+    "jose": "^4.15.4",
+    "react-responsive-carousel": "^3.2.23"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
