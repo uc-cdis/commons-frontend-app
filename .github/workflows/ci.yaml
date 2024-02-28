@@ -7,9 +7,9 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: 20
     - name: Setup npm
-      run: npm install -g npm@8
+      run: npm install -g npm@10.2.4
     - name: Install modules
       run: npm ci
     - name: Run ESLint

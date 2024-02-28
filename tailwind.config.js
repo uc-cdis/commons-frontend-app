@@ -12,7 +12,7 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/features/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@gen3/frontend/dist/index.js',
+    './node_modules/@gen3/frontend/dist/esm/index.js',
   ],
   theme: {
     extend: {
