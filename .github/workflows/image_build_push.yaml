@@ -3,8 +3,13 @@ name: Build Image and Push to Quay
 on: push
 
 jobs:
+  Security:
+    name: Security Pipeline
+    uses: uc-cdis/.github/.github/workflows/securitypipeline.yaml@master
+    secrets: inherit
   ci:
     name: Build Image and Push to Quay
+    needs: Security
     uses: uc-cdis/.github/.github/workflows/image_build_push.yaml@master
     with:
       OVERRIDE_REPO_NAME: "commons-frontend-app"
