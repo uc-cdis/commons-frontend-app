@@ -23,14 +23,14 @@ or
 git remote add upstream git@github.com:uc-cdis/commons-frontend-app.git
 ```
 
-changes can be pulled from the Common Frontend Repository by running:
+changes to ```main``` can be pulled from the Common Frontend Repository by running:
 ```bash
-git pull upstream
+git pull upstream main
 ```
 
 Please see [Styling and Theming](https://github.com/uc-cdis/gen3-frontend-framework/blob/develop/docs/Local%20Development/Styling%20and%20Theming.md) and [Local Development with Helm Charts](https://github.com/uc-cdis/gen3-frontend-framework/blob/develop/docs/Local%20Development/Using%20Helm%20Charts/Local%20Development%20with%20Helm%20Charts.md)
 for more information on setting up and configuring the Gen3 Data Commons Application.
-This documentation is current less complete than than we would like, but we will be adding to it as development progresses.
+This documentation is currently less complete than we would like, but we will be adding to it as development progresses.
 
 ## Installation
 
