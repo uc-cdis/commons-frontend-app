@@ -3,6 +3,12 @@ name: Build Image and Push to Quay
 on: push
 
 jobs:
+  Security:
+    name: Security Pipeline
+    uses: uc-cdis/.github/.github/workflows/securitypipeline.yaml@master
+    with:
+      python-poetry: 'false'
+    secrets: inherit
   ci:
     name: Build Image and Push to Quay
     uses: uc-cdis/.github/.github/workflows/image_build_push.yaml@master

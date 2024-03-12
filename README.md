@@ -1,10 +1,36 @@
 
 
-This is the base REPOSITORY or TEMPLATE for
-Gen3.2 data commons.
+This is the base REPOSITORY for Gen3.2 data commons.
 
 
 ## Getting Started
+Gen3 Data Commons using the Gen3 Frontend Framework is a matter of the following:
+
+* create a clone of [Gen3 Data Commons Application](https://github.com/uc-cdis/commons-frontend-app/)  
+
+* Configure the commons by editing the configuration files in the ```config```
+
+* Add your pages and content
+
+* Deploy via helm charts or Docker.
+
+Changes to the Gen3 Data Commons Application can be pulled from the Common Frontend Repository. You need configure git to pull from the Common Frontend Repository.
+```bash
+git remote add upstream https://github.com/uc-cdis/commons-frontend-app.git
+```
+or
+```bash
+git remote add upstream git@github.com:uc-cdis/commons-frontend-app.git
+```
+
+changes can be pulled from the Common Frontend Repository by running:
+```bash
+git pull upstream
+```
+
+Please see [Styling and Theming](https://github.com/uc-cdis/gen3-frontend-framework/blob/develop/docs/Local%20Development/Styling%20and%20Theming.md) and [Local Development with Helm Charts](https://github.com/uc-cdis/gen3-frontend-framework/blob/develop/docs/Local%20Development/Using%20Helm%20Charts/Local%20Development%20with%20Helm%20Charts.md)
+for more information on setting up and configuring the Gen3 Data Commons Application.
+This documentation is current less complete than than we would like, but we will be adding to it as development progresses.
 
 ## Installation
 
@@ -23,7 +49,7 @@ npm ERR! This command does not support workspaces.
 ```
 you can run ```npx next telemetry disable```
 
-Alterntively, you can use `nvm` to install the correct version of npm:
+Alternatively, you can use `nvm` to install the correct version of npm:
 ```bash
 nvm install 20.11.0
 ```
@@ -36,4 +62,19 @@ From the root of the project, install dependencies by running:
 npm install
 ```
 
+### Run the Development Server
+
+```bash
+npm run dev
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+## Docker
+
+You build a Docker image by:
+
+```bash
+docker build .
+```
