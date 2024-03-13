@@ -1,0 +1,25 @@
+{
+  "navigation": {
+    "logo": {
+    "src": "/images/BDF-MIDRC Logo-V2.png",
+      "height":256,
+    "href": "/"
+    },
+    "items": [
+      {
+        "icon": "gen3:exploration",
+        "href": "/Explorer",
+        "name": "Exploration",
+        "tooltip": "The Exploration Page enables discovery of the data at the series level and features a cohort builder."
+      }
+    ]
+  },
+  "topBar": {
+    "items": [
+    ],
+    "showLogin": false,
+    "classNames": {
+      "root": "flex justify-end items-center align-middle w-100 h-10 bg-secondary"
+    }
+  }
+}
