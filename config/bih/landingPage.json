@@ -1,0 +1,43 @@
+{
+  "body": [
+    {
+      "title": {
+        "text": "Biomedical Imaging Hub",
+        "level": 2
+      }
+    },
+    {
+      "splitarea": {
+        "left": [
+          {
+            "text": "The Biomedical Imaging Hub is a data hub, which is a federated data search, discovery, and analysis platform that allows researchers to query and analyze data from independent data repositories or resources related to medical imaging."
+          },
+          {
+            "link": {
+              "href": "/Explorer",
+              "linkType": "portal",
+              "text": "Explore BIH Data"
+            }
+          },
+          {
+            "text": "Queries and subsequent analyses in the BIH run across structured data aggregated from all the independent data nodes connected through the data fabric."
+          },
+          {
+            "text": "Data files are not stored in the BIH. Instead, BIH records contain unique identifiers for files that researchers can use to access files from the connected data nodes in which they’re stored."
+          }
+        ],
+        "right": [
+          {
+            "image": {
+              "src": "https://gen3.org/figs/kv.svg",
+              "alt": "Gen3 Data Platform"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "break": "standard"
+    }
+  ]
+}

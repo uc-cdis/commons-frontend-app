@@ -1,0 +1,11 @@
+{
+  "systemUse": {
+    "systemUseTitle": "Data Use Agreement for Academic and Institutional Users",
+    "content": {
+      "text": "This is a data use agreement for academic and institutional users.  It is not a legal agreement.  It is a statement of the terms and conditions under which you may use the data.  By clicking the \"I Agree\" button, you agree to the terms and conditions of this agreement.  If you do not agree to these terms and conditions, you will not be able to use the data.  If you have any questions about these terms and conditions, please contact the data provider."
+    },
+    "displayUseMsg": "cookie",
+    "expireUseMsgDays": 365,
+    "showOnlyOnLogin": true
+  }
+}

@@ -1,0 +1,156 @@
+ [
+    {
+      "tabTitle": "Series",
+      "charts": {
+        "gen3_discovery.PatientSex": {
+          "chartType": "fullPie",
+          "title": "Gender"
+        },
+        "gen3_discovery.primary_site": {
+          "chartType": "fullPie",
+          "title": "Primary Site"
+        },
+        "gen3_discovery.commons": {
+          "chartType": "fullPie",
+          "title": "Platform"
+        }
+      },
+      "filters": {
+        "tabs": [
+          {
+            "title": "Study Selection",
+            "fields": [
+              "gen3_discovery.PatientSex",
+              "gen3_discovery.Modality",
+              "gen3_discovery.BodyPartExamined",
+              "gen3_discovery.primary_site",
+              "gen3_discovery.disease_type",
+              "gen3_discovery.commons"
+            ]
+          }
+        ]
+      },
+      "table": {
+        "enabled": true,
+        "fields": [
+          "gen3_discovery.dicom_viewer_url",
+          "gen3_discovery.StudyInstanceUID",
+          "gen3_discovery.SeriesDescription",
+          "gen3_discovery.BodyPartExamined",
+          "gen3_discovery.primary_site",
+          "gen3_discovery.disease_type",
+          "gen3_discovery.commons",
+          "gen3_discovery.SeriesInstanceUID"
+        ],
+        "columns": {
+          "gen3_discovery.StudyInstanceUID": {
+            "title": "Study ID"
+          },
+          "gen3_discovery.dicom_viewer_url": {
+            "title": "",
+            "type": "link",
+            "cellRenderFunction": "DiacomLink"
+          },
+          "gen3_discovery.SeriesDescription": {
+            "title": "Series Description"
+          },
+          "gen3_discovery.BodyPartExamined": {
+            "title": "Body Part Examined"
+          },
+          "gen3_discovery.SeriesInstanceUID": {
+            "title": "Series Images"
+          },
+          "gen3_discovery.commons": {
+            "title": "Platform"
+          }
+        }
+      },
+      "guppyConfig": {
+        "dataType": "metadata",
+        "nodeCountTitle": "Imaging Series",
+        "fieldMapping": [
+          {
+            "field": "gen3_discovery.StudyInstanceUID",
+            "name": "Study ID"
+          },
+          {
+            "field": "gen3_discovery.SeriesDescription",
+            "name": "Series Description"
+          },
+          {
+            "field": "gen3_discovery.BodyPartExamined",
+            "name": "Body Part Examined"
+          },
+          {
+            "field": "gen3_discovery.PatientSex",
+            "name": "Gender"
+          },
+          {
+            "field": "gen3_discovery.primary_site",
+            "name": "Primary Site"
+          },
+          {
+            "field": "gen3_discovery.disease_type",
+            "name": "Disease Type"
+          }
+        ],
+        "manifestMapping": {
+          "resourceIndexType": "metadata",
+          "resourceIdField": "gen3_discovery.StudyInstanceUID",
+          "referenceIdFieldInResourceIndex": "StudyInstanceUID",
+          "referenceIdFieldInDataIndex": "StudyInstanceUID"
+        },
+        "accessibleFieldCheckList": ["authz"],
+        "accessibleValidationField": "gen3_discovery.authz"
+      },
+      "loginForDownload": false,
+      "dropdowns": {
+        "download-menu": {
+          "enabled": true,
+          "title": "Download Table",
+          "leftIcon": "gen3:download",
+          "rightIcon": "gen3:chevron-down",
+          "dropdownItems": [
+            {
+              "enabled": true,
+              "type": "data-json",
+              "title": "JSON",
+              "leftIcon": "datafile",
+              "rightIcon": "download",
+              "action": "data-json",
+              "actionArgs" : {
+                "filename": "MIDRC_Series_table.json",
+                "rootPath": "gen3_discovery"
+              }
+            },
+            {
+              "enabled": true,
+              "type": "data-csv",
+              "title": "CSV",
+              "leftIcon": "datafile",
+              "rightIcon": "download",
+              "action": "data-csv",
+              "actionArgs" : {
+                "filename": "MIDRC_Series_table.csv",
+                "rootPath": "gen3_discovery"
+              }
+            }
+          ]
+        }
+      },
+      "buttons": [
+        {
+          "enabled": true,
+          "type": "manifest",
+          "title": "Download Manifest",
+          "leftIcon": "gen3:datafile",
+          "rightIcon": "gen3:download",
+          "fileName": "manifest.json",
+          "resourceIndexType": "metadata",
+          "resourceIdField": "gen3_discovery.StudyInstanceUID",
+          "referenceIdFieldInResourceIndex": "StudyInstanceUID",
+          "referenceIdFieldInDataIndex": "StudyInstanceUID"
+        }
+      ]
+    }
+  ]
