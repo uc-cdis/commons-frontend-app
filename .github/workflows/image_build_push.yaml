@@ -13,6 +13,7 @@ jobs:
     name: Build Image and Push to Quay
     uses: uc-cdis/.github/.github/workflows/image_build_push.yaml@master
     with:
+      OVERRIDE_REPO_NAME: "bih-data-commons"
       USE_QUAY_ONLY: true
     secrets:
       ECR_AWS_ACCESS_KEY_ID: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
