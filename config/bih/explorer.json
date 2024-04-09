@@ -2,17 +2,17 @@
     {
       "tabTitle": "Series",
       "charts": {
-        "gen3_discovery.PatientSex": {
+        "gen3_discovery.commons": {
           "chartType": "fullPie",
-          "title": "Gender"
+          "title": "Platform"
         },
         "gen3_discovery.primary_site": {
           "chartType": "fullPie",
           "title": "Primary Site"
         },
-        "gen3_discovery.commons": {
+        "gen3_discovery.disease_type": {
           "chartType": "fullPie",
-          "title": "Platform"
+          "title": "Disease Type"
         }
       },
       "filters": {
