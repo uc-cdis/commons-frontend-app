@@ -142,14 +142,22 @@
         {
           "enabled": true,
           "type": "manifest",
+          "action": "manifest",
           "title": "Download Manifest",
           "leftIcon": "gen3:datafile",
           "rightIcon": "gen3:download",
           "fileName": "manifest.json",
-          "resourceIndexType": "metadata",
-          "resourceIdField": "gen3_discovery.StudyInstanceUID",
-          "referenceIdFieldInResourceIndex": "StudyInstanceUID",
-          "referenceIdFieldInDataIndex": "StudyInstanceUID"
+          "actionArgs": {
+            "resourceIndexType": "metadata",
+            "resourceIdField": "gen3_discovery.SeriesInstanceUID",
+            "referenceIdFieldInDataIndex": "gen3_discovery.SeriesInstanceUID",
+            "fileFields": [
+              "gen3_discovery.x__manifest.file_name",
+              "gen3_discovery.x__manifest.file_size",
+              "gen3_discovery.x__manifest.md5sum",
+              "gen3_discovery.x__manifest.object_id"
+            ]
+          }
         }
       ]
     }
