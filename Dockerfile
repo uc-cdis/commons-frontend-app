@@ -51,10 +51,11 @@ COPY ./.env.development ./
 COPY ./.env.production ./
 COPY ./tailwind.config.js ./
 COPY ./postcss.config.js ./
+COPY ./start.sh ./
 RUN npm ci
 RUN npm install \
     "@swc/core" \
     "@napi-rs/magic-string"
 RUN npm run build
-ENV PORT=80
-CMD ["npm", "run", "start"]
+ENV PORT=3000
+CMD bash ./start.sh
