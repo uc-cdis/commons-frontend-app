@@ -2,7 +2,7 @@
   "body": [
     {
       "title": {
-        "text": "Biomedical Imaging Hub",
+        "text": "MIDRC BDF Imaging Hub",
         "level": 2
       }
     },
@@ -10,7 +10,7 @@
       "splitarea": {
         "left": [
           {
-            "text": "The Biomedical Imaging Hub is a data hub, which is a federated data search, discovery, and analysis platform that allows researchers to query and analyze data from independent data repositories or resources related to medical imaging."
+            "text": "The MIDRC BDF Imaging Hub (BIH) is a data hub, which is a federated data search, discovery, and analysis platform that allows researchers to query and analyze data from independent data repositories or resources related to medical imaging."
           },
           {
             "link": {
