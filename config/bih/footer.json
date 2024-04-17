@@ -1,4 +1,7 @@
 {
+  "classNames": {
+    "root": "bg-base-darker"
+  },
   "footerRightLogos": [
     [
       {
