@@ -5,7 +5,6 @@ import themeColors from '../../config/themeColors.json';
 import themeFonts from '../../config/themeFonts.json';
 import icons from '../../config/icons/gen3.json';
 import '../styles/globals.css';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import 'graphiql/graphiql.css';
 import '@graphiql/react/dist/style.css';
 import { setDRSHostnames } from '@gen3/core';
