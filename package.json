@@ -24,9 +24,7 @@
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.1.0",
     "@types/mdx": "^2.0.11",
-    "cookies-next": "^4.1.1",
-    "jose": "4.15.5",
-    "react-responsive-carousel": "^3.2.23"
+    "cookies-next": "^4.1.1"
   },
   "devDependencies": {
     "@gen3/toolsff": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-toolsff-0.10.23.tgz",
