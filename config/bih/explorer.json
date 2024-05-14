@@ -32,6 +32,10 @@
       },
       "table": {
         "enabled": true,
+        "pageLimit": {
+          "limit": 10000,
+          "label": "Maximum of 10,000 Total Records. Records per Page:"
+        },
         "fields": [
           "gen3_discovery.dicom_viewer_url",
           "gen3_discovery.StudyInstanceUID",
