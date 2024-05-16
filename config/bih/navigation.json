@@ -12,7 +12,9 @@
         "name": "Exploration",
         "tooltip": "The Exploration Page enables discovery of the data at the series level and features a cohort builder.",
         "classNames": {
-          "root": "flex flex-col flex-nowrap px-1 py-2 pt-4 items-center hover:text-accent opacity-80 hover:opacity-100 pr-10 px-2"
+          "root": "flex flex-col border-b-4 border-accent flex-nowrap py-4 pt-4 items-center pr-10 px-2",
+          "label" : "text-black font-semibold hover:text-black",
+          "icon" : "text-black hover:text-black"
         }
       }
     ]
