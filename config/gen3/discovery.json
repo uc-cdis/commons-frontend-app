@@ -4,27 +4,33 @@
     "expandableRows": true
   },
   "features": {
+    "dataFetchFunction": "AggMDSAllLocal",
+    "aiSearch" : true,
     "advSearchFilters": {
-      "enabled": true,
+      "enabled": false,
       "field": "advSearchFilters",
       "displayName": "Filters",
       "filters": [
         {
-          "key": "Study Type"
+          "key": "Research Focus Area"
         },
         {
-          "key": "Data Type"
+          "key": "Administering IC(s)"
         },
         {
-          "key": "Subject Type"
+          "key": "Simulated vs. Real Data"
         },
         {
-          "key": "Gender"
+          "key": "Year Grant Awarded"
         },
         {
-          "key": "Age"
+          "key": "Study Description"
         }
       ]
+    },
+    "pageTitle": {
+      "enabled": false,
+      "text": "Study Discovery"
     },
     "tagsColumn": {
       "enabled": false
@@ -32,52 +38,34 @@
     "tagsInDescription": {
       "enabled": true
     },
-    "exportToWorkspace": {
-      "enabled": true,
-      "manifestFieldName": "__manifest",
-      "enableDownloadManifest": true,
-      "enableDownloadZip": true,
-      "downloadZipButtonText": "Download Zip",
-      "downloadManifestButtonText": "Download Manifest",
-      "documentationLinks": {
-        "gen3Client": "https://gen3.org/resources/user/gen3-client/",
-        "gen3Workspaces": "https://gen3.org/resources/user/analyze-data/"
-      },
-      "verifyExternalLogins": true
-    },
-    "pageTitle": {
-      "enabled": false
-    },
     "search": {
       "searchBar": {
         "enabled": true,
-        "inputSubtitle": "Examples: pain, buprenorphine, intervention",
         "searchableTextFields": [
-          "study_metadata.minimal_info.study_description",
-          "institutions",
-          "investigators_name",
-          "study_metadata.minimal_info.study_name",
-          "project_number",
-          "study_metadata.metadata_location.nih_application_id",
-          "_hdp_uid",
-          "dataset_1_title",
-          "dataset_2_title",
-          "dataset_3_title",
-          "dataset_4_title",
-          "administering_ic",
-          "research_program",
-          "doi_identifier",
-          "doi_resolvable_link"
+          "short_name",
+          "full_name",
+          "study_description",
+          "study_id"
         ]
       },
       "tagSearchDropdown": {
         "enabled": true,
-        "collapsibleButtonText": "Data Repository"
+        "collapsibleButtonText": "Data Commons"
+      },
+      "exportToWorkspace": {
+        "enabled": true,
+        "manifestFieldName": "__manifest",
+        "enableDownloadManifest": true,
+        "downloadManifestButtonText": "Download",
+        "documentationLinks": {
+          "gen3Client": "https://gen3.org/resources/user/gen3-client/",
+          "gen3Workspaces": "https://gen3.org/resources/user/analyze-data/"
+        }
       }
     },
     "authorization": {
       "enabled": true,
-      "columnTooltip": "Filter by data access",
+      "columnTooltip": "Filter by data access. Accessible indicates you are authorized to access. Not accessible indicates you are not authorized to access.",
       "supportedValues": {
         "accessible": {
           "enabled": true,
@@ -88,11 +76,11 @@
           "menuText": "Not Accessible"
         },
         "pending": {
-          "enabled": true,
+          "enabled": false,
           "menuText": "Pending"
         },
         "notAvailable": {
-          "enabled": true,
+          "enabled": false,
           "menuText": "Not Available"
         }
       }
@@ -101,250 +89,196 @@
   "aggregations": [
     {
       "name": "Studies",
-      "field": "_hdp_uid",
+      "field": "_unique_id",
       "type": "count"
+    },
+    {
+      "name": "Total Subjects",
+      "field": "_subjects_count",
+      "type": "sum"
     }
   ],
   "tagSelector": {
-    "showTagCategoryNames": true
+    "title": "Tags by category"
   },
-  "studies": [],
   "studyColumns": [
     {
-      "name": "Project Title",
-      "field": "study_metadata.minimal_info.study_name",
+      "name": "Study Name",
+      "field": "short_name",
       "errorIfNotAvailable": false,
-      "valueIfNotAvailable": "n/a"
+      "valueIfNotAvailable": "n/a",
+      "width": "157px",
+      "contentType": "string"
     },
     {
-      "name": "HEAL Research Focus Area",
-      "field": "research_focus_area",
+      "name": "Full Name",
+      "field": "full_name",
       "errorIfNotAvailable": false,
-      "valueIfNotAvailable": "n/a"
+      "valueIfNotAvailable": "n/a",
+      "width": "400px",
+      "contentType": "string"
     },
     {
-      "name": "HEAL Research Program",
-      "field": "research_program",
+      "name": "Number of Subjects",
+      "field": "_subjects_count",
       "errorIfNotAvailable": false,
-      "valueIfNotAvailable": "n/a"
+      "valueIfNotAvailable": "n/a",
+      "contentType": "number",
+      "width": "98px"
     },
     {
-      "name": "Investigator(s)",
-      "field": "investigators_name",
+      "name": "ID Number",
+      "field": "study_id",
       "errorIfNotAvailable": false,
-      "valueIfNotAvailable": "n/a"
+      "valueIfNotAvailable": "n/a",
+      "width": "152px",
+      "contentType": "string"
+    },
+    {
+      "name": "Data Commons",
+      "field": "commons",
+      "errorIfNotAvailable": false,
+      "valueIfNotAvailable": "n/a",
+      "contentType": "link",
+      "cellRenderFunction": "withURL",
+      "params": {
+        "hrefValueFromField": "commons_url"
+      }
+    },
+    {
+      "name": "DATA ACCESS METHOD",
+      "field": "data_access_method",
+      "errorIfNotAvailable": false,
+      "valueIfNotAvailable": "API",
+      "contentType": "string"
     }
   ],
   "studyPreviewField": {
-    "name": "Summary",
-    "field": "study_metadata.minimal_info.study_description",
+    "name": "Description",
+    "field": "study_description",
     "contentType": "string",
     "includeName": false,
     "includeIfNotAvailable": true,
-    "valueIfNotAvailable": "No summary has been provided for this study."
+    "valueIfNotAvailable": "No description has been provided for this study."
   },
-  "detailView": {
-    "headerField": "study_metadata.minimal_info.study_name",
-    "tabs": [
+  "simpleDetailsView": {
+    "showAllAvailableFields": false,
+    "header": {
+      "field": "name"
+    },
+    "fieldsToShow": [
       {
-        "tabName": "Summary",
-        "groups": [
+        "groupName": "Study Identifiers",
+        "groupWidth": "half",
+        "includeName": false,
+        "fields": [
           {
-            "header": "Study Description Summary",
-            "fields": [
-              {
-                "type": "block",
-                "sourceField": "study_metadata.minimal_info.study_description"
-              }
-            ]
+            "name": "Number of Subjects",
+            "field": "_subjects_count",
+            "contentType": "number"
           },
           {
-            "header": "HEAL Research Initiative/Award Administration",
-            "fields": [
-              {
-                "type": "text",
-                "label": "Project Number",
-                "sourceField": "project_number",
-                "default": ""
-              },
-              {
-                "type": "text",
-                "label": "HEAL Research Program",
-                "sourceField": "research_program",
-                "default": "Not specified"
-              },
-              {
-                "type": "text",
-                "label": "Institution(s)",
-                "sourceField": "institutions"
-              },
-              {
-                "type": "text",
-                "label": "Investigator(s)",
-                "sourceField": "investigators_name"
-              },
-              {
-                "type": "text",
-                "label": "Administering IC(s)",
-                "sourceField": "administering_ic"
-              },
-              {
-                "type": "text",
-                "label": "Year Grant Awarded",
-                "sourceField": "year_awarded"
-              },
-              {
-                "type": "link",
-                "label": "NIH RePORTER Link",
-                "sourceField": "study_metadata.metadata_location.nih_reporter_link"
-              },
-              {
-                "type": "text",
-                "label": "Clinical Trial ID",
-                "sourceField": "study_metadata.metadata_location.clinical_trials_study_ID"
-              },
-              {
-                "type": "link",
-                "label": "Clinical Trial Link",
-                "sourceField": "study_metadata.metadata_location.clinical_trials_study_link"
-              },
-              {
-                "type": "text",
-                "label": "DOI",
-                "sourceField": "doi_identifier"
-              },
-              {
-                "type": "link",
-                "label": "DOI Link",
-                "sourceField": "doi_resolvable_link"
-              }
-            ]
+            "name": "Full Name",
+            "field": "full_name",
+            "contentType": "string"
           },
           {
-            "header": "Study Characteristics",
-            "fields": [
-              {
-                "type": "tags",
-                "sourceField": "tags"
-              }
-            ]
+            "name": "Short Name",
+            "field": "short_name",
+            "contentType": "text",
+            "includeName": true,
+            "includeIfNotAvailable": true,
+            "valueIfNotAvailable": "N/A"
+          },
+          {
+            "name": "dbGaP Accession Number",
+            "field": "dbgap_accession",
+            "contentType": "text",
+            "includeName": true,
+            "includeIfNotAvailable": false
+          },
+          {
+            "name": "Project ID",
+            "field": "project_id",
+            "contentType": "text",
+            "includeIfNotAvailable": false
+          },
+          {
+            "name": "Data Commons",
+            "field": "commons",
+            "contentType": "text",
+            "includeIfNotAvailable": false
+          },
+          {
+            "name": "Tutorial Notebook",
+            "field": "tutorial_notebook",
+            "contentType": "text",
+            "includeIfNotAvailable": true,
+            "valueIfNotAvailable": "NO"
           }
         ]
       },
       {
-        "tabName": "Data",
-        "groups": [
+        "groupWidth": "full",
+        "fields": [
           {
-            "fields": [
-              {
-                "type": "accessDescriptor"
-              }
-            ]
-          },
-          {
-            "header": "Repository",
-            "fields": [
-              {
-                "sourceField": "study_metadata.metadata_location.data_repositories[*].repository_study_link",
-                "type": "linkList",
-                "label": ""
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "tabName": "Cite",
-        "groups": [
-          {
-            "header": "Citation Requirements",
-            "fields": [
-              {
-                "type": "text",
-                "label": "Cite the study on the HEAL Data Platform",
-                "sourceField": "study_metadata.citation.heal_platform_citation"
-              },
-              {
-                "type": "text",
-                "label": "Cite the study at the local repository",
-                "sourceField": "study_metadata.metadata_location.data_repositories[*].repository_citation"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "tabName": "Related Studies",
-        "groups": [
-          {
-            "header": "Related Studies",
-            "fields": [
-              {
-                "type": "linkList",
-                "sourceField": "related_studies",
-                "label": "",
-                "renderFunction": "linkWithTitle"
-              }
-            ]
+            "name": "Description",
+            "field": "study_description",
+            "contentType": "paragraphs",
+            "includeName": true,
+            "includeIfNotAvailable": true,
+            "valueIfNotAvailable": "No description has been provided for this study."
           }
         ]
       }
     ]
   },
-  "tagsDisplayName": "Study Filters",
-  "tagColumnWidth": "500px",
   "minimalFieldMapping": {
-    "authzField": "authz",
     "tagsListFieldName": "tags",
-    "dataAvailabilityField": "data_availability",
-    "uid": "_hdp_uid"
+    "authzField": "authz",
+    "uid": "_unique_id"
   },
   "tagCategories": [
     {
-      "name": "Study Type",
-      "color": "#532565",
+      "name": "Commons",
+      "displayName": "Data Commons",
+      "color": "rgba(129, 211, 248, 1)",
+      "display": true
+    },
+    {
+      "name": "Program",
+      "color": "rgba(129, 211, 248, 1)",
+      "display": false
+    },
+    {
+      "name": "Study Registration",
+      "color": "rgba(236, 128, 141, 1)",
       "display": false
     },
     {
       "name": "Data Type",
-      "color": "#982568",
+      "color": "rgba(112, 182, 3, 1)",
       "display": false
     },
     {
-      "name": "Subject Type",
-      "color": "#981f32",
+      "name": "primary_site",
+      "color": "rgba(112, 182, 3, 1)",
       "display": false
     },
     {
-      "name": "Gender",
-      "color": "#bf362e",
+      "name": "disease_type",
+      "color": "rgba(112, 182, 3, 1)",
       "display": false
     },
     {
-      "name": "Age",
-      "color": "#e07c3e",
+      "name": "data_type",
+      "color": "rgba(112, 182, 3, 1)",
       "display": false
     },
     {
-      "name": "Research Program",
-      "color": "#532565",
+      "name": "clinical_study_type",
+      "color": "rgba(112, 182, 3, 1)",
       "display": false
-    },
-    {
-      "name": "Commons",
-      "displayName": "Data Resources",
-      "color": "#981f32",
-      "display": false
-    },
-    {
-      "name": "Other",
-      "color": "#bf362e",
-      "display": false
-    },
-    {
-      "name": "Data Repository",
-      "color": "#bf362e",
-      "display": true
     }
   ]
 }

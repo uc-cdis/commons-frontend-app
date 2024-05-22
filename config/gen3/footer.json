@@ -1,14 +1,17 @@
 {
+  "classNames": {
+    "root": "bg-base-darkest"
+  },
   "footerRightLogos": [
     [
       {
-        "logo": "/icons/gen3.png",
+        "logo": "/ff/icons/gen3.png",
         "width": 132,
         "height": 60,
         "description": "Gen3 Logo"
       },
       {
-        "logo": "/icons/createdby.png",
+        "logo": "/ff/icons/createdby.png",
         "width": 170,
         "height": 60,
         "description": "Created by CTDS"

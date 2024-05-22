@@ -18,7 +18,7 @@
     "getDRSToHostname": "node ./node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/"
   },
   "dependencies": {
-      "@gen3/frontend": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-frontend-0.10.23.tgz",
+      "@gen3/frontend": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-frontend-0.10.27.tgz",
     "@mantine/core": "^6.0.21",
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
@@ -27,7 +27,7 @@
     "cookies-next": "^4.1.1"
   },
   "devDependencies": {
-    "@gen3/toolsff": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-toolsff-0.10.23.tgz",
+    "@gen3/toolsff": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-toolsff-0.10.27.tgz",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -47,7 +47,7 @@
     "typescript": "5.0.2"
   },
   "peerDependencies": {
-    "@gen3/core": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-core-0.10.23.tgz",
+    "@gen3/core": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-core-0.10.27.tgz",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
