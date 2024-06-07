@@ -4,13 +4,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v3
-      with:
-        node-version: 20
-    - name: Setup npm
-      run: npm install -g npm@10.2.4
-    - name: Install modules
-      run: npm ci
-    - name: Run ESLint
-      run: npm run lint
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 20.11.0
+      - name: install npm version
+        run: npm install -g npm
+      - name: Get Version
+        run: npm -v
+      - name: Install modules
+
+        run: npm ci
+      - name: Run ESLint
+        run: npm run lint
