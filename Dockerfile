@@ -23,21 +23,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
     git \
-    gnupg \
-    nginx \
-    python3 \
-    time \
-    vim \
     && mkdir -p /etc/apt/keyrings \
     && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
     && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
     && apt-get update \
     && apt-get install -y nodejs \
     && apt-get clean \
-    && rm -rf /var/src/apt/lists/* \
-    && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && npm install -g npm@10.2.4
+    && npm install -g npm@10.5.2
 
 RUN  addgroup --system --gid 1001 nextjs && adduser --system --uid 1001 nextjs
 COPY ./package.json ./package-lock.json ./
