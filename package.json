@@ -24,7 +24,7 @@
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.2.3",
     "@types/mdx": "^2.0.11",
-    "cookies-next": "^4.1.1"
+    "cookies-next": "^4.2.1"
   },
   "devDependencies": {
     "@gen3/toolsff": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-toolsff-0.10.30.tgz",
