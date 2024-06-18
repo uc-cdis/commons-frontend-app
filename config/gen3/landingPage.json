@@ -10,7 +10,7 @@
       "splitarea": {
         "left": [
           {
-            "text": "Fill in Description of the Data Platform"
+            "text": "<strong>PROMETHEUS</strong> stands for <strong>Pro</strong>ject for <strong>M</strong>ilitary <strong>E</strong>xposures and <strong>T</strong>oxin <strong>H</strong>istory <strong>E</strong>valuation in <strong>US</strong> Service Members. The Prometheus Data Platform (PDP) is part of the President Biden Cancer Moonshot 2.0, which aims to mobilize a national effort to end cancer as we know it. The  PDP is a robust data mesh designed to support existing and future Prometheus projects. PDP provides a hybrid governance structure, ensuring a secure and compliant data exchange through specialized software services, referred to as Gen3 Mesh Services."
           },
           {
             "link": {
