@@ -7,8 +7,6 @@ FROM quay.io/cdis/ubuntu:20.04 as build
 
 ARG NODE_VERSION=20
 
-ENV DEBIAN_FRONTEND=noninteractive
-
 ARG BASE_PATH
 ARG NEXT_PUBLIC_PORTAL_BASENAME
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
@@ -30,12 +28,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get update \
     && apt-get install -y nodejs \
     && apt-get clean \
-    && npm install -g npm@10.5.2
+    && npm install -g npm
 
 RUN  addgroup --system --gid 1001 nextjs && adduser --system --uid 1001 nextjs
 COPY ./package.json ./
 COPY ./package-lock.json ./
-RUN npm ci
+
 COPY ./src ./src
 COPY ./public ./public
 COPY ./config ./config
@@ -48,6 +46,7 @@ COPY ./postcss.config.js ./
 RUN npm install \
     "@swc/core" \
     "@napi-rs/magic-string"
+RUN npm ci
 RUN npm run build
 ENV PORT=80
 CMD ["npm", "run", "start"]
