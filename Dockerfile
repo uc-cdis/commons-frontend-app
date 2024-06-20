@@ -33,8 +33,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && npm install -g npm@10.5.2
 
 RUN  addgroup --system --gid 1001 nextjs && adduser --system --uid 1001 nextjs
-COPY ./package.json ./package-lock.json ./
+COPY ./package.json ./
 COPY ./package-lock.json ./
+RUN npm ci
 COPY ./src ./src
 COPY ./public ./public
 COPY ./config ./config
@@ -44,7 +45,6 @@ COPY ./.env.development ./
 COPY ./.env.production ./
 COPY ./tailwind.config.js ./
 COPY ./postcss.config.js ./
-RUN npm ci
 RUN npm install \
     "@swc/core" \
     "@napi-rs/magic-string"
