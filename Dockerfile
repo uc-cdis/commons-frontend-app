@@ -3,9 +3,11 @@
 # for Macbook silicon M1/m2 uncomment the following lines and comment quay.io/cdis/ubuntu:20.04:
 #FROM arm64v8/ubuntu:20.04 as build
 
-FROM quay.io/cdis/ubuntu:20.04 AS build
+FROM quay.io/cdis/ubuntu:20.04 as build
 
 ARG NODE_VERSION=20
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 ARG BASE_PATH
 ARG NEXT_PUBLIC_PORTAL_BASENAME
@@ -28,10 +30,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get update \
     && apt-get install -y nodejs \
     && apt-get clean \
-    && npm install -g npm
+    && npm install -g npm@10.5.2
 
 RUN  addgroup --system --gid 1001 nextjs && adduser --system --uid 1001 nextjs
-COPY ./package.json ./
+COPY ./package.json ./package-lock.json ./
 COPY ./package-lock.json ./
 COPY ./src ./src
 COPY ./public ./public
@@ -42,10 +44,10 @@ COPY ./.env.development ./
 COPY ./.env.production ./
 COPY ./tailwind.config.js ./
 COPY ./postcss.config.js ./
+RUN npm ci
 RUN npm install \
     "@swc/core" \
     "@napi-rs/magic-string"
-RUN npm ci
 RUN npm run build
 ENV PORT=80
 CMD ["npm", "run", "start"]
