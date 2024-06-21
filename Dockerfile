@@ -3,11 +3,9 @@
 # for Macbook silicon M1/m2 uncomment the following lines and comment quay.io/cdis/ubuntu:20.04:
 #FROM arm64v8/ubuntu:20.04 as build
 
-FROM quay.io/cdis/ubuntu:20.04 as build
+FROM quay.io/cdis/ubuntu:20.04 AS build
 
 ARG NODE_VERSION=20
-
-ENV DEBIAN_FRONTEND=noninteractive
 
 ARG BASE_PATH
 ARG NEXT_PUBLIC_PORTAL_BASENAME
