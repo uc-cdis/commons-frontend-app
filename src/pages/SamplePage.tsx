@@ -26,7 +26,7 @@ const SamplePage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
 
 export const getServerSideProps: GetServerSideProps<
   NavPageLayoutProps
-> = async (_context) => {
+> = async () => {
   return {
     props: {
       ...(await getNavPageLayoutPropsFromConfig()),
