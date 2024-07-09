@@ -96,6 +96,10 @@
           {
             "field": "gen3_discovery.disease_type",
             "name": "Disease Type"
+          },
+          {
+            "field": "gen3_discovery.commons",
+            "title": "Platform"
           }
         ],
         "manifestMapping": {
