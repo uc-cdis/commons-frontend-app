@@ -6,7 +6,7 @@
       "navigationPanel": "bg-base-max text-primary"
     },
     "logo": {
-      "src": "/icons/gen3-dark.svg",
+      "src": "/icons/Prometheus_logo.png",
       "height": 128,
       "href": "/"
     },
