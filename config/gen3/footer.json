@@ -15,6 +15,12 @@
         "width": 170,
         "height": 60,
         "description": "Created by CTDS"
+      },
+      {
+        "logo": "/icons/OCC.png",
+        "width": 150,
+        "height": 60,
+        "description": "OCC"
       }
     ]
   ]
