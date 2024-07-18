@@ -99,7 +99,7 @@
           },
           {
             "field": "gen3_discovery.commons",
-            "title": "Platform"
+            "name": "Platform"
           }
         ],
         "manifestMapping": {
