@@ -12,7 +12,8 @@
           "dataFetchArgs": {
             "indexKeys": [
               "BloodPAC-study-level-metadata",
-              "VPODC-study-level-metadata"
+              "VPODC-study-level-metadata",
+              "APOLLO-study-level-metadata"
             ]
           }
         },
