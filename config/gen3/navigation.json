@@ -18,16 +18,16 @@
         "tooltip": "Use free-text search and tags to rapidly find relevant studies."
       },
       {
+        "icon": "gen3:comparison",
+        "href": "/Crosswalk",
+        "name": "Crosswalk",
+        "tooltip": "Match ids across the mesh."
+      },
+      {
         "icon": "gen3:dictionary",
         "href": "/DataDictionary",
         "name": "Dictionary",
         "tooltip": "The Data Dictionary serves to inform the data model and is updated as new data is ingested."
-      },
-      {
-        "icon": "gen3:exploration",
-        "href": "/Explorer",
-        "name": "Exploration",
-        "tooltip": "The Exploration Page enables discovery of the data at the subject level and features a cohort builder."
       },
       {
         "icon": "gen3:profile",
