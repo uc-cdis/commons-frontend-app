@@ -1,268 +1,6 @@
 {
   "metadataConfig": [
     {
-      "label": "Studies",
-      "tableConfig": {
-        "selectableRows": false,
-        "expandableRows": true
-      },
-      "features": {
-        "dataLoader": {
-          "dataFetchFunction": "IndexedAggMDSAllLocal",
-          "dataFetchArgs": {
-            "indexKeys": [
-              "BloodPAC-study-level-metadata",
-              "VPODC-study-level-metadata",
-              "APOLLO-study-level-metadata"
-            ]
-          }
-        },
-        "aiSearch": false,
-        "advSearchFilters": {
-          "enabled": false,
-          "field": "advSearchFilters",
-          "displayName": "Filters",
-          "filters": [
-            {
-              "key": "Research Focus Area"
-            },
-            {
-              "key": "Administering IC(s)"
-            },
-            {
-              "key": "Simulated vs. Real Data"
-            },
-            {
-              "key": "Year Grant Awarded"
-            },
-            {
-              "key": "Study Description"
-            }
-          ]
-        },
-        "pageTitle": {
-          "enabled": false,
-          "text": "Study Discovery"
-        },
-        "tagsColumn": {
-          "enabled": false
-        },
-        "tagsInDescription": {
-          "enabled": true
-        },
-        "search": {
-          "searchBar": {
-            "enabled": true,
-            "searchableTextFields": [
-              "short_name",
-              "full_name",
-              "study_description",
-              "study_id"
-            ]
-          },
-          "tagSearchDropdown": {
-            "enabled": true,
-            "collapsibleButtonText": "Data Commons"
-          },
-          "exportToWorkspace": {
-            "enabled": true,
-            "manifestFieldName": "__manifest",
-            "enableDownloadManifest": true,
-            "downloadManifestButtonText": "Download",
-            "documentationLinks": {
-              "gen3Client": "https://gen3.org/resources/user/gen3-client/",
-              "gen3Workspaces": "https://gen3.org/resources/user/analyze-data/"
-            }
-          }
-        },
-        "authorization": {
-          "enabled": true,
-          "columnTooltip": "Filter by data access. Accessible indicates you are authorized to access. Not accessible indicates you are not authorized to access.",
-          "supportedValues": {
-            "accessible": {
-              "enabled": true,
-              "menuText": "Available"
-            },
-            "unaccessible": {
-              "enabled": false,
-              "menuText": "Not Accessible"
-            },
-            "pending": {
-              "enabled": false,
-              "menuText": "Pending"
-            },
-            "notAvailable": {
-              "enabled": false,
-              "menuText": "Not Available"
-            }
-          }
-        }
-      },
-      "aggregations": [
-        {
-          "name": "Studies",
-          "field": "_unique_id",
-          "type": "count"
-        }
-      ],
-      "tagSelector": {
-        "title": "Tags by category"
-      },
-      "studyColumns": [
-        {
-          "name": "Study/Project Name",
-          "field": "short_name",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "n/a",
-          "width": "157px",
-          "contentType": "string"
-        },
-        {
-          "name": "Full Name",
-          "field": "full_name",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "n/a",
-          "contentType": "string"
-        },
-        {
-          "name": "Number of Subjects",
-          "field": "_subjects_count",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "n/a",
-          "contentType": "number"
-        },
-        {
-          "name": "ID Number",
-          "field": "study_id",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "n/a",
-          "contentType": "string"
-        },
-        {
-          "name": "Data Commons",
-          "field": "commons",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "n/a",
-          "contentType": "link",
-          "cellRenderFunction": "withURL",
-          "params": {
-            "hrefValueFromField": "commons_url",
-            "transform" : "uppercase"
-          }
-        },
-        {
-          "name": "DATA ACCESS METHOD",
-          "field": "data_access_method",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "API",
-          "contentType": "string"
-        }
-      ],
-      "studyPreviewField": {
-        "name": "Description",
-        "field": "study_description",
-        "contentType": "string",
-        "includeName": false,
-        "includeIfNotAvailable": true,
-        "valueIfNotAvailable": "No description has been provided for this study."
-      },
-      "simpleDetailsView": {
-        "showAllAvailableFields": false,
-        "header": {
-          "field": "name"
-        },
-        "fieldsToShow": [
-          {
-            "groupWidth": "half",
-            "includeName": false,
-            "fields": [
-              {
-                "name": "Unique ID",
-                "field": "_unique_id",
-                "contentType": "string"
-              },
-              {
-                "name": "Study ID",
-                "field": "_unique_id",
-                "contentType": "string"
-              },
-              {
-                "name": "Study/Project Name:",
-                "field": "short_name",
-                "contentType": "text",
-                "includeName": true,
-                "includeIfNotAvailable": true,
-                "valueIfNotAvailable": "N/A"
-              },
-              {
-                "name": "Full Name",
-                "field": "full_name",
-                "contentType": "string"
-              },
-              {
-                "name": "Number of Subjects",
-                "field": "_subjects_count",
-                "contentType": "string",
-                "includeIfNotAvailable": true
-              },
-              {
-                "name": "Study URL",
-                "field": "study_url",
-                "contentType": "link",
-                "includeIfNotAvailable": true
-              },
-              {
-                "name": "Data Commons",
-                "field": "commons",
-                "contentType": "string",
-                "includeIfNotAvailable": true,
-                "params" : {
-                  "style" : "uppercase"
-                }
-              }
-            ]
-          },
-          {
-            "groupWidth": "half",
-            "fields": [
-              {
-                "name": "Description",
-                "field": "study_description",
-                "contentType": "paragraphs",
-                "includeName": true,
-                "includeIfNotAvailable": true,
-                "valueIfNotAvailable": "No description has been provided for this study."
-              }
-            ]
-          }
-        ]
-      },
-      "minimalFieldMapping": {
-        "tagsListFieldName": "tags",
-        "authzField": "authz",
-        "uid": "_unique_id"
-      },
-      "tags": {
-        "tagCategories": [
-          {
-            "name": "Cancer Type",
-            "color": "rgba(129, 211, 248, 1)",
-            "display": true
-          },
-          {
-            "name": "Cancer Type",
-            "color": "rgba(129, 211, 248, 1)",
-            "display": false
-          },
-          {
-            "name": "Study Setting",
-            "color": "rgba(112, 182, 3, 1)",
-            "display": true
-          }
-        ]
-      }
-    },
-    {
       "label": "Subjects",
       "tableConfig": {
         "selectableRows": false,
@@ -276,7 +14,16 @@
               "VPODC-subject-level-metadata",
               "APOLLO-subject-level-metadata",
               "BloodPAC-subject-level-metadata"
-            ]
+            ],
+            "hasEnoughData": {
+              "keys": [
+                "subject_primary_disease",
+                "subject_gender",
+                "subject_race",
+                "subject_ethnicity"
+              ],
+              "limit": 4
+            }
           }
         },
         "aiSearch": false,
@@ -322,7 +69,8 @@
               "subject_gender",
               "subject_race",
               "subject_ethnicity",
-              "subject_id"
+              "subject_id",
+              "commons"
             ]
           },
           "tagSearchDropdown": {
@@ -418,10 +166,14 @@
         },
         {
           "name": "ID Number",
-          "field": "subject_id",
+          "field": "gen3MDSGUID",
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "",
-          "contentType": "string"
+          "contentType": "string",
+          "cellRenderFunction": "truncated",
+          "params": {
+            "maxLength": 16
+          }
         },
         {
           "name": "Data Commons",
@@ -579,6 +331,270 @@
           {
             "name": "primary_disease'",
             "color": "rgba(129, 211, 248, 1)",
+            "display": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "Studies",
+      "tableConfig": {
+        "selectableRows": false,
+        "expandableRows": true
+      },
+      "features": {
+        "dataLoader": {
+          "dataFetchFunction": "IndexedAggMDSAllLocal",
+          "dataFetchArgs": {
+            "indexKeys": [
+              "BloodPAC-study-level-metadata",
+              "VPODC-study-level-metadata",
+              "APOLLO-study-level-metadata"
+            ]
+          }
+        },
+        "aiSearch": false,
+        "advSearchFilters": {
+          "enabled": false,
+          "field": "advSearchFilters",
+          "displayName": "Filters",
+          "filters": [
+            {
+              "key": "Research Focus Area"
+            },
+            {
+              "key": "Administering IC(s)"
+            },
+            {
+              "key": "Simulated vs. Real Data"
+            },
+            {
+              "key": "Year Grant Awarded"
+            },
+            {
+              "key": "Study Description"
+            }
+          ]
+        },
+        "pageTitle": {
+          "enabled": false,
+          "text": "Study Discovery"
+        },
+        "tagsColumn": {
+          "enabled": false
+        },
+        "tagsInDescription": {
+          "enabled": true
+        },
+        "search": {
+          "searchBar": {
+            "enabled": true,
+            "searchableTextFields": [
+              "short_name",
+              "full_name",
+              "study_description",
+              "study_id",
+              "commons"
+            ]
+          },
+          "tagSearchDropdown": {
+            "enabled": true,
+            "collapsibleButtonText": "Data Commons"
+          },
+          "exportToWorkspace": {
+            "enabled": true,
+            "manifestFieldName": "__manifest",
+            "enableDownloadManifest": true,
+            "downloadManifestButtonText": "Download",
+            "documentationLinks": {
+              "gen3Client": "https://gen3.org/resources/user/gen3-client/",
+              "gen3Workspaces": "https://gen3.org/resources/user/analyze-data/"
+            }
+          }
+        },
+        "authorization": {
+          "enabled": true,
+          "columnTooltip": "Filter by data access. Accessible indicates you are authorized to access. Not accessible indicates you are not authorized to access.",
+          "supportedValues": {
+            "accessible": {
+              "enabled": true,
+              "menuText": "Available"
+            },
+            "unaccessible": {
+              "enabled": false,
+              "menuText": "Not Accessible"
+            },
+            "pending": {
+              "enabled": false,
+              "menuText": "Pending"
+            },
+            "notAvailable": {
+              "enabled": false,
+              "menuText": "Not Available"
+            }
+          }
+        }
+      },
+      "aggregations": [
+        {
+          "name": "Studies",
+          "field": "_unique_id",
+          "type": "count"
+        }
+      ],
+      "tagSelector": {
+        "title": "Tags by category"
+      },
+      "studyColumns": [
+        {
+          "name": "Study/Project Name",
+          "field": "short_name",
+          "errorIfNotAvailable": false,
+          "valueIfNotAvailable": "n/a",
+          "width": "157px",
+          "contentType": "string"
+        },
+        {
+          "name": "Full Name",
+          "field": "full_name",
+          "errorIfNotAvailable": false,
+          "valueIfNotAvailable": "n/a",
+          "contentType": "string"
+        },
+        {
+          "name": "Number of Subjects",
+          "field": "_subjects_count",
+          "errorIfNotAvailable": false,
+          "valueIfNotAvailable": "n/a",
+          "contentType": "number"
+        },
+        {
+          "name": "ID Number",
+          "field": "gen3MDSGUID",
+          "errorIfNotAvailable": false,
+          "valueIfNotAvailable": "n/a",
+          "contentType": "string",
+          "cellRenderFunction": "truncated"
+        },
+        {
+          "name": "Data Commons",
+          "field": "commons",
+          "errorIfNotAvailable": false,
+          "valueIfNotAvailable": "n/a",
+          "contentType": "link",
+          "cellRenderFunction": "withURL",
+          "params": {
+            "hrefValueFromField": "commons_url",
+            "transform": "uppercase"
+          }
+        },
+        {
+          "name": "DATA ACCESS METHOD",
+          "field": "data_access_method",
+          "errorIfNotAvailable": false,
+          "valueIfNotAvailable": "API",
+          "contentType": "string"
+        }
+      ],
+      "studyPreviewField": {
+        "name": "Description",
+        "field": "study_description",
+        "contentType": "string",
+        "includeName": false,
+        "includeIfNotAvailable": true,
+        "valueIfNotAvailable": "No description has been provided for this study."
+      },
+      "simpleDetailsView": {
+        "showAllAvailableFields": false,
+        "header": {
+          "field": "name"
+        },
+        "fieldsToShow": [
+          {
+            "groupWidth": "half",
+            "includeName": false,
+            "fields": [
+              {
+                "name": "Unique ID",
+                "field": "_unique_id",
+                "contentType": "string"
+              },
+              {
+                "name": "Study ID",
+                "field": "_unique_id",
+                "contentType": "string"
+              },
+              {
+                "name": "Study/Project Name:",
+                "field": "short_name",
+                "contentType": "text",
+                "includeName": true,
+                "includeIfNotAvailable": true,
+                "valueIfNotAvailable": "N/A"
+              },
+              {
+                "name": "Full Name",
+                "field": "full_name",
+                "contentType": "string"
+              },
+              {
+                "name": "Number of Subjects",
+                "field": "_subjects_count",
+                "contentType": "string",
+                "includeIfNotAvailable": true
+              },
+              {
+                "name": "Study URL",
+                "field": "study_url",
+                "contentType": "link",
+                "includeIfNotAvailable": true
+              },
+              {
+                "name": "Data Commons",
+                "field": "commons",
+                "contentType": "string",
+                "includeIfNotAvailable": true,
+                "params": {
+                  "style": "uppercase"
+                }
+              }
+            ]
+          },
+          {
+            "groupWidth": "half",
+            "fields": [
+              {
+                "name": "Description",
+                "field": "study_description",
+                "contentType": "paragraphs",
+                "includeName": true,
+                "includeIfNotAvailable": true,
+                "valueIfNotAvailable": "No description has been provided for this study."
+              }
+            ]
+          }
+        ]
+      },
+      "minimalFieldMapping": {
+        "tagsListFieldName": "tags",
+        "authzField": "authz",
+        "uid": "_unique_id"
+      },
+      "tags": {
+        "tagCategories": [
+          {
+            "name": "Cancer Type",
+            "color": "rgba(129, 211, 248, 1)",
+            "display": true
+          },
+          {
+            "name": "Cancer Type",
+            "color": "rgba(129, 211, 248, 1)",
+            "display": false
+          },
+          {
+            "name": "Study Setting",
+            "color": "rgba(112, 182, 3, 1)",
             "display": true
           }
         ]

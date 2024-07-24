@@ -1,15 +1,20 @@
 {
-  "showSubmittedIdInTable" : true,
+  "showSubmittedIdInTable" : false,
   "mapping" : {
     "source" : {
       "id": "prom",
-      "label": "dbGaP",
+      "label": "Prometheus",
       "description" : "PROject for Military Exposures and Toxin History Evaluation in US Service Members"
     },
     "external" : [
       {
+        "id": "Prometheus",
+        "label": "Prometheus",
+        "dataPath": "crosswalk->subject->https://www.cancerimagingarchive.net->subject.subject_id->value"
+      },
+      {
         "id": "GDC",
-        "label": "Genomic Data Commons",
+        "label": "GDC",
         "dataPath": "crosswalk->subject->https://portal.gdc.cancer.gov->submitter_id->value",
         "description": "A repository and computational platform for cancer researchers who need to understand cancer, its clinical progression, and response to therapy."
       },
@@ -20,8 +25,8 @@
         "description": "Veterans Precision Oncology Data Commons® (VPOC) The Veterans Data Commons supports the management, analysis and sharing of veteran oncologic data for the research community and aims to accelerate discovery and development of therapies, diagnostic tests, and other technologies for precision oncology"
       },
       {
-        "id": "TCIA",
-        "label": "TCIA",
+        "id": "Bloodpac",
+        "label": "Bloodpac",
         "dataPath": "crosswalk->subject->https://www.cancerimagingarchive.net->subject.subject_id->value",
         "description": "The Cancer Imaging Archive (TCIA) is a service which de-identifies and hosts a large archive of medical images of cancer accessible for public download"
       }
