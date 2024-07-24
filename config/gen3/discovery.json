@@ -13,7 +13,8 @@
             "indexKeys": [
               "VPODC-subject-level-metadata",
               "APOLLO-subject-level-metadata",
-              "BloodPAC-subject-level-metadata"
+              "BloodPAC-subject-level-metadata",
+              "Proteomic-Data-Commons-subject-level-metadata"
             ],
             "hasEnoughData": {
               "keys": [
@@ -349,7 +350,8 @@
             "indexKeys": [
               "BloodPAC-study-level-metadata",
               "VPODC-study-level-metadata",
-              "APOLLO-study-level-metadata"
+              "APOLLO-study-level-metadata",
+              "Proteomic-Data-Commons-study-level-metadata"
             ]
           }
         },
