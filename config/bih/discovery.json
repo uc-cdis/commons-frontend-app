@@ -1,4 +1,6 @@
 {
+  "metadataConfig": [
+{
   "tableConfig": {
     "selectableRows": true,
     "expandableRows": true
@@ -183,11 +185,15 @@
     "authzField": "authz",
     "uid": "StudyInstanceUID"
   },
-  "tagCategories": [
-    {
-      "name": "Data Type",
-      "color": "rgba(71, 130, 195, 1)",
-      "display": true
-    }
-  ]
+  "tags": {
+    "tagCategories": [
+      {
+        "name": "Data Type",
+        "color": "rgba(71, 130, 195, 1)",
+        "display": true
+      }
+    ]
+  }
+}
+]
 }
