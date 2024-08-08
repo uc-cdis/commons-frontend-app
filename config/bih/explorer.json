@@ -53,7 +53,8 @@
           "title": "Study ID"
         },
         "gen3_discovery.StudyDescription": {
-          "title": "Study Description"
+          "title": "Study Description",
+          "sortable": false
         },
         "gen3_discovery.dicom_viewer_url": {
           "title": "",
@@ -62,7 +63,8 @@
           "cellRenderFunction": "DiacomLink"
         },
         "gen3_discovery.SeriesDescription": {
-          "title": "Series Description"
+          "title": "Series Description",
+          "sortable": false
         },
         "gen3_discovery.BodyPartExamined": {
           "title": "Body Part Examined"
