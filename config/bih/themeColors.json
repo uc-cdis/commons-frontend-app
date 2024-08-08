@@ -203,7 +203,7 @@
     "darkest": "#535353",
     "min": "#191919"
   },
-  "tablePallet-contrast": {
+  "table-contrast": {
     "max": "#111111",
     "lightest": "#111111",
     "lighter": "#111111",

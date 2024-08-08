@@ -1,152 +1,174 @@
- [
-    {
-      "tabTitle": "Series",
-      "charts": {
-        "gen3_discovery.commons": {
-          "chartType": "fullPie",
-          "title": "Platform"
-        },
-        "gen3_discovery.primary_site": {
-          "chartType": "fullPie",
-          "title": "Primary Site"
-        },
-        "gen3_discovery.disease_type": {
-          "chartType": "fullPie",
-          "title": "Disease Type"
-        }
+[
+  {
+    "tabTitle": "Series",
+    "charts": {
+      "gen3_discovery.commons": {
+        "chartType": "fullPie",
+        "title": "Platform"
       },
-      "filters": {
-        "tabs": [
-          {
-            "title": "Study Selection",
-            "fields": [
-              "gen3_discovery.PatientSex",
-              "gen3_discovery.Modality",
-              "gen3_discovery.BodyPartExamined",
-              "gen3_discovery.primary_site",
-              "gen3_discovery.disease_type",
-              "gen3_discovery.commons"
-            ]
-          }
-        ]
+      "gen3_discovery.primary_site": {
+        "chartType": "fullPie",
+        "title": "Primary Site"
       },
-      "table": {
-        "enabled": true,
-        "pageLimit": {
-          "limit": 10000,
-          "label": "Maximum of 10,000 Total Records. Records per Page:"
-        },
-        "fields": [
-          "gen3_discovery.dicom_viewer_url",
-          "gen3_discovery.StudyInstanceUID",
-          "gen3_discovery.SeriesDescription",
-          "gen3_discovery.BodyPartExamined",
-          "gen3_discovery.primary_site",
-          "gen3_discovery.disease_type",
-          "gen3_discovery.commons",
-          "gen3_discovery.SeriesInstanceUID"
-        ],
-        "columns": {
-          "gen3_discovery.StudyInstanceUID": {
-            "title": "Study ID"
-          },
-          "gen3_discovery.dicom_viewer_url": {
-            "title": "",
-            "type": "link",
-            "cellRenderFunction": "DiacomLink"
-          },
-          "gen3_discovery.SeriesDescription": {
-            "title": "Series Description"
-          },
-          "gen3_discovery.BodyPartExamined": {
-            "title": "Body Part Examined"
-          },
-          "gen3_discovery.SeriesInstanceUID": {
-            "title": "Series Images"
-          },
-          "gen3_discovery.commons": {
-            "title": "Platform"
-          }
-        }
-      },
-      "guppyConfig": {
-        "dataType": "metadata",
-        "nodeCountTitle": "Imaging Series",
-        "fieldMapping": [
-          {
-            "field": "gen3_discovery.StudyInstanceUID",
-            "name": "Study ID"
-          },
-          {
-            "field": "gen3_discovery.SeriesDescription",
-            "name": "Series Description"
-          },
-          {
-            "field": "gen3_discovery.BodyPartExamined",
-            "name": "Body Part Examined"
-          },
-          {
-            "field": "gen3_discovery.PatientSex",
-            "name": "Gender"
-          },
-          {
-            "field": "gen3_discovery.primary_site",
-            "name": "Primary Site"
-          },
-          {
-            "field": "gen3_discovery.disease_type",
-            "name": "Disease Type"
-          },
-          {
-            "field": "gen3_discovery.commons",
-            "name": "Platform"
-          }
-        ],
-        "manifestMapping": {
-          "resourceIndexType": "metadata",
-          "resourceIdField": "gen3_discovery.StudyInstanceUID",
-          "referenceIdFieldInResourceIndex": "StudyInstanceUID",
-          "referenceIdFieldInDataIndex": "StudyInstanceUID"
-        },
-        "accessibleFieldCheckList": ["authz"],
-        "accessibleValidationField": "gen3_discovery.authz"
-      },
-      "loginForDownload": false,
-      "dropdowns": {
-        "download-menu": {
-          "enabled": true,
-          "title": "Download Table",
-          "leftIcon": "gen3:download",
-          "rightIcon": "gen3:chevron-down",
-          "dropdownItems": [
-            {
-              "enabled": true,
-              "type": "data-json",
-              "title": "JSON",
-              "leftIcon": "datafile",
-              "rightIcon": "download",
-              "action": "data-json",
-              "actionArgs" : {
-                "filename": "MIDRC_Series_table.json",
-                "rootPath": "gen3_discovery"
-              }
-            },
-            {
-              "enabled": true,
-              "type": "data-csv",
-              "title": "CSV",
-              "leftIcon": "datafile",
-              "rightIcon": "download",
-              "action": "data-csv",
-              "actionArgs" : {
-                "filename": "MIDRC_Series_table.csv",
-                "rootPath": "gen3_discovery"
-              }
-            }
+      "gen3_discovery.disease_type": {
+        "chartType": "fullPie",
+        "title": "Disease Type"
+      }
+    },
+    "filters": {
+      "tabs": [
+        {
+          "title": "Study Selection",
+          "fields": [
+            "gen3_discovery.PatientSex",
+            "gen3_discovery.Modality",
+            "gen3_discovery.BodyPartExamined",
+            "gen3_discovery.primary_site",
+            "gen3_discovery.disease_type",
+            "gen3_discovery.commons"
           ]
         }
-      },
-      "buttons": [
       ]
-    }
-  ]
+    },
+    "table": {
+      "enabled": true,
+      "pageLimit": {
+        "limit": 10000,
+        "label": "Maximum of 10,000 Total Records. Records per Page:"
+      },
+      "fields": [
+        "gen3_discovery.dicom_viewer_url",
+        "gen3_discovery.StudyInstanceUID",
+        "gen3_discovery.StudyDescription",
+        "gen3_discovery.BodyPartExamined",
+        "gen3_discovery.primary_site",
+        "gen3_discovery.disease_type",
+        "gen3_discovery.commons",
+        "gen3_discovery.collection_id",
+        "gen3_discovery.SeriesInstanceUID",
+        "gen3_discovery.SeriesDescription"
+      ],
+      "columns": {
+        "gen3_discovery.StudyInstanceUID": {
+          "title": "Study ID"
+        },
+        "gen3_discovery.StudyDescription": {
+          "title": "Study Description"
+        },
+        "gen3_discovery.dicom_viewer_url": {
+          "title": "",
+          "type": "link",
+          "width" : "32px",
+          "cellRenderFunction": "DiacomLink"
+        },
+        "gen3_discovery.SeriesDescription": {
+          "title": "Series Description"
+        },
+        "gen3_discovery.BodyPartExamined": {
+          "title": "Body Part Examined"
+        },
+        "gen3_discovery.SeriesInstanceUID": {
+          "title": "Series Images"
+        },
+        "gen3_discovery.commons": {
+          "title": "Platform",
+          "type": "link",
+          "cellRenderFunction": "linkWithValueMap",
+          "params": {
+            "valueToURL": {
+              "IDC": "https://portal.imaging.datacommons.cancer.gov/explore/",
+              "MIDRC": "https://data.midrc.org",
+              "Stanford AIMI": "https://stanfordaimi.azurewebsites.net/",
+              "DART": "https://dart.acr.org/"
+            }
+          }
+        },
+        "gen3_discovery.collection_id": {
+          "title": "Collection"
+        }
+      }
+    },
+    "guppyConfig": {
+      "dataType": "metadata",
+      "nodeCountTitle": "Imaging Series",
+      "fieldMapping": [
+        {
+          "field": "gen3_discovery.StudyInstanceUID",
+          "name": "Study ID"
+        },
+        {
+          "field": "gen3_discovery.SeriesDescription",
+          "name": "Series Description"
+        },
+        {
+          "field": "gen3_discovery.BodyPartExamined",
+          "name": "Body Part Examined"
+        },
+        {
+          "field": "gen3_discovery.PatientSex",
+          "name": "Gender"
+        },
+        {
+          "field": "gen3_discovery.primary_site",
+          "name": "Primary Site"
+        },
+        {
+          "field": "gen3_discovery.disease_type",
+          "name": "Disease Type"
+        },
+        {
+          "field": "gen3_discovery.commons",
+          "name": "Platform"
+        },
+        {
+          "field": "gen3_discovery.collection_id",
+          "name": "Collection ID"
+        }
+      ],
+      "manifestMapping": {
+        "resourceIndexType": "metadata",
+        "resourceIdField": "gen3_discovery.StudyInstanceUID",
+        "referenceIdFieldInResourceIndex": "StudyInstanceUID",
+        "referenceIdFieldInDataIndex": "StudyInstanceUID"
+      },
+      "accessibleFieldCheckList": ["authz"],
+      "accessibleValidationField": "gen3_discovery.authz"
+    },
+    "loginForDownload": false,
+    "dropdowns": {
+      "download-menu": {
+        "enabled": true,
+        "title": "Download Table",
+        "leftIcon": "gen3:download",
+        "rightIcon": "gen3:chevron-down",
+        "dropdownItems": [
+          {
+            "enabled": true,
+            "type": "data-json",
+            "title": "JSON",
+            "leftIcon": "datafile",
+            "rightIcon": "download",
+            "action": "data-json",
+            "actionArgs": {
+              "filename": "MIDRC_Series_table.json",
+              "rootPath": "gen3_discovery"
+            }
+          },
+          {
+            "enabled": true,
+            "type": "data-csv",
+            "title": "CSV",
+            "leftIcon": "datafile",
+            "rightIcon": "download",
+            "action": "data-csv",
+            "actionArgs": {
+              "filename": "MIDRC_Series_table.csv",
+              "rootPath": "gen3_discovery"
+            }
+          }
+        ]
+      }
+    },
+    "buttons": []
+  }
+]

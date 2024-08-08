@@ -22,7 +22,7 @@
   "topBar": {
     "items": [
     ],
-    "showLogin": false,
+    "loginButtonVisibility": "logoutOnly",
     "classNames": {
       "root": "flex justify-end items-center align-middle w-100 h-10 bg-secondary"
     }
