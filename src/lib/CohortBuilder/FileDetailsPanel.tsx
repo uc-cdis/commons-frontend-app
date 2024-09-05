@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */ // TODO remove use of any
 import {
   Anchor,
   Group,
@@ -106,7 +105,7 @@ export const FileDetailsPanel = ({
   const rows = Object.entries(queryData).map(([field, value]) => (
     <tr key={field}>
       <td>
-        <Text weight="bold">{field}</Text>
+        <Text fw={700}>{field}</Text>
       </td>
       <td>
         {/*
@@ -132,7 +131,7 @@ export const FileDetailsPanel = ({
     <Stack>
       <LoadingOverlay visible={isLoading} />
       <Text color="primary.4">Results for {id}</Text>
-      <Table withBorder withColumnBorders>
+      <Table withColumnBorders>
         <thead>
           <tr>
             <th>Field</th>
@@ -141,7 +140,7 @@ export const FileDetailsPanel = ({
         </thead>
         <tbody>{rows}</tbody>
       </Table>
-      <Group position="right">
+      <Group justify="flex-end">
         <CopyButton value={JSON.stringify(queryData)} timeout={2000}>
           {({ copied, copy }) => (
             <Tooltip

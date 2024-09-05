@@ -151,7 +151,7 @@ export const FilemapPopup = ({ value }: CellRenderFunctionProps) => {
           {value[0].length}
         </Button>
       </Popover.Target>
-      <Popover.Dropdown sx={{ pointerEvents: 'none' }}>
+      <Popover.Dropdown style={{ pointerEvents: 'none' }}>
         <div style={{ width: 380 }}>
           <ReactECharts option={chartDefinition} />
         </div>
