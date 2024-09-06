@@ -50,7 +50,7 @@ const isQueryResponse = (obj: any): obj is QueryResponse => {
 const extractData = (
   data: QueryResponse,
   index: string,
-): Record<string, any> => {
+): Record<string, never> => {
   if (data === undefined || data === null) return {};
   if (data.data === undefined || data.data === null) return {};
 
@@ -130,7 +130,7 @@ export const FileDetailsPanel = ({
   return (
     <Stack>
       <LoadingOverlay visible={isLoading} />
-      <Text color="primary.4">Results for {id}</Text>
+      <Text c="primary.4">Results for {id}</Text>
       <Table withColumnBorders>
         <thead>
           <tr>
