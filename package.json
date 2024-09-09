@@ -18,16 +18,25 @@
     "getDRSToHostname": "node ./node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/"
   },
   "dependencies": {
-    "@gen3/frontend": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-frontend-0.10.31.tgz",
-    "@mantine/core": "^6.0.21",
+    "@fontsource/montserrat": "^5.0.19",
+    "@fontsource/source-sans-pro": "^5.0.8",
+    "@fontsource/poppins": "^5.0.15",
+    "@gen3/frontend": "^0.10.44",
+    "@mantine/core": "^7.12.1",
+    "@mantine/form": "^7.12.1",
+    "@mantine/hooks": "^7.12.1",
+    "@mantine/modals": "^7.12.1",
+    "@mantine/notifications": "^7.12.1",
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
-    "@next/mdx": "^14.2.3",
+    "@next/mdx": "^14.2.8",
     "@types/mdx": "^2.0.11",
-    "cookies-next": "^4.1.1"
+    "cookies-next": "^4.1.1",
+    "swr": "^2.2.5",
+    "@axe-core/react": "^4.10.0"
   },
   "devDependencies": {
-    "@gen3/toolsff": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-toolsff-0.10.31.tgz",
+    "@gen3/toolsff": "^0.10.44",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -42,22 +51,17 @@
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-config-next": "14.2.3",
-    "next": "^14.2.3",
+    "next": "^14.2.8",
     "postcss": "^8.4.29",
     "postcss-loader": "^7.3.2",
     "postcss-preset-env": "^8.4.2",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "^3.3.7",
-    "ts-jest": "^29.0.3",
+    "tailwindcss": "^3.4.10",
+    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.1",
-    "typescript": "5.0.2",
+    "typescript": "5.5.4",
     "@typescript-eslint/eslint-plugin": "^7.12.0"
-  },
-  "peerDependencies": {
-    "@gen3/core": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-core-0.10.31.tgz",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
   }
 }

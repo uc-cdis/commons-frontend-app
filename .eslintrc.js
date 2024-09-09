@@ -23,6 +23,7 @@ module.exports = {
   },
   plugins: ['jsx-a11y', 'react', 'react-hooks', '@typescript-eslint'],
   rules: {
+    '@typescript-eslint/no-explicit-any':['warn'],
     'no-underscore-dangle': 'off',
     'import/prefer-default-export': 'off',
     'linebreak-style': ['error', 'unix'],
