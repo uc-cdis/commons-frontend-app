@@ -22,6 +22,9 @@ const withMDX = require('@next/mdx')({
 const nextConfig = {
   output: 'standalone',
   reactStrictMode: true,
+  experimental: {
+    instrumentationHook: true,
+  },
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
   basePath: process.env.BASE_PATH || '',
   transpilePackages: ['@gen3/core', '@gen3/frontend'],

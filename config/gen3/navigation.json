@@ -7,7 +7,8 @@
     },
     "logo": {
       "src": "/icons/gen3-dark.svg",
-      "height": 128,
+      "width": 120,
+      "height": 60,
       "href": "/"
     },
     "items": [

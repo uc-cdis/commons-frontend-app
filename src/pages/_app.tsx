@@ -1,5 +1,8 @@
 import App, { AppProps, AppContext, AppInitialProps } from 'next/app';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { Faro, FaroErrorBoundary, withFaroProfiler } from "@grafana/faro-react";
+
+import { initGrafanaFaro } from '../lib/Grafana/grafana';
 
 import {
   Gen3Provider,
@@ -11,8 +14,8 @@ import {
   SessionConfiguration,
 } from '@gen3/frontend';
 import '../styles/globals.css';
-// import 'graphiql/graphiql.css';
-//import '@graphiql/react/dist/style.css';
+import 'graphiql/graphiql.css';
+import '@graphiql/react/dist/style.css';
 import '@fontsource/montserrat';
 import '@fontsource/source-sans-pro';
 import '@fontsource/poppins';
@@ -49,7 +52,20 @@ const Gen3App = ({
     setDRSHostnames(drsHostnames);
   }, []);
 
+  const faroRef = useRef<null | Faro>(null);
+
+  useEffect(() => {
+    // if (
+    //   process.env.NEXT_PUBLIC_FARO_COLLECTOR_URL &&
+    //   process.env.NEXT_PUBLIC_FARO_APP_ENVIRONMENT != "local" &&
+    //   !faroRef.current
+    // ) {
+    faroRef.current = initGrafanaFaro();
+    // }
+  }, []);
+
   return (
+    <FaroErrorBoundary>
     <Gen3Provider
       colors={colors}
       icons={icons}
@@ -59,6 +75,7 @@ const Gen3App = ({
     >
       <Component {...pageProps} />
     </Gen3Provider>
+    </FaroErrorBoundary>
   );
 };
 
@@ -123,4 +140,4 @@ Gen3App.getInitialProps = async (
     sessionConfig: {},
   };
 };
-export default Gen3App;
+export default withFaroProfiler(Gen3App);

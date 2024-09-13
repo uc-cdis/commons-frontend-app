@@ -18,10 +18,14 @@
     "getDRSToHostname": "node ./node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/"
   },
   "dependencies": {
+    "@grafana/faro-react": "^1.9.1",
+    "@grafana/faro-web-sdk": "^1.9.1",
+    "@grafana/faro-web-tracing": "^1.9.1",
     "@fontsource/montserrat": "^5.0.19",
     "@fontsource/source-sans-pro": "^5.0.8",
     "@fontsource/poppins": "^5.0.15",
-    "@gen3/frontend": "^0.10.44",
+    "@gen3/frontend": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-frontend-0.10.45.tgz",
+    "@gen3/core": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-core-0.10.45.tgz",
     "@mantine/core": "^7.12.1",
     "@mantine/form": "^7.12.1",
     "@mantine/hooks": "^7.12.1",
@@ -36,7 +40,7 @@
     "@axe-core/react": "^4.10.0"
   },
   "devDependencies": {
-    "@gen3/toolsff": "^0.10.44",
+    "@gen3/toolsff": "https://github.com/uc-cdis/gen3-frontend-framework/releases/download/v0.10.0-alpha/gen3-toolsff-0.10.45.tgz",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -55,6 +59,9 @@
     "postcss": "^8.4.29",
     "postcss-loader": "^7.3.2",
     "postcss-preset-env": "^8.4.2",
+    "postcss-import": "^16.1.0",
+    "postcss-modules": "^6.0.0",
+    "postcss-preset-mantine": "^1.17.0",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
