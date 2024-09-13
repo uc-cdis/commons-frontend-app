@@ -2,7 +2,7 @@
   "body": [
     {
       "title": {
-        "text": "Gen3 Data Platform",
+        "text": "Veterans Precision Oncology Data Commons",
         "level": 2
       }
     },
@@ -10,22 +10,14 @@
       "splitarea": {
         "left": [
           {
-            "text": "The <strong>Gen3 Data Platform</strong> is a single web interface which allows visitors to <strong>discover, access and analyze data</strong>. Making data easily findable enables secondary, cross-study analyses, promotes dissemination of research and accelerates new discoveries."
+            "text": "The VPO Data Commons supports the management, and analysis of veteran oncologic data for the research community. The data commons aims to accelerate discovery and development of therapies, diagnostic tests, and other technologies for precision oncology. The data commons supports cross-project analyses by harmonizing data from different projects through the collaborative development of a data dictionary, providing an API for data queries, and providing a cloud-based analysis workspace with rich tools and resources."
           },
           {
             "link": {
-              "href": "/discovery",
+              "href": "/submission",
               "linkType": "portal",
-              "text": "Explore Gen3 Data"
-            }
-          },
-          {
-            "text": "The Gen3 platform consists of open-source software services that support the emergence of healthy data ecosystems by enabling the interoperation and creation of cloud-based data resources, including data commons and analysis workspaces. Gen3 aims to accelerate and democratize the process of scientific discovery by making it easy to manage, analyze, harmonize, and share large and complex datasets in the cloud."
-          },
-          {
-            "link": {
-              "href": "https://gen3.datacommons.io",
-              "text": "Learn More"
+              "text": "Submit Data",
+              "rightIcon": "gen3:upload"
             }
           }
         ],
@@ -48,25 +40,37 @@
         "cards": [
           {
             "icon": "MdOutlineSearch",
-            "bodyText": "Search studies and related datasets for download or analysis in a workspace.",
-            "btnText": "Discover",
-            "href": "/Discovery",
+            "bodyText": "The VPO Data Commons defines the data in a general way. Please study the dictionary before you start browsing.",
+            "btnText": "Define Data Field",
+            "href": "/DD",
             "linkType": "portal"
           },
           {
-            "icon": "MdOutlineBarChart",
-            "bodyText": "Explore Tutorials and Example Analysis.",
-            "btnText": "Analyze",
-            "href": "/resource-browser",
+            "icon": "MdOutlineSearch",
+            "bodyText": "View or submit data to a project.",
+            "btnText": "View/Submit Data",
+            "href": "/submission",
+            "linkType": "portal"
+          },
+          {
+            "icon": "MdOutlineSearch",
+            "bodyText": "Use our selected tool to filter out the data you need.",
+            "btnText": "Access Data",
+            "href": "/query",
+            "linkType": "portal"
+          },
+          {
+            "icon": "MdOutlineSearch",
+            "bodyText": "Analyze your selected cases using Jupyter Notebooks in our secure cloud environment",
+            "btnText": "Analyze Data",
+            "href": "/workspace",
             "linkType": "portal"
           }
         ]
       }
     },
     {
-      "quoteArea": {
-        "quote": "Our vision is a world in which researchers have ready access to the data needed and the tools required to make data-driven discoveries that increase our scientific knowledge and improve the quality of life."
-      }
+      "break": "standard"
     }
   ]
 }
