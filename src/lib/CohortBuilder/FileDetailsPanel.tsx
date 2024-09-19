@@ -104,11 +104,11 @@ export const FileDetailsPanel = ({
 
   // create the rows for the table
   const rows = Object.entries(queryData).map(([field, value]) => (
-    <tr key={field}>
-      <td>
-        <Text weight="bold">{field}</Text>
-      </td>
-      <td>
+    <Table.Tr key={field}>
+      <Table.Td>
+        <Text fw="bold">{field}</Text>
+      </Table.Td>
+      <Table.Td>
         {/*
           if field is one that we want a link for make it an Anchor otherwise
           render as text.
@@ -125,23 +125,23 @@ export const FileDetailsPanel = ({
         ) : (
           <Text>{value ? (value as string) : ''}</Text>
         )}
-      </td>
-    </tr>
+      </Table.Td>
+    </Table.Tr>
   ));
   return (
     <Stack>
       <LoadingOverlay visible={isLoading} />
       <Text color="primary.4">Results for {id}</Text>
-      <Table withBorder withColumnBorders>
-        <thead>
-          <tr>
-            <th>Field</th>
-            <th>Value</th>
-          </tr>
-        </thead>
+      <Table withTableBorder withColumnBorders>
+        <Table.Th>
+          <Table.Td>
+            <Table.Th>Field</Table.Th>
+            <Table.Th>Value</Table.Th>
+          </Table.Td>
+        </Table.Th>
         <tbody>{rows}</tbody>
       </Table>
-      <Group position="right">
+      <Group >
         <CopyButton value={JSON.stringify(queryData)} timeout={2000}>
           {({ copied, copy }) => (
             <Tooltip

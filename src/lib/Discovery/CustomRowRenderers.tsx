@@ -30,7 +30,7 @@ const DetailsWithTagsRowRenderer = (
 
   return (
     <Box
-      sx={{
+      style={{
         display: 'flex',
         width: '100%',
       }}
