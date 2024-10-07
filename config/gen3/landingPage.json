@@ -2,7 +2,7 @@
   "body": [
     {
       "title": {
-        "text": "Gen3 Data Platform",
+        "text": "NHLBI Biodata Catalyst Powered by Gen3",
         "level": 2
       }
     },
@@ -10,7 +10,7 @@
       "splitarea": {
         "left": [
           {
-            "text": "The <strong>Gen3 Data Platform</strong> is a single web interface which allows visitors to <strong>discover, access and analyze data</strong>. Making data easily findable enables secondary, cross-study analyses, promotes dissemination of research and accelerates new discoveries."
+            "text": "The <strong>NHLBI Biodata Catalyst Powered by Gen3</strong> is a single web interface which allows visitors to <strong>discover, access and analyze data</strong>. Making data easily findable enables secondary, cross-study analyses, promotes dissemination of research and accelerates new discoveries."
           },
           {
             "link": {
