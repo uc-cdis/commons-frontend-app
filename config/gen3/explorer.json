@@ -45,7 +45,7 @@
         "panel": "default",
         "mode" : "click",
         "idField": "submitter_id",
-        "title": "Details"
+        "title": "Row Details"
       },
       "pageLimit": {
         "limit": 10000
