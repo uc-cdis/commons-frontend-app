@@ -7,6 +7,9 @@
 @import "tailwindcss/utilities";
 @import '@gen3/frontend/dist/styles.css';
 
+@import 'graphiql/graphiql.css';
+@import '@graphiql/react/dist/style.css';
+
 @layer base {
   html {
     @apply font-heading;
