@@ -12,7 +12,6 @@
   "dg.UM33R90": "gen3.agha.umccr.org",
   "dg.NACD": "accessclinicaldata.niaid.nih.gov",
   "dg.80B6": "genomel.bionimbus.org",
-  "dg.EA80": "ibdgc.datacommons.io",
   "dg.712C": "staging.gen3.biodatacatalyst.nhlbi.nih.gov",
   "dg.63D5": "http://chicagoland.pandemicresponsecommons.org",
   "dg.MD1R": "data.midrc.org",
@@ -20,5 +19,6 @@
   "dg.C78ne": "caninedc.org",
   "dg.F738": "vpodc.data-commons.org",
   "dg.5B0D": "data.bloodpac.org",
-  "dg.OADC": "gen3.datacommons.io"
+  "dg.OADC": "gen3.datacommons.io",
+  "dg.4825": "gen3.datacommons.io"
 }
