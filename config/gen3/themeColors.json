@@ -214,5 +214,14 @@
     "darker": "#111111",
     "darkest": "#fefefe",
     "min": "#fefefe"
-  }
+  },
+  "navigation": {
+    "footer": "#373A3C",
+    "topbar_hover": "#FFFFFF",
+    "light": "#111111",
+    "DEFAULT": "#111111",
+    "dark": "#111111",
+    "darker": "#111111",
+    "darkest": "#111111",
+    "min": "#111111"}
 }

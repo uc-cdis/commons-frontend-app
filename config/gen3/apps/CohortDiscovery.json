@@ -1,0 +1,33 @@
+{
+  "name": "CohortDiscovery",
+  "dataIndexes": [
+    {
+      "dataConfig": {
+        "dataType": "subject",
+        "nodeCountTitle": "Cases"
+      },
+      "tabTitle": "Cases",
+      "tabs": [
+        {
+          "title": "Demographic",
+          "fields": [
+            "gender",
+            "race",
+            "ethnicity",
+            "vital_status"
+          ]
+        },
+        {
+          "title": "Study",
+          "fields": [
+            "gender",
+            "race",
+            "ethnicity",
+            "vital_status",
+            "project"
+          ]
+        }
+      ]
+    }
+  ]
+}
