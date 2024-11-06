@@ -1,10 +1,29 @@
+import React,{ ReactNode } from 'react';
 import {
   ExplorerTableCellRendererFactory,
   type CellRendererFunctionProps,
 } from '@gen3/frontend';
-import { ActionIcon } from '@mantine/core';
-import React  from 'react';
+import { ActionIcon, Text } from '@mantine/core';
+
 import { FaExternalLinkAlt } from 'react-icons/fa';
+
+
+const RenderLinkCell = (
+  { cell }: CellRendererFunctionProps,
+) => {
+  return (
+    <a
+      href={`${cell.getValue()}`}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <Text c="blue" td="underline" fw={700}>
+        {' '}
+        {cell.getValue() as ReactNode}{' '}
+      </Text>
+    </a>
+  );
+};
 
 
 const RenderDiacomLink = ({ cell }: CellRendererFunctionProps) => {
@@ -24,5 +43,9 @@ export const registerCohortTableCustomCellRenderers = () => {
   ExplorerTableCellRendererFactory().registerRenderer(
       'link', 'DiacomLink' ,
       RenderDiacomLink,
+  );
+  ExplorerTableCellRendererFactory().registerRenderer(
+    'link', 'linkURL' ,
+    RenderLinkCell,
   );
 };

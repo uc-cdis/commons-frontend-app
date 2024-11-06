@@ -9,6 +9,8 @@ import {
     RegisteredIcons,
     Fonts,
     SessionConfiguration,
+    registerCohortBuilderDefaultPreviewRenderers,
+    registerExplorerDefaultCellRenderers,
 } from '@gen3/frontend';
 import '../styles/globals.css';
 import 'graphiql/graphiql.css';
@@ -18,6 +20,9 @@ import '@fontsource/source-sans-pro';
 import '@fontsource/poppins';
 import {GEN3_COMMONS_NAME, setDRSHostnames} from '@gen3/core';
 import drsHostnames from '../../config/drsHostnames.json';
+
+import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
+import { registerCustomExplorerDetailsPanels } from '@/lib/CohortBuilder/FileDetailsPanel';
 
 import { initGrafanaFaro } from '../lib/Grafana/grafana';
 
@@ -58,6 +63,10 @@ const Gen3App = ({
         //   process.env.NEXT_PUBLIC_FARO_APP_ENVIRONMENT != "local" &&
         //   !faroRef.current
         // ) {
+        registerExplorerDefaultCellRenderers();
+        registerCohortBuilderDefaultPreviewRenderers();
+        registerCohortTableCustomCellRenderers();
+        registerCustomExplorerDetailsPanels();
         if (!faroRef.current) faroRef.current = initGrafanaFaro();
         // }
     }, []);
