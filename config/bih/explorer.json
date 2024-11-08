@@ -2,15 +2,15 @@
   {
     "tabTitle": "Series",
     "charts": {
-      "gen3_discovery.commons": {
+      "commons_name": {
         "chartType": "fullPie",
         "title": "Platform"
       },
-      "gen3_discovery.primary_site": {
+      "primary_site": {
         "chartType": "fullPie",
         "title": "Primary Site"
       },
-      "gen3_discovery.disease_type": {
+      "disease_type": {
         "chartType": "fullPie",
         "title": "Disease Type"
       }
@@ -20,12 +20,12 @@
         {
           "title": "Study Selection",
           "fields": [
-            "gen3_discovery.PatientSex",
-            "gen3_discovery.Modality",
-            "gen3_discovery.BodyPartExamined",
-            "gen3_discovery.primary_site",
-            "gen3_discovery.disease_type",
-            "gen3_discovery.commons"
+            "PatientSex",
+            "Modality",
+            "BodyPartExamined",
+            "primary_site",
+            "disease_type",
+            "commons_name"
           ]
         }
       ]
@@ -37,105 +37,130 @@
         "label": "Maximum of 10,000 Total Records. Records per Page:"
       },
       "fields": [
-        "gen3_discovery.dicom_viewer_url",
-        "gen3_discovery.StudyInstanceUID",
-        "gen3_discovery.StudyDescription",
-        "gen3_discovery.BodyPartExamined",
-        "gen3_discovery.primary_site",
-        "gen3_discovery.disease_type",
-        "gen3_discovery.commons",
-        "gen3_discovery.collection_id",
-        "gen3_discovery.SeriesInstanceUID",
-        "gen3_discovery.SeriesDescription"
+        "dicom_viewer_url",
+        "StudyInstanceUID",
+        "StudyDescription",
+        "BodyPartExamined",
+        "primary_site",
+        "disease_type",
+        "commons_name",
+        "collection_id",
+        "license",
+        "data_url_doi",
+        "SeriesInstanceUID",
+        "SeriesDescription"
       ],
       "columns": {
-        "gen3_discovery.StudyInstanceUID": {
+        "StudyInstanceUID": {
           "title": "Study ID"
         },
-        "gen3_discovery.StudyDescription": {
+        "StudyDescription": {
           "title": "Study Description",
           "sortable": false
         },
-        "gen3_discovery.dicom_viewer_url": {
+        "dicom_viewer_url": {
           "title": "",
           "type": "link",
           "width" : "32px",
           "cellRenderFunction": "DiacomLink"
         },
-        "gen3_discovery.SeriesDescription": {
+        "SeriesDescription": {
           "title": "Series Description",
           "sortable": false
         },
-        "gen3_discovery.BodyPartExamined": {
+        "BodyPartExamined": {
           "title": "Body Part Examined"
         },
-        "gen3_discovery.SeriesInstanceUID": {
+        "SeriesInstanceUID": {
           "title": "Series Images"
         },
-        "gen3_discovery.commons": {
+        "commons_name": {
           "title": "Platform",
           "type": "link",
           "cellRenderFunction": "linkWithValueMap",
           "params": {
             "valueToURL": {
+              "ACRdart": "https://dart.acr.org/Home/ImagingHub",
               "IDC": "https://portal.imaging.datacommons.cancer.gov/explore/",
               "MIDRC": "https://data.midrc.org",
               "Stanford AIMI": "https://stanfordaimi.azurewebsites.net/",
-              "DART": "https://dart.acr.org/",
-              "ACRdart": "https://dart.acr.org/Home/ImagingHub"
+              "TCIA": "https://www.cancerimagingarchive.net/"
             }
           }
         },
-        "gen3_discovery.collection_id": {
+        "collection_id": {
           "title": "Collection"
+        },
+        "license": {
+          "title": "License",
+          "type": "link",
+          "cellRenderFunction": "linkURL",
+          "sortable": false,
+          "params": {
+            "href": ""
+          }
+        },
+        "data_url_doi": {
+          "title": "DOI",
+          "type": "link",
+          "cellRenderFunction": "linkURL",
+          "sortable": false
         }
       }
     },
     "guppyConfig": {
-      "dataType": "metadata",
+      "dataType": "imaging_series",
       "nodeCountTitle": "Imaging Series",
       "fieldMapping": [
         {
-          "field": "gen3_discovery.StudyInstanceUID",
+          "field": "StudyInstanceUID",
           "name": "Study ID"
         },
         {
-          "field": "gen3_discovery.SeriesDescription",
+          "field": "SeriesDescription",
           "name": "Series Description"
         },
         {
-          "field": "gen3_discovery.BodyPartExamined",
+          "field": "BodyPartExamined",
           "name": "Body Part Examined"
         },
         {
-          "field": "gen3_discovery.PatientSex",
+          "field": "PatientSex",
           "name": "Gender"
         },
         {
-          "field": "gen3_discovery.primary_site",
+          "field": "primary_site",
           "name": "Primary Site"
         },
         {
-          "field": "gen3_discovery.disease_type",
+          "field": "disease_type",
           "name": "Disease Type"
         },
         {
-          "field": "gen3_discovery.commons",
+          "field": "commons_name",
           "name": "Platform"
         },
         {
-          "field": "gen3_discovery.collection_id",
+          "field": "collection_id",
           "name": "Collection ID"
+        },
+        {
+          "field": "license",
+          "name": "License"
+        },
+        {
+          "field": "data_url_doi",
+          "name": "DOI"
         }
       ],
       "manifestMapping": {
-        "resourceIndexType": "metadata",
-        "resourceIdField": "gen3_discovery.StudyInstanceUID",
+        "resourceIndexType": "imaging_series",
+        "resourceIdField": "StudyInstanceUID",
         "referenceIdFieldInResourceIndex": "StudyInstanceUID",
         "referenceIdFieldInDataIndex": "StudyInstanceUID"
       },
       "accessibleFieldCheckList": ["authz"],
-      "accessibleValidationField": "gen3_discovery.authz"
+      "accessibleValidationField": "auth_resource_path"
     },
     "loginForDownload": false,
     "dropdowns": {
@@ -153,8 +178,7 @@
             "rightIcon": "download",
             "action": "data-json",
             "actionArgs": {
-              "filename": "MIDRC_Series_table.json",
-              "rootPath": "gen3_discovery"
+              "filename": "BIH_Series_table.json"
             }
           },
           {
@@ -165,8 +189,7 @@
             "rightIcon": "download",
             "action": "data-csv",
             "actionArgs": {
-              "filename": "MIDRC_Series_table.csv",
-              "rootPath": "gen3_discovery"
+              "filename": "BIH_Series_table.csv"
             }
           }
         ]
