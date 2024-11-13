@@ -1,7 +1,7 @@
 import {
-  WorkspacesPage,
-  WorkspacesPageGetServerSideProps as getServerSideProps,
+  WorkspacePage,
+  WorkspacePageGetServerSideProps as getServerSideProps,
 } from '@gen3/frontend';
-export default WorkspacesPage;
+export default WorkspacePage;
 
 export { getServerSideProps };
