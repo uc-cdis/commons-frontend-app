@@ -62,7 +62,7 @@
           "title": "",
           "type": "link",
           "width" : "32px",
-          "cellRenderFunction": "DiacomLink"
+          "cellRenderFunction": "DicomLink"
         },
         "SeriesDescription": {
           "title": "Series Description",
