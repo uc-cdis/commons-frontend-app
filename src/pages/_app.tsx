@@ -12,7 +12,7 @@ import {
   RegisteredIcons,
   Fonts,
   SessionConfiguration,
-  registerCohortDiscoveryApp,
+  // registerCohortDiscoveryApp,
   registerCohortDiversityApp,
   registerCohortBuilderDefaultPreviewRenderers,
   registerExplorerDefaultCellRenderers,
@@ -38,8 +38,6 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
   axe(React, ReactDOM, 1000);
 }
 
-// TODO fix app registration
-
 interface Gen3AppProps {
   colors: Record<string, TenStringArray>;
   icons: Array<RegisteredIcons>;
@@ -49,14 +47,14 @@ interface Gen3AppProps {
 }
 
 const Gen3App = ({
-  Component,
-  pageProps,
-  colors,
-  icons,
-  themeFonts,
-  sessionConfig,
-  modalsConfig,
-}: AppProps & Gen3AppProps) => {
+                   Component,
+                   pageProps,
+                   colors,
+                   icons,
+                   themeFonts,
+                   sessionConfig,
+                   modalsConfig,
+                 }: AppProps & Gen3AppProps) => {
   useEffect(() => {
     setDRSHostnames(drsHostnames);
   }, []);
@@ -71,7 +69,7 @@ const Gen3App = ({
     //   !faroRef.current
     // ) {
     if (!faroRef.current) faroRef.current = initGrafanaFaro();
-    registerCohortDiscoveryApp();
+    //  registerCohortDiscoveryApp();
     registerCohortDiversityApp();
     registerExplorerDefaultCellRenderers();
     registerCohortBuilderDefaultPreviewRenderers();
