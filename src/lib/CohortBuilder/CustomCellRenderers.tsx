@@ -6,7 +6,7 @@ import { ActionIcon } from '@mantine/core';
 import React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
-const RenderDiacomLink = ({ cell }: CellRendererFunctionProps) => {
+const RenderDicomLink = ({ cell }: CellRendererFunctionProps) => {
   if (!cell?.getValue() || cell?.getValue() === '') {
     return <span></span>;
   } else
@@ -22,7 +22,7 @@ const RenderDiacomLink = ({ cell }: CellRendererFunctionProps) => {
 export const registerCohortTableCustomCellRenderers = () => {
   ExplorerTableCellRendererFactory().registerRenderer(
     'link',
-    'DiacomLink',
-    RenderDiacomLink,
+    'DicomLink',
+    RenderDicomLink,
   );
 };
