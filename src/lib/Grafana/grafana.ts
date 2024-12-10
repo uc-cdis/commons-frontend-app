@@ -13,8 +13,7 @@ export const initGrafanaFaro = () => {
     url: 'https://faro.planx-pla.net/collect',
 
     app: {
-      // TODO: Populate with real values.
-      name: 'gen3-frontend-framework',
+      name: 'prometheus-data-commons',
       //   version: packageJson.version,
       version: '10.0.0',
       environment: 'local',
