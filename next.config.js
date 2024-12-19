@@ -19,7 +19,6 @@ const withMDX = require('@next/mdx')({
 
 // Next configuration with support for rewrting API to existing common services
 const nextConfig = {
-  output: 'standalone',
   reactStrictMode: true,
   experimental: {
     instrumentationHook: true,

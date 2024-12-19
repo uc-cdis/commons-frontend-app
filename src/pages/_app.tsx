@@ -12,7 +12,6 @@ import {
   RegisteredIcons,
   Fonts,
   SessionConfiguration,
-  // registerCohortDiscoveryApp,
   registerCohortDiversityApp,
   registerCohortBuilderDefaultPreviewRenderers,
   registerExplorerDefaultCellRenderers,
