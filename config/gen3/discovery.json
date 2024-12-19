@@ -110,6 +110,29 @@
               "menuText": "Not Available"
             }
           }
+        },
+        "chartsSection": {
+          "title": "Charts",
+          "enabled": true,
+          "showLegends" : {
+            "enabled" : true
+          },
+          "charts": {
+            "subject_ethnicity": {
+              "chartType": "fullPie",
+              "title": "Ethnicity"
+            },
+            "subject_cancer_grade": {
+              "chartType": "fullPie",
+              "title": "Cancer Grade"
+
+            },
+            "subject_gender": {
+              "chartType": "fullPie",
+              "title": "Gender"
+
+            }
+          }
         }
       },
       "aggregations": [
