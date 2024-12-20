@@ -8,6 +8,7 @@ RUN npm ci
 COPY ./src ./src
 COPY ./public ./public
 COPY ./config ./config
+COPY ./start.sh ./
 RUN npm install @swc/core @napi-rs/magic-string && \
     npm run build
 
@@ -27,4 +28,4 @@ COPY --from=builder /gen3/.next/static ./.next/static
 
 USER nextjs
 ENV PORT=3000
-CMD ["node", "server.js"]
+CMD bash ./start.sh
