@@ -35,12 +35,6 @@
         "href": "/Profile",
         "name": "Profile",
         "tooltip": "Create API keys for programmatic data access, and review your authorization privileges to datasets and services."
-      },
-      {
-        "icon": "gen3:profile",
-        "href": "/DataLibrary",
-        "name": "Data Library",
-        "tooltip": "library of data"
       }
     ]
   },
@@ -51,6 +45,6 @@
         "name": "Documentation"
       }
     ],
-    "loginButtonVisibility": "visible"
+    "loginButtonVisibility": "hidden"
   }
 }
