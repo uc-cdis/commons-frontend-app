@@ -3,7 +3,7 @@ FROM node:20-slim AS builder
 
 WORKDIR /gen3
 
-COPY ./package.json ./package-lock.json ./next.config.js ./tsconfig.json ./.env.development  ./tailwind.config.js ./postcss.config.js  ./
+COPY ./package.json ./package-lock.json ./next.config.js ./tsconfig.json ./.env.development  ./tailwind.config.js ./postcss.config.js ./start.sh ./
 RUN npm ci
 COPY ./src ./src
 COPY ./public ./public
