@@ -31,6 +31,4 @@ RUN chown nextjs:nextjs /gen3/.next
 VOLUME  /gen3/.next
 
 USER nextjs:nextjs
-ENV HOSTNAME=0.0.0.0
-ENV PORT=3000
 CMD bash ./start.sh
