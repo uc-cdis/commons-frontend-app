@@ -131,6 +131,10 @@
               "chartType": "fullPie",
               "title": "Gender"
 
+            },
+            "commons": {
+              "chartType": "fullPie",
+              "title": "Data Commons"
             }
           }
         }
