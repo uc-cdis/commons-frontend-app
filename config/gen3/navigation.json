@@ -41,6 +41,10 @@
   "topBar": {
     "items": [
       {
+        "href": "/files/minimal_metadata_elements.pdf",
+        "name": "Minimal Metadata Elements"
+      },
+      {
         "href": "https://gen3.org/resources/user/",
         "name": "Documentation"
       }
