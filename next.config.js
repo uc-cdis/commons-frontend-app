@@ -46,6 +46,15 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/MDD',
+        destination: '/files/minimal_metadata_elements.pdf',
+        permanent: true,
+      },
+    ]
+  },
 };
 
 module.exports = withMDX(nextConfig);
