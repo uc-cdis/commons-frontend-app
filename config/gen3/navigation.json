@@ -19,6 +19,12 @@
         "tooltip": "Use free-text search and tags to rapidly find relevant studies."
       },
       {
+        "icon": "gen3:mdd",
+        "href": "/app/MetadataDictionary",
+        "name": "MDD",
+        "tooltip": "View the metadata data schemas."
+      },
+      {
         "icon": "gen3:comparison",
         "href": "/Crosswalk",
         "name": "Crosswalk",
@@ -29,6 +35,12 @@
         "href": "/DataDictionary",
         "name": "Dictionary",
         "tooltip": "The Data Dictionary serves to inform the data model and is updated as new data is ingested."
+      },
+      {
+        "name": "Workspace",
+        "href": "/Workspace",
+        "icon": "gen3:workspace",
+        "tooltip": "Gen3 workspaces are secure data analysis environments in the cloud that can access data from one or more data resources."
       },
       {
         "icon": "gen3:profile",

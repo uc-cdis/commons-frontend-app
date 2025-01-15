@@ -1,0 +1,14 @@
+{
+  "schemas": [
+    {
+      "label": "Subject Metadata",
+      "schemaID": "subject_minimal_metadata_schema",
+      "definitionsFieldName": "subject_metadata_elements"
+    },
+    {
+      "label": "Study Metadata",
+      "schemaID": "study_minimal_metadata_schema",
+      "definitionsFieldName": "study_metadata_elements"
+    }
+  ]
+}

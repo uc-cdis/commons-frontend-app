@@ -1,6 +1,6 @@
 {
 	"prefix": "workspace",
-	"lastModified": 1724107947,
+	"lastModified": 1736809901,
 	"icons": {
 		"galaxy": {
 			"body": "<defs><linearGradient id=\"svgID0\" x1=\"100%\" x2=\"0%\" y1=\"50%\" y2=\"50%\"><stop offset=\"0%\" stop-color=\"currentColor\"/><stop offset=\"100%\" stop-color=\"currentColor\"/></linearGradient></defs><g fill=\"none\" fill-rule=\"evenodd\"><rect width=\"47.362\" height=\"13.945\" fill=\"currentColor\" rx=\"2\"/><rect width=\"35.176\" height=\"13.945\" y=\"18.09\" fill=\"currentColor\" rx=\"2\"/><rect width=\"49.121\" height=\"13.945\" x=\"16.206\" y=\"36.055\" fill=\"url(#svgID0)\" rx=\"2\"/></g>",
