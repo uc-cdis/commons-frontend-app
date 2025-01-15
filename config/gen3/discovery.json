@@ -151,6 +151,17 @@
       },
       "studyColumns": [
         {
+          "name": "ID Number",
+          "field": "gen3MDSGUID",
+          "errorIfNotAvailable": false,
+          "valueIfNotAvailable": "",
+          "contentType": "string",
+          "cellRenderFunction": "truncated",
+          "params": {
+            "maxLength": 16
+          }
+        },
+        {
           "name": "Cancer Type",
           "field": "subject_cancer_type",
           "errorIfNotAvailable": false,
@@ -191,17 +202,6 @@
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "",
           "contentType": "string"
-        },
-        {
-          "name": "ID Number",
-          "field": "gen3MDSGUID",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "",
-          "contentType": "string",
-          "cellRenderFunction": "truncated",
-          "params": {
-            "maxLength": 16
-          }
         },
         {
           "name": "Data Commons",
@@ -476,6 +476,14 @@
       },
       "studyColumns": [
         {
+          "name": "ID Number",
+          "field": "gen3MDSGUID",
+          "errorIfNotAvailable": false,
+          "valueIfNotAvailable": "n/a",
+          "contentType": "string",
+          "cellRenderFunction": "truncated"
+        },
+        {
           "name": "Study/Project Name",
           "field": "short_name",
           "errorIfNotAvailable": false,
@@ -496,14 +504,6 @@
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "n/a",
           "contentType": "number"
-        },
-        {
-          "name": "ID Number",
-          "field": "gen3MDSGUID",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "n/a",
-          "contentType": "string",
-          "cellRenderFunction": "truncated"
         },
         {
           "name": "Data Commons",
