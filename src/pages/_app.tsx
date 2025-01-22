@@ -30,7 +30,7 @@ import '@fontsource/poppins';
 import { setDRSHostnames } from '@gen3/core';
 import drsHostnames from '../../config/drsHostnames.json';
 import { loadContent } from '@/lib/content/loadContent';
-import Loading from './Loading';
+import Loading from '../components/Loading';
 
 if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
@@ -80,16 +80,16 @@ const Gen3App = ({
     // }
   }, []);
 
+
+  const theme = useMemo(
+    () => createMantineTheme(themeFonts, colors),
+    [themeFonts, colors],
+  );
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true); // Only on client-side
   }, []);
-  const theme = useMemo(
-    () => createMantineTheme(themeFonts, colors),
-    [themeFonts, colors],
-  );
-
   return (
     <>
       {isClient ? (
