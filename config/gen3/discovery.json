@@ -247,6 +247,11 @@
                 "contentType": "string"
               },
               {
+                "name": "Synthetic Data",
+                "field": "is_synthetic",
+                "contentType": "string"
+              },
+              {
                 "name": "Apollo ID",
                 "field": "subject_apollo_id",
                 "contentType": "string"
