@@ -20,9 +20,24 @@
         "description": "A repository and computational platform for cancer researchers who need to understand cancer, its clinical progression, and response to therapy."
       },
       {
-        "id": "PDC",
-        "label": "PDC",
-        "dataPath": "crosswalk->subject->https://proteomic.datacommons.cancer.gov->case_id->value"
+        "id": "VPODC",
+        "label": "VPODC",
+        "dataPath": "crosswalk->subject->https://vpodc.data-commons.org->submitter_id->value"
+      },
+      {
+        "id": "TCIA",
+        "label": "TCIA",
+        "dataPath": "crosswalk->subject->https://www.cancerimagingarchive.net->subject_id->value"
+      },
+      {
+        "id": "VMOAT",
+        "label": "VMOAT",
+        "dataPath": "crosswalk->subject->https://externalgen3.prometheus.data-commons.org/VMOAT->subject_id->value"
+      },
+      {
+        "id": "Metabolomics",
+        "label": "Metabolomics",
+        "dataPath": "crosswalk->subject->https://externalgen3.prometheus.data-commons.org/Metabolomics->subject_id->value"
       },
       {
         "id": "BLOODPAC",
