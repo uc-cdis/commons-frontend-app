@@ -1,5 +1,6 @@
 {
   "showSubmittedIdInTable": false,
+  "idEntryPlaceholderText": "Enter IDs, one per line.\nExample:\nC1175886204\nAP-6H6G\nAP-mock-609711\ntest-case-012\nPROM-A3F205",
   "mapping": {
     "source": {
       "id": "prom",
