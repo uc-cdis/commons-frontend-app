@@ -249,13 +249,18 @@
                 "contentType": "string"
               },
               {
-                "name": "Synthetic Data",
-                "field": "is_synthetic",
+                "name": "Data source ID",
+                "field": "gen3MDSGUID",
                 "contentType": "string"
               },
               {
                 "name": "Apollo ID",
                 "field": "subject_apollo_id",
+                "contentType": "string"
+              },
+              {
+                "name": "Synthetic Data",
+                "field": "is_synthetic",
                 "contentType": "string"
               },
               {
