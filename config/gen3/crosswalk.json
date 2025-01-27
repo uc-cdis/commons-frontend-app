@@ -11,7 +11,7 @@
       {
         "id": "PROMETHEUS",
         "label": "PROMETHEUS",
-        "dataPath": "crosswalk->subject->https://prometheus.data-commons.org->case_id->value"
+        "dataPath": "crosswalk->subject->https://prometheus.data-commons.org/->case_id->value"
       },
       {
         "id": "GDC",
