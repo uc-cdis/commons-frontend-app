@@ -145,8 +145,8 @@
       },
       "studyColumns": [
         {
-          "name": "ID Number",
-          "field": "gen3MDSGUID",
+          "name": "Prometheus Global ID",
+          "field": "prometheus_global_id",
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "",
           "contentType": "string",
@@ -244,8 +244,8 @@
             "includeName": false,
             "fields": [
               {
-                "name": "Prometheus ID",
-                "field": "_unique_id",
+                "name": "Prometheus Global ID",
+                "field": "prometheus_global_id",
                 "contentType": "string"
               },
               {
