@@ -126,7 +126,7 @@
               "title": "Gender"
 
             },
-            "commons": {
+            "data_source": {
               "chartType": "fullPie",
               "title": "Data Commons"
             }
