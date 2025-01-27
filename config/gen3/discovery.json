@@ -207,7 +207,7 @@
         },
         {
           "name": "Data Commons",
-          "field": "commons",
+          "field": "data_source",
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "",
           "contentType": "link",
@@ -524,7 +524,7 @@
         },
         {
           "name": "Data Commons",
-          "field": "commons",
+          "field": "data_source",
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "n/a",
           "contentType": "link",
@@ -597,7 +597,7 @@
               },
               {
                 "name": "Data Commons",
-                "field": "commons",
+                "field": "data_source",
                 "contentType": "string",
                 "includeIfNotAvailable": true,
                 "params": {
