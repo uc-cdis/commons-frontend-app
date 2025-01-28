@@ -1,6 +1,6 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.10.73",
+  "version": "0.10.78",
   "private": "true",
   "engines": {
     "npm": ">=10.2.3",
@@ -22,8 +22,8 @@
     "@fontsource/poppins": "^5.0.15",
     "@fontsource/source-sans-pro": "^5.0.8",
     "jsonpath-plus": "^10.2.0",
-    "@gen3/core": "^0.10.77",
-    "@gen3/frontend": "^0.10.77",
+    "@gen3/core": "^0.10.78",
+    "@gen3/frontend": "^0.10.78",
     "@grafana/faro-react": "^1.9.1",
     "@grafana/faro-web-sdk": "^1.9.1",
     "@grafana/faro-web-tracing": "^1.9.1",
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.0",
-    "@gen3/toolsff": "^0.10.77",
+    "@gen3/toolsff": "^0.10.78",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
