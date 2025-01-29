@@ -1,9 +1,9 @@
 import App, { AppProps, AppContext, AppInitialProps } from 'next/app';
-import React, { useEffect, useRef } from 'react';
-
+import React, { useState,useEffect, useMemo, useRef ,Suspense} from 'react';
+import { MantineProvider } from '@mantine/core';
 import { Faro, FaroErrorBoundary, withFaroProfiler } from '@grafana/faro-react';
-
 import { initGrafanaFaro } from '../lib/Grafana/grafana';
+
 
 import {
   Gen3Provider,
@@ -11,11 +11,12 @@ import {
   type ModalsConfig,
   RegisteredIcons,
   Fonts,
+  createMantineTheme,
   SessionConfiguration,
   // registerCohortDiscoveryApp,
   registerCohortDiversityApp,
   registerCohortBuilderDefaultPreviewRenderers,
-  registerExplorerDefaultCellRenderers,
+  registerMetadataSchemaApp,
 } from '@gen3/frontend';
 
 import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
@@ -28,7 +29,8 @@ import '@fontsource/poppins';
 
 import { setDRSHostnames } from '@gen3/core';
 import drsHostnames from '../../config/drsHostnames.json';
-import { loadContent } from '../lib/content/loadContent';
+import { loadContent } from '@/lib/content/loadContent';
+import Loading from '../components/Loading';
 
 if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
@@ -71,27 +73,47 @@ const Gen3App = ({
     if (!faroRef.current) faroRef.current = initGrafanaFaro();
     //  registerCohortDiscoveryApp();
     registerCohortDiversityApp();
-    registerExplorerDefaultCellRenderers();
+    registerMetadataSchemaApp();
     registerCohortBuilderDefaultPreviewRenderers();
     registerCohortTableCustomCellRenderers();
     registerCustomExplorerDetailsPanels();
     // }
   }, []);
 
+
+  const theme = useMemo(
+    () => createMantineTheme(themeFonts, colors),
+    [themeFonts, colors],
+  );
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // Only on client-side
+  }, []);
   return (
-    <FaroErrorBoundary>
-      <Gen3Provider
-        colors={colors}
-        icons={icons}
-        fonts={themeFonts}
-        sessionConfig={sessionConfig}
-        modalsConfig={modalsConfig}
-      >
-        <Component {...pageProps} />
-      </Gen3Provider>
-    </FaroErrorBoundary>
+    <>
+      {isClient ? (
+        <Suspense fallback={<Loading />}>
+          <FaroErrorBoundary>
+            <MantineProvider theme={theme}>
+              <Gen3Provider
+                icons={icons}
+                sessionConfig={sessionConfig}
+                modalsConfig={modalsConfig}
+              >
+                <Component {...pageProps} />
+              </Gen3Provider>
+            </MantineProvider>
+          </FaroErrorBoundary>
+        </Suspense>
+      ) : (
+        // Show some fallback UI while waiting for the client to load
+        <Loading />
+      )}
+    </>
   );
 };
+
 
 // TODO: replace with page router
 Gen3App.getInitialProps = async (
