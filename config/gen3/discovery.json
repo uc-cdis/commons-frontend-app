@@ -60,6 +60,7 @@
             "searchableTextFields": [
               "subject_primary_disease",
               "subject_cancer_type",
+              "subject_cancer_grade",
               "subject_metastasis",
               "subject_gender",
               "subject_race",
