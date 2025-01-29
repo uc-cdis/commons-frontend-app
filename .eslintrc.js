@@ -12,6 +12,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@next/next/recommended',
     'prettier',
+    'plugin:storybook/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -23,7 +24,7 @@ module.exports = {
   },
   plugins: ['jsx-a11y', 'react', 'react-hooks', '@typescript-eslint'],
   rules: {
-    '@typescript-eslint/no-explicit-any':['warn'],
+    '@typescript-eslint/no-explicit-any': ['warn'],
     'no-underscore-dangle': 'off',
     'import/prefer-default-export': 'off',
     'linebreak-style': ['error', 'unix'],

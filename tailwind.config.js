@@ -9,6 +9,7 @@ const themeFonts = require(`./config/${GEN3_COMMONS_NAME}/themeFonts.json`);
 
 module.exports = {
   content: [
+    './src/lib/**/*.{js,ts,jsx,tsx}',
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/features/**/*.{js,ts,jsx,tsx}',
@@ -17,6 +18,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        vadc: {
+          primary: '#2e77b8',
+          secondary: '#2466ac',
+          tertiary: '#cfdbe6',
+          slate_blue: '#e9eef2',
+          border: '#dedede',
+          alternate_row: '#fafafb',
+          gold: '#a35b18',
+        },
         heal: {
           primary: '#99286B',
           secondary: '#402264',
