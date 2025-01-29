@@ -1,0 +1,113 @@
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import EditIcon from './Icons/EditIcon';
+import isEnterOrSpace from '../../AccessibilityUtils/IsEnterOrSpace';
+import TeamProjectModal from '../TeamProjectModal/TeamProjectModal';
+import IsCurrentTeamProjectValid from './IsCurrentTeamProjectValid';
+import { TeamProjectsEndpoint } from '../../Endpoints';
+import { Loader } from '@mantine/core';
+import useSWR from 'swr';
+
+const runningApplicationClientSide = typeof window !== 'undefined';
+
+interface TeamProjectHeaderProps {
+  isEditable: boolean;
+}
+const TeamProjectHeader: React.FC<TeamProjectHeaderProps> = ({
+  isEditable,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bannerText, setBannerText] = useState('- -');
+  const [selectedTeamProject, setSelectedTeamProject] = useState(
+    runningApplicationClientSide && localStorage.getItem('teamProject'),
+  );
+  const [redirect, setRedirect] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const router = useRouter();
+
+  const rerouteToAppSelectionIfNeeded = () => {
+    if (
+      !isEditable &&
+      runningApplicationClientSide &&
+      !localStorage.getItem('teamProject')
+    ) {
+      redirect === false && setRedirect(true);
+    }
+  };
+  useEffect(() => {
+    // non-editable view should redirect to app selection if user doesn't have a storedTeamProject
+    redirect && router.push('/resource-browser');
+  }, [redirect]);
+
+  // SWR CODE
+  const { data, error, isLoading } = useSWR(TeamProjectsEndpoint, (...args) =>
+    fetch(...args).then((res) => res.json()),
+  );
+
+  let currentTeamProjectIsValid = false;
+  if (data) {
+    currentTeamProjectIsValid = IsCurrentTeamProjectValid(data);
+    if (!currentTeamProjectIsValid) {
+      runningApplicationClientSide && localStorage.removeItem('teamProject');
+      rerouteToAppSelectionIfNeeded();
+    }
+  }
+
+  useEffect(() => {
+    const storedTeamProject =
+      runningApplicationClientSide && localStorage.getItem('teamProject');
+    if (storedTeamProject) {
+      setBannerText(storedTeamProject);
+    } else if (isEditable) {
+      setSelectedTeamProject(null);
+      showModal();
+    }
+    rerouteToAppSelectionIfNeeded();
+  }, [isEditable, currentTeamProjectIsValid, data]);
+
+  if (isLoading) return <Loader size="sm" />;
+  return (
+    <div>
+      <div
+        data-testid="team-project-header"
+        className="text-vadc-secondary text-lg"
+      >
+        <strong className="text-xl ">Team Project</strong> / {bannerText}
+        {isEditable && (
+          <button
+            className="team-project-header_modal-button ml-2"
+            aria-label="Change Team Project"
+            type="button"
+            tabIndex={0}
+            data-testid="team-project-edit"
+            onClick={() => {
+              showModal();
+            }}
+            onKeyDown={(e) => {
+              if (isEnterOrSpace(e)) showModal();
+            }}
+          >
+            <EditIcon />
+          </button>
+        )}
+      </div>
+      {isEditable && (
+        <TeamProjectModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          setBannerText={setBannerText}
+          data={data}
+          status={error ? 'error' : 'loading'}
+          selectedTeamProject={selectedTeamProject}
+          setSelectedTeamProject={setSelectedTeamProject}
+        />
+      )}
+    </div>
+  );
+};
+
+export default TeamProjectHeader;

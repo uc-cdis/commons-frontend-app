@@ -1,0 +1,24 @@
+/* VADC APP STYLES */
+
+/* BUTTONS */
+.mantine-Button-root.mantine-UnstyledButton-root:not([data-disabled='true']),
+.mantine-Pagination-control.mantine-active {
+  background-color: #2e77b8;
+  color: #fff;
+}
+.mantine-Button-root.mantine-UnstyledButton-root:not(
+    [data-disabled='true']
+  ):hover,
+.mantine-Pagination-control.mantine-active:hover {
+  background-color: #05b8ee;
+}
+
+/* Modal */
+header.mantine-Modal-header {
+  border-bottom: 1px solid #d0dce6;
+  margin-bottom: 20px;
+}
+header.mantine-Modal-header h2 {
+  color: #2d77b8;
+  font-size: 20px;
+}
