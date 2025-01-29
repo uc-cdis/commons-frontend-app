@@ -65,7 +65,7 @@
               "subject_race",
               "subject_ethnicity",
               "subject_id",
-              "commons"
+              "data_source"
             ]
           },
           "tagSearchDropdown": {
