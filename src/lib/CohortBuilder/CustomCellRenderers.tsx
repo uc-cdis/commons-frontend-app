@@ -4,7 +4,6 @@ import {
   type CellRendererFunctionProps,
 } from '@gen3/frontend';
 import { ActionIcon, Text } from '@mantine/core';
-
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
 
@@ -26,8 +25,9 @@ const RenderLinkCell = (
 };
 
 
-const RenderDiacomLink = ({ cell }: CellRendererFunctionProps) => {
-  if (!cell.getValue() || cell.getValue() === '') {
+
+const RenderDicomLink = ({ cell }: CellRendererFunctionProps) => {
+  if (!cell?.getValue() || cell?.getValue() === '') {
     return <span></span>;
   } else
     return (
@@ -41,8 +41,9 @@ const RenderDiacomLink = ({ cell }: CellRendererFunctionProps) => {
 
 export const registerCohortTableCustomCellRenderers = () => {
   ExplorerTableCellRendererFactory().registerRenderer(
-      'link', 'DiacomLink' ,
-      RenderDiacomLink,
+    'link',
+    'DicomLink',
+    RenderDicomLink,
   );
   ExplorerTableCellRendererFactory().registerRenderer(
     'link', 'linkURL' ,

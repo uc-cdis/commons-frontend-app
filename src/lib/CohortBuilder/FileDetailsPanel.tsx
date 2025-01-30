@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */ // TODO remove use of any
 import {
   Anchor,
   Group,
@@ -51,7 +50,7 @@ const isQueryResponse = (obj: any): obj is QueryResponse => {
 const extractData = (
   data: QueryResponse,
   index: string,
-): Record<string, any> => {
+): Record<string, never> => {
   if (data === undefined || data === null) return {};
   if (data.data === undefined || data.data === null) return {};
 
@@ -141,7 +140,7 @@ export const FileDetailsPanel = ({
         </Table.Th>
         <tbody>{rows}</tbody>
       </Table>
-      <Group >
+      <Group justify="flex-end">
         <CopyButton value={JSON.stringify(queryData)} timeout={2000}>
           {({ copied, copy }) => (
             <Tooltip
