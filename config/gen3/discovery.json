@@ -124,7 +124,7 @@
             },
             "subject_gender": {
               "chartType": "fullPie",
-              "title": "Gender"
+              "title": "Biological Sex"
 
             },
             "data_source": {
