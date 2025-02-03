@@ -20,8 +20,7 @@
             "primary_site",
             "disease_type",
             "commons_name",
-            "collection_id",
-            "data_contributor"
+            "collection_id"
           ]
         }
       ]
@@ -42,7 +41,6 @@
         "disease_type",
         "commons_name",
         "collection_id",
-        "data_contributor",
         "license",
         "data_url_doi",
         "StudyInstanceUID",
@@ -86,9 +84,6 @@
         },
         "collection_id": {
           "title": "Collection ID"
-        },
-        "data_contributor": {
-          "title": "Data Contributor"
         },
         "license": {
           "title": "License",
@@ -149,10 +144,6 @@
         {
           "field": "collection_id",
           "name": "Collection ID"
-        },
-        {
-          "field": "data_contributor",
-          "name": "Data Contributor"
         },
         {
           "field": "license",
@@ -236,7 +227,6 @@
             "primary_site",
             "disease_type",
             "commons_name",
-            "data_contributor",
             "collection_id"
           ]
         }
@@ -253,7 +243,6 @@
         "disease_type",
         "race",
         "commons_name",
-        "data_contributor",
         "collection_id",
         "license",
         "data_url_doi"
@@ -281,9 +270,6 @@
               "TCIA": "https://www.cancerimagingarchive.net/"
             }
           }
-        },
-        "data_contributor": {
-          "title": "Data Contributor"
         },
         "collection_id": {
           "title": "Collection ID"
