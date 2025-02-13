@@ -151,7 +151,7 @@
         },
         {
           "field": "data_url_doi",
-          "name": "DOI"
+          "name": "Data URL/DOI"
         },
         {
           "field": "StudyInstanceUID",
@@ -317,7 +317,7 @@
         },
         {
           "field": "data_url_doi",
-          "name": "DOI"
+          "name": "Data URL/DOI"
         }
       ],
       "manifestMapping": {
@@ -392,8 +392,7 @@
             "disease_type",
             "commons_name",
             "collection_id",
-            "StudyDescription",
-            "SeriesDescription"
+            "StudyDescription"
           ]
         }
       ]
@@ -487,10 +486,10 @@
           "title": "Subject ID"
         },
         "StudyInstanceUID": {
-          "title": "Study UID"
+          "title": "Study ID"
         },
         "SeriesInstanceUID": {
-          "title": "Series UID"
+          "title": "Series ID"
         }
       }
     },
@@ -540,7 +539,7 @@
         },
         {
           "field": "data_url_doi",
-          "name": "DOI"
+          "name": "Data URL/DOI"
         },
         {
           "field": "dicom_viewer_url",
@@ -552,11 +551,11 @@
         },
         {
           "field": "StudyInstanceUID",
-          "name": "Study UID"
+          "name": "Study ID"
         },
         {
           "field": "SeriesInstanceUID",
-          "name": "Series UID"
+          "name": "Series ID"
         }
       ],
       "manifestMapping": {
