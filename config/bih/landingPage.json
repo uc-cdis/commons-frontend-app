@@ -10,7 +10,7 @@
       "splitarea": {
         "left": [
           {
-            "text": "The MIDRC BDF Imaging Hub (BIH) is a data hub, which is a federated data search, discovery, and analysis platform that allows researchers to query and analyze data from independent data repositories or resources related to medical imaging."
+            "text": "The MIDRC BDF Imaging Hub (BIH) is a federated data hub designed to help researchers search, discover, and analyze biomedical imaging data across multiple medical imaging data repositories at scale. It is part of the ARPA-H Biomedical Data Fabric (BDF)."
           },
           {
             "link": {
@@ -20,16 +20,13 @@
             }
           },
           {
-            "text": "Queries and subsequent analyses in the BIH run across structured data aggregated from all the independent data nodes connected through the data fabric."
+            "text": "MIDRC BIH enables researchers to query and analyze structured data aggregated from independent data repositories. Instead of storing data files directly, MIDRC BIH provides unique identifiers that researchers can use to access files from the original data nodes where they are stored."
           },
           {
-            "text": "Data files are not stored in the BIH. Instead, BIH records contain unique identifiers for files that researchers can use to access files from the connected data nodes in which they're stored."
+            "text": "Handling Duplicate Images: Because MIDRC BIH connects multiple independent data sources, some datasets may contain duplicate images. This is especially important to consider when preparing data for AI model training, as duplicates can introduce bias, overfitting, and other issues affecting model performance."
           },
           {
-            "text": "Important note for users: Due to the nature of federated data systems like this one, it is possible for certain datasets or images to appear as duplicates across multiple data nodes. To ensure the integrity and reliability of your research, we strongly recommend exercising due diligence in identifying and handling duplicate images in any datasets you select. This is particularly crucial when preparing data for use in training AI models, as duplicates in training data can introduce biases, overfitting, and other issues that may compromise the performance and generalizability of your models."
-          },
-          {
-            "text": "We recommend users check for duplicated images, using unique IDs like Imaging Study and Series UIDs, perform thorough data validation before proceeding with any analysis or AI model training, and document your process by keeping detailed records of how duplicates were identified and handled to enhance the reproducibility of your research."
+            "text": "To maintain data integrity, researchers should check for duplicate images using unique identifiers such as Imaging Study and Series UIDs. It is essential to validate datasets thoroughly before conducting any analysis or training AI models to prevent biases and overfitting. Additionally, documenting the process, including how duplicates were identified and managed, helps ensure research reproducibility and transparency."
           }
         ],
         "right": [
