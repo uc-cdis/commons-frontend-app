@@ -20,9 +20,6 @@ const withMDX = require('@next/mdx')({
 // Next configuration with support for rewrting API to existing common services
 const nextConfig = {
   reactStrictMode: true,
-  experimental: {
-    instrumentationHook: true,
-  },
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
   basePath: process.env.BASE_PATH || '',
   transpilePackages: ['@gen3/core', '@gen3/frontend'],
@@ -31,10 +28,6 @@ const nextConfig = {
       level: 'error',
     };
     return config;
-  },
-  experimental: {
-    esmExternals: true,
-    instrumentationHook: true,
   },
   async headers() {
     return [
