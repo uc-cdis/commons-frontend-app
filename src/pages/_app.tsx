@@ -79,7 +79,7 @@ const Gen3App = ({
     setIsClient(true); // Only on client-side
   }, []);
   return (
-    <>
+    <React.Fragment>
       {isClient ? (
         <Suspense fallback={<Loading />}>
           <FaroErrorBoundary>
@@ -98,7 +98,7 @@ const Gen3App = ({
         // Show some fallback UI while waiting for the client to load
         <Loading />
       )}
-    </>
+    </React.Fragment>
   );
 };
 
