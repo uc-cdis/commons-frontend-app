@@ -30,10 +30,6 @@ const nextConfig = {
     };
     return config;
   },
-  experimental: {
-    esmExternals: true,
-    instrumentationHook: true,
-  },
   async headers() {
     return [
       {

@@ -6,15 +6,15 @@ import { initGrafanaFaro } from '../lib/Grafana/grafana';
 import mantinetheme from '../mantineTheme';
 
 
+
 import {
   Gen3Provider,
   type ModalsConfig,
   RegisteredIcons,
   SessionConfiguration,
-  registerCohortDiscoveryApp,
+  registerExplorerDefaultCellRenderers,
   registerCohortBuilderDefaultPreviewRenderers,
   registerMetadataSchemaApp,
-  registerExplorerDefaultCellRenderers,
 } from '@gen3/frontend';
 
 import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
@@ -65,8 +65,8 @@ const Gen3App = ({
     //   !faroRef.current
     // ) {
     if (!faroRef.current) faroRef.current = initGrafanaFaro();
-    registerCohortDiscoveryApp();
     registerMetadataSchemaApp();
+    registerExplorerDefaultCellRenderers();
     registerCohortBuilderDefaultPreviewRenderers();
     registerCohortTableCustomCellRenderers();
     registerCustomExplorerDetailsPanels();
@@ -79,7 +79,7 @@ const Gen3App = ({
     setIsClient(true); // Only on client-side
   }, []);
   return (
-    <React.Fragment>
+    <>
       {isClient ? (
         <Suspense fallback={<Loading />}>
           <FaroErrorBoundary>
@@ -98,7 +98,7 @@ const Gen3App = ({
         // Show some fallback UI while waiting for the client to load
         <Loading />
       )}
-    </React.Fragment>
+    </>
   );
 };
 
