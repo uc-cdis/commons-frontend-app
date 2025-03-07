@@ -23,6 +23,10 @@ const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
   basePath: process.env.BASE_PATH || '',
+  images:{ // This is for QA FF path
+    loader:"custom",
+    loaderFile:"next-custom-image-loader.js",
+  },
   transpilePackages: ['@gen3/core', '@gen3/frontend'],
   webpack: (config) => {
     config.infrastructureLogging = {

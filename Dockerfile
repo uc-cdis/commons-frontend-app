@@ -37,6 +37,7 @@ COPY ./src ./src
 COPY ./public ./public
 COPY ./config ./config
 COPY ./next.config.js ./
+COPY ./next-custom-image-loader.js ./
 COPY ./tsconfig.json ./
 COPY ./.env.development ./
 COPY ./.env.production ./
