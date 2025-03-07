@@ -29,10 +29,10 @@ export const loadContent = async () => {
     ]),
   );
 
-  const icons = await ContentSource.getAll(`config/icons/`, '\\.json');
+  const icons = await ContentSource.getAll('config/icons/', '\\.json');
   return {
     modalsConfig: modals,
-    sessionConfig: session,
+    sessionConfig: 'sessionConfig' in session ? session.sessionConfig : session,
     themeFonts: fonts as Fonts,
     colors: colors,
     icons: icons as RegisteredIcons[],

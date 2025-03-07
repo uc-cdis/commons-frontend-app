@@ -105,7 +105,7 @@ export const FileDetailsPanel = ({
   const rows = Object.entries(queryData).map(([field, value]) => (
     <Table.Tr key={field}>
       <Table.Td>
-        <Text fw="bold">{field}</Text>
+        <Text fw={700}>{field}</Text>
       </Table.Td>
       <Table.Td>
         {/*
