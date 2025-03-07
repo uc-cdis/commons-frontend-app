@@ -1,21 +1,17 @@
 {
   "systemUseModal": {
-    "title": "Data Use Agreement for Academic and Institutional Users",
+    "title": "VA systems are intended for Academic and Institutional Users",
     "content": {
       "text": [
-        "Please see the below two Data Use Agreements: the first one is for Academic and Institutional users for non-commercial use; the second agreement is for commercial use.",
-        "",
-        "",
-        "Data Use Agreement - Non-Commercial Research Use Only",
-        "This Data Use Agreement for Academic and Institutional Users (this “Agreement”) is by and between you and the University and governs your access to and use of the deidentified imaging and associated demographic and clinical data provided to you by the University. By accessing, using, or downloading any data, you are agreeing to be bound by the terms and conditions of this Agreement.",
-        "1. The University is the legal entity that hosts data.",
-        "",
-        "DATA USE AGREEMENT – COMMERCIAL USE PERMITTED",
-        "This Data Use Agreement (this “Agreement”) is by and between you or the entity you represent (“you”) and the University of Chicago (the “University”) and governs your access to and use of the deidentified imaging and associated demographic and clinical data provided to you by the University. By accessing, using, or downloading any data, you are agreeing to be bound by the terms and conditions of this Agreement. If you are entering into this Agreement for an entity, such as the company you work for, you represent and warrant that you have legal authority to bind that entity",
-        "1. The University may terminate this Agreement at any time upon notice to you. The University shall have no liability in the event of any such termination. Upon such termination, the University may direct that you immediately return or destroy all copies of any data and, upon the University’s request, you will certify the foregoing to the University in writing."
-      ]
+        "VA systems are intended to be used by authorized VA network users for viewing and retrieving information; except as otherwise authorized for official business and limited personal use under VA policy.",
+        "Information from this system resides on and transmits through computer systems and networks funded by VA. Access or use constitutes understanding and acceptance that there is no reasonable expectation of privacy in the use of Government networks or systems.",
+        "Access or use of this system constitutes user understanding and acceptance of these terms and constitutes unconditional consent to review and action includes but is not limited to: monitoring; recording; copying; auditing; inspecting; investigating; restricting access; blocking; tracking; disclosing to authorized personnel; or other authorized actions by authorized VA and law enforcement personnel.",
+        "Unauthorized user attempts or acts to (1) access; upload; download; change; or delete information on this system; (2) modify this system; (3) deny access to this system; (4) accrue resources for unauthorized use; or (5) otherwise misuse this system are strictly prohibited.",
+        "Such attempts or acts are subject to action that result in criminal; civil; or administrative penalties."
+      ],
+      "className" : "text-base-contrast-max"
     },
     "expireDays": 365,
-    "showOnlyOnLogin": true
+    "showOnlyOnLogin": false
   }
 }
