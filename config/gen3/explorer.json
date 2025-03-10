@@ -43,6 +43,9 @@
         "collection_id",
         "license",
         "data_url_doi",
+        "metadata_source_date",
+        "metadata_source_version",
+        "study_viewer_url",
         "StudyInstanceUID",
         "subject_id"
       ],
@@ -93,6 +96,18 @@
         },
         "data_url_doi": {
           "title": "DOI",
+          "type": "link",
+          "cellRenderFunction": "linkURL",
+          "sortable": false
+        },
+        "metadata_source_date": {
+          "title": "Metadata Source Date"
+        },
+        "metadata_source_version": {
+          "title": "Metadata Source Version"
+        },
+        "study_viewer_url": {
+          "title": "DICOM Viewer URL",
           "type": "link",
           "cellRenderFunction": "linkURL",
           "sortable": false
@@ -152,6 +167,18 @@
         {
           "field": "data_url_doi",
           "name": "Data URL/DOI"
+        },
+        {
+          "field": "metadata_source_date",
+          "name": "Metadata Source Date"
+        },
+        {
+          "field": "metadata_source_version",
+          "name": "Metadata Source Version"
+        },
+        {
+          "field": "study_viewer_url",
+          "name": "DICOM Viewer URL"
         },
         {
           "field": "StudyInstanceUID",
@@ -415,7 +442,9 @@
         "SeriesDescription",
         "license",
         "data_url_doi",
-        "dicom_viewer_url",
+        "metadata_source_date",
+        "metadata_source_version",
+        "series_viewer_url",
         "subject_id",
         "StudyInstanceUID",
         "SeriesInstanceUID"
@@ -476,11 +505,17 @@
           "cellRenderFunction": "linkURL",
           "sortable": false
         },
-        "dicom_viewer_url": {
+        "metadata_source_date": {
+          "title": "Metadata Source Date"
+        },
+        "metadata_source_version": {
+          "title": "Metadata Source Version"
+        },
+        "series_viewer_url": {
           "title": "DICOM Viewer URL",
           "type": "link",
-          "width" : "32px",
-          "cellRenderFunction": "DicomLink"
+          "cellRenderFunction": "linkURL",
+          "sortable": false
         },
         "subject_id": {
           "title": "Subject ID"
@@ -542,8 +577,16 @@
           "name": "Data URL/DOI"
         },
         {
-          "field": "dicom_viewer_url",
-          "name": "DICOM Viewer"
+          "field": "metadata_source_date",
+          "name": "Metadata Source Date"
+        },
+        {
+          "field": "metadata_source_version",
+          "name": "Metadata Source Version"
+        },
+        {
+          "field": "series_viewer_url",
+          "name": "DICOM Viewer URL"
         },
         {
           "field": "subject_id",
