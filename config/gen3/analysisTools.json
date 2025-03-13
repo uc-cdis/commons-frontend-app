@@ -1,0 +1,22 @@
+{
+  "tools": [
+      {
+        "title": "Crosswalk",
+        "type": "application",
+        "icon": "/images/apps/icons/gen3_app.png",
+        "image": "/images/apps/crosswalk.png",
+        "description": "Crosswalk is a data mapping service that enables users to translate an ID from one dataset to its corresponding ID(s) in other datasets. It supports one-to-one and one-to-many mappings, allowing seamless integration and interoperability across multiple data sources. Whether linking records across systems or consolidating data from various sources, Crosswalk simplifies ID resolution and enhances data connectivity.",
+        "loginRequired": false,
+        "href": "Crosswalk"
+      },
+    {
+      "title": "Proteome Data Commons (PDC) Clustergram",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.png",
+      "image": "/images/apps/PDC_clustergram.png",
+      "description": "Use the Proteome Data Commons (PDC) API to retreive protein relative expression data for a CPTAC study. The PDC uses values produced by the Common Data Analysis Pipeline (CDAP). The results are intended to help identify clusters of samples (tumors) displaying similar patterns of protein expression.",
+      "loginRequired": false,
+      "href": "notebook"
+    }
+  ]
+}
