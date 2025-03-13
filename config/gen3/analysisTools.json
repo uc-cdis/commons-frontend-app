@@ -1,14 +1,5 @@
 {
   "tools": [
-      {
-        "title": "Crosswalk",
-        "type": "application",
-        "icon": "/images/apps/icons/gen3_app.png",
-        "image": "/images/apps/crosswalk.png",
-        "description": "Crosswalk is a data mapping service that enables users to translate an ID from one dataset to its corresponding ID(s) in other datasets. It supports one-to-one and one-to-many mappings, allowing seamless integration and interoperability across multiple data sources. Whether linking records across systems or consolidating data from various sources, Crosswalk simplifies ID resolution and enhances data connectivity.",
-        "loginRequired": false,
-        "href": "Crosswalk"
-      },
     {
       "title": "Proteome Data Commons (PDC) Clustergram",
       "type": "notebook",
