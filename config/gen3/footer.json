@@ -28,6 +28,18 @@
             }
           }
         ]
+      },
+      {
+        "rows": [
+          {
+            "Icon": {
+              "logo": "/icons/OCC.png",
+              "width": 150,
+              "height": 60,
+              "description": "Open Commons Consortium"
+            }
+          }
+        ]
       }
     ]
   }

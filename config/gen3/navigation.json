@@ -6,18 +6,11 @@
       "navigationPanel": "bg-base-max text-primary"
     },
     "logo": {
-      "src": "/icons/gen3-dark.svg",
-      "width": 120,
-      "height": 60,
-      "href": "/"
+      "src": "/images/vpodc-logo.png",
+      "height": 40,
+      "width": 152
     },
     "items": [
-      {
-        "icon": "gen3:query",
-        "href": "/Discovery",
-        "name": "Discovery",
-        "tooltip": "Use free-text search and tags to rapidly find relevant studies."
-      },
       {
         "icon": "gen3:dictionary",
         "href": "/DataDictionary",
@@ -49,6 +42,12 @@
         "tooltip": "Gen3 workspaces are secure data analysis environments in the cloud that can access data from one or more data resources."
       },
       {
+        "icon": "gen3:analysis",
+        "href": "/resource-browser",
+        "name": "Apps",
+        "tooltip": "Learn how to use Jupyter Notebooks to explore and visualize data available by running a tutorial notebook, or use one of these examples as a launching point for your own custom analysis."
+      },
+      {
         "icon": "gen3:profile",
         "href": "/Profile",
         "name": "Profile",
@@ -65,9 +64,13 @@
   "topBar": {
     "items": [
       {
+        "href": "https://uc-cdis.github.io/platform-citation/vpodc-cite/",
+        "name": "Cite VPODC"
+      },
+      {
         "rightIcon": "gen3:upload",
         "href": "/Submission",
-        "name": "Browse Data"
+        "name": "Submit Data"
       },
       {
         "href": "https://gen3.org/resources/user/",
