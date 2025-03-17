@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Anchor,
   Group,
@@ -50,7 +51,7 @@ const isQueryResponse = (obj: any): obj is QueryResponse => {
 const extractData = (
   data: QueryResponse,
   index: string,
-): Record<string, never> => {
+): Record<string, any> => {
   if (data === undefined || data === null) return {};
   if (data.data === undefined || data.data === null) return {};
 
@@ -114,7 +115,7 @@ export const FileDetailsPanel = ({
          */}
         {field === 'object_id' ? (
           <Anchor
-            href={`${GEN3_FENCE_API}/user/data/download/${
+            href={`${GEN3_FENCE_API}/data/download/${
               value ? (value as string) : ''
             }?redirect=true`}
             target="_blank"

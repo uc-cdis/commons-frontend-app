@@ -1,8 +1,10 @@
 // server/plugins.js
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require('path');
 
 
@@ -17,7 +19,7 @@ function main() {
     const plugins = JSON.parse(
         fs
             .readFileSync(path.join(process.cwd(), 'config', 'plugins.json'))
-            .toString('utf-8'),
+            .toString('utf8'),
     );
     const imports = plugins
         .map(
