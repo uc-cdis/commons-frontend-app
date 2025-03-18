@@ -35,12 +35,16 @@ const TeamProjectHeader: React.FC<TeamProjectHeaderProps> = ({
       runningApplicationClientSide &&
       !localStorage.getItem('teamProject')
     ) {
-      redirect === false && setRedirect(true);
+      if ( redirect === false) {
+        setRedirect(true);
+      }
     }
   };
   useEffect(() => {
     // non-editable view should redirect to app selection if user doesn't have a storedTeamProject
-    redirect && router.push('/resource-browser');
+    if (redirect) {
+      router.push('/resource-browser');
+    }
   }, [redirect]);
 
   // SWR CODE
@@ -52,7 +56,9 @@ const TeamProjectHeader: React.FC<TeamProjectHeaderProps> = ({
   if (data) {
     currentTeamProjectIsValid = IsCurrentTeamProjectValid(data);
     if (!currentTeamProjectIsValid) {
-      runningApplicationClientSide && localStorage.removeItem('teamProject');
+      if ( runningApplicationClientSide) {
+        localStorage.removeItem('teamProject');
+      }
       rerouteToAppSelectionIfNeeded();
     }
   }

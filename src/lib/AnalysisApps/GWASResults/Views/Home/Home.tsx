@@ -17,7 +17,6 @@ const Home = ({ selectedTeamProject }: { selectedTeamProject: string }) => {
       refetchInterval,
     },
   ); */
-  () => selectedTeamProject; // placeholder for now to avoid compilation & linting errors.
 
   const data = {};
 
