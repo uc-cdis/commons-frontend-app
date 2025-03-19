@@ -17,13 +17,13 @@ interface CustomDichotomousCovariatesInput {
   readonly selectedTeamProject: string,
 }
 interface setPopulationType {
-  cohort_name?: string, 
-  size?: number, 
+  cohort_name?: string,
+  size?: number,
   cohort_definition_id?: string
 }
 const setPopulation: setPopulationType = {
-  cohort_name: undefined, 
-  size: undefined, 
+  cohort_name: undefined,
+  size: undefined,
   cohort_definition_id: undefined,
 };
 const CustomDichotomousCovariates = ({

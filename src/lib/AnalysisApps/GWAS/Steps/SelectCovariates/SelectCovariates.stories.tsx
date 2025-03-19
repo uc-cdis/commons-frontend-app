@@ -3,17 +3,17 @@ import reducer from '../../Utils/StateManagement/reducer';
 import InitializeCurrentState from '../../Utils/StateManagement/InitializeCurrentState';
 
 import { Meta, StoryObj } from '@storybook/react';
- 
+
 import SelectCovariates from './SelectCovariates';
- 
+
 const meta: Meta<typeof SelectCovariates> = {
   title: 'GWASAPP/Steps/SelectCovariates',
   component: SelectCovariates,
 };
- 
+
 export default meta;
 type Story = StoryObj<typeof SelectCovariates>;
- 
+
 
 const SelectCovariatesWithHooks = () => {
 
@@ -26,7 +26,7 @@ const SelectCovariatesWithHooks = () => {
       selectedTeamProject={state.selectedTeamProject}
     />;
 };
- 
+
 export const Mock: Story = {
   render: () => <SelectCovariatesWithHooks />,
 };
