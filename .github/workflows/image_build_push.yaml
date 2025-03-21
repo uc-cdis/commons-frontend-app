@@ -8,7 +8,7 @@ jobs:
     uses: uc-cdis/.github/.github/workflows/securitypipeline.yaml@master
     with:
       python-poetry: 'false'
-    secrets: inherit
+    secrets: inherit # pragma: allowlist-secret
   ci:
     name: Build Image and Push to Quay
     uses: uc-cdis/.github/.github/workflows/image_build_push.yaml@master
