@@ -71,7 +71,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "jest-fixed-jsdom": "^0.0.9",
     "msw": "^2.7.0",
-    "next": "^15.1.7",
+    "next": "^15.2.3",
     "postcss": "^8.4.29",
     "postcss-import": "^16.1.0",
     "postcss-loader": "^7.3.2",
