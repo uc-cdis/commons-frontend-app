@@ -1,10 +1,11 @@
 {
   "navigation": {
+    "title": "MIDRC BDF Imaging Hub",
     "logo": {
-    "src": "/images/BDF-MIDRC Logo-V2.png",
+      "src": "/images/BDF-MIDRC Logo-V2.png",
       "height":128,
       "width": 256,
-    "href": "/"
+      "href": "/"
     },
     "items": [
       {
