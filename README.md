@@ -63,3 +63,19 @@ You build a Docker image by:
 ```bash
 docker build .
 ```
+## Updating a forked commons
+
+To update a forked commons, the following steps usually apply.
+
+Get the changes from the parent fork:
+```bash
+git remote add upstream git@github.com:uc-cdis/commons-frontend-app.git 
+git fetch upstream
+```
+Create a branch and merge changes from upstream:
+```bash
+git merge upstream/main
+```
+You will see merge conflicts. In general: **take the remote's version for everything except the config files**, as those are customized to the commons config. Resolve the remaining config issues and open a PR.
+Test the new common by running it locally or in a staging environment.
+
