@@ -1,89 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
 
-@import '~@fontsource/montserrat/700.css';
-@import '~@fontsource/montserrat/400-italic.css';
-@import '~@fontsource/montserrat/index.css';
-@import '~@fontsource/montserrat/600.css';
-@import '~@fontsource/montserrat/700-italic.css';
-@import '~@fontsource/source-sans-pro/index.css';
+@import '@mantine/core/styles.css';
+@import '@mantine/notifications/styles.css';
+@import 'mantine-react-table/styles.css';
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: normal;
-  line-height: 1.6em;
-  letter-spacing: 0.02rem;
-}
+@import "tailwindcss/utilities";
+@import '@gen3/frontend/dist/styles.css';
 
-.has-tooltip .tooltip {
-  visibility: hidden;
-  position: absolute;
-  z-index: 1000;
-  top: 90%;
-  vertical-align: middle;
-  transform: translateX(-75%);
-}
+@import 'graphiql/graphiql.css';
+@import '@graphiql/react/dist/style.css';
 
-.has-tooltip .tooltip::before {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: 35%;
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent transparent gray transparent;
-}
-
-.has-tooltip .tooltip::after {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: 35%;
-  transform: translateY(1px);
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent transparent white transparent;
-}
-
-.has-tooltip:hover .tooltip {
-  visibility: visible;
-}
-
-.h3-typo {
-  font-size: 1.125rem;
-  font-weight: 700;
-  letter-spacing: 0.02rem;
-}
-
-.body-typo {
-  font-size: 0.875rem;
-  font-weight: normal;
-  line-height: 1.6em;
-  letter-spacing: 0.02rem;
-}
-
-.navbutton-type {
-  font-size: 1.125rem;
-  font-weight: 700;
-  letter-spacing: 0.02rem;
-}
 @layer base {
   html {
     @apply font-heading;
   }
 }
 
-.mantine-TableBodyCell-DetailPanel {
-  border-color: aqua;
-  border-top: hidden;
-  padding: 16px;
-  margin: 16px 0;
-}
-
-@tailwind utilities;
 @tailwind variants;

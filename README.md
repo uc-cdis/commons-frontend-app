@@ -78,3 +78,27 @@ You build a Docker image by:
 ```bash
 docker build .
 ```
+## Updating a forked commons
+
+The following steps usually apply to update a forked commons.
+
+Get the changes from the parent fork:
+```bash
+git remote add upstream git@github.com:uc-cdis/commons-frontend-app.git 
+git fetch upstream
+```
+Create a branch and merge changes from upstream:
+```bash
+git merge upstream/main
+```
+If the above has the error message:  "fatal: refusing to merge unrelated histories" error.
+This often happens when the repo was created as a template, not a fork.
+To resolve this, the ```--allow-unrelated-histories``` flag can be used during the merge operation. This flag forces Git to merge the branches despite lacking a common history.
+```bash
+git merge upstream/main --allow-unrelated-histories
+```
+If you use this flag, it is recommended that you carefully review the changes and resolve any conflicts before finalizing the merge.
+
+You will see merge conflicts. In general: **take the remote's version for everything except the config files**, as those are customized to the commons config. Resolve any remaining config issues and open a PR.
+Test the new common by running it locally or in a staging environment.
+

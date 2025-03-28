@@ -1,43 +1,136 @@
-import type { AppProps } from 'next/app';
-import { useEffect } from 'react';
-import { Gen3Provider, TenStringArray, type ModalsConfig } from '@gen3/frontend';
-import themeColors from '../../config/themeColors.json';
-import themeFonts from '../../config/themeFonts.json';
-import icons from '../../config/icons/gen3.json';
+import App, { AppProps, AppContext, AppInitialProps } from 'next/app';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
+import { MantineProvider } from '@mantine/core';
+import { Faro, FaroErrorBoundary, withFaroProfiler } from '@grafana/faro-react';
+import { initGrafanaFaro } from '../lib/Grafana/grafana';
+import mantinetheme from '../mantineTheme';
+
+import {
+  Gen3Provider,
+  type ModalsConfig,
+  RegisteredIcons,
+  SessionConfiguration,
+  registerExplorerDefaultCellRenderers,
+  registerCohortBuilderDefaultPreviewRenderers,
+  registerMetadataSchemaApp,
+} from '@gen3/frontend';
+
+import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
+import { registerCustomExplorerDetailsPanels } from '@/lib/CohortBuilder/FileDetailsPanel';
+
 import '../styles/globals.css';
-import 'graphiql/graphiql.css';
-import '@graphiql/react/dist/style.css';
+import '@fontsource/montserrat';
+import '@fontsource/source-sans-pro';
+import '@fontsource/poppins';
+
 import { setDRSHostnames } from '@gen3/core';
-
-
-// TODO: This can be done in a better way using newer NextJS features
-import sessionConfig from '../../config/session.json';
-import modalsConfig from '../../config/modals.json';
 import drsHostnames from '../../config/drsHostnames.json';
+import { loadContent } from '@/lib/content/loadContent';
+import Loading from '../components/Loading';
 
-const colors = Object.fromEntries(
-  Object.entries(themeColors).map(([key, values]) => [
-    key,
-    Object.values(values) as TenStringArray,
-  ]),
-);
+if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
+  const ReactDOM = require('react-dom');
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
+  const axe = require('@axe-core/react');
+  axe(React, ReactDOM, 1000);
+}
 
-export default function App({ Component, pageProps }: AppProps) {
+interface Gen3AppProps {
+  icons: Array<RegisteredIcons>;
+  modalsConfig: ModalsConfig;
+  sessionConfig: SessionConfiguration;
+}
+
+const Gen3App = ({
+  Component,
+  pageProps,
+  icons,
+  sessionConfig,
+  modalsConfig,
+}: AppProps & Gen3AppProps) => {
+  const isFirstRender = useRef(true);
+  const faroRef = useRef<null | Faro>(null);
 
   useEffect(() => {
-    setDRSHostnames(drsHostnames);
+    // one time init
+    // if (
+    //   process.env.NEXT_PUBLIC_FARO_COLLECTOR_URL &&
+    //   process.env.NEXT_PUBLIC_FARO_APP_ENVIRONMENT != "local" &&
+    //   !faroRef.current
+    // ) {
 
+    if (!faroRef.current) faroRef.current = initGrafanaFaro();
+    if (isFirstRender.current) {
+      setDRSHostnames(drsHostnames);
+      registerMetadataSchemaApp();
+      registerExplorerDefaultCellRenderers();
+      registerCohortBuilderDefaultPreviewRenderers();
+      registerCohortTableCustomCellRenderers();
+      registerCustomExplorerDetailsPanels();
+      isFirstRender.current = false;
+      console.log('Gen3 App initialized');
+    }
   }, []);
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // Only on client-side
+  }, []);
   return (
-    <Gen3Provider
-      colors={colors}
-      icons={icons}
-      fonts={themeFonts}
-      sessionConfig={sessionConfig.sessionConfig}
-      modalsConfig={modalsConfig as ModalsConfig}
-    >
-      <Component {...pageProps} />
-    </Gen3Provider>
+    <React.Fragment>
+      {isClient ? (
+        <Suspense fallback={<Loading />}>
+          <FaroErrorBoundary>
+            <MantineProvider theme={mantinetheme}>
+              <Gen3Provider
+                icons={icons}
+                sessionConfig={sessionConfig}
+                modalsConfig={modalsConfig}
+              >
+                <Component {...pageProps} />
+              </Gen3Provider>
+            </MantineProvider>
+          </FaroErrorBoundary>
+        </Suspense>
+      ) : (
+        // Show some fallback UI while waiting for the client to load
+        <Loading />
+      )}
+    </React.Fragment>
   );
-}
+};
+
+// TODO: replace with page router
+Gen3App.getInitialProps = async (
+  context: AppContext,
+): Promise<Gen3AppProps & AppInitialProps> => {
+  const ctx = await App.getInitialProps(context);
+
+  try {
+    const res = await loadContent();
+    return {
+      ...ctx,
+      ...res,
+    };
+  } catch (error: any) {
+    console.error('Provider Wrapper error loading config', error.toString());
+  }
+  // return default
+  return {
+    ...ctx,
+    icons: [
+      {
+        prefix: 'gen3',
+        lastModified: 0,
+        icons: {},
+        width: 0,
+        height: 0,
+      },
+    ],
+    modalsConfig: {},
+    sessionConfig: {},
+  };
+};
+export default withFaroProfiler(Gen3App);

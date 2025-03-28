@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const plugin = require('tailwindcss/plugin');
-const themeColors = require('./config/themeColors.json');
-const themeFonts = require('./config/themeFonts.json');
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { GEN3_COMMONS_NAME } = require('@gen3/core');
+const themeColors = require(`./config/${GEN3_COMMONS_NAME}/themeColors.json`);
+const themeFonts = require(`./config/${GEN3_COMMONS_NAME}/themeFonts.json`);
 
 module.exports = {
-  presets: [require('@gen3/frontend/tailwind')],
-  // important: '#__next', // Uncommenting this affects tailwind styling in Modals
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
