@@ -15,20 +15,19 @@ RUN npm install @swc/core @napi-rs/magic-string && \
     npm run build
 
 # Production stage
-FROM node:20-slim AS runner
-
+FROM node:20.18.2-alpine3.20 AS runner
+RUN apk add bash
 WORKDIR /gen3
 
 RUN addgroup --system --gid 1001 nextjs && \
     adduser --system --uid 1001 nextjs
 
-COPY --from=builder /gen3/config ./config
+#COPY --from=builder /gen3/config ./config
 COPY --from=builder /gen3/public ./public
-COPY --from=builder /gen3/.next/standalone ./
-COPY --from=builder /gen3/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /gen3/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /gen3/.next/static ./.next/static
 COPY --from=builder /gen3/start.sh ./start.sh
-RUN chown nextjs:nextjs /gen3/.next
-VOLUME  /gen3/.next
+VOLUME /config
 
 USER nextjs:nextjs
 ENV PORT=3000
