@@ -2,4 +2,6 @@
 
 set -e
 echo "starting server"
-node server.js
+echo "spinning"
+tail -f /dev/null
+#node server.js
