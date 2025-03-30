@@ -27,8 +27,9 @@ COPY --from=builder /gen3/public ./public
 COPY --from=builder --chown=nextjs:nodejs /gen3/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /gen3/.next/static ./.next/static
 COPY --from=builder /gen3/start.sh ./start.sh
-RUN rm -rf /gen3/config
+RUN rm -rf /gen3/config  /gen3/public
 VOLUME /gen3/config
+VOLUME /gen3/public
 
 USER nextjs:nextjs
 ENV PORT=3000
