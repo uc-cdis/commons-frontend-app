@@ -21,7 +21,7 @@ WORKDIR /gen3
 
 RUN addgroup --system --gid 1001 nextjs && \
     adduser --system --uid 1001 nextjs
-
+COPY --from=builder /gen3/node_modules ./node_modules
 COPY --from=builder /gen3/config ./config
 COPY --from=builder /gen3/public ./public
 COPY --from=builder /gen3/.next/standalone ./
