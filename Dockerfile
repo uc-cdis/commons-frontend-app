@@ -21,14 +21,16 @@ WORKDIR /gen3
 
 RUN addgroup --system --gid 1001 nextjs && \
     adduser --system --uid 1001 nextjs
+
+COPY --from=builder /gen3/package.json ./
 COPY --from=builder /gen3/node_modules ./node_modules
 COPY --from=builder /gen3/config ./config
+COPY --from=builder /gen3/.next ./.next
 COPY --from=builder /gen3/public ./public
-COPY --from=builder /gen3/.next/standalone ./
-COPY --from=builder /gen3/.next/static ./.next/static
 COPY --from=builder /gen3/start.sh ./start.sh
+RUN mkdir -p /gen3/.next/cache/images
+RUN chmod -R 777 /gen3/.next/cache
 RUN chown nextjs:nextjs /gen3/.next
-VOLUME  /gen3/.next
 
 USER nextjs:nextjs
 ENV PORT=3000
