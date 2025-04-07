@@ -91,13 +91,18 @@
         "license": {
           "title": "License",
           "type": "link",
-          "cellRenderFunction": "linkURL",
-          "sortable": false
+          "cellRenderFunction": "LinkWithIcon",
+          "sortable": false,
+          "params" : {
+            "color" : "accent.5",
+            "size" : "md",
+            "variant" : "filled"
+          }
         },
         "data_url_doi": {
           "title": "DOI",
           "type": "link",
-          "cellRenderFunction": "linkURL",
+          "cellRenderFunction": "LinkWithIcon",
           "sortable": false
         },
         "metadata_source_date": {
