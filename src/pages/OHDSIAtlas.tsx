@@ -1,30 +1,55 @@
 import React from 'react';
-import { Center, Text, Paper } from '@mantine/core';
+import { Title } from '@mantine/core';
 import {
   NavPageLayout,
   NavPageLayoutProps,
   getNavPageLayoutPropsFromConfig,
 } from '@gen3/frontend';
+import { useLazyFetchUserDetailsQuery, GEN3_API } from '@gen3/core';
 import { GetServerSideProps } from 'next';
 
 const OHDSIAtlas = ({ headerProps, footerProps }: NavPageLayoutProps) => {
+  const iframeUrl = GEN3_API ? `https://atlas.${GEN3_API}/atlas/`: 'https://atlas.vpodc.data-commons.org/atlas/';
+  const [fetchUserDetails] = useLazyFetchUserDetailsQuery();
+  
+  const processAppMessages = (event: MessageEvent) => {
+    const pathArray = iframeUrl.split('/');
+    const protocol = pathArray[0];
+    const host = pathArray[2];
+    const applicationBaseUrl = `${protocol}//${host}`;
+
+    // ONLY process messages coming from the same domain as the app AND
+    // which contain the message "refresh token!":
+    if (
+      event.origin === applicationBaseUrl
+      && event.data === 'refresh token!'
+    ) {
+      // This refreshes the user token
+      fetchUserDetails();
+    }
+  };
+
+  // this will ensure the main window will process the app messages (if any):
+  window.addEventListener('message', processAppMessages);
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
       headerData={{
-        title: 'Gen3 Sample Page',
-        content: 'Sample Data',
-        key: 'gen3-sample-page',
+        title: 'OHDSI Atlas',
+        content: 'OHDSI Atlas Page',
+        key: 'gen3-ohdsi-atlas',
       }}
     >
-      <div className="w-full m-10">
-        <Center>
-          <Paper shadow="md" p="xl" withBorder>
-            <h1>OHDSIAtlas</h1>
-            <Text>This is a example custom page in Gen3</Text>
-            <Text>You can add your own content here.</Text>
-          </Paper>
-        </Center>
+      <div className="w-full mx-10 relative flex flex-col">
+        <div>
+          <Title order={1}>OHDSI Atlas</Title>
+          <p>Use this App for cohort creation. These will be automatically populated in the Gen3 GWAS App</p>
+        </div>
+        <iframe
+          className='w-full h-full'
+          title='OHDSI Atlas App'
+          src={iframeUrl}
+        />
       </div>
     </NavPageLayout>
   );
