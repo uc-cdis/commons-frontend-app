@@ -1,7 +1,7 @@
 import {
   LandingPage,
-  LandingPageGetStaticProps as getStaticProps,
+  LandingPageGetServerSideProps as getServerSideProps,
 } from '@gen3/frontend';
 
 export default LandingPage;
-export { getStaticProps };
+export { getServerSideProps };
