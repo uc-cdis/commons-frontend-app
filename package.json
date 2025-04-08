@@ -1,6 +1,6 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.10.85",
+  "version": "0.10.89",
   "private": "true",
   "engines": {
     "npm": ">=10.2.3",
