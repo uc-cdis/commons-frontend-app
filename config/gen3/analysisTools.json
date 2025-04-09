@@ -7,7 +7,8 @@
       "image": "/images/apps/PDC_clustergram.png",
       "description": "Use the Proteome Data Commons (PDC) API to retreive protein relative expression data for a CPTAC study. The PDC uses values produced by the Common Data Analysis Pipeline (CDAP). The results are intended to help identify clusters of samples (tumors) displaying similar patterns of protein expression.",
       "loginRequired": false,
-      "href": "notebook"
+      "href": "notebook",
+      "btnText": "Show Analysis"
     }
   ]
 }
