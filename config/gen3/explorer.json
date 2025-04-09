@@ -32,6 +32,9 @@
         "label": "Maximum of 10,000 Total Records. Records per Page:"
       },
       "fields": [
+        "study_viewer_url",
+        "data_url_doi",
+        "license",
         "StudyDescription",
         "PatientSex",
         "PatientAge",
@@ -41,15 +44,40 @@
         "disease_type",
         "commons_name",
         "collection_id",
-        "license",
-        "data_url_doi",
         "metadata_source_date",
         "metadata_source_version",
-        "study_viewer_url",
         "StudyInstanceUID",
         "subject_id"
       ],
       "columns": {
+        "study_viewer_url": {
+          "title": "DICOM Viewer URL",
+          "type": "link",
+          "cellRenderFunction": "linkWithIcon",
+          "sortable": false,
+          "params" : {
+            "variant": "light"
+          }
+        },
+        "data_url_doi": {
+          "title": "DOI",
+          "type": "link",
+          "cellRenderFunction": "linkWithIcon",
+          "sortable": false,
+          "params" : {
+            "variant": "light"
+          }
+        },
+        "license": {
+          "title": "License",
+          "type": "link",
+          "cellRenderFunction": "linkWithIcon",
+          "sortable": false,
+          "params" : {
+            "variant": "light"
+          }
+        }
+        },
         "StudyDescription": {
           "title": "Study Description"
         },
@@ -88,29 +116,11 @@
         "collection_id": {
           "title": "Collection ID"
         },
-        "license": {
-          "title": "License",
-          "type": "link",
-          "cellRenderFunction": "linkURL",
-          "sortable": false
-        },
-        "data_url_doi": {
-          "title": "DOI",
-          "type": "link",
-          "cellRenderFunction": "linkURL",
-          "sortable": false
-        },
         "metadata_source_date": {
           "title": "Metadata Source Date"
         },
         "metadata_source_version": {
           "title": "Metadata Source Version"
-        },
-        "study_viewer_url": {
-          "title": "DICOM Viewer URL",
-          "type": "link",
-          "cellRenderFunction": "linkURL",
-          "sortable": false
         },
         "StudyInstanceUID": {
           "title": "Study UID"
@@ -124,6 +134,18 @@
       "dataType": "imaging_study",
       "nodeCountTitle": "Imaging Studies",
       "fieldMapping": [
+        {
+          "field": "study_viewer_url",
+          "name": "DICOM Viewer URL"
+        },
+        {
+          "field": "data_url_doi",
+          "name": "Data URL/DOI"
+        },
+        {
+          "field": "license",
+          "name": "License"
+        },
         {
           "field": "StudyDescription",
           "name": "Study Description"
@@ -161,24 +183,12 @@
           "name": "Collection ID"
         },
         {
-          "field": "license",
-          "name": "License"
-        },
-        {
-          "field": "data_url_doi",
-          "name": "Data URL/DOI"
-        },
-        {
           "field": "metadata_source_date",
           "name": "Metadata Source Date"
         },
         {
           "field": "metadata_source_version",
           "name": "Metadata Source Version"
-        },
-        {
-          "field": "study_viewer_url",
-          "name": "DICOM Viewer URL"
         },
         {
           "field": "StudyInstanceUID",
@@ -266,14 +276,32 @@
         "label": "Maximum of 10,000 Total Records. Records per Page:"
       },
       "fields": [
+        "data_url_doi",
+        "license",
         "primary_site",
         "disease_type",
         "race",
         "commons_name",
-        "collection_id",
-        "license",
-        "data_url_doi"
+        "collection_id"
       ],
+      "data_url_doi": {
+        "title": "DOI",
+        "type": "link",
+        "cellRenderFunction": "linkWithIcon",
+        "sortable": false,
+        "params" : {
+            "variant": "light"
+          }
+      },
+      "license": {
+        "title": "License",
+        "type": "link",
+        "cellRenderFunction": "linkWithIcon",
+        "sortable": false,
+        "params" : {
+            "variant": "light"
+          }
+      },
       "columns": {
         "primary_site": {
           "title": "Primary Site"
@@ -300,21 +328,6 @@
         },
         "collection_id": {
           "title": "Collection ID"
-        },
-        "license": {
-          "title": "License",
-          "type": "link",
-          "cellRenderFunction": "linkURL",
-          "sortable": false,
-          "params": {
-            "href": ""
-          }
-        },
-        "data_url_doi": {
-          "title": "DOI",
-          "type": "link",
-          "cellRenderFunction": "linkURL",
-          "sortable": false
         }
       }
     },
@@ -322,6 +335,14 @@
       "dataType": "subject",
       "nodeCountTitle": "Subjects",
       "fieldMapping": [
+        {
+          "field": "data_url_doi",
+          "name": "Data URL/DOI"
+        },
+        {
+          "field": "license",
+          "name": "License"
+        },
         {
           "field": "primary_site",
           "name": "Primary Site"
@@ -337,14 +358,6 @@
         {
           "field": "collection_id",
           "name": "Collection ID"
-        },
-        {
-          "field": "license",
-          "name": "License"
-        },
-        {
-          "field": "data_url_doi",
-          "name": "Data URL/DOI"
         }
       ],
       "manifestMapping": {
@@ -431,6 +444,9 @@
         "label": "Maximum of 10,000 Total Records. Records per Page:"
       },
       "fields": [
+        "series_viewer_url",
+        "data_url_doi",
+        "license",
         "Modality",
         "BodyPartExamined",
         "PatientSex",
@@ -440,16 +456,40 @@
         "collection_id",
         "StudyDescription",
         "SeriesDescription",
-        "license",
-        "data_url_doi",
         "metadata_source_date",
         "metadata_source_version",
-        "series_viewer_url",
         "subject_id",
         "StudyInstanceUID",
         "SeriesInstanceUID"
       ],
       "columns": {
+        "series_viewer_url": {
+          "title": "DICOM Viewer URL",
+          "type": "link",
+          "cellRenderFunction": "linkWithIcon",
+          "sortable": false,
+          "params" : {
+            "variant": "light"
+          }
+        },
+        "data_url_doi": {
+          "title": "DOI",
+          "type": "link",
+          "cellRenderFunction": "linkWithIcon",
+          "sortable": false,
+          "params" : {
+            "variant": "light"
+          }
+        },
+        "license": {
+          "title": "License",
+          "type": "link",
+          "cellRenderFunction": "linkWithIcon",
+          "sortable": false,
+          "params" : {
+            "variant": "light"
+          }
+        },
         "Modality": {
           "title": "Modality"
         },
@@ -490,32 +530,12 @@
           "title": "Series Description",
           "sortable": false
         },
-        "license": {
-          "title": "License",
-          "type": "link",
-          "cellRenderFunction": "linkURL",
-          "sortable": false,
-          "params": {
-            "href": ""
-          }
-        },
-        "data_url_doi": {
-          "title": "DOI",
-          "type": "link",
-          "cellRenderFunction": "linkURL",
-          "sortable": false
-        },
+
         "metadata_source_date": {
           "title": "Metadata Source Date"
         },
         "metadata_source_version": {
           "title": "Metadata Source Version"
-        },
-        "series_viewer_url": {
-          "title": "DICOM Viewer URL",
-          "type": "link",
-          "cellRenderFunction": "linkURL",
-          "sortable": false
         },
         "subject_id": {
           "title": "Subject ID"
@@ -532,6 +552,18 @@
       "dataType": "imaging_series",
       "nodeCountTitle": "Imaging Series",
       "fieldMapping": [
+        {
+          "field": "series_viewer_url",
+          "name": "DICOM Viewer URL"
+        },
+        {
+          "field": "data_url_doi",
+          "name": "Data URL/DOI"
+        },
+        {
+          "field": "license",
+          "name": "License"
+        },
         {
           "field": "Modality",
           "name": "Modality"
@@ -569,24 +601,12 @@
           "name": "Series Description"
         },
         {
-          "field": "license",
-          "name": "License"
-        },
-        {
-          "field": "data_url_doi",
-          "name": "Data URL/DOI"
-        },
-        {
           "field": "metadata_source_date",
           "name": "Metadata Source Date"
         },
         {
           "field": "metadata_source_version",
           "name": "Metadata Source Version"
-        },
-        {
-          "field": "series_viewer_url",
-          "name": "DICOM Viewer URL"
         },
         {
           "field": "subject_id",
