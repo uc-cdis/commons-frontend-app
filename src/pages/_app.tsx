@@ -10,9 +10,8 @@ import {
   type ModalsConfig,
   RegisteredIcons,
   SessionConfiguration,
-  // registerCohortDiscoveryApp,
-  registerCohortBuilderDefaultPreviewRenderers,
   registerExplorerDefaultCellRenderers,
+  registerCohortBuilderDefaultPreviewRenderers,
   registerMetadataSchemaApp,
 } from '@gen3/frontend';
 
