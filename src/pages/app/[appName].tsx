@@ -54,7 +54,7 @@ export const getServerSideProps: GetServerSideProps<
   const appName = context.query.appName as string;
 
   try {
-    const config: any = await ContentSource.get(
+    const config: any = await ContentSource.getContentDatabase().get(
       `config/${GEN3_COMMONS_NAME}/apps/${appName}.json`,
     );
 
