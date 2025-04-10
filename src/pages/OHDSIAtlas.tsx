@@ -4,6 +4,7 @@ import {
   NavPageLayout,
   NavPageLayoutProps,
   getNavPageLayoutPropsFromConfig,
+  ProtectedContent,
 } from '@gen3/frontend';
 import { useLazyFetchUserDetailsQuery, GEN3_API } from '@gen3/core';
 import { GetServerSideProps } from 'next';
@@ -40,17 +41,19 @@ const OHDSIAtlas = ({ headerProps, footerProps }: NavPageLayoutProps) => {
         key: 'gen3-ohdsi-atlas',
       }}
     >
-      <div className="w-full mx-10 relative flex flex-col">
-        <div>
-          <Title order={1}>OHDSI Atlas</Title>
-          <p>Use this App for cohort creation. These will be automatically populated in the Gen3 GWAS App</p>
+      <ProtectedContent>
+        <div className="w-full mx-10 relative flex flex-col">
+          <div>
+            <Title order={1}>OHDSI Atlas</Title>
+            <p>Use this App for cohort creation. These will be automatically populated in the Gen3 GWAS App</p>
+          </div>
+          <iframe
+            className='w-full h-full'
+            title='OHDSI Atlas App'
+            src={iframeUrl}
+          />
         </div>
-        <iframe
-          className='w-full h-full'
-          title='OHDSI Atlas App'
-          src={iframeUrl}
-        />
-      </div>
+      </ProtectedContent>
     </NavPageLayout>
   );
 };

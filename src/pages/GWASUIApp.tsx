@@ -3,6 +3,7 @@ import {
   NavPageLayout,
   NavPageLayoutProps,
   getNavPageLayoutPropsFromConfig,
+  ProtectedContent,
 } from '@gen3/frontend';
 import { GetServerSideProps } from 'next';
 import GWASContainer from '../lib/AnalysisApps/GWAS/GWASContainer';
@@ -17,11 +18,13 @@ const GWASUIApp = ({ headerProps, footerProps }: NavPageLayoutProps) => {
         key: 'gen3-sample-page',
       }}
     >
-      <div className="w-full m-10">
-        <div className="w-full p-5">
-          <GWASContainer />
+      <ProtectedContent>
+        <div className="w-full m-10">
+          <div className="w-full p-5">
+            <GWASContainer />
+          </div>
         </div>
-      </div>
+      </ProtectedContent>
     </NavPageLayout>
   );
 };
