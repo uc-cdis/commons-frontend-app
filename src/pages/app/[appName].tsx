@@ -55,7 +55,7 @@ export const getServerSideProps: GetServerSideProps<
 
   try {
     const config: any = await ContentSource.getContentDatabase().get(
-      `config/${GEN3_COMMONS_NAME}/apps/${appName}.json`,
+      `${GEN3_COMMONS_NAME}/apps/${appName}.json`,
     );
 
     return {
