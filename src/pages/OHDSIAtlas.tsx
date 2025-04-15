@@ -10,7 +10,7 @@ import { useLazyFetchUserDetailsQuery, GEN3_API } from '@gen3/core';
 import { GetServerSideProps } from 'next';
 
 const OHDSIAtlas = ({ headerProps, footerProps }: NavPageLayoutProps) => {
-  const iframeUrl = `${process.env.NEXT_PUBLIC_GEN3_ATLAS_URL}/WebAPI/user/login/openid?redirectUrl=/home`;
+  const iframeUrl = `https://atlas.${window.location.hostname}/WebAPI/user/login/openid?redirectUrl=/home`;
   const [fetchUserDetails] = useLazyFetchUserDetailsQuery();
   
   const processAppMessages = (event: MessageEvent) => {
