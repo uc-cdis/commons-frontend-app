@@ -24,11 +24,11 @@ const GWASResults = ({ headerProps, footerProps }: NavPageLayoutProps) => {
     >
 
       <ProtectedContent>
-      <div className="w-full m-10">
-        <div className="w-full p-5">
-          <GWASResultsContainer />
+        <div className="w-full m-10">
+          <div className="w-full p-5">
+            <GWASResultsContainer />
+          </div>
         </div>
-      </div>
       </ProtectedContent>
     </NavPageLayout>
   );
