@@ -6,12 +6,11 @@ import {
   getNavPageLayoutPropsFromConfig,
   ProtectedContent,
 } from '@gen3/frontend';
-import { useLazyFetchUserDetailsQuery, GEN3_API } from '@gen3/core';
 import { GetServerSideProps } from 'next';
 
 const OHDSIAtlas = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   const iframeUrl = `https://atlas.${window.location.hostname}/WebAPI/user/login/openid?redirectUrl=/home`;
-  const [fetchUserDetails] = useLazyFetchUserDetailsQuery();
+  const userRefreshEvent = new Event("updateUserActivity");
   
   const processAppMessages = (event: MessageEvent) => {
     const pathArray = iframeUrl.split('/');
@@ -26,7 +25,7 @@ const OHDSIAtlas = ({ headerProps, footerProps }: NavPageLayoutProps) => {
       && event.data === 'refresh token!'
     ) {
       // This refreshes the user token
-      fetchUserDetails();
+      window.dispatchEvent(userRefreshEvent);
     }
   };
 
