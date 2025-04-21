@@ -27,7 +27,7 @@
     "@grafana/faro-react": "^1.9.1",
     "@grafana/faro-web-sdk": "^1.9.1",
     "@grafana/faro-web-tracing": "^1.9.1",
-    "@mantine/core": "^7.16.0",
+    "@mantine/core": "^7.17.3",
     "@mantine/dates": "^7.16.0",
     "@mantine/form": "^7.16.0",
     "@mantine/hooks": "^7.16.0",
