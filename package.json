@@ -13,12 +13,14 @@
     "build": "next build",
     "start": "next start",
     "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname",
+    "copy:thebe": "mkdir -p public/thebe && cp -R node_modules/thebe-lite/dist/lib/* public/thebe && cp -R node_modules/thebe-core/dist/lib/* public/thebe",
     "build:colors": "node ./node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/$npm_config_commons/colors.json --out=config/$npm_config_commons",
     "build:icons": "node ./node_modules/@gen3/toolsff/dist/bundleIcons.esm.js --inpath=config/icons --outpath=config/icons",
     "getSchema": "node ./node_modules/@gen3/toolsff/dist/getSchema.esm.js --out=config/",
     "getDRSToHostname": "node ./node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/"
   },
   "dependencies": {
+    "@datalayer/jupyter-viewer": "^1.0.1",
     "@fontsource/montserrat": "^5.0.19",
     "@fontsource/poppins": "^5.0.15",
     "@fontsource/source-sans-pro": "^5.0.8",
@@ -41,8 +43,12 @@
     "jsonpath-plus": "^10.3.0",
     "react": "^18.3.1",
     "react-dom": "18.3.1",
+    "react-jupyter-notebook-viewer": "^1.1.13",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
     "sharp": "^0.33.5",
-    "swr": "^2.2.5"
+    "swr": "^2.2.5",
+    "thebe-react": "^0.5.0"
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.1",

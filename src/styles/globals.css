@@ -8,6 +8,8 @@
 @import "tailwindcss/utilities";
 @import '@gen3/frontend/dist/styles.css';
 
+@import "katex/dist/katex.min.css";
+
 @import 'graphiql/graphiql.css';
 @import '@graphiql/react/dist/style.css';
 
