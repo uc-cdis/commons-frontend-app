@@ -1,6 +1,4 @@
 {
-  "metadataConfig": [
-{
   "tableConfig": {
     "selectableRows": true,
     "expandableRows": true
@@ -194,6 +192,4 @@
       }
     ]
   }
-}
-]
 }

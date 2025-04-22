@@ -19,6 +19,7 @@ const RenderDicomLink = ({ cell }: CellRendererFunctionProps) => {
     );
 };
 
+
 interface LinkCellOptions {
   icon: string;
   color: string;
@@ -120,7 +121,7 @@ export const registerCohortTableCustomCellRenderers = () => {
   );
   ExplorerTableCellRendererFactory().registerRenderer(
     'link',
-    'LinkWithIcon',
+    'linkWithIcon',
     RenderLinkWithIcon,
   );
 };

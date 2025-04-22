@@ -54,6 +54,7 @@
           "title": "DICOM Viewer URL",
           "type": "link",
           "cellRenderFunction": "linkWithIcon",
+          "width" : "20",
           "sortable": false,
           "params" : {
             "variant": "light"
@@ -62,6 +63,7 @@
         "data_url_doi": {
           "title": "DOI",
           "type": "link",
+          "width" : "20",
           "cellRenderFunction": "linkWithIcon",
           "sortable": false,
           "params" : {
@@ -71,6 +73,7 @@
         "license": {
           "title": "License",
           "type": "link",
+          "width" : "20",
           "cellRenderFunction": "linkWithIcon",
           "sortable": false,
           "params" : {
@@ -120,6 +123,7 @@
           "title": "License",
           "type": "link",
           "cellRenderFunction": "LinkWithIcon",
+          "width" : "20",
           "sortable": false,
           "params" : {
             "color" : "accent.5",
@@ -131,6 +135,7 @@
           "title": "DOI",
           "type": "link",
           "cellRenderFunction": "LinkWithIcon",
+          "width" : "20",
           "sortable": false
         },
         "metadata_source_date": {
@@ -145,8 +150,7 @@
         "subject_id": {
           "title": "Subject ID"
         }
-      }
-    },
+      },
     "guppyConfig": {
       "dataType": "imaging_study",
       "nodeCountTitle": "Imaging Studies",
@@ -305,6 +309,7 @@
         "title": "DOI",
         "type": "link",
         "cellRenderFunction": "linkWithIcon",
+        "width" : "20",
         "sortable": false,
         "params" : {
             "variant": "light"
@@ -314,6 +319,7 @@
         "title": "License",
         "type": "link",
         "cellRenderFunction": "linkWithIcon",
+        "width" : "20",
         "sortable": false,
         "params" : {
             "variant": "light"
@@ -493,6 +499,7 @@
           "title": "DOI",
           "type": "link",
           "cellRenderFunction": "linkWithIcon",
+          "width" : "20",
           "sortable": false,
           "params" : {
             "variant": "light"
@@ -502,6 +509,7 @@
           "title": "License",
           "type": "link",
           "cellRenderFunction": "linkWithIcon",
+          "width" : "20",
           "sortable": false,
           "params" : {
             "variant": "light"
