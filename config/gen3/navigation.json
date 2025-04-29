@@ -6,8 +6,8 @@
       "navigationPanel": "bg-base-max text-primary"
     },
     "logo": {
-      "src": "/images/Prometheus_logo.png",
-      "height": 58,
+      "src": "/images/murtha_cancer_center_logo.jpg",
+      "height": 100,
       "width": 100,
       "href": "/"
     },
