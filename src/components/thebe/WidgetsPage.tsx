@@ -11,7 +11,7 @@ const WidgetsPage = ({ notebookName}:{ notebookName: string}) =>   {
   const mime = useRenderMimeRegistry();
 
   const { ready, executing, executeAll, cellRefs, cellIds } = useNotebook(
-    notebookName ?? 'widget-test',
+    notebookName ?? 'primary_analysis',
     async (n) => {
       const url = `/${n}.ipynb`;
       const resp = await fetch(url);

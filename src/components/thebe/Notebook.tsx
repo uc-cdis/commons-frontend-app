@@ -28,7 +28,7 @@ const NotebookWithWidget = () => {
         path={config?.kernels.path}
       >
 
-        <WidgetsPage notebookName={"widget-test"} />
+        <WidgetsPage notebookName={"primary_analyses"} />
       </ThebeSessionProvider>
     </ThebeRenderMimeRegistryProvider>
   )

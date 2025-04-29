@@ -6,6 +6,7 @@ const plugin = require('tailwindcss/plugin');
 const { GEN3_COMMONS_NAME } = require('@gen3/core');
 const themeColors = require(`./config/${GEN3_COMMONS_NAME}/themeColors.json`);
 const themeFonts = require(`./config/${GEN3_COMMONS_NAME}/themeFonts.json`);
+const mystTheme = require('@myst-theme/styles');
 
 module.exports = {
   content: [
@@ -13,9 +14,13 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/features/**/*.{js,ts,jsx,tsx}',
     './node_modules/@gen3/frontend/dist/esm/index.js',
+    './node_modules/myst-to-react/dist/esm/index.js',
+    './node_modules/@myst-theme/frontmatter/dist/esm/index.js',
+      ...mystTheme.content
   ],
   theme: {
     extend: {
+      ...mystTheme.themeExtensions,
       colors: {
         heal: {
           primary: '#99286B',
@@ -182,5 +187,6 @@ module.exports = {
     {
       pattern: /border-(primary|secondary|accent|accent-warm|accent-cool|base)/,
     },
+    ...mystTheme.safeList
   ],
 };

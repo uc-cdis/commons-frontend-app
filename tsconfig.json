@@ -4,7 +4,7 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "es2019"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -13,11 +13,10 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
     "paths": {
       "@/*": [
         "./src/*"
@@ -27,7 +26,8 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",
