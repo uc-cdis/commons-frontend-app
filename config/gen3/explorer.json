@@ -43,6 +43,7 @@
         "primary_site",
         "disease_type",
         "commons_name",
+        "commons_long_name",
         "collection_id",
         "metadata_source_date",
         "metadata_source_version",
@@ -57,27 +58,33 @@
           "width" : "20",
           "sortable": false,
           "params" : {
-            "variant": "light"
+            "color": "accent.5",
+            "size": "md",
+            "variant": "filled"
           }
         },
         "data_url_doi": {
           "title": "DOI",
           "type": "link",
-          "width" : "20",
-          "cellRenderFunction": "linkWithIcon",
+          "cellRenderFunction": "LinkWithIcon",
+          "width": "20",
           "sortable": false,
           "params" : {
-            "variant": "light"
+            "color": "accent.5",
+            "size": "md",
+            "variant": "filled"
           }
         },
         "license": {
           "title": "License",
           "type": "link",
-          "width" : "20",
-          "cellRenderFunction": "linkWithIcon",
+          "cellRenderFunction": "LinkWithIcon",
+          "width": "20",
           "sortable": false,
           "params" : {
-            "variant": "light"
+            "color": "accent.5",
+            "size": "md",
+            "variant": "filled"
           }
         }
         },
@@ -111,32 +118,17 @@
               "ACRdart": "https://dart.acr.org/Home/ImagingHub",
               "IDC": "https://portal.imaging.datacommons.cancer.gov/explore/",
               "MIDRC": "https://data.midrc.org",
+              "NIHCC": "https://www.cc.nih.gov/",
               "Stanford AIMI": "https://stanfordaimi.azurewebsites.net/",
               "TCIA": "https://www.cancerimagingarchive.net/"
             }
           }
         },
+        "commons_long_name": {
+          "title": "Platform Name"
+        },
         "collection_id": {
           "title": "Collection ID"
-        },
-        "license": {
-          "title": "License",
-          "type": "link",
-          "cellRenderFunction": "LinkWithIcon",
-          "width" : "20",
-          "sortable": false,
-          "params" : {
-            "color" : "accent.5",
-            "size" : "md",
-            "variant" : "filled"
-          }
-        },
-        "data_url_doi": {
-          "title": "DOI",
-          "type": "link",
-          "cellRenderFunction": "LinkWithIcon",
-          "width" : "20",
-          "sortable": false
         },
         "metadata_source_date": {
           "title": "Metadata Source Date"
@@ -181,7 +173,7 @@
         },
         {
           "field": "EthnicGroup",
-          "name" : "Ethnic Group"
+          "name": "Ethnic Group"
         },
         {
           "field": "race",
@@ -198,6 +190,10 @@
         {
           "field": "commons_name",
           "name": "Platform"
+        },
+        {
+          "field": "commons_long_name",
+          "name": "Platform Name"
         },
         {
           "field": "collection_id",
@@ -226,7 +222,9 @@
         "referenceIdFieldInResourceIndex": "StudyInstanceUID",
         "referenceIdFieldInDataIndex": "StudyInstanceUID"
       },
-      "accessibleFieldCheckList": ["authz"],
+      "accessibleFieldCheckList": [
+        "authz"
+      ],
       "accessibleValidationField": "auth_resource_path"
     },
     "loginForDownload": false,
@@ -285,6 +283,7 @@
             "primary_site",
             "disease_type",
             "commons_name",
+            "commons_long_name",
             "collection_id"
           ]
         }
@@ -305,27 +304,31 @@
         "commons_name",
         "collection_id"
       ],
-      "data_url_doi": {
+      "columns": {
+        "data_url_doi": {
         "title": "DOI",
         "type": "link",
         "cellRenderFunction": "linkWithIcon",
-        "width" : "20",
-        "sortable": false,
-        "params" : {
-            "variant": "light"
+          "width" : "20",
+          "sortable": false,
+          "params" : {
+            "color": "accent.5",
+            "size": "md",
+            "variant": "filled"
           }
-      },
-      "license": {
-        "title": "License",
-        "type": "link",
-        "cellRenderFunction": "linkWithIcon",
-        "width" : "20",
-        "sortable": false,
-        "params" : {
-            "variant": "light"
+        },
+        "license": {
+          "title": "License",
+          "type": "link",
+          "cellRenderFunction": "linkWithIcon",
+          "width" : "20",
+          "sortable": false,
+          "params" : {
+            "color": "accent.5",
+            "size": "md",
+            "variant": "filled"
           }
-      },
-      "columns": {
+        },
         "primary_site": {
           "title": "Primary Site"
         },
@@ -344,6 +347,7 @@
               "ACRdart": "https://dart.acr.org/Home/ImagingHub",
               "IDC": "https://portal.imaging.datacommons.cancer.gov/explore/",
               "MIDRC": "https://data.midrc.org",
+              "NIHCC": "https://www.cc.nih.gov/",
               "Stanford AIMI": "https://stanfordaimi.azurewebsites.net/",
               "TCIA": "https://www.cancerimagingarchive.net/"
             }
@@ -379,6 +383,10 @@
           "name": "Platform"
         },
         {
+          "field": "commons_long_name",
+          "name": "Platform"
+        },
+        {
           "field": "collection_id",
           "name": "Collection ID"
         }
@@ -389,7 +397,9 @@
         "referenceIdFieldInResourceIndex": "submitter_id",
         "referenceIdFieldInDataIndex": "submitter_id"
       },
-      "accessibleFieldCheckList": ["authz"],
+      "accessibleFieldCheckList": [
+        "authz"
+      ],
       "accessibleValidationField": "auth_resource_path"
     },
     "loginForDownload": false,
@@ -454,6 +464,7 @@
             "primary_site",
             "disease_type",
             "commons_name",
+            "commons_long_name"
             "collection_id",
             "StudyDescription"
           ]
@@ -476,6 +487,7 @@
         "primary_site",
         "disease_type",
         "commons_name",
+        "commons_long_name",
         "collection_id",
         "StudyDescription",
         "SeriesDescription",
@@ -490,9 +502,12 @@
           "title": "DICOM Viewer URL",
           "type": "link",
           "cellRenderFunction": "linkWithIcon",
+          "width" : "20",
           "sortable": false,
           "params" : {
-            "variant": "light"
+            "color": "accent.5",
+            "size": "md",
+            "variant": "filled"
           }
         },
         "data_url_doi": {
@@ -502,7 +517,9 @@
           "width" : "20",
           "sortable": false,
           "params" : {
-            "variant": "light"
+            "color": "accent.5",
+            "size": "md",
+            "variant": "filled"
           }
         },
         "license": {
@@ -512,7 +529,9 @@
           "width" : "20",
           "sortable": false,
           "params" : {
-            "variant": "light"
+            "color": "accent.5",
+            "size": "md",
+            "variant": "filled"
           }
         },
         "Modality": {
@@ -539,10 +558,14 @@
               "ACRdart": "https://dart.acr.org/Home/ImagingHub",
               "IDC": "https://portal.imaging.datacommons.cancer.gov/explore/",
               "MIDRC": "https://data.midrc.org",
+              "NIHCC": "https://www.cc.nih.gov/",
               "Stanford AIMI": "https://stanfordaimi.azurewebsites.net/",
               "TCIA": "https://www.cancerimagingarchive.net/"
             }
           }
+        },
+        "commons_long_name": {
+          "title": "Platform Name"
         },
         "collection_id": {
           "title": "Collection"
@@ -555,7 +578,6 @@
           "title": "Series Description",
           "sortable": false
         },
-
         "metadata_source_date": {
           "title": "Metadata Source Date"
         },
@@ -614,6 +636,10 @@
           "name": "Platform"
         },
         {
+          "field": "commons_long_name",
+          "name": "Platform Name"
+        },
+        {
           "field": "collection_id",
           "name": "Collection ID"
         },
@@ -652,7 +678,9 @@
         "referenceIdFieldInResourceIndex": "SeriesInstanceUID",
         "referenceIdFieldInDataIndex": "SeriesInstanceUID"
       },
-      "accessibleFieldCheckList": ["authz"],
+      "accessibleFieldCheckList": [
+        "authz"
+      ],
       "accessibleValidationField": "auth_resource_path"
     },
     "loginForDownload": false,
