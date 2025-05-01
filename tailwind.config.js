@@ -14,8 +14,6 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/features/**/*.{js,ts,jsx,tsx}',
     './node_modules/@gen3/frontend/dist/esm/index.js',
-    './node_modules/myst-to-react/dist/esm/index.js',
-    './node_modules/@myst-theme/frontmatter/dist/esm/index.js',
       ...mystTheme.content
   ],
   theme: {

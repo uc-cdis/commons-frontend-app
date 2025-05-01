@@ -3,7 +3,7 @@ import {ArticleProvider,  ReferencesProvider, ThemeProvider } from '@myst-theme/
 import { MyST, DEFAULT_RENDERERS } from 'myst-to-react';
 import { Box } from "@mantine/core";
 
-export function MyComponent({ data }) {
+export function MysyMarkdown({ data }) {
 
   const { mdast, frontmatter, references } = data
   return (

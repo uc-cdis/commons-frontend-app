@@ -53,8 +53,14 @@ export function Article({
   const top = useThemeTop();
   const isOutlineMargin = useMediaQuery('(min-width: 1024px)');
 
+
+  console.log("compute", compute);
+
   const { thebe } = manifest as any;
   const { location } = article;
+
+  console.log("thebe", thebe);
+  console.log("tree", tree);
   return (
     <ArticleProvider
       kind={article.kind}

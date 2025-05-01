@@ -8,7 +8,7 @@ const NotebookViewer = dynamic(() => import("../components/NotebookViewer2"), {
 export default function IndexPage() {
   return (
     <NotebookViewer
-      filePath="Example.ipynb"
+      filePath="primary_analyses.ipynb"
     />
   );
 }

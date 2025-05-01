@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
-import {useRouter } from 'next/dist/client/router';
-import { ensureSerializable} from '@/pages/book/utils';
+import { useRouter } from 'next/dist/client/router';
+import { ensureSerializable } from '@/pages/book/utils';
+import { renderers } from '../../components/book/renderers';
+import { Theme } from '@myst-theme/common';
 
 import { ArticlePage } from '@/components/article/ArticlePage';
-import { ComputeOptionsProvider, ThebeLoaderAndServer } from '@myst-theme/jupyter';
-import { BaseUrlProvider, SiteProvider, useSiteManifest, ProjectProvider } from '@myst-theme/providers';
+import {
+  ComputeOptionsProvider,
+  ThebeLoaderAndServer,
+} from '@myst-theme/jupyter';
+import {
+  BaseUrlProvider,
+  SiteProvider,
+  ThemeProvider,
+  ProjectProvider,
+} from '@myst-theme/providers';
+import { useTheme } from './theme';
 type Props = { host: string | null };
 
 import {
@@ -22,13 +33,12 @@ interface AppConfig extends NavPageLayoutProps {
   config?: SiteManifest;
 }
 
-const AppsPage =  ({ headerProps, footerProps, article, config }: AppConfig) => {
+const AppsPage = ({ headerProps, footerProps, article, config }: AppConfig) => {
   const router = useRouter();
-  const  baseUrl  = router.basePath;
+  const baseUrl = router.basePath;
+  // (Local) theme state driven by SSR and cookie/localStorage
+  const [theme, setTheme] = useState<Theme>(Theme.light);
 
-
-  console.log('baseUrl', baseUrl);
-  console.log('config', config);
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
@@ -38,22 +48,26 @@ const AppsPage =  ({ headerProps, footerProps, article, config }: AppConfig) => 
         key: 'gen3-app-page',
       }}
     >
-      <BaseUrlProvider baseurl={baseUrl ?? ''}>
-        <SiteProvider config={config}>
-      <ProjectProvider>
-        <ComputeOptionsProvider
-          features={{ notebookCompute: true, figureCompute: true, launchBinder: false }}
-        >
-          <ThebeLoaderAndServer baseurl={baseUrl ?? ''}>
-            <ArticlePage article={article} />
-          </ThebeLoaderAndServer>
-        </ComputeOptionsProvider>
-      </ProjectProvider>
-        </SiteProvider>
+      <ThemeProvider theme={theme} setTheme={setTheme} renderers={renderers}>
+        <BaseUrlProvider baseurl={baseUrl ?? ''}>
+          <SiteProvider config={config}>
+            <ProjectProvider>
+              <ComputeOptionsProvider
+                features={{
+                  notebookCompute: true,
+                  figureCompute: true,
+                  launchBinder: false,
+                }}
+              >
+                <ThebeLoaderAndServer connect={true}>
+                  <ArticlePage article={article} />
+                </ThebeLoaderAndServer>
+              </ComputeOptionsProvider>
+            </ProjectProvider>
+          </SiteProvider>
         </BaseUrlProvider>
-
+      </ThemeProvider>
     </NavPageLayout>
-
   );
 };
 
@@ -62,23 +76,22 @@ export const getServerSideProps: GetServerSideProps<
 > = async (context) => {
   const host = context.req.headers.host;
   try {
+    const article = await getPage(host ?? 'localhost', {
+      project: '',
+      slug: 'primary-analyses',
+    });
 
-    const article = await getPage(host ?? "localhost", {
-      project: "",
-      slug: "primary-analyses"
-    })
-
-    const config =  await getConfig();
+    const config = await getConfig();
     const jsonConfig = JSON.parse(JSON.stringify(config));
 
-    console.log("got article", article);
+    console.log('got article', article);
     const serializedData = ensureSerializable(article);
-    console.log("got serializedData", serializedData);
+    console.log('got serializedData', serializedData);
     return {
       props: {
         ...(await getNavPageLayoutPropsFromConfig()),
         article: serializedData,
-        config: jsonConfig
+        config: jsonConfig,
       },
     };
   } catch (err) {
@@ -87,7 +100,7 @@ export const getServerSideProps: GetServerSideProps<
       props: {
         ...(await getNavPageLayoutPropsFromConfig()),
         article: null,
-        config: null
+        config: null,
       },
     };
   }
