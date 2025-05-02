@@ -464,7 +464,7 @@
             "primary_site",
             "disease_type",
             "commons_name",
-            "commons_long_name"
+            "commons_long_name",
             "collection_id",
             "StudyDescription"
           ]
