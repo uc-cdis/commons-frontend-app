@@ -10,7 +10,7 @@
     "external": [
       {
         "id": "PROMETHEUS",
-        "label": "PROMETHEUS",
+        "label": "MC2DP",
         "dataPath": "crosswalk->subject->https://prometheus.data-commons.org/->case_id->value"
       },
       {
