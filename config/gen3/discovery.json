@@ -146,7 +146,7 @@
       },
       "studyColumns": [
         {
-          "name": "Prometheus Global ID",
+          "name": "MC2DP Global ID",
           "field": "prometheus_global_id",
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "",
@@ -245,7 +245,7 @@
             "includeName": false,
             "fields": [
               {
-                "name": "Prometheus Global ID",
+                "name": "MC2DP Global ID",
                 "field": "prometheus_global_id",
                 "contentType": "string"
               },
