@@ -141,7 +141,8 @@
         "subject_id": {
           "title": "Subject ID"
         }
-      },
+      }
+    },
     "guppyConfig": {
       "dataType": "imaging_study",
       "nodeCountTitle": "Imaging Studies",
