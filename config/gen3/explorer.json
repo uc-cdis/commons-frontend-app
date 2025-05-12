@@ -66,7 +66,7 @@
         "data_url_doi": {
           "title": "DOI",
           "type": "link",
-          "cellRenderFunction": "LinkWithIcon",
+          "cellRenderFunction": "linkWithIcon",
           "width": "20",
           "sortable": false,
           "params" : {
@@ -78,7 +78,7 @@
         "license": {
           "title": "License",
           "type": "link",
-          "cellRenderFunction": "LinkWithIcon",
+          "cellRenderFunction": "linkWithIcon",
           "width": "20",
           "sortable": false,
           "params" : {

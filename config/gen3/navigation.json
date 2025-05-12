@@ -18,11 +18,21 @@
           "label" : "text-black font-semibold hover:text-black",
           "icon" : "text-black hover:text-black"
         }
+      },
+      {
+        "icon": "gen3:mdd",
+        "href": "/app/MetadataDictionary",
+        "name": "Mesh Metadata Model",
+        "tooltip": "View the mesh metadata model, which defines metadata elements in the Explorer."
       }
     ]
   },
   "topBar": {
     "items": [
+      {
+        "href": "/app/MetadataDictionary",
+        "name": "Mesh Metadata Model"
+      }
     ],
     "loginButtonVisibility": "logoutOnly",
     "classNames": {
