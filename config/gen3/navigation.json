@@ -6,9 +6,9 @@
       "navigationPanel": "bg-base-max text-primary"
     },
     "logo": {
-      "src": "/images/logo.png",
-      "width": 300,
-      "height": 60,
+      "src": "/images/logo.svg",
+      "width": 200,
+      "height": 65,
       "href": "/"
     },
     "items": [

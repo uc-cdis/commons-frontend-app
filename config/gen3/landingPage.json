@@ -2,7 +2,7 @@
   "body": [
     {
       "title": {
-        "text": "VA Data Commons",
+        "text": "Cohort Analysis Data Commons",
         "level": 1
       }
     },
@@ -10,7 +10,7 @@
       "splitarea": {
         "left": [
           {
-            "text": "The VA Data Commons supports the research and analysis of US military Veteran medical and genomic data and aims to accelerate scientific discovery and development of therapies, diagnostic tests, and other technologies for improving the lives of Veterans and beyond. The data commons features GWAS analyses on harmonized data."
+            "text": "The Cohort Analysis Data Commons (CADC) supports the research and analysis of US military Veteran medical and genomic data and aims to accelerate scientific discovery and development of therapies, diagnostic tests, and other technologies for improving the lives of Veterans and beyond."
           }
         ],
         "right": [

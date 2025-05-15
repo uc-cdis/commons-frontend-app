@@ -9,6 +9,18 @@
         "rows": [
           {
             "Icon": {
+              "logo": "/icons/va-dark.svg",
+              "width": 91,
+              "height": 60,
+              "description": "VA Department of Veterans Affairs Logo"
+            }
+          }
+        ]
+      },
+      {
+        "rows": [
+          {
+            "Icon": {
               "logo": "/icons/gen3.png",
               "width": 132,
               "height": 60,
