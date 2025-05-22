@@ -7,7 +7,7 @@ import {
   BackmatterParts,
   extractKnownParts,
   Footnotes,
-} from '../book';
+} from '../components';
 import React from 'react';
 import {
   ErrorTray,
@@ -24,7 +24,6 @@ import {
   useMediaQuery,
   useProjectManifest,
 } from '@myst-theme/providers';
-import type { GenericParent } from 'myst-common';
 import { copyNode } from 'myst-common';
 import { SourceFileKind } from 'myst-spec-ext';
 import { MyST } from 'myst-to-react';
@@ -53,8 +52,6 @@ export function Article({
   const top = useThemeTop();
   const isOutlineMargin = useMediaQuery('(min-width: 1024px)');
 
-
-  console.log("compute", compute);
 
   const { thebe } = manifest as any;
   const { location } = article;

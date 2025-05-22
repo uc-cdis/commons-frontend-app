@@ -1,6 +1,6 @@
 import React from 'react';
 import type { PageLoader } from '@myst-theme/common';
-import { FooterLinksBlock, ArticleHeader, Error404 } from '../book';
+import { FooterLinksBlock, ArticleHeader, Error404 } from '../components';
 import { LaunchBinder, useComputeOptions } from '@myst-theme/jupyter';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { DocumentArrowDownIcon } from '@heroicons/react/24/outline';
@@ -72,7 +72,7 @@ export function ArticlePage({ article }: { article: PageLoader }) {
             {!isIndex && (
               <div className="flex items-center p-3 mb-10 border-y bg-slate-50 dark:bg-slate-600 border-y-slate-300 col-screen">
                 <Link
-                  to={baseurl || '/'}
+                  to={baseurl || '/public'}
                   className="flex gap-1 px-2 py-1 font-normal no-underline border rounded bg-slate-200 border-slate-600 hover:bg-slate-800 hover:text-white hover:border-transparent"
                 >
                   <ArrowLeftIcon

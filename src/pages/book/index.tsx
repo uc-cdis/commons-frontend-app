@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import { ensureSerializable } from '@/pages/book/utils';
-import { renderers } from '../../components/book/renderers';
+import { renderers } from '@/components/notebook/components/renderers';
 import { Theme } from '@myst-theme/common';
 
-import { ArticlePage } from '@/components/article/ArticlePage';
+import { ArticlePage } from '@/components/notebook/article/ArticlePage';
+import { ArticlePageAndNavigation } from '@/components/notebook/article/ArticlePageAndNavigation';
 import {
   ComputeOptionsProvider,
   ThebeLoaderAndServer,
@@ -16,8 +17,6 @@ import {
   ThemeProvider,
   ProjectProvider,
 } from '@myst-theme/providers';
-import { useTheme } from './theme';
-type Props = { host: string | null };
 
 import {
   NavPageLayout,
@@ -33,7 +32,7 @@ interface AppConfig extends NavPageLayoutProps {
   config?: SiteManifest;
 }
 
-const AppsPage = ({ headerProps, footerProps, article, config }: AppConfig) => {
+const NotebookArticlePage = ({ headerProps, footerProps, article, config }: AppConfig) => {
   const router = useRouter();
   const baseUrl = router.basePath;
   // (Local) theme state driven by SSR and cookie/localStorage
@@ -51,6 +50,7 @@ const AppsPage = ({ headerProps, footerProps, article, config }: AppConfig) => {
       <ThemeProvider theme={theme} setTheme={setTheme} renderers={renderers}>
         <BaseUrlProvider baseurl={baseUrl ?? ''}>
           <SiteProvider config={config}>
+            <ArticlePageAndNavigation>
             <ProjectProvider>
               <ComputeOptionsProvider
                 features={{
@@ -64,6 +64,7 @@ const AppsPage = ({ headerProps, footerProps, article, config }: AppConfig) => {
                 </ThebeLoaderAndServer>
               </ComputeOptionsProvider>
             </ProjectProvider>
+              </ArticlePageAndNavigation>
           </SiteProvider>
         </BaseUrlProvider>
       </ThemeProvider>
@@ -106,4 +107,4 @@ export const getServerSideProps: GetServerSideProps<
   }
 };
 
-export default AppsPage;
+export default NotebookArticlePage;

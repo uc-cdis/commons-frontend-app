@@ -26,7 +26,7 @@ export function responseNoArticle() {
   });
 }
 
-const CONTENT_CDN_PORT = process.env.CONTENT_CDN_PORT ?? '3002';
+const CONTENT_CDN_PORT = process.env.CONTENT_CDN_PORT ?? '3000';
 const CONTENT_CDN = process.env.CONTENT_CDN ?? `http://localhost:${CONTENT_CDN_PORT}/book/site`;
 
 type LinkRewriteOptions = { rewriteStaticFolder?: boolean };
