@@ -717,5 +717,209 @@
       }
     },
     "buttons": []
+  },
+  {
+    "tabTitle": "Datasets",
+    "charts": {
+      "commons_name": {
+        "chartType": "fullPie",
+        "title": "Platform"
+      },
+      "disease_type": {
+        "chartType": "fullPie",
+        "title": "Disease Type"
+      },
+      "primary_site": {
+        "chartType": "fullPie",
+        "title": "Primary Anatomic Site"
+      }
+    },
+    "filters": {
+      "tabs": [
+        {
+          "title": "Dataset Filters",
+          "fields": [
+            "collection_id",
+            "commons_long_name",
+            "commons_name",
+            "disease_type",
+            "full_name",
+            "primary_site"
+          ]
+        }
+      ]
+    },
+    "table": {
+      "enabled": true,
+      "pageLimit": {
+        "limit": 10000,
+        "label": "Maximum of 10,000 Total Records. Records per Page:"
+      },
+      "fields": [
+        "collection_id",
+        "commons_long_name",
+        "commons_name",
+        "data_url_doi",
+        "disease_type",
+        "full_name",
+        "license",
+        "metadata_source_date",
+        "metadata_source_version",
+        "primary_site",
+        "publication_citation"
+      ],
+      "columns": {
+        "data_url_doi": {
+          "title": "DOI",
+          "type": "link",
+          "cellRenderFunction": "linkWithIcon",
+          "width": "20",
+          "sortable": false,
+          "params" : {
+            "color": "accent.5",
+            "size": "md",
+            "variant": "filled"
+          }
+        },
+        "license": {
+          "title": "License",
+          "type": "link",
+          "cellRenderFunction": "linkWithIcon",
+          "width": "20",
+          "sortable": false,
+          "params" : {
+            "color": "accent.5",
+            "size": "md",
+            "variant": "filled"
+          }
+        },
+        "primary_site": {
+          "title": "Primary Site"
+        },
+        "disease_type": {
+          "title": "Disease Type"
+        },
+        "commons_name": {
+          "title": "Platform",
+          "type": "link",
+          "cellRenderFunction": "linkWithValueMap",
+          "params": {
+            "valueToURL": {
+              "ACRdart": "https://dart.acr.org/Home/ImagingHub",
+              "IDC": "https://portal.imaging.datacommons.cancer.gov/explore/",
+              "MIDRC": "https://data.midrc.org",
+              "NIHCC": "https://www.cc.nih.gov/",
+              "Stanford AIMI": "https://stanfordaimi.azurewebsites.net/",
+              "TCIA": "https://www.cancerimagingarchive.net/",
+              "OpenNeuro": "https://www.openeuro.org/"
+            }
+          }
+        },
+        "commons_long_name": {
+          "title": "Platform Name"
+        },
+        "collection_id": {
+          "title": "Collection ID"
+        },
+        "metadata_source_date": {
+          "title": "Metadata Source Date"
+        },
+        "metadata_source_version": {
+          "title": "Metadata Source Version"
+        },
+        "StudyInstanceUID": {
+          "title": "Study UID"
+        },
+        "subject_id": {
+          "title": "Subject ID"
+        }
+      }
+    },
+    "guppyConfig": {
+      "dataType": "dataset",
+      "nodeCountTitle": "Datasets",
+      "fieldMapping": [
+        {
+          "field": "data_url_doi",
+          "name": "Data URL/DOI"
+        },
+        {
+          "field": "license",
+          "name": "License"
+        },
+        {
+          "field": "primary_site",
+          "name": "Primary Site"
+        },
+        {
+          "field": "disease_type",
+          "name": "Disease Type"
+        },
+        {
+          "field": "commons_name",
+          "name": "Platform"
+        },
+        {
+          "field": "commons_long_name",
+          "name": "Platform Name"
+        },
+        {
+          "field": "collection_id",
+          "name": "Collection ID"
+        },
+        {
+          "field": "metadata_source_date",
+          "name": "Metadata Source Date"
+        },
+        {
+          "field": "metadata_source_version",
+          "name": "Metadata Source Version"
+        }
+      ],
+      "manifestMapping": {
+        "resourceIndexType": "dataset",
+        "resourceIdField": "collection_id",
+        "referenceIdFieldInResourceIndex": "collection_id",
+        "referenceIdFieldInDataIndex": "collection_id"
+      },
+      "accessibleFieldCheckList": [
+        "authz"
+      ],
+      "accessibleValidationField": "auth_resource_path"
+    },
+    "loginForDownload": false,
+    "dropdowns": {
+      "download-menu": {
+        "enabled": true,
+        "title": "Download Table",
+        "leftIcon": "gen3:download",
+        "rightIcon": "gen3:chevron-down",
+        "dropdownItems": [
+          {
+            "enabled": true,
+            "type": "data-json",
+            "title": "JSON",
+            "leftIcon": "datafile",
+            "rightIcon": "download",
+            "action": "data-json",
+            "actionArgs": {
+              "filename": "BIH_dataset_table.json"
+            }
+          },
+          {
+            "enabled": true,
+            "type": "data-tsv",
+            "title": "TSV",
+            "leftIcon": "datafile",
+            "rightIcon": "download",
+            "action": "data-tsv",
+            "actionArgs": {
+              "filename": "BIH_dataset_table.tsv"
+            }
+          }
+        ]
+      }
+    },
+    "buttons": []
   }
 ]
