@@ -34,9 +34,15 @@
         "name": "Mesh Metadata Model"
       }
     ],
-    "loginButtonVisibility": "logoutOnly",
+    "loginButtonVisibility": "hide",
     "classNames": {
-      "root": "flex justify-end items-center align-middle w-100 h-10 bg-secondary"
+      "root": "border-base-light bg-secondary text-secondary-contrast",
+      "divider": "border-base-min border-0"
+    },
+    "itemClassnames": {
+      "root": "border-base-light",
+      "label": "text-white",
+      "button": "hover:border-white"
     }
   }
 }
