@@ -9,6 +9,14 @@
       "loginRequired": false,
       "href": "notebook",
       "btnText": "Show Analysis"
-    }
+    },
+    {"title": "VPODC Cohort File Selection & Download Guide",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.png",
+      "image": "/images/apps/vpodc-logo.png",
+      "description": "This notebook provides a step-by-step walkthrough for: Selecting a VPODC cohort from Gen3, listing associated VCF object IDs and downloading files using the gen3-client",
+      "loginRequired": false,
+      "href": "notebook",
+      "btnText": "Show Analysis"}
   ]
 }
