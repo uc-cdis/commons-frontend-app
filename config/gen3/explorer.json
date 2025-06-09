@@ -721,10 +721,6 @@
   {
     "tabTitle": "Datasets",
     "charts": {
-      "commons_name": {
-        "chartType": "fullPie",
-        "title": "Platform"
-      },
       "disease_type": {
         "chartType": "fullPie",
         "title": "Disease Type"
@@ -739,12 +735,12 @@
         {
           "title": "Dataset Filters",
           "fields": [
-            "collection_id",
-            "commons_long_name",
-            "commons_name",
+            "primary_site",
             "disease_type",
+            "collection_id",
             "full_name",
-            "primary_site"
+            "commons_name",
+            "commons_long_name"
           ]
         }
       ]
@@ -757,32 +753,20 @@
       },
       "fields": [
         "collection_id",
-        "commons_long_name",
-        "commons_name",
         "data_url_doi",
-        "disease_type",
-        "full_name",
         "license",
-        "metadata_source_date",
-        "metadata_source_version",
+        "full_name",
         "primary_site",
-        "publication_citation"
+        "disease_type",
+        "commons_name",
+        "commons_long_name",
+        "publication_citation",
+        "metadata_source_date",
+        "metadata_source_version"
       ],
       "columns": {
         "data_url_doi": {
           "title": "DOI",
-          "type": "link",
-          "cellRenderFunction": "linkWithIcon",
-          "width": "20",
-          "sortable": false,
-          "params" : {
-            "color": "accent.5",
-            "size": "md",
-            "variant": "filled"
-          }
-        },
-        "license": {
-          "title": "License",
           "type": "link",
           "cellRenderFunction": "linkWithIcon",
           "width": "20",
@@ -826,12 +810,6 @@
         },
         "metadata_source_version": {
           "title": "Metadata Source Version"
-        },
-        "StudyInstanceUID": {
-          "title": "Study UID"
-        },
-        "subject_id": {
-          "title": "Subject ID"
         }
       }
     },
