@@ -1,11 +1,9 @@
-/*
 import React from 'react';
 import Succeeded from './Succeeded';
 import Pending from './Pending';
 import Running from './Running';
 import Failed from './Failed';
 import Error from './Error';
-import './Icons.css';
 
 const Icons = {
   Error: () => <Error />,
@@ -16,5 +14,3 @@ const Icons = {
 };
 
 export default Icons;
-
-*/

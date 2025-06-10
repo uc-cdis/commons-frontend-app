@@ -1,26 +1,26 @@
 import React from 'react';
-// import { Spin } from 'antd';
-// import { useQuery } from 'react-query';
-// import PropTypes from 'prop-types';
 import HomeTable from './HomeTable/HomeTable';
-// import LoadingErrorMessage from '../../../SharedUtils/LoadingErrorMessage/LoadingErrorMessage';
-// import { Loader } from '@mantine/core';
-import ManageColumns from './ManageColumns/ManageColumns';
-// import { fetchGwasWorkflows } from '../../Utils/gwasWorkflowApi';
+import LoadingErrorMessage from '../../../SharedUtils/LoadingErrorMessage/LoadingErrorMessage';
+import { Loader } from '@mantine/core';
+import { GEN3_API } from '@gen3/core';
+import useSWR from 'swr';
+import { GwasWorkflowEndpoint } from '../../../SharedUtils/Endpoints';
 
 const Home = ({ selectedTeamProject }: { selectedTeamProject: string }) => {
-  /*const refetchInterval = 5000;
-     const { data, status } = useQuery(
-    ['workflows', selectedTeamProject],
-    fetchGwasWorkflows,
-    {
-      refetchInterval,
-    },
-  ); */
+  const refetchInterval = 5000;
+  const tranformDates = (data: any) => {
+    return data.map((item: any) => ({
+      ...item,
+      submittedAt: new Date(item.submittedAt),
+      finishedAt: new Date(item.finishedAt),
+    }));
+  };
+  const { data, error, isLoading, isValidating } = useSWR(
+    `${GEN3_API}/${GwasWorkflowEndpoint}?team_projects=${selectedTeamProject}`,
+    (...args) => fetch(...args).then((res) => res.json().then(tranformDates)),
+  );
 
-  const data = {};
-
-  /* if (status === 'loading') {
+  if (isLoading || isValidating) {
     return (
       <React.Fragment>
         <div className="spinner-container">
@@ -31,14 +31,11 @@ const Home = ({ selectedTeamProject }: { selectedTeamProject: string }) => {
       </React.Fragment>
     );
   }
-  if (status === 'error') {
+  if (error) {
     return <LoadingErrorMessage />;
-  } */
+  }
   return (
-    <React.Fragment>
-      <ManageColumns />
-      <HomeTable data={data} />
-    </React.Fragment>
+    <HomeTable data={data} />
   );
 };
 

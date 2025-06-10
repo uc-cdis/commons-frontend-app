@@ -1,2 +1,4 @@
-export const CohortsEndpoint = 'http://localhost:3000/api/cohorts';
-export const TeamProjectsEndpoint = 'http://localhost:3000/api/teamprojects';
+export const CohortsEndpoint = 'api/cohorts';
+export const TeamProjectsEndpoint = 'api/teamprojects';
+//export const gwasWorkflowPath = 'ga4gh/wes/v2/';
+export const GwasWorkflowEndpoint = 'ga4gh/wes/v2/workflows';

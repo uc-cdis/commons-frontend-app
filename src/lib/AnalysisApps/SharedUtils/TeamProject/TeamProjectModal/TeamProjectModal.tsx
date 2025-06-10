@@ -14,8 +14,8 @@ interface TeamProjectModalProps {
   setBannerText: (bannerText: string) => void;
   data: { teams: Team[] } | null;
   status: 'loading' | 'error' | 'success';
-  selectedTeamProject: string | null | false;
-  setSelectedTeamProject: (selectedTeamProject: string | null) => void;
+  selectedTeamProject: string | null;
+  setSelectedTeamProject: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const TeamProjectModal: React.FC<TeamProjectModalProps> = ({
@@ -84,9 +84,6 @@ const TeamProjectModal: React.FC<TeamProjectModalProps> = ({
           // maskClosable={localStorage.getItem('teamProject')}
           // keyboard={localStorage.getItem('teamProject')}
         >
-          <div data-testid="team-project-modal_modal-description">
-            Please select your team.
-          </div>
           <TeamsDropdown
             teams={data.teams}
             selectedTeamProject={selectedTeamProject}

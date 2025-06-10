@@ -1,4 +1,3 @@
-/*
 import React from 'react';
 
 const Pending = () => (
@@ -27,5 +26,3 @@ const Pending = () => (
 );
 
 export default Pending;
-
-*/

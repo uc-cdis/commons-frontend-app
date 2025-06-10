@@ -1,4 +1,3 @@
-/*
 import React from 'react';
 
 const Error = () => (
@@ -32,5 +31,3 @@ const Error = () => (
 );
 
 export default Error;
-
-*/

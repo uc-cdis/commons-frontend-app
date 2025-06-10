@@ -1,4 +1,5 @@
 import React from 'react';
+import { Select } from '@mantine/core';
 
 interface Team {
   teamName: string;
@@ -6,8 +7,8 @@ interface Team {
 
 interface TeamsDropdownProps {
   teams: Team[];
-  selectedTeamProject: string | null | false;
-  setSelectedTeamProject: (selectedTeamProject: string) => void;
+  selectedTeamProject: string | null;
+  setSelectedTeamProject: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const TeamsDropdown: React.FC<TeamsDropdownProps> = ({
@@ -15,39 +16,16 @@ const TeamsDropdown: React.FC<TeamsDropdownProps> = ({
   selectedTeamProject,
   setSelectedTeamProject,
 }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = event.target.value;
-    setSelectedTeamProject(selectedValue);
-  };
-
-  const selectedValue =
-    selectedTeamProject === null || selectedTeamProject === false
-      ? 'placeholder'
-      : selectedTeamProject;
 
   return (
     <div data-testid="teams-dropdown">
-      <label id="team-select-label" className="sr-only" htmlFor="team-select">
-        Select Team Project
-      </label>
-      <select
-        id="team-select"
-        className="mb-6 w-full"
-        aria-labelledby="team-select-label"
-        value={selectedValue}
-        onChange={handleChange}
-      >
-        {selectedTeamProject === null && (
-          <option value="placeholder" disabled>
-            -select one of the team projects below-
-          </option>
-        )}
-        {teams.map((team, index) => (
-          <option key={index} value={team.teamName}>
-            {team.teamName}
-          </option>
-        ))}
-      </select>
+      <Select
+        label="Please select your team"
+        placeholder="-select one of the team projects below-"
+        value={selectedTeamProject}
+        data={teams.map((team) => team.teamName)}
+        onChange={setSelectedTeamProject}
+      />
     </div>
   );
 };

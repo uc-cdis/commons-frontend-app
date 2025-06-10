@@ -1,5 +1,5 @@
-import React from 'react';
-import { Title } from '@mantine/core';
+import React, { useState } from 'react';
+import { Title, Anchor } from '@mantine/core';
 import {
   NavPageLayout,
   NavPageLayoutProps,
@@ -7,9 +7,14 @@ import {
   ProtectedContent,
 } from '@gen3/frontend';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
+import TeamProjectHeader from '../lib/AnalysisApps/SharedUtils/TeamProject/TeamProjectHeader/TeamProjectHeader';
 
 const OHDSIAtlas = ({ headerProps, footerProps }: NavPageLayoutProps) => {
-  const iframeUrl = `https://atlas.${window.location.hostname}/WebAPI/user/login/openid?redirectUrl=/home`;
+  const [selectedTeamProject] = useState(
+    localStorage.getItem('teamProject') || '',
+  );
+  const iframeUrl = `https://atlas.${window.location.hostname}/WebAPI/user/login/openid?redirectUrl=/home?teamproject=${selectedTeamProject}`;
 
   const userRefreshEvent = new Event("updateUserActivity");
   
@@ -44,7 +49,11 @@ const OHDSIAtlas = ({ headerProps, footerProps }: NavPageLayoutProps) => {
       <ProtectedContent>
         <div className="w-full mx-10 relative flex flex-col">
           <div>
-            <Title order={1}>OHDSI Atlas</Title>
+            <Anchor component={Link} href="/resource-browser"> ← Back to Apps</Anchor>
+            <div className="flex justify-between pb-4">
+              <Title order={1}>OHDSI Atlas</Title>
+              <TeamProjectHeader isEditable={false} />
+            </div>
             <p>Use this App for cohort creation. These will be automatically populated in the Gen3 GWAS App</p>
           </div>
           <iframe

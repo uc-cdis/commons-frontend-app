@@ -27,7 +27,7 @@ const CohortDefinitions: React.FC<CohortDefinitionsProps> = ({
   const [rowsPerPage, setRowsPerPage] = useState(10); // Number of rows to show per page
 
   const { data, error, isLoading } = useSWR(
-    CohortsEndpoint + `?team-project=${selectedTeamProject}`,
+    `${CohortsEndpoint}?team-project=${selectedTeamProject}`,
     (...args) => fetch(...args).then((res) => res.json()),
   );
   let displayedCohorts: cohort[] = useFilter(data, searchTerm, 'cohort_name');

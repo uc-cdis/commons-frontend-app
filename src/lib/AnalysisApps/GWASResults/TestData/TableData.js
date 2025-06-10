@@ -1,4 +1,3 @@
-/*
 const TableData = [
   {
     uid: '123',
@@ -33,5 +32,3 @@ const TableData = [
 ];
 
 export default TableData;
-
-*/

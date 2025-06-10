@@ -1,4 +1,3 @@
-/*
 import React from 'react';
 
 const Failed = () => (
@@ -29,5 +28,3 @@ const Failed = () => (
 );
 
 export default Failed;
-
-*/

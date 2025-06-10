@@ -22,9 +22,8 @@ const GWASResults = ({ headerProps, footerProps }: NavPageLayoutProps) => {
         key: 'gen3-gwas-results',
       }}
     >
-
       <ProtectedContent>
-        <div className="w-full m-10">
+        <div className="w-full p-10">
           <div className="w-full p-5">
             <GWASResultsContainer />
           </div>

@@ -1,5 +1,4 @@
-/*
-const PHASES = {
+const PHASES: Record<string, string> = {
   Succeeded: 'Succeeded',
   Error: 'Error',
   Failed: 'Failed',
@@ -8,5 +7,3 @@ const PHASES = {
 };
 
 export default PHASES;
-
-*/

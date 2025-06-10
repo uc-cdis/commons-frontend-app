@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { Button, Group } from '@mantine/core';
+import { Button, Group, Anchor, Title } from '@mantine/core';
 import ProgressBar from './Components/ProgressBar/ProgressBar';
 import { GWASAppSteps, checkFinalPopulationSizeZero } from './Utils/constants';
 // import { SourceContextProvider } from './Utils/Source';
@@ -16,6 +16,7 @@ import InitializeCurrentState from './Utils/StateManagement/InitializeCurrentSta
 import TeamProjectHeader from '../SharedUtils/TeamProject/TeamProjectHeader/TeamProjectHeader';
 // import WorkflowLimitsDashboard from '../SharedUtils/WorkflowLimitsDashboard/WorkflowLimitsDashboard';
 // import './GWASApp.css';
+import Link from 'next/link';
 
 const GWASContainer = () => {
   const [state, dispatch] = useReducer(reducer, InitializeCurrentState());
@@ -107,8 +108,9 @@ const GWASContainer = () => {
   return (
     <React.Fragment>
       <div>
+        <Anchor component={Link} href="/resource-browser"> ← Back to Apps</Anchor>
         <div className="flex justify-between pb-4">
-          <h1 className="text-3xl pb-5 font-medium">Gen3 GWAS</h1>
+          <Title order={1}>Gen3 GWAS</Title>
           <TeamProjectHeader isEditable={false} />
         </div>
       </div>

@@ -1,4 +1,3 @@
-/*
 import React from 'react';
 
 const Succeeded = () => (
@@ -29,5 +28,3 @@ const Succeeded = () => (
 );
 
 export default Succeeded;
-
-*/

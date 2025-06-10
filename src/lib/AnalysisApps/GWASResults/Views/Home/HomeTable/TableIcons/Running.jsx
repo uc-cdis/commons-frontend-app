@@ -1,4 +1,3 @@
-/*
 import React from 'react';
 
 const Running = () => (
@@ -27,5 +26,3 @@ const Running = () => (
 );
 
 export default Running;
-
-*/
