@@ -114,11 +114,11 @@
           },
           "charts": {
             "subject_primary_disease": {
-              "chartType": "bar",
+              "chartType": "horizontalStacked",
               "title": "Primary Disease"
             },
             "subject_type_of_exposure": {
-              "chartType": "bar",
+              "chartType": "horizontalStacked",
               "title": "Type of Exposure"
             },
             "subject_cancer_grade": {
@@ -126,7 +126,7 @@
               "title": "Cancer Stage"
             },
             "subject_gender": {
-              "chartType": "fullPie",
+              "chartType": "horizontalStacked",
               "title": "Biological Sex"
             }
           }
