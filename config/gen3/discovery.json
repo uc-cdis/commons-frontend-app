@@ -113,23 +113,21 @@
             "enabled" : true
           },
           "charts": {
-            "subject_ethnicity": {
-              "chartType": "fullPie",
-              "title": "Ethnicity"
+            "subject_primary_disease": {
+              "chartType": "bar",
+              "title": "Primary Disease"
+            },
+            "subject_type_of_exposure": {
+              "chartType": "bar",
+              "title": "Type of Exposure"
             },
             "subject_cancer_grade": {
-              "chartType": "fullPie",
-              "title": "Cancer Grade"
-
+              "chartType": "horizontalStacked",
+              "title": "Cancer Stage"
             },
             "subject_gender": {
               "chartType": "fullPie",
               "title": "Biological Sex"
-
-            },
-            "data_source": {
-              "chartType": "fullPie",
-              "title": "Data Commons"
             }
           }
         }
