@@ -7,10 +7,10 @@ import useSWR from 'swr';
 import { GwasWorkflowEndpoint } from '../../../SharedUtils/Endpoints';
 
 const Home = ({ selectedTeamProject }: { selectedTeamProject: string }) => {
-  const refetchInterval = 5000;
   const tranformDates = (data: any) => {
     return data.map((item: any) => ({
       ...item,
+      startedAt: new Date(item.startedAt),
       submittedAt: new Date(item.submittedAt),
       finishedAt: new Date(item.finishedAt),
     }));

@@ -11,20 +11,32 @@ import { GwasWorkflowEndpoint } from '@/lib/AnalysisApps/SharedUtils/Endpoints';
 import { http, HttpResponse, delay } from 'msw';
 import { GWASResultsJobs } from './HomeTable/HomeTable';
 
-// this is to forvce the page to reload due to mock service worker
-const forceReloadDecorator = (storyFn: any, context: any) => {
-  if (context.globals.shouldReload) {
-    context.globals.shouldReload = false;
-    window.location.reload();
-  }
-  context.globals.shouldReload = true;
-  return storyFn();
-};
-
 const meta: Meta<typeof Home> = {
   title: 'GWASResults/Views/Home',
   component: Home,
-  decorators: [forceReloadDecorator],
+  decorators: [
+    (Story) => {
+      const [selectedRowData, setSelectedRowData] = useState({} as GWASResultsJobs);
+      const [homeTableState, setHomeTableState] = useState(InitialHomeTableState);
+      const [currentView, setCurrentView] = useState('home');
+      /*useEffect(() => {
+        alert(`setCurrentView called with ${currentView}`);
+      }, [currentView]);*/
+      return (
+          <SharedContext.Provider
+            value={{
+              selectedRowData,
+              setSelectedRowData,
+              setCurrentView,
+              homeTableState,
+              setHomeTableState,
+            }}
+          >
+            <Story selectedTeamProject='test' />
+          </SharedContext.Provider>
+      );
+    },
+  ],
 };
 export default meta;
 
@@ -52,28 +64,6 @@ const TestData = [
     size: 80,
   },
 ];
-
-const MockTemplate = () => {
-  const [selectedRowData, setSelectedRowData] = useState({} as GWASResultsJobs);
-  const [homeTableState, setHomeTableState] = useState(InitialHomeTableState);
-  const [currentView, setCurrentView] = useState('home');
-  useEffect(() => {
-    alert(`setCurrentView called with ${currentView}`);
-  }, [currentView]);
-  return (
-      <SharedContext.Provider
-        value={{
-          selectedRowData,
-          setSelectedRowData,
-          setCurrentView,
-          homeTableState,
-          setHomeTableState,
-        }}
-      >
-        <Home selectedTeamProject='test' />
-      </SharedContext.Provider>
-  );
-};
 
 let requestCount = 0;
 let rowCount = 1;
@@ -189,7 +179,6 @@ export const MockedSuccessButFailedRetry: Story = {
 };
 
 export const MockedError: Story = {
-  ...MockTemplate,
   parameters: {
     msw: {
       handlers: [

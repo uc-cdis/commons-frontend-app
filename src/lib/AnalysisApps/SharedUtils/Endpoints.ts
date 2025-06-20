@@ -1,6 +1,4 @@
 import { GEN3_API } from '@gen3/core';
-
-//export const gwasWorkflowPath = 'ga4gh/wes/v2/';
 export const GwasWorkflowEndpoint = 'ga4gh/wes/v2/workflows';
 
 export const GEN3_WORKFLOW_API =
@@ -18,5 +16,6 @@ export const SourcesEndpoint = `${COHORT_MIDDLEWARE_PATH}/sources`;
 export const CohortsEndpoint = `${COHORT_MIDDLEWARE_PATH}/cohortdefinition-stats/by-source-id`;
 export const CohortsOverlapEndpoint = `${COHORT_MIDDLEWARE_PATH}/cohort-stats/check-overlap/by-source-id/`;
 
-export const TeamProjectsEndpoint = 'http://localhost:3000/api/teamprojects';
+export const TeamProjectsEndpoint = 'api/teamprojects';
 export const SubmitWorkflowEndpoint = `${GEN3_WORKFLOW_API}/submit`; // TODO - use src/lib/AnalysisApps/Results/Utils/workflowApi.ts instead...
+export const gwasWorkflowPath = 'ga4gh/wes/v2/';

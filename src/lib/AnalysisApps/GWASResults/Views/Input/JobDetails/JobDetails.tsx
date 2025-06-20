@@ -1,5 +1,5 @@
-/*
-import React, { useContext } from 'react';
+import React from 'react';
+/*import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 import { Spin } from 'antd';
@@ -8,9 +8,10 @@ import { gwasWorkflowPath } from '../../../../../localconf';
 import IsJsonString from '../../../Utils/IsJsonString';
 import SharedContext from '../../../Utils/SharedContext';
 import LoadingErrorMessage from '../../../../SharedUtils/LoadingErrorMessage/LoadingErrorMessage';
-import DismissibleMessage from '../../../../SharedUtils/DismissibleMessage/DismissibleMessage';
+import DismissibleMessage from '../../../../SharedUtils/DismissibleMessage/DismissibleMessage';*/
+import { AttritionTableJSONType } from '../../../Utils/gwasWorkflowApi';
 
-const JobDetails = ({ attritionTableData }) => {
+/*const JobDetails = ({ attritionTableData }: {attritionTableData: AttritionTableJSONType[]}) => {
   const { selectedRowData } = useContext(SharedContext);
   const { name, uid } = selectedRowData;
   const endpoint = `${gwasWorkflowPath}status/${name}?uid=${uid}`;
@@ -206,12 +207,15 @@ const JobDetails = ({ attritionTableData }) => {
       </section>
     </React.Fragment>
   );
-};
+};*/
 
-JobDetails.propTypes = {
-  attritionTableData: PropTypes.array.isRequired,
+const JobDetails = ({ attritionTableData }: {attritionTableData: AttritionTableJSONType[]}) => {
+  return (
+    <>
+      JobDetails
+    </>
+  );
 };
 
 export default JobDetails;
 
-*/

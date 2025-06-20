@@ -1,24 +1,26 @@
-/*
 import React, { useContext } from 'react';
-import { useQuery } from 'react-query';
-import { Spin } from 'antd';
+import { Loader } from '@mantine/core';
+//import { useQuery } from 'react-query';
 import DetailPageHeader from '../../Components/DetailPageHeader/DetailPageHeader';
 import JobDetails from './JobDetails/JobDetails';
 import AttritionTableWrapper from './AttritionTable/AttrtitionTableWrapper';
 import SharedContext from '../../Utils/SharedContext';
 import { getDataForWorkflowArtifact } from '../../Utils/gwasWorkflowApi';
-import queryConfig from '../../../SharedUtils/QueryConfig';
+//import queryConfig from '../../../SharedUtils/QueryConfig';
 import LoadingErrorMessage from '../../../SharedUtils/LoadingErrorMessage/LoadingErrorMessage';
-import './Input.css';
+import useSWR from 'swr';
+import { GEN3_API } from '@gen3/core';
+import { GwasWorkflowEndpoint } from '../../../SharedUtils/Endpoints';
 
 const Input = () => {
   const { selectedRowData } = useContext(SharedContext);
+  if (!selectedRowData) {
+    throw new Error('selectedRowData is not defined in SharedContext');
+  }
+  console.log('selectedRowData', selectedRowData);
   const { name, uid } = selectedRowData;
-  const { data, status } = useQuery(
-    [`getDataForWorkflowArtifact${name}`, name, uid, 'attrition_json_index'],
-    () => getDataForWorkflowArtifact(name, uid, 'attrition_json_index'),
-    queryConfig,
-  );
+  const { data, error, isLoading } = getDataForWorkflowArtifact(name, uid, 'attrition_json_index');
+  console.log('data 2', data, error, isLoading);
 
   const displayTopSection = () => (
     <section className='results-top'>
@@ -30,7 +32,7 @@ const Input = () => {
     </section>
   );
 
-  if (status === 'error') {
+  if (error) {
     return (
       <React.Fragment>
         {displayTopSection()}
@@ -42,12 +44,12 @@ const Input = () => {
     );
   }
 
-  if (status === 'loading') {
+  if (isLoading) {
     return (
       <React.Fragment>
         {displayTopSection()}
         <div className='spinner-container' data-testid='spinner'>
-          <Spin />
+          <Loader />
         </div>
       </React.Fragment>
     );
@@ -57,7 +59,6 @@ const Input = () => {
     !data
     || data.length === 0
     || data[0].table_type !== 'case'
-    || data.error
   ) {
     return (
       <React.Fragment>
@@ -76,5 +77,3 @@ const Input = () => {
   );
 };
 export default Input;
-
-*/

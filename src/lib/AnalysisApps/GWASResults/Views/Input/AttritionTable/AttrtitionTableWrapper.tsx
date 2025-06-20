@@ -1,11 +1,7 @@
-/*
 import React from 'react';
-import PropTypes from 'prop-types';
-
-import './AttritionTable.css';
 import AttritionTable from './AttrtitionTable';
-
-const AttritionTableWrapper = ({ data }) => (
+import { AttritionTableJSONType } from '../../../Utils/gwasWorkflowApi';
+const AttritionTableWrapper = ({ data }: {data:AttritionTableJSONType[]}) => (
   <section
     data-testid='attrition-table-wrapper'
     className='attrition-table-wrapper'
@@ -26,10 +22,4 @@ const AttritionTableWrapper = ({ data }) => (
   </section>
 );
 
-AttritionTableWrapper.propTypes = {
-  data: PropTypes.array.isRequired,
-};
-
 export default AttritionTableWrapper;
-
-*/

@@ -17,16 +17,16 @@ import VIEWS from '../../../Utils/ViewsEnumeration';
 import {Button} from '@mantine/core';
 
 export interface GWASResultsJobs {
-    name: string;
-    gen3username: string;
-    wf_name: string;
-    jobTitle: string;
-    salary: number;
-    startDate: string;
-    signatureCatchPhrase: string;
-    avatar: string;
-    phase: string;
-  };
+  finishedAt: Date;
+  gen3teamproject: string;
+  gen3username: string;
+  name: string;
+  phase: string;
+  startedAt: Date;
+  submittedAt: Date;
+  uid: string;
+  wf_name: string;
+};
 
 const HomeTable = ({ data }: { data: GWASResultsJobs[] }) => {
   const {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Home from './Views/Home/Home';
 // import Results from './Views/Results/Results';
 // import Execution from './Views/Execution/Execution';
-// import Input from './Views/Input/Input';
+import Input from './Views/Input/Input';
 import SharedContext from './Utils/SharedContext';
 import VIEWS from './Utils/ViewsEnumeration';
 import InitialHomeTableState from './Views/Home/HomeTableState/InitialHomeTableState';
@@ -31,8 +31,7 @@ const GWASResultsContainer = () => {
         return <h1>Execution</h1>;
       // return <Execution />;
       case VIEWS.input:
-        return <h1>Input</h1>;
-      //return <Input />;
+        return <Input />;
       default:
         return null;
     }

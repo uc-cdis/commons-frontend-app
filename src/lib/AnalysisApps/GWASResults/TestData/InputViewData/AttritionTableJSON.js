@@ -1,4 +1,3 @@
-/*
 const AttritionTableJSON = [
   {
     table_type: 'case',
@@ -151,5 +150,3 @@ const AttritionTableJSON = [
 ];
 
 export default AttritionTableJSON;
-
-*/

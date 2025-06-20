@@ -1,4 +1,3 @@
-/*
 const MockedFailureJSON = {
   name: 'gwas-workflow-2139489957',
   wf_name: 'TestJDRMar29-1130AM',
@@ -66,5 +65,3 @@ const MockedFailureJSON = {
   },
 };
 export default MockedFailureJSON;
-
-*/
