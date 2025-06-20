@@ -1,4 +1,3 @@
-/*
 const IsJsonString = (str) => {
   try {
     JSON.parse(str);
@@ -9,5 +8,3 @@ const IsJsonString = (str) => {
 };
 
 export default IsJsonString;
-
-*/

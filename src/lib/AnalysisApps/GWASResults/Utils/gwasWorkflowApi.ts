@@ -1,10 +1,6 @@
-/*import { headers } from '../../../configs';
-import { gwasWorkflowPath } from '../../../localconf';*/
 import React, { useState } from 'react';
-import { PresignedUrl } from '../../Results/Utils/workflowApi';
-import useSWR, { SWRResponse } from 'swr';
 import { GEN3_API } from '@gen3/core';
-import { gwasWorkflowPath } from '../../SharedUtils/Endpoints';
+import { GEN3_WORKFLOW_API } from '../../SharedUtils/Endpoints';
 
 export const getPresignedUrl = async (did: string, method: string) => {
   const urlPath = `${GEN3_API}/user/data/${method}/${did}`;
@@ -12,7 +8,7 @@ export const getPresignedUrl = async (did: string, method: string) => {
   return response?.url;
 };
 
-interface WorkflowDetailsType {
+export interface WorkflowDetailsType {
   name: string;
   phase: string;
   gen3username: string;
@@ -41,7 +37,7 @@ export const getWorkflowDetails = async (
   workflowUid: string,
 ) => {
   // query argo-wrapper endpoint to get the list of artifacts produced by the workflow:
-  const endPoint = `${GEN3_API}/${gwasWorkflowPath}status/${workflowName}?uid=${workflowUid}`;
+  const endPoint = `${GEN3_WORKFLOW_API}status/${workflowName}?uid=${workflowUid}`;
   const errorMessage = 'An error has occured while fetching workflow details';
   const response: WorkflowDetailsType = await fetch(endPoint)
     .then((res) => res.json())
@@ -112,8 +108,8 @@ export interface AttritionTableJSONrowsType {
   concept_breakdown: AttritionTableJSONconcept_breakdownType[];
 }
 export interface AttritionTableJSONType {
-  table_type?: string;
-  rows?: AttritionTableJSONrowsType[];
+  table_type: string;
+  rows: AttritionTableJSONrowsType[];
 }
 
 export const getDataForWorkflowArtifact = (

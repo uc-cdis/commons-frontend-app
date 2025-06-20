@@ -8,6 +8,7 @@ import MockedSuccessJSON from '../../TestData/InputViewData/MockedSuccessJSON';
 import MockedFailureJSON from '../../TestData/InputViewData/MockedFailureJSON';
 import AttritionTableJSON from '../../TestData/InputViewData/AttritionTableJSON';
 import { GEN3_API } from '@gen3/core';
+import { GEN3_WORKFLOW_API } from '../../../SharedUtils/Endpoints';
 
 const selectedRowData = {
   finishedAt: new Date('2022-02-15T14:00:00Z'),
@@ -56,7 +57,7 @@ export const MockedFailure: Story = {
     msw: {
       handlers: [
         http.get(
-          `${GEN3_API}/ga4gh/wes/v2/status/${name}?uid=${uid}`,
+          `${GEN3_WORKFLOW_API}status/${name}?uid=${uid}`,
           async () => {
             await delay(100);
             return HttpResponse.json(MockedFailureJSON);
@@ -74,7 +75,7 @@ export const MockedSuccess: Story = {
     msw: {
       handlers: [
         http.get(
-          `${GEN3_API}/ga4gh/wes/v2/status/${name}?uid=${uid}`,
+          `${GEN3_WORKFLOW_API}status/${name}?uid=${uid}`,
           async () => {
             await delay(100);
             return HttpResponse.json(MockedSuccessJSON);
@@ -102,7 +103,7 @@ export const MockedErrorNoData: Story = {
     msw: {
       handlers: [
         http.get(
-          `${GEN3_API}/ga4gh/wes/v2/status/${name}?uid=${uid}`,
+          `${GEN3_WORKFLOW_API}status/${name}?uid=${uid}`,
           async () => {
             await delay(100);
             return HttpResponse.json(MockedSuccessJSON);
@@ -130,7 +131,7 @@ export const MockedError500Response: Story = {
     msw: {
       handlers: [
         http.get(
-          `${GEN3_API}/ga4gh/wes/v2/status/${name}?uid=${uid}`,
+          `${GEN3_WORKFLOW_API}status/${name}?uid=${uid}`,
           async () => {
             await delay(100);
             return new HttpResponse(null, {
@@ -147,7 +148,7 @@ export const MockedError403Response: Story = {
     msw: {
       handlers: [
         http.get(
-          `${GEN3_API}/ga4gh/wes/v2/status/${name}?uid=${uid}`,
+          `${GEN3_WORKFLOW_API}status/${name}?uid=${uid}`,
           async () => {
             await delay(100);
             return new HttpResponse(null, {

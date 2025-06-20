@@ -8,19 +8,14 @@ import SharedContext from '../../Utils/SharedContext';
 import { getDataForWorkflowArtifact } from '../../Utils/gwasWorkflowApi';
 //import queryConfig from '../../../SharedUtils/QueryConfig';
 import LoadingErrorMessage from '../../../SharedUtils/LoadingErrorMessage/LoadingErrorMessage';
-import useSWR from 'swr';
-import { GEN3_API } from '@gen3/core';
-import { GwasWorkflowEndpoint } from '../../../SharedUtils/Endpoints';
 
 const Input = () => {
   const { selectedRowData } = useContext(SharedContext);
   if (!selectedRowData) {
     throw new Error('selectedRowData is not defined in SharedContext');
   }
-  console.log('selectedRowData', selectedRowData);
   const { name, uid } = selectedRowData;
   const { data, error, isLoading } = getDataForWorkflowArtifact(name, uid, 'attrition_json_index');
-  console.log('data 2', data, error, isLoading);
 
   const displayTopSection = () => (
     <section className='results-top'>
@@ -32,18 +27,6 @@ const Input = () => {
     </section>
   );
 
-  if (error) {
-    return (
-      <React.Fragment>
-        {displayTopSection()}
-        <LoadingErrorMessage
-          data-testid='loading-error-message'
-          message='Error getting attrition table data due to status'
-        />
-      </React.Fragment>
-    );
-  }
-
   if (isLoading) {
     return (
       <React.Fragment>
@@ -51,6 +34,18 @@ const Input = () => {
         <div className='spinner-container' data-testid='spinner'>
           <Loader />
         </div>
+      </React.Fragment>
+    );
+  }
+
+  if (error) {
+    return (
+      <React.Fragment>
+        {displayTopSection()}
+        <LoadingErrorMessage
+          data-testid='loading-error-message'
+          message={`Error getting attrition table data due to status: ${error}`}
+        />
       </React.Fragment>
     );
   }

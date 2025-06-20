@@ -18,4 +18,3 @@ export const CohortsOverlapEndpoint = `${COHORT_MIDDLEWARE_PATH}/cohort-stats/ch
 
 export const TeamProjectsEndpoint = 'api/teamprojects';
 export const SubmitWorkflowEndpoint = `${GEN3_WORKFLOW_API}/submit`; // TODO - use src/lib/AnalysisApps/Results/Utils/workflowApi.ts instead...
-export const gwasWorkflowPath = 'ga4gh/wes/v2/';

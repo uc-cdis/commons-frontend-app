@@ -1,46 +1,48 @@
-import React from 'react';
-/*import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import { useQuery } from 'react-query';
-import { Spin } from 'antd';
+import React, { useContext } from 'react';
+import { Loader, Card, Title, Group, Divider } from '@mantine/core';
 import { isEqual } from 'lodash';
-import { gwasWorkflowPath } from '../../../../../localconf';
+
 import IsJsonString from '../../../Utils/IsJsonString';
 import SharedContext from '../../../Utils/SharedContext';
 import LoadingErrorMessage from '../../../../SharedUtils/LoadingErrorMessage/LoadingErrorMessage';
-import DismissibleMessage from '../../../../SharedUtils/DismissibleMessage/DismissibleMessage';*/
-import { AttritionTableJSONType } from '../../../Utils/gwasWorkflowApi';
+import DismissibleMessage from '../../../../SharedUtils/DismissibleMessage/DismissibleMessage';
+import { AttritionTableJSONType, WorkflowDetailsType } from '../../../Utils/gwasWorkflowApi';
 
-/*const JobDetails = ({ attritionTableData }: {attritionTableData: AttritionTableJSONType[]}) => {
+import useSWR from 'swr';
+import { GEN3_WORKFLOW_API } from '../../../../SharedUtils/Endpoints';
+
+const JobDetails = ({ attritionTableData }: {attritionTableData: AttritionTableJSONType[]}) => {
   const { selectedRowData } = useContext(SharedContext);
+  if (!selectedRowData) {
+    throw new Error('selectedRowData is not defined in SharedContext');
+  }
   const { name, uid } = selectedRowData;
-  const endpoint = `${gwasWorkflowPath}status/${name}?uid=${uid}`;
+  //TODO clean this up and make only one api call, move up to parent
+  const endpoint = `${GEN3_WORKFLOW_API}status/${name}?uid=${uid}`;
   const minimumRecommendedCohortSize = 1000;
   const cohortNameValue = attritionTableData[0].rows[0].name;
 
-  const fetchData = async () => {
-    const res = await fetch(endpoint);
-    return res.json();
-  };
+  const { data, error, isLoading, isValidating } = useSWR(
+    endpoint,
+    (...args) => fetch(...args).then((res) => (res.json() as Promise<WorkflowDetailsType>)),
+  );
 
-  const { data, status } = useQuery('jobDetails', fetchData);
-
-  if (status === 'error') {
-    return <LoadingErrorMessage message='Error getting job details' />;
+  if (error) {
+    return <LoadingErrorMessage message={`Error getting job details: ${error}`} />;
   }
-  if (status === 'loading') {
+  if (isLoading || isValidating) {
     return (
       <div className='spinner-container' data-testid='spinner'>
-        <Spin />
+        <Loader />
       </div>
     );
   }
 
-  if (!data || data.length === 0 || data.error) {
+  if (!data) {
     return <LoadingErrorMessage message='Issue Loading Data for Job Details' />;
   }
 
-  const getParameterData = (key) => {
+  const getParameterData = (key: string) => {
     const datum = data?.arguments?.parameters?.find((obj) => obj.name === key);
     return datum?.value || 'Unexpected Error';
   };
@@ -55,15 +57,15 @@ import { AttritionTableJSONType } from '../../../Utils/gwasWorkflowApi';
         || JSON.parse(getParameterData('outcome'))?.provided_name
       );
     }
-    /* eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console
     console.error('Data not found or not in expected JSON format');
     return 'Unexpected Error';
   };
 
-  const removeOutcomeFromVariablesData = (variablesArray) => {
+  const removeOutcomeFromVariablesData = (variablesArray: any) => {
     const outcome = JSON.parse(getParameterData('outcome'));
     const filteredResult = variablesArray.filter(
-      (obj) => !isEqual(obj, outcome),
+      (obj: any) => !isEqual(obj, outcome),
     );
     return filteredResult;
   };
@@ -82,7 +84,7 @@ import { AttritionTableJSONType } from '../../../Utils/gwasWorkflowApi';
   const displayCovariates = () => {
     const covariates = processCovariates();
     if (covariates && covariates.length > 0) {
-      return covariates.map((obj, index) => (
+      return covariates.map((obj: any, index: number) => (
         <React.Fragment key={index}>
           <span className='covariate-item'>
             {obj?.concept_name}
@@ -96,12 +98,12 @@ import { AttritionTableJSONType } from '../../../Utils/gwasWorkflowApi';
     return 'No covariates';
   };
 
-  const findAncestrySizeOfLastRow = (tableData, hareAncestry) => {
+  const findAncestrySizeOfLastRow = (tableData: AttritionTableJSONType, hareAncestry: string) => {
     const lastRowOfData = tableData?.rows[tableData?.rows.length - 1];
     const datum = lastRowOfData?.concept_breakdown.find(
       (obj) => obj.concept_value_name === hareAncestry,
     );
-    return datum?.persons_in_cohort_with_value || 'Unexpected Error';
+    return datum?.persons_in_cohort_with_value;
   };
 
   const getTotalSizes = () => {
@@ -111,7 +113,7 @@ import { AttritionTableJSONType } from '../../../Utils/gwasWorkflowApi';
     const controlSize = attritionTableData[1]?.rows
       ? findAncestrySizeOfLastRow(attritionTableData[1], hareAncestry)
       : null;
-    const totalSize = controlSize !== null ? caseSize + controlSize : caseSize;
+    const totalSize = controlSize !== null ? `${caseSize}${controlSize}` : `${caseSize}`;
     return {
       caseSize,
       controlSize,
@@ -120,29 +122,29 @@ import { AttritionTableJSONType } from '../../../Utils/gwasWorkflowApi';
   };
   const { caseSize, controlSize, totalSize } = getTotalSizes();
   const displayTotalSizes = () => (controlSize === null ? (
-    <div className='GWASResults-flex-row'>
-      <div>Total Size</div>
-      <div>{totalSize || '---'}</div>
-    </div>
+    <Group justify="space-between" className='w-full px-4'>
+      <span>Total Size</span>
+      <span>{totalSize || '---'}</span>
+    </Group>
   ) : (
     <React.Fragment>
-      <div className='GWASResults-flex-row'>
-        <div>Control Size</div>
-        <div>{controlSize}</div>
-      </div>
-      <div className='GWASResults-flex-row'>
-        <div>Case Size</div>
-        <div>{caseSize}</div>
-      </div>
-      <div className='GWASResults-flex-row'>
-        <div>Total Size</div>
-        <div>{totalSize}</div>
-      </div>
+      <Group justify="space-between" className='w-full px-4'>
+        <span>Control Size</span>
+        <span>{controlSize}</span>
+      </Group>
+      <Group justify="space-between" className='w-full px-4'>
+        <span>Case Size</span>
+        <span>{caseSize}</span>
+      </Group>
+      <Group justify="space-between" className='w-full px-4'>
+        <span>Total Size</span>
+        <span>{totalSize}</span>
+      </Group>
     </React.Fragment>
   ));
 
   const showCautionMessages = () => {
-    if (caseSize < minimumRecommendedCohortSize && controlSize === null) {
+    if (caseSize && caseSize < minimumRecommendedCohortSize && controlSize === null) {
       return (
         <DismissibleMessage
           messageType='caution'
@@ -152,8 +154,10 @@ import { AttritionTableJSONType } from '../../../Utils/gwasWorkflowApi';
       );
     }
     if (
-      caseSize < minimumRecommendedCohortSize
-      || (controlSize !== null && controlSize < minimumRecommendedCohortSize)
+      caseSize
+      && caseSize < minimumRecommendedCohortSize
+      || controlSize
+      && (controlSize !== null && controlSize < minimumRecommendedCohortSize)
     ) {
       return (
         <DismissibleMessage
@@ -170,50 +174,47 @@ import { AttritionTableJSONType } from '../../../Utils/gwasWorkflowApi';
   return (
     <React.Fragment>
       {showCautionMessages()}
-      <section data-testid='job-details' className='job-details'>
-        <h2 className='job-details-title'>{data.wf_name}</h2>
-        <div className='GWASResults-flex-col job-details-table'>
-          <div className='GWASResults-flex-row'>
-            <div>Number of PCs</div>
-            <div>{getParameterData('n_pcs')}</div>
-          </div>
-          <div className='GWASResults-flex-row'>
-            <div>MAF Cutoff</div>
-            <div>{getParameterData('maf_threshold')}</div>
-          </div>
-          <div className='GWASResults-flex-row'>
-            <div>HARE Ancestry</div>
-            <div>{getParameterData('hare_population')}</div>
-          </div>
-          <div className='GWASResults-flex-row'>
-            <div>Imputation Score Cutoff</div>
-            <div>{getParameterData('imputation_score_cutoff')}</div>
-          </div>
-          <hr />
-          <div className='GWASResults-flex-row'>
-            <div>Cohort</div>
-            <div className='job-details-cohort-name'>{cohortNameValue}</div>
-          </div>
-          <div className='GWASResults-flex-row'>
-            <div>Outcome Phenotype</div>
-            <div>{getPhenotype()}</div>
-          </div>
-          {displayTotalSizes()}
-          <div className='GWASResults-flex-row'>
-            <div>Covariates</div>
-            <div>{displayCovariates()}</div>
-          </div>
-        </div>
-      </section>
+      <Card shadow="sm" padding="lg" radius="md" withBorder className='w-1/2'>
+        <Card.Section>
+          <Title order={3} className='px-4'>{data.wf_name}</Title>
+          <Divider />
+          <Group>
+            <Group justify="space-between" mt='sm' className='w-full px-4'>
+              <span>Number of PCs</span>
+              <span>{getParameterData('n_pcs')}</span>
+            </Group>
+            <Group justify="space-between" className='w-full px-4'>
+              <span>MAF Cutoff</span>
+              <span>{getParameterData('maf_threshold')}</span>
+            </Group>
+            <Group justify="space-between" className='w-full px-4'>
+              <span>HARE Ancestry</span>
+              <span>{getParameterData('hare_population')}</span>
+            </Group>
+            <Group justify="space-between" mb='sm' className='w-full px-4'>
+              <span>Imputation Score Cutoff</span>
+              <span>{getParameterData('imputation_score_cutoff')}</span>
+            </Group>
+          </Group>
+          <Divider />
+          <Group>
+            <Group justify="space-between" mt='sm' className='w-full px-4'>
+              <span>Cohort</span>
+              <span>{cohortNameValue}</span>
+            </Group>
+            <Group justify="space-between" className='w-full px-4'>
+              <span>Outcome Phenotype</span>
+              <span>{getPhenotype()}</span>
+            </Group>
+            {displayTotalSizes()}
+            <Group justify="space-between" mb='sm' className='w-full px-4'>
+              <span>Covariates</span>
+              <span>{displayCovariates()}</span>
+            </Group>
+          </Group>
+        </Card.Section>
+      </Card>
     </React.Fragment>
-  );
-};*/
-
-const JobDetails = ({ attritionTableData }: {attritionTableData: AttritionTableJSONType[]}) => {
-  return (
-    <>
-      JobDetails
-    </>
   );
 };
 
