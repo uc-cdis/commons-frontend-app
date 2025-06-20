@@ -188,7 +188,7 @@ const workflowApi = ResultsApiTags.injectEndpoints({
           if (!parsedValue?.did) {
             throw new Error(`Missing "did" field in artifact value.`);
           }
-        } catch (_error: unknown) {
+        } catch {
           return {
             error: {
               error: 'Failed to parse artifact value or missing "did"',

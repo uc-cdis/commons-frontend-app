@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import AddCohortButton from './Utils/AddCohortButton';
 import CohortDefinitions from './Utils/CohortDefinitions';
-import SearchBar from '../SearchBar/SearchBar';
+import SearchBar from '../../PLP/Components/SearchBar/SearchBar';
 
 interface SelectCohortProps {
-  selectedCohort?: number | undefined;
-  handleCohortSelect: (selectedRow: number) => void;
+  selectedCohort?: cohort | undefined;
+  handleCohortSelect: (selectedCohort: cohort) => void;
   selectedTeamProject: string;
 }
-//TODO - DEPRECATE THIS ONE in favor of src/lib/AnalysisApps/SharedUtils/SelectCohort/SelectCohort.tsx
-/** Component for selecting a cohort, used in select study population view */
+interface cohort { // TODO - centralize this interface
+  cohort_definition_id: number;
+  cohort_name: string;
+  size: number;
+}
+
 const SelectCohort: React.FC<SelectCohortProps> = ({
   selectedCohort,
   handleCohortSelect,

@@ -6,7 +6,7 @@ import TeamProjectModal from '../TeamProjectModal/TeamProjectModal';
 import IsCurrentTeamProjectValid from './IsCurrentTeamProjectValid';
 //import { TeamProjectsEndpoint } from '../../Endpoints';
 import { Loader } from '@mantine/core';
-import useSWR from 'swr';
+//import useSWR from 'swr';
 
 const runningApplicationClientSide = typeof window !== 'undefined';
 
