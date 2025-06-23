@@ -1,24 +1,29 @@
-/*
 import React, { useContext } from 'react';
-import { useQuery } from 'react-query';
-import { Spin, Button } from 'antd';
 import DetailPageHeader from '../../Components/DetailPageHeader/DetailPageHeader';
 import SharedContext from '../../Utils/SharedContext';
-import { fetchPresignedUrlForWorkflowArtifact, getWorkflowDetails } from '../../Utils/gwasWorkflowApi';
-import queryConfig from '../../../SharedUtils/QueryConfig';
-import LoadingErrorMessage from '../../../SharedUtils/LoadingErrorMessage/LoadingErrorMessage';
-import './Results.css';
-import ResultsPheWeb from './ResultsPheWeb/ResultsPheWeb';
-import ResultsPng from './ResultsPng/ResultsPng';
 
-/* eslint no-alert: 0  // --> OFF
+import LoadingErrorMessage from '../../../SharedUtils/LoadingErrorMessage/LoadingErrorMessage';
+//import ResultsPheWeb from './ResultsPheWeb/ResultsPheWeb';
+//import ResultsPng from './ResultsPng/ResultsPng';
+
+import { Loader, Button } from '@mantine/core';
+import useSWR from 'swr';
+import { GEN3_WORKFLOW_API } from '../../../SharedUtils/Endpoints';
+import { fetchPresignedUrlForWorkflowArtifact, getWorkflowDetails, WorkflowDetailsType } from '../../Utils/gwasWorkflowApi';
+
 const Results = () => {
   const { selectedRowData } = useContext(SharedContext);
+  if (!selectedRowData) {
+    throw new Error('selectedRowData is not defined in SharedContext');
+  }
   const { name, uid } = selectedRowData;
-  const { data, status } = useQuery(
-    ['getWorkflowDetails', name, uid],
-    () => getWorkflowDetails(name, uid),
-    queryConfig,
+
+  //TODO clean this up and make only one api call, move up to parent
+  const endpoint = `${GEN3_WORKFLOW_API}status/${name}?uid=${uid}`;
+
+  const { data, error, isLoading, isValidating } = useSWR(
+    endpoint,
+    (...args) => fetch(...args).then((res) => (res.json() as Promise<WorkflowDetailsType>)),
   );
 
   const downloadAll = () => {
@@ -44,7 +49,7 @@ const Results = () => {
     </section>
   );
 
-  if (status === 'error') {
+  if (error) {
     return (
       <React.Fragment>
         {displayTopSection()}
@@ -52,12 +57,12 @@ const Results = () => {
       </React.Fragment>
     );
   }
-  if (status === 'loading') {
+  if (isLoading || isValidating) {
     return (
       <React.Fragment>
         {displayTopSection()}
         <div className='spinner-container'>
-          Fetching workflow details... <Spin />
+          Fetching workflow details... <Loader />
         </div>
       </React.Fragment>
     );
@@ -78,14 +83,14 @@ const Results = () => {
       (entry) => entry.name === 'pheweb_manhattan_json_index',
     );
     if (results && results.length !== 0) {
-      return <ResultsPheWeb />;
+      return <>ResultsPheWeb</>;//<ResultsPheWeb />;
     }
     // If no pheweb json file, try to see if there is a PNG Manhattan plot:
     results = data?.outputs?.parameters?.filter(
       (entry) => entry.name === 'manhattan_plot_index',
     );
     if (results && results.length !== 0) {
-      return <ResultsPng />;
+      return <>ResultsPng</>;//<ResultsPng />;
     }
     // If none of the above, show error:
     return (
@@ -101,5 +106,3 @@ const Results = () => {
   );
 };
 export default Results;
-
-*/

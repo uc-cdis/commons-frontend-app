@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Home from './Views/Home/Home';
-// import Results from './Views/Results/Results';
+import Results from './Views/Results/Results';
 // import Execution from './Views/Execution/Execution';
 import Input from './Views/Input/Input';
 import SharedContext from './Utils/SharedContext';
@@ -25,8 +25,7 @@ const GWASResultsContainer = () => {
       case VIEWS.home:
         return <Home selectedTeamProject={selectedTeamProject} />;
       case VIEWS.results:
-        return <h1>Results</h1>;
-      // return <Results />;
+        return <Results />;
       case VIEWS.execution:
         return <h1>Execution</h1>;
       // return <Execution />;

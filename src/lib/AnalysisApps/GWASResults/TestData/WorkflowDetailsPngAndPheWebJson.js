@@ -1,4 +1,3 @@
-/*
 const WorkflowStatusResponse = {
   name: 'gwas-workflow-123',
   wf_name: 'test job',
@@ -50,5 +49,3 @@ const WorkflowStatusResponse = {
 };
 
 export default WorkflowStatusResponse;
-
-*/
