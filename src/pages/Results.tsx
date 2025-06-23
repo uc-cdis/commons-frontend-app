@@ -17,9 +17,9 @@ const GWASResults = ({ headerProps, footerProps }: NavPageLayoutProps) => {
     <NavPageLayout
       {...{ headerProps, footerProps }}
       headerData={{
-        title: 'GWAS Results',
-        content: 'Results of GWAS Workflows',
-        key: 'gen3-gwas-results',
+        title: 'Results',
+        content: 'Results of Workflows',
+        key: 'gen3-results',
       }}
     >
       <ProtectedContent>

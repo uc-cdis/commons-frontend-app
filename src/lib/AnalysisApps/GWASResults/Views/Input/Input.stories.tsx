@@ -25,7 +25,7 @@ const selectedRowData = {
 const { name, uid } = selectedRowData;
 
 const meta: Meta<typeof Input> = {
-  title: 'GWASResults/Views/Input',
+  title: 'Results/Views/Input',
   component: Input,
   decorators: [
     (Story) => {

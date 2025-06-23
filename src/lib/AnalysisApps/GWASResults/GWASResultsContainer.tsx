@@ -42,7 +42,7 @@ const GWASResultsContainer = () => {
       <div>
         <Anchor component={Link} href="/resource-browser"> ← Back to Apps</Anchor>
         <div className="flex justify-between pb-4">
-          <Title order={1}>GWAS Results</Title>
+          <Title order={1}>Results</Title>
           <TeamProjectHeader isEditable={false} />
         </div>
       </div>

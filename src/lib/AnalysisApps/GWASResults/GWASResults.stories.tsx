@@ -5,7 +5,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 
 const meta: Meta<typeof GWASResultsContainer> = {
-  title: 'GWASResults',
+  title: 'Results',
   component: GWASResultsContainer,
 };
 

@@ -32,8 +32,8 @@ const ResourcesData = [
     imageSrc: PLPApp,
   },
   {
-    title: 'GWAS Results',
-    link: '/GWASResults',
+    title: 'Results',
+    link: '/Results',
     summary: 'Use this App to view status & results of submitted workflows',
     imageSrc: GWASResults,
   },

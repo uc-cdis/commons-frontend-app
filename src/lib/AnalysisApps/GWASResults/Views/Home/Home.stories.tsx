@@ -12,7 +12,7 @@ import { http, HttpResponse, delay } from 'msw';
 import { GWASResultsJobs } from './HomeTable/HomeTable';
 
 const meta: Meta<typeof Home> = {
-  title: 'GWASResults/Views/Home',
+  title: 'Results/Views/Home',
   component: Home,
   decorators: [
     (Story) => {
