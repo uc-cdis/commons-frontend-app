@@ -17,6 +17,14 @@
       "description": "This notebook provides a step-by-step walkthrough for: Selecting a VPODC cohort from Gen3, listing associated VCF object IDs and downloading files using the gen3-client",
       "loginRequired": false,
       "href": "notebook",
+      "btnText": "Show Analysis"},
+    {"title": "Metabolomics Analysis using Data from Metabolomics Workbench",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.png",
+      "image": "/images/apps/metabolomics.png",
+      "description": "This notebook demonstrates a real-world data integration pipeline involving the Murtha Cancer Center Data Platform and external public resources like the Metabolomics Workbench",
+      "loginRequired": false,
+      "href": "notebook",
       "btnText": "Show Analysis"}
   ]
 }
