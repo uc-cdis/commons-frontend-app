@@ -13,8 +13,9 @@ import {
   registerExplorerDefaultCellRenderers,
   registerCohortBuilderDefaultPreviewRenderers,
   registerMetadataSchemaApp,
+  registerCohortDiscoveryApp,
 } from '@gen3/frontend';
-
+import { registerDefaultRemoteSupport } from '@gen3/core';
 import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
 import { registerCustomExplorerDetailsPanels } from '@/lib/CohortBuilder/FileDetailsPanel';
 
@@ -63,7 +64,9 @@ const Gen3App = ({
     if (!faroRef.current) faroRef.current = initGrafanaFaro();
     if (isFirstRender.current) {
       setDRSHostnames(drsHostnames);
+      registerDefaultRemoteSupport();
       registerMetadataSchemaApp();
+      registerCohortDiscoveryApp();
       registerExplorerDefaultCellRenderers();
       registerCohortBuilderDefaultPreviewRenderers();
       registerCohortTableCustomCellRenderers();
