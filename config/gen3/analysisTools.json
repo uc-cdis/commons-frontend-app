@@ -17,7 +17,8 @@
       "description": "This notebook provides a step-by-step walkthrough for: Selecting a VPODC cohort from Gen3, listing associated VCF object IDs and downloading files using the gen3-client",
       "loginRequired": false,
       "href": "notebook",
-      "btnText": "Show Analysis"},
+      "btnText": "Show Analysis"
+    },
     {"title": "Metabolomics Analysis using Data from Metabolomics Workbench",
       "type": "notebook",
       "icon": "/images/apps/icons/jupyter.png",
