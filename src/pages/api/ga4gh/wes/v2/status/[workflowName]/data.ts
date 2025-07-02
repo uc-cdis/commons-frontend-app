@@ -125,24 +125,9 @@ export const data = {
           '{"baseid": "af4fb252-d773-4f9b-9a4f-5a7251c54b46", "did": "dg.TST0/9aee8147-97e7-4b07-9690-bf26e953ed2a", "rev": "ed3d2bcf"}',
       },
       {
-        name: 'manhattan_plot_index',
+        name: 'lasso_logistic_regression_sparceROC_index',
         value:
           '{"baseid": "7637a41e-cbec-4ba2-8556-3b8a506498bb", "did": "dg.TST0/e41e7a85-baba-4a37-8871-45bc3c375c7f", "rev": "c60b974f"}',
-      },
-      {
-        name: 'attrition_json_index',
-        value:
-          '{"baseid": "a13b170e-e8c1-4750-831f-1b1587bd960a", "did": "dg.TST0/08803c69-3ef9-46c9-b025-fd12e0ed6d23", "rev": "8ab52ddc"}',
-      },
-      {
-        name: 'pheweb_manhattan_json_index',
-        value:
-          '{"baseid": "6129ca03-c9c1-4b27-b410-6773fac5bcce", "did": "dg.TST0/4dda3cba-636d-400b-ac70-3c8872c4d4ca", "rev": "ec930d6b"}',
-      },
-      {
-        name: 'pheweb_qq_json_index',
-        value:
-          '{"baseid": "4135bb4b-3634-4fce-8bf6-fa533b253585", "did": "dg.TST0/5d458b10-ff4c-4920-8d28-9f2956e6dec8", "rev": "7dfb5d18"}',
       },
     ],
   },

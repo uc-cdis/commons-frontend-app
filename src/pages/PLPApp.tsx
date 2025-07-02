@@ -7,6 +7,8 @@ import {
 } from '@gen3/frontend';
 import { GetServerSideProps } from 'next';
 import PLPContainer from '../lib/AnalysisApps/PLP/PLPContainer';
+import { Anchor } from '@mantine/core';
+import Link from 'next/link';
 
 const PLPApp = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   return (
@@ -15,12 +17,13 @@ const PLPApp = ({ headerProps, footerProps }: NavPageLayoutProps) => {
       headerData={{
         title: 'Gen3 Sample Page',
         content: 'Sample Data',
-        key: 'gen3-sample-page',
+        key: 'gen3-plp-page',
       }}
     >
       <ProtectedContent>
         <div className="w-full m-10">
           <div className="w-full p-5">
+            <Anchor component={Link} href="/resource-browser"> ← Back to Apps</Anchor>
             <PLPContainer />
           </div>
         </div>

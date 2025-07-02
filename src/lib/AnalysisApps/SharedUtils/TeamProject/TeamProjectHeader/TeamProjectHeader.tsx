@@ -85,6 +85,8 @@ const TeamProjectHeader: React.FC<TeamProjectHeaderProps> = ({
     rerouteToAppSelectionIfNeeded();
   }, [isEditable, currentTeamProjectIsValid, data]);
 
+  const getLastPathSegment = (path: string) => path.split('/').filter(Boolean).pop();
+
   if (isLoading) return <Loader size="sm" />;
   return (
     <div>
@@ -92,7 +94,7 @@ const TeamProjectHeader: React.FC<TeamProjectHeaderProps> = ({
         data-testid="team-project-header"
         className="text-vadc-secondary text-lg"
       >
-        <strong className="text-xl ">Team Project</strong> / {bannerText}
+        <strong className="text-xl ">Team Project</strong>: {getLastPathSegment(bannerText)}
         {isEditable && (
           <button
             className="team-project-header_modal-button ml-2"

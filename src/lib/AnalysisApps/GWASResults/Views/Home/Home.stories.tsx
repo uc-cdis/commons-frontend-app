@@ -93,6 +93,7 @@ const createWorkflowNum = () =>
 
 const getMockWorkflowList = () => {
   requestCount++;
+  const phase = getMockPhase(requestCount / 2);
   // simulate a new workflow only at each 2nd request:
   if (requestCount % 2 == 0) {
     workflowList.splice(0, 0, {
@@ -102,8 +103,8 @@ const getMockWorkflowList = () => {
         .substr(2, 5)}@aol.com`,
       wf_name: 'User Added WF Name ' + requestCount,
       uid: 'uid-' + requestCount,
-      phase: getMockPhase(requestCount / 2),
-      finishedAt: new Date(new Date().getTime() - Math.random() * 1e12).toISOString(),
+      phase: phase,
+      finishedAt: (phase === PHASES.Running? null : new Date().toISOString()),
       submittedAt: new Date(new Date().getTime() - Math.random() * 1e12).toISOString(),
       startedAt: new Date().toISOString(),
     });

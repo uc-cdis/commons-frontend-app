@@ -18,7 +18,7 @@ const JobDetails = ({ attritionTableData }: {attritionTableData: AttritionTableJ
   }
   const { name, uid } = selectedRowData;
   //TODO clean this up and make only one api call, move up to parent
-  const endpoint = `${GEN3_WORKFLOW_API}status/${name}?uid=${uid}`;
+  const endpoint = `${GEN3_WORKFLOW_API}/status/${name}?uid=${uid}`;
   const minimumRecommendedCohortSize = 1000;
   const cohortNameValue = attritionTableData[0].rows[0].name;
 
@@ -219,4 +219,3 @@ const JobDetails = ({ attritionTableData }: {attritionTableData: AttritionTableJ
 };
 
 export default JobDetails;
-

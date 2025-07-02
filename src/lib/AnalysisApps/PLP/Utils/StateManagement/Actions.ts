@@ -2,6 +2,7 @@ const ACTIONS = {
   SET_SELECTED_STUDY_POPULATION_COHORT: 'setSelectedStudyPopulationCohort',
   SET_SELECTED_OUTCOME_COHORT: 'setSelectedOutcomeCohort',
   SET_DATASET_OBSERVATION_WINDOW: 'setDatasetObservationWindow',
+  SET_DATASET_REMAINING_SIZE: 'setDatasetRemainingSize',
   SET_OUTCOME_OBSERVATION_WINDOW: 'setOutcomeObservationWindow',
   SET_MINIMUM_COVARIATE_OCCURRENCE: 'setMinimumCovariateOccurrence',
   SET_USE_ALL_COVARIATES: 'setUseAllCovariates',

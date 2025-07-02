@@ -15,7 +15,7 @@ const TableData = [
     name: 'Workflow 2',
     gen3username: 'janedoe@aol.com',
     startedAt: '2022-02-16T10:00:00Z',
-    finishedAt: '2022-02-16T10:00:00Z',
+    finishedAt: null,
     phase: 'Running',
     submittedAt: '2022-02-16T10:30:00Z',
   },

@@ -77,7 +77,7 @@ const PLPContainer = () => {
       return (
         <div data-tour="cohort-intro" >
           <div>
-            In this step, you can define an outcome observation period in days. This period specifies how many days to look for the outcome
+            In this step, you can define an outcome period in days. This period specifies how many days to look for the outcome
             of interest to occur for each patient relative to their cohort entry date in the initial dataset.
             This is also known as the time-at-risk window.
           </div>
@@ -120,7 +120,7 @@ const PLPContainer = () => {
           <br/>
           <DefineTestAndValidationDatasets
             numberOfCrossValidationFolds={state.numberOfCrossValidationFolds}
-            percentageOfDataToUseAsTest={state.percentageOfDataToUseAsTest}
+            percentageOfDataToUseAsTest={state.percentageOfDataToUseAsTest ?? undefined}
             dispatch={dispatch}
           />
           <br/>
@@ -149,7 +149,7 @@ const PLPContainer = () => {
             modelParameters={state.modelParameters}
             dispatch={dispatch}
           />
-          {state.showJobSubmitModal && (
+          {state.showJobSubmitModal && state.percentageOfDataToUseAsTest && (
             <JobSubmitModal
               jobName={state.jobName}
               dispatch={dispatch}
@@ -161,6 +161,7 @@ const PLPContainer = () => {
               minimumCovariateOccurrence={state.minimumCovariateOccurrence}
               percentageOfDataToUseAsTest={state.percentageOfDataToUseAsTest}
               numberOfCrossValidationFolds={state.numberOfCrossValidationFolds}
+              datasetRemainingSize={state.datasetRemainingSize}
               model={state.model}
               modelParameters={state.modelParameters}
             />
@@ -180,7 +181,8 @@ const PLPContainer = () => {
     (state.currentStep === 0 && !state.selectedStudyPopulationCohort) ||
     (state.currentStep === 1 && !state.datasetObservationWindow) ||
     (state.currentStep === 2 && !state.selectedOutcomeCohort) ||
-    (state.currentStep === 3 && !state.outcomeObservationWindow)
+    (state.currentStep === 3 && !state.outcomeObservationWindow) ||
+    (state.currentStep === 5 && !state.percentageOfDataToUseAsTest)
   ) {
     nextButtonEnabled = false;
   }
@@ -202,6 +204,7 @@ const PLPContainer = () => {
         selectionMode={state.selectionMode}
       />
       <AttritionTableWrapper
+        dispatch={dispatch}
         selectedStudyPopulationCohort={state.selectedStudyPopulationCohort}
         datasetObservationWindow={state.datasetObservationWindow}
         selectedOutcomeCohort={state.selectedOutcomeCohort}

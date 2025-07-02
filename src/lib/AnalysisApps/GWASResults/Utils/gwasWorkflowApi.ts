@@ -37,7 +37,7 @@ export const getWorkflowDetails = async (
   workflowUid: string,
 ) => {
   // query argo-wrapper endpoint to get the list of artifacts produced by the workflow:
-  const endPoint = `${GEN3_WORKFLOW_API}status/${workflowName}?uid=${workflowUid}`;
+  const endPoint = `${GEN3_WORKFLOW_API}/status/${workflowName}?uid=${workflowUid}`;
   const errorMessage = 'An error has occured while fetching workflow details';
   const response: WorkflowDetailsType = await fetch(endPoint)
     .then((res) => res.json())
@@ -61,7 +61,7 @@ export const fetchGwasWorkflows = async () => {
   }
   return response.json();
 
-  became 
+  became
 
   const { data, error, isLoading, isValidating } = useSWR(
     `${GEN3_API}/${GwasWorkflowEndpoint}?team_projects=${selectedTeamProject}`,

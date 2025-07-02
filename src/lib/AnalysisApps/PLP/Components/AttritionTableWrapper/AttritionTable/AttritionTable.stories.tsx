@@ -60,6 +60,7 @@ const AttritionTableWithHooks = () => {
   return (
     <SourceContextProvider>
       <AttritionTable
+        dispatch={() => {return null}}
         selectedStudyPopulationCohort={selectedStudyPopulationCohort}
         datasetObservationWindow={365}
         selectedOutcomeCohort={selectedOutcomeCohort}

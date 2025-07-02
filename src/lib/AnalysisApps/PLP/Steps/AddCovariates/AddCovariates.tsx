@@ -21,7 +21,9 @@ const AddCovariates = ({
   return (
     <div data-tour="define-dataset-observation-window">
       <NumberInput
+        label="Minimum covariate occurrence"
         placeholder="Enter %"
+        w={400}
         min={0.1}
         step={0.1}
         defaultValue={0.1}

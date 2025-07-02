@@ -16,6 +16,7 @@ interface Props {
   minimumCovariateOccurrence: number;
   percentageOfDataToUseAsTest: number;
   numberOfCrossValidationFolds: number;
+  datasetRemainingSize: number | null;
   model: string;
   modelParameters: Record<string, any>;
 }
@@ -37,6 +38,7 @@ const JobSubmitModal: React.FC<Props> = ({
   minimumCovariateOccurrence,
   percentageOfDataToUseAsTest,
   numberOfCrossValidationFolds,
+  datasetRemainingSize,
   model,
   modelParameters,
 }) => {
@@ -123,6 +125,19 @@ const JobSubmitModal: React.FC<Props> = ({
     }
   };
 
+  const calculateTestSetSize = (percentageOfDataToUseAsTest: number, datasetRemainingSize: number) => {
+    // round both test and training sizes and sum. If sum > datasetRemainingSize, then seet testSize = testSize -1.
+    // This will happen in some cases, e.g. datasetRemainingSize = 114, and percentageOfDataToUseAsTest = 25
+    // will result in rounded values of 86 and 29 = 115, which is then corrected by method below to 86 and 28.
+    const trainingSize = Math.round((100-percentageOfDataToUseAsTest)*datasetRemainingSize/100);
+    const testSize = Math.round((percentageOfDataToUseAsTest)*datasetRemainingSize/100);
+    if (trainingSize+testSize > datasetRemainingSize) {
+      return testSize-1;
+    } else {
+      return testSize;
+    }
+  };
+
   return (
     <Modal
       opened={true}
@@ -131,7 +146,7 @@ const JobSubmitModal: React.FC<Props> = ({
       }}
       title={<div className="flex-row">Review Details</div>}
       overlayProps={{ opacity: 0.55, blur: 3 }}
-      size="80vh"
+      size="90vh"
     >
       <TextInput
         className="gwas-job-name"
@@ -141,22 +156,74 @@ const JobSubmitModal: React.FC<Props> = ({
       />
       <div className="flex-col">
         <div className="flex-row">
-          <div>
-            Dataset: {selectedStudyPopulationCohort.cohort_name}, size{' '}
-            {selectedOutcomeCohort.size}
-          </div>
-        </div>
-        <div className="flex-row">
-          <div>Dataset Observation Window: {datasetObservationWindow}</div>
-        </div>
-        <div className="flex-row">
-          <div>
-            Outcome of Interest: {selectedOutcomeCohort.cohort_name}, size{' '}
-            {selectedOutcomeCohort.size}
-          </div>
-        </div>
-        <div className="flex-row">
-          <div>Outcome Observation Window: {outcomeObservationWindow}</div>
+          <table className="table-auto w-full my-4">
+            <tbody>
+              <tr>
+                <td className="font-semibold pr-4 text-right align-top whitespace-nowrap">
+                  Dataset:
+                </td>
+                <td className="align-top">
+                  {selectedStudyPopulationCohort.cohort_name}
+                </td>
+              </tr>
+              <tr>
+                <td className="font-semibold pr-4 text-right align-top whitespace-nowrap">
+                  Dataset Observation Window:
+                </td>
+                <td className="align-top">
+                  {datasetObservationWindow} days
+                </td>
+              </tr>
+              <tr>
+                <td className="font-semibold pr-4 text-right align-top whitespace-nowrap">
+                  Outcome of Interest:
+                </td>
+                <td className="align-top">
+                  {selectedOutcomeCohort.cohort_name}
+                </td>
+              </tr>
+              <tr>
+                <td className="font-semibold pr-4 text-right align-top whitespace-nowrap">
+                  Outcome Window:
+                </td>
+                <td className="align-top">
+                  {outcomeObservationWindow} days
+                </td>
+              </tr>
+              <tr>
+                <td className="font-semibold pr-4 text-right align-top whitespace-nowrap">
+                  Dataset size (after time window filters):
+                </td>
+                <td className="align-top">
+                  {datasetRemainingSize !== null ? datasetRemainingSize : 'see attrition table'}
+                </td>
+              </tr>
+              <tr>
+                <td className="font-semibold pr-4 text-right align-top whitespace-nowrap">
+                  Training set size:
+                </td>
+                <td className="align-top">
+                  {datasetRemainingSize !== null ? `${Math.round((100-percentageOfDataToUseAsTest)*datasetRemainingSize/100)}` : 'see attrition table'}
+                </td>
+              </tr>
+              <tr>
+                <td className="font-semibold pr-4 text-right align-top whitespace-nowrap">
+                  Testing set size:
+                </td>
+                <td className="align-top">
+                  {datasetRemainingSize !== null ? `${calculateTestSetSize(percentageOfDataToUseAsTest, datasetRemainingSize)}` : 'see attrition table'}
+                </td>
+              </tr>
+              <tr>
+                <td className="font-semibold pr-4 text-right align-top whitespace-nowrap">
+                  Cross-validation:
+                </td>
+                <td className="align-top">
+                  {numberOfCrossValidationFolds} folds
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         {submitError && (

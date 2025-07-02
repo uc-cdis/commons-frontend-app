@@ -8,12 +8,13 @@ export interface Action {
 export interface State {
   selectedStudyPopulationCohort: any;
   datasetObservationWindow: number;
+  datasetRemainingSize: number | null;
   selectedOutcomeCohort: any;
   outcomeObservationWindow: number;
   minimumCovariateOccurrence: number;
   useAllCovariates: boolean;
   numberOfCrossValidationFolds: number,
-  percentageOfDataToUseAsTest: number,
+  percentageOfDataToUseAsTest: number | null,
   model: string,
   modelParameters: Record<string,any>,
   finalPopulationSizes: any[];
@@ -34,6 +35,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, selectedOutcomeCohort: action.payload };
     case ACTIONS.SET_DATASET_OBSERVATION_WINDOW:
       return { ...state, datasetObservationWindow: action.payload };
+    case ACTIONS.SET_DATASET_REMAINING_SIZE:
+      return { ...state, datasetRemainingSize: action.payload };
     case ACTIONS.SET_OUTCOME_OBSERVATION_WINDOW:
       return { ...state, outcomeObservationWindow: action.payload };
     case ACTIONS.SET_MINIMUM_COVARIATE_OCCURRENCE:

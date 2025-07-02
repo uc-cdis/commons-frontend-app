@@ -16,6 +16,8 @@ const TeamsDropdown: React.FC<TeamsDropdownProps> = ({
   selectedTeamProject,
   setSelectedTeamProject,
 }) => {
+  const getLastPathSegment = (path: string): string =>
+    path.split('/').filter(Boolean).pop() ?? path;
 
   return (
     <div data-testid="teams-dropdown">
@@ -23,7 +25,10 @@ const TeamsDropdown: React.FC<TeamsDropdownProps> = ({
         label="Please select your team"
         placeholder="-select one of the team projects below-"
         value={selectedTeamProject}
-        data={teams.map((team) => team.teamName)}
+        data={teams.map((team) => ({
+          value: team.teamName, // e.g., '/team_project/project1'
+          label: getLastPathSegment(team.teamName), // e.g., 'project1'
+        }))}
         onChange={setSelectedTeamProject}
       />
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ACTIONS from '../../Utils/StateManagement/Actions';
 import { NumberInput } from '@mantine/core';
-import { toInteger } from 'lodash';
+import { toInteger, toNumber } from 'lodash';
 
 
 type DefineTestAndValidationDatasetsProps = {
@@ -32,7 +32,9 @@ const DefineTestAndValidationDatasets = ({
   return (
     <div data-tour="define-dataset-observation-window">
       <NumberInput
-        placeholder="Number of folds to use in the cross-validation"
+        label="Number of folds to use in the cross-validation"
+        placeholder="e.g. 3"
+        w={450}
         min={2}
         max={15}
         value={numberOfCrossValidationFolds}
@@ -41,14 +43,15 @@ const DefineTestAndValidationDatasets = ({
         onChange={(e) => handleNumberOfCrossValidationFolds(toInteger(e))}
       />
       <NumberInput
-        placeholder="Percentage of the data to be held out for final model testing (0-100%)"
+        label="Percentage of the data to be held out for final model testing"
+        placeholder="e.g. 25"
+        w={450}
         min={0}
+        max={99}
         value={percentageOfDataToUseAsTest}
         rightSection="%"
         onChange={(value) => {
-          if (typeof value === 'number') {
-            handlePercentageOfDataToUseAsTest(value);
-          }
+          handlePercentageOfDataToUseAsTest(toNumber(value));
         }}
       />
     </div>

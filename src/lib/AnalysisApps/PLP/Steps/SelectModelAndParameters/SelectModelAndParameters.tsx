@@ -2,6 +2,7 @@ import React from 'react';
 import ACTIONS from '../../Utils/StateManagement/Actions';
 import { LassoParameters } from './LassoParameters';
 import { RandomForestParameters } from './RandomForestParameters';
+import { SupportVectorMachineParameters } from './SupportVectorMachineParameters';
 import { useState } from 'react';
 import { Tabs, TabsList, TabsTab, TabsPanel } from '@mantine/core';
 import { Flex, Box, Title } from '@mantine/core';
@@ -9,7 +10,7 @@ import { Flex, Box, Title } from '@mantine/core';
 const modelOptions = [
   'Lasso Logistic Regression',
   'Random Forest',
-  'Gradient Boosting Machine',
+  'Support Vector Machine',
   'Ada Boost',
   'Decision Tree',
   'Naïve Bayes',
@@ -50,6 +51,12 @@ const SelectModelAndParameters = ({
           model={model}
           modelParameters={modelParameters}
          />;
+      case 'Support Vector Machine':
+         return <SupportVectorMachineParameters
+          dispatch={dispatch}
+          model={model}
+          modelParameters={modelParameters}
+         />;
       // add other cases...
       default:
         return "Not Available";
@@ -79,7 +86,7 @@ const SelectModelAndParameters = ({
             }}
           >
             {modelOptions.map((model) => (
-              <TabsTab key={model} value={model}>
+              <TabsTab key={model} value={model.replace(/\s+/g, '-')}>
                 {model}
               </TabsTab>
             ))}
@@ -87,7 +94,7 @@ const SelectModelAndParameters = ({
 
           <Box ml="md" style={{ flex: 1 }}>
             {modelOptions.map((model) => (
-              <TabsPanel key={model} value={model}>
+              <TabsPanel key={model} value={model.replace(/\s+/g, '-')}>
                 <Title order={5} mb="sm">
                   Selected model: {model}
                 </Title>

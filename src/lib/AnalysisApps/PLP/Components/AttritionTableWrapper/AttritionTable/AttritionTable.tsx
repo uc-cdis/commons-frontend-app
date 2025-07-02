@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Table, Loader } from '@mantine/core';
 import { CohortsEndpoint, CohortsOverlapEndpoint } from '@/lib/AnalysisApps/SharedUtils/Endpoints';
 import { useSourceContext } from '../../../../SharedUtils/Source';
+import ACTIONS from '../../../Utils/StateManagement/Actions';
 
 interface AttritionTableProps {
+  dispatch: (action: any) => void;
   selectedStudyPopulationCohort: cohort;
   datasetObservationWindow: number;
   selectedOutcomeCohort: cohort;
   outcomeObservationWindow: number;
-  percentageOfDataToUseAsTest: number;
+  percentageOfDataToUseAsTest: number | null;
 }
 
 interface cohort { // TODO - centralize this interface
@@ -30,6 +32,7 @@ const cellKeys: Key[][] = [
 ];
 
 export const AttritionTable: React.FC<AttritionTableProps> = ({
+  dispatch,
   selectedStudyPopulationCohort,
   datasetObservationWindow,
   selectedOutcomeCohort,
@@ -42,7 +45,7 @@ export const AttritionTable: React.FC<AttritionTableProps> = ({
     'Initial data cohort',
     `Observation window (${datasetObservationWindow} days)`,
     `Time-at-risk (${outcomeObservationWindow} days)`,
-    `Training set (${100-percentageOfDataToUseAsTest} %)`,
+    `Training set (${percentageOfDataToUseAsTest? 100-percentageOfDataToUseAsTest : '...'}%)`,
   ];
 
   const getTraininSetSize = async (baseSize: number | null) => {
@@ -53,6 +56,18 @@ export const AttritionTable: React.FC<AttritionTableProps> = ({
     }
   }
 
+  const getAndSetRemaningSize = async (baseSize: number | null) => {
+    if (!baseSize) {
+      return null
+    } else {
+      // update global remaining size state:
+      dispatch({
+        type: ACTIONS.SET_DATASET_REMAINING_SIZE,
+        payload: baseSize,
+      });
+      return baseSize;
+    }
+  }
 
   const getOverlapWithOutcome = async () => {
     if (! (selectedStudyPopulationCohort && selectedOutcomeCohort) ) {
@@ -154,7 +169,7 @@ export const AttritionTable: React.FC<AttritionTableProps> = ({
       async (v) =>  (v.D2 == null || v.C2 == null || v.C3 == null ? null : (v.D2 +(v.C2 - v.C3))), // D3
     ],
     [
-      async (v) =>  (v.A3 == null ? null : v.A3),                        // A4
+      async (v) => getAndSetRemaningSize(v.A3),                          // A4
       async (v) => getTraininSetSize(v.A3),                              // B4
       async (v) => getTraininSetSize(v.C3),                              // C4
       async (v) => getTraininSetSize(v.D3),                              // D4

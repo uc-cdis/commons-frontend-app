@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Text, Grid, Title } from '@mantine/core';
 import Link from 'next/link';
 import Image from 'next/image';
-import PLPApp from './Icons/PLPApp.svg';
+import PLPApp from './Icons/PLPApp.png';
 import GWASUIApp from './Icons/GWASUIApp.svg';
 import GWASResults from './Icons/GWASResults.svg';
 import AtlasLogo from './Icons/atlasLogo.svg';
@@ -18,14 +18,7 @@ const ResourcesData = [
     imageSrc: AtlasLogo,
   },
   {
-    title: 'Gen3 GWAS',
-    link: '/GWASUIApp',
-    summary:
-      'Use this App to perform high throughput GWAS on Million Veteran Program (MVP) data, using the University of Washington Genesis pipeline',
-    imageSrc: GWASUIApp,
-  },
-  {
-    title: 'Run patient level prediction models',
+    title: 'Run Patient Level Prediction Models',
     link: '/PLPApp',
     summary:
       'Use this app for building Patient Level Prediction (PLP) models',
@@ -38,10 +31,10 @@ const ResourcesData = [
     imageSrc: GWASResults,
   },
   {
-    title: 'MVP Data Dictionary',
+    title: 'Data Dictionary',
     link: '/AtlasDataDictionary',
     summary:
-      'Use this App to view a tabluar representation of the MVP data dictionary',
+      'Use this App to view a tabluar representation of the data dictionary',
     imageSrc: DataDictionary,
   },
 ];
