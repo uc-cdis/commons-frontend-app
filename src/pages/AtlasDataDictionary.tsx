@@ -14,7 +14,7 @@ const AtlasDataDictionary = ({
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={{
         title: 'Gen3 Sample Page',
         content: 'Sample Data',
         key: 'gen3-sample-page',

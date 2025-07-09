@@ -84,7 +84,7 @@ The following steps usually apply to update a forked commons.
 
 Get the changes from the parent fork:
 ```bash
-git remote add upstream git@github.com:uc-cdis/commons-frontend-app.git
+git remote add upstream git@github.com:uc-cdis/commons-frontend-app.git 
 git fetch upstream
 ```
 Create a branch and merge changes from upstream:

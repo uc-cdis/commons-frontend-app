@@ -16,7 +16,7 @@ const GWASResults = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={{
         title: 'Results',
         content: 'Results of Workflows',
         key: 'gen3-results',

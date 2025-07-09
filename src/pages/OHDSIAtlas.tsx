@@ -40,7 +40,7 @@ const OHDSIAtlas = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={{
         title: 'OHDSI Atlas',
         content: 'OHDSI Atlas Page',
         key: 'gen3-ohdsi-atlas',

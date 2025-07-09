@@ -12,7 +12,7 @@ const GWASUIApp = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={{
         title: 'Gen3 Sample Page',
         content: 'Sample Data',
         key: 'gen3-sample-page',
