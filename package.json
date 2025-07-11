@@ -1,10 +1,10 @@
 {
   "name": "@gen3/vpodc-data-commons",
-  "version": "0.10.89",
+  "version": "0.11.12",
   "private": "true",
   "engines": {
     "npm": ">=10.2.3",
-    "node": ">=20.11.0"
+    "node": ">=22.11.0"
   },
   "scripts": {
     "lint": "next lint",
@@ -19,11 +19,12 @@
     "getDRSToHostname": "node ./node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/"
   },
   "dependencies": {
+    "@datadog/browser-rum": "^6.7.0",
     "@fontsource/montserrat": "^5.0.19",
     "@fontsource/poppins": "^5.0.15",
     "@fontsource/source-sans-pro": "^5.0.8",
-    "@gen3/core": "^0.10.89",
-    "@gen3/frontend": "^0.10.89",
+    "@gen3/core": "^0.11.12",
+    "@gen3/frontend": "^0.11.12",
     "@grafana/faro-react": "^1.9.1",
     "@grafana/faro-web-sdk": "^1.9.1",
     "@grafana/faro-web-tracing": "^1.9.1",
@@ -35,7 +36,7 @@
     "@mantine/notifications": "^7.16.0",
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
-    "@next/mdx": "^15.2.4",
+    "@next/mdx": "^15.3.3",
     "cookies-next": "^4.3.0",
     "idb": "^8.0.0",
     "jsonpath-plus": "^10.3.0",
@@ -46,8 +47,8 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.1",
-    "@gen3/toolsff": "^0.10.89",
-    "@next/eslint-plugin-next": "^15.2.4",
+    "@gen3/toolsff": "^0.11.12",
+    "@next/eslint-plugin-next": "^15.3.3",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -71,7 +72,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "jest-fixed-jsdom": "^0.0.9",
     "msw": "^2.7.0",
-    "next": "^15.2.4",
+    "next": "^15.3.3",
     "postcss": "^8.4.29",
     "postcss-import": "^16.1.0",
     "postcss-loader": "^7.3.2",

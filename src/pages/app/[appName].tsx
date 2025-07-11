@@ -29,7 +29,7 @@ const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetaData={{
         title: 'Gen3 App Page',
         content: 'App Data',
         key: 'gen3-app-page',
