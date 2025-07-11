@@ -3,7 +3,7 @@
   "version": "0.11.12",
   "private": "true",
   "engines": {
-    "npm": ">=10.2.3",
+    "npm": ">=10.9.0",
     "node": ">=22.11.0"
   },
   "scripts": {
@@ -23,11 +23,8 @@
     "@fontsource/montserrat": "^5.0.19",
     "@fontsource/poppins": "^5.0.15",
     "@fontsource/source-sans-pro": "^5.0.8",
-    "@gen3/core": "^0.11.12",
-    "@gen3/frontend": "^0.11.12",
-    "@grafana/faro-react": "^1.9.1",
-    "@grafana/faro-web-sdk": "^1.9.1",
-    "@grafana/faro-web-tracing": "^1.9.1",
+    "@gen3/core": "0.11.12",
+    "@gen3/frontend": "0.11.12",
     "@mantine/core": "^7.16.0",
     "@mantine/dates": "^7.16.0",
     "@mantine/form": "^7.16.0",
@@ -42,13 +39,13 @@
     "jsonpath-plus": "^10.3.0",
     "react": "^18.3.1",
     "react-dom": "18.3.1",
-    "sharp": "^0.33.5",
+    "sharp": "^0.34.2",
     "swr": "^2.2.5"
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.1",
-    "@gen3/toolsff": "^0.11.12",
-    "@next/eslint-plugin-next": "^15.3.3",
+    "@gen3/toolsff": "0.11.12",
+    "@next/eslint-plugin-next": "^15.2.4",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
