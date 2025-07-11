@@ -11,7 +11,7 @@ const Analysis = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={{
         title: 'Resource Browser',
         content: 'Resource Browser',
         key: 'Resource Browser',

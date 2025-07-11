@@ -1,86 +1,37 @@
 [
   {
-    "tabTitle": "Patients",
+    "tabTitle": "Cases",
     "charts": {},
     "filters": {
       "tabs": [
         {
           "title": "Demographic",
           "fields": [
-            "project_id",
-            "Days_To_Birth",
-            "Days_To_Death",
-            "DeceasedFlag",
-            "Ethnicity",
-            "Gender",
-            "Race"
-          ]
-        },
-        {
-          "title": "ActionableMutations",
-          "fields": [
-            "project_id",
-            "ActionableMutations.Lab",
-            "ActionableMutations.Gene",
-            "ActionableMutations.DaysFromAnchorDateToBxDate"
-          ]
-        },
-        {
-          "title": "Oncology Primary",
-          "fields": [
-            "project_id",
-            "Oncology_Primary.Multiplicitycounter",
-            "Oncology_Primary.ICDOSite",
-            "Oncology_Primary.Radiation",
-            "Oncology_Primary.Chemotherapy",
-            "Oncology_Primary.DaysFromAnchorDateToDiagnosisDate",
-            "Oncology_Primary.Gradedifferentiation",
-            "Oncology_Primary.Laterality",
-            "Oncology_Primary.Stagegroupbest",
-            "Oncology_Primary.RadiationsurgerySequence",
-            "Oncology_Primary.Histologyicdo3X",
-            "Oncology_Primary.Lymphvascularinvasionl",
-            "Oncology_Primary.SeerSummaryStage2000",
-            "Oncology_Primary.PhysiciansStage",
-            "Oncology_Primary.DaysFromAnchorDateToMostdefinitivesurgDate",
-            "Oncology_Primary.ChemotherapyFac",
-            "Oncology_Primary.TumorSize",
-            "Oncology_Primary.SequenceNumber"
+            "project_id"
           ]
         }
       ]
     },
     "buttons": [
-      {
-        "enabled": false,
-        "type": "manifest",
-        "title": "Download Manifest",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "fileName": "manifest.json"
-      }
+
     ],
     "table": {
       "enabled": true,
       "fields": [
         "project_id",
-        "Race",
-        "Ethnicity",
-        "Gender",
-        "ActionableMutations.Lab",
-        "Oncology_Primary.Multiplicitycounter",
-        "Oncology_Primary.ICDOSite"
+        "_case_id",
+        "submitter_id"
       ]
     },
     "guppyConfig": {
-      "dataType": "patients",
-      "nodeCountTitle": "Patients",
+      "dataType": "case",
+      "nodeCountTitle": "Case",
       "fieldMapping": [],
       "manifestMapping": {
-        "resourceIndexType": "file",
-        "resourceIdField": "object_id",
-        "referenceIdFieldInResourceIndex": "case_id",
-        "referenceIdFieldInDataIndex": "Chicago_ID"
+        "resourceIndexType": "data_file",
+        "resourceIdField": "_imaging_file_id",
+        "referenceIdFieldInResourceIndex": "_case_id",
+        "referenceIdFieldInDataIndex": "_case_id"
       }
     }
   },
@@ -92,44 +43,44 @@
         {
           "title": "Files",
           "fields": [
-            "project_id",
-            "data_type",
+            "data_category",
             "data_format",
-            "file_size"
+            "data_type",
+            "program_name",
+            "project_code",
+            "project_id"
           ]
         }
       ]
     },
     "buttons": [
-      {
-        "enabled": false,
-        "type": "file-manifest",
-        "title": "Download Manifest",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "fileName": "manifest.json"
-      }
     ],
     "table": {
       "enabled": true,
       "fields": [
-        "submitter_id",
-        "data_type",
+        "_case_id",
+        "_imaging_file_id",
+        "data_category",
         "data_format",
+        "data_type",
         "file_name",
         "file_size",
-        "object_id"
+        "md5sum",
+        "program_name",
+        "project_code",
+        "project_id",
+        "submitter_id"
       ]
     },
     "guppyConfig": {
-      "dataType": "file",
-      "nodeCountTitle": "Files",
+      "dataType": "data_file",
+      "nodeCountTitle": "File",
       "fieldMapping": [],
       "manifestMapping": {
-        "resourceIndexType": "file",
-        "resourceIdField": "object_id",
-        "referenceIdFieldInResourceIndex": "object_id",
-        "referenceIdFieldInDataIndex": "Chicago_ID"
+        "resourceIndexType": "case",
+        "resourceIdField": "_imaging_file_id",
+        "referenceIdFieldInResourceIndex": "_case_id",
+        "referenceIdFieldInDataIndex": "_imaging_file_id"
       }
     }
   }

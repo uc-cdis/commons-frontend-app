@@ -11,7 +11,7 @@ import { GetServerSideProps } from 'next';
 const OHDSIAtlas = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   const iframeUrl = `https://atlas.${window.location.hostname}/WebAPI/user/login/openid?redirectUrl=/home`;
   const userRefreshEvent = new Event("updateUserActivity");
-  
+
   const processAppMessages = (event: MessageEvent) => {
     const pathArray = iframeUrl.split('/');
     const protocol = pathArray[0];
@@ -34,7 +34,7 @@ const OHDSIAtlas = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={{
         title: 'OHDSI Atlas',
         content: 'OHDSI Atlas Page',
         key: 'gen3-ohdsi-atlas',

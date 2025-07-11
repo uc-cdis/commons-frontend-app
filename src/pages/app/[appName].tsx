@@ -15,7 +15,7 @@ import {
 } from '@gen3/frontend';
 
 interface AppConfig extends NavPageLayoutProps {
-  config?: object;
+  config?: Record<string, any>;
 }
 
 const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
@@ -29,10 +29,11 @@ const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={{
         title: 'Gen3 App Page',
         content: 'App Data',
         key: 'gen3-app-page',
+        ...(config?.headerMetadata ? config.headerMetadata : {}),
       }}
     >
       {GdcApp && <GdcApp {...config} />}
@@ -55,7 +56,7 @@ export const getServerSideProps: GetServerSideProps<
 
   try {
     const config: any = await ContentSource.getContentDatabase().get(
-      `config/${GEN3_COMMONS_NAME}/apps/${appName}.json`,
+      `${GEN3_COMMONS_NAME}/apps/${appName}.json`,
     );
 
     return {
