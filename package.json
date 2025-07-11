@@ -3,8 +3,8 @@
   "version": "0.10.94",
   "private": "true",
   "engines": {
-    "npm": ">=10.2.3",
-    "node": ">=20.11.0"
+    "npm": ">=10.9.0",
+    "node": ">=22.11.0"
   },
   "scripts": {
     "lint": "next lint",
