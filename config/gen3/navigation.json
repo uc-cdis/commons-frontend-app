@@ -31,6 +31,11 @@
         "tooltip": "Match ids across the mesh."
       },
       {
+        "icon": "gen3:analysis",
+        "href": "/stats",
+        "name": "Stats"
+      },
+      {
         "icon": "gen3:dictionary",
         "href": "/DataDictionary",
         "name": "Dictionary",
