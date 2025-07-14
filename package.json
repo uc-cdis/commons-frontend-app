@@ -26,7 +26,7 @@
     "@gen3/core": "0.11.12",
     "@gen3/frontend": "0.11.12",
     "@mantine/core": "^7.16.0",
-    "@mantine/dates": "^7.16.0",
+    "@mantine/dates": "^7.17.3",
     "@mantine/form": "^7.16.0",
     "@mantine/hooks": "^7.16.0",
     "@mantine/modals": "^7.16.0",
