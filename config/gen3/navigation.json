@@ -25,12 +25,6 @@
         "tooltip": "View the metadata data schemas."
       },
       {
-        "icon": "gen3:comparison",
-        "href": "/Crosswalk",
-        "name": "Crosswalk",
-        "tooltip": "Match ids across the mesh."
-      },
-      {
         "icon": "gen3:analysis",
         "href": "/stats",
         "name": "Stats"
