@@ -1,0 +1,23 @@
+{
+  "useAPI": true,
+  "actions": [
+    {
+      "id": "exportDiscoveryToWorkspace",
+      "label": "Export Workspace",
+      "rightIcon" : "gen3:send",
+      "buttonLabel" : "Export",
+      "actionFunction" : "export-from-discovery-to-workspace",
+      "parameters" : {
+        "useAggMDS" : true
+      },
+      "itemRules": [
+        {
+          "field": "type",
+          "operator": "equals",
+          "value": "GA4GH_DRS",
+          "errorMessage": "file type must be GA4GH_DRS"
+        }
+      ]
+    }
+  ]
+}

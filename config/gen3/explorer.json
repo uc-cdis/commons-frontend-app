@@ -1,39 +1,88 @@
 [
   {
-    "tabTitle": "Cases",
-    "charts": {
-      "race": {
-        "chartType": "fullPie",
-        "title": "Race"
+    "tabTitle": "Subjects",
+    "chartsSection": {
+      "title": "Charts",
+      "enabled": true,
+      "showLegends" : {
+        "enabled" : true
       },
-      "ethnicity": {
-        "chartType": "horizontalStacked",
-        "title": "Ethnicity"
-      },
-      "gender": {
-        "chartType": "bar",
-        "title": "Gender"
+      "charts": {
+        "gen3_discovery.subject_primary_disease": {
+          "chartType": "horizontalStacked",
+          "title": "Primary Disease",
+          "showLegendInChart" : false
+        },
+        "gen3_discovery.subject_type_of_exposure": {
+          "chartType": "horizontalStacked",
+          "title": "Type of Exposure",
+          "showLegendInChart" : false
+        },
+        "gen3_discovery.subject_cancer_grade": {
+          "chartType": "horizontalStacked",
+          "title": "Cancer Stage",
+          "showLegendInChart" : false
+        },
+        "gen3_discovery.subject_gender": {
+          "chartType": "horizontalStacked",
+          "title": "Biological Sex",
+          "showLegendInChart" : false
+        }
       }
     },
     "filters": {
       "tabs": [
         {
-          "title": "Study Selection",
-          "fields": ["project"]
-        },
-        {
           "title": "Subjects",
           "fields": [
-            "study",
-            "gender",
-            "race",
-            "ethnicity",
-            "vital_status",
-            "whatever_lab_result_value"
+            "gen3_discovery.subject_primary_disease",
+            "gen3_discovery.subject_cancer_type",
+            "gen3_discovery.subject_metastasis",
+            "gen3_discovery.subject_type_of_exposure",
+            "gen3_discovery.subject_cancer_stage",
+            "gen3_discovery.subject_cancer_grade"
           ],
-          "fieldsConfig": {
-            "gender" : {
-              "type" : "multiselect"
+          "fieldsConfig" : {
+            "gen3_discovery.subject_primary_disease": {
+              "field": "gen3_discovery.subject_primary_disease",
+              "label": "Primary Disease",
+              "moveValuesToBottom": [
+                "no data"
+              ]
+            },
+            "gen3_discovery.subject_cancer_type": {
+              "field": "gen3_discovery.subject_cancer_type",
+              "label": "Cancer Type",
+              "moveValuesToBottom": [
+                "no data"
+              ]
+            },
+            "gen3_discovery.subject_metastasis": {
+              "field": "gen3_discovery.subject_metastasis",
+              "label": "Metastasis",
+              "moveValuesToBottom": [
+                "no data"
+              ]
+            },
+            "gen3_discovery.subject_type_of_exposure": {
+              "field": "gen3_discovery.subject_type_of_exposure",
+              "moveValuesToBottom": [
+                "no data"
+              ]
+            },
+            "gen3_discovery.subject_cancer_stage": {
+              "field": "gen3_discovery.subject_cancer_stage",
+              "label": "Cancer Stage",
+              "moveValuesToBottom": [
+                "no data"
+              ]
+            },
+            "gen3_discovery.subject_cancer_grade": {
+              "field": "gen3_discovery.subject_cancer_grade",
+              "label": "Cancer Grade",
+              "moveValuesToBottom": [
+                "no data"
+              ]
             }
           }
         }
@@ -43,20 +92,52 @@
       "enabled": true,
       "detailsConfig": {
         "panel": "default",
-        "mode" : "click",
+        "mode": "click",
         "idField": "submitter_id",
         "title": "Details"
       },
       "fields": [
-        "project",
-        "gender",
-        "race",
-        "ethnicity",
-        "whatever_lab_result_value"
+        "gen3_discovery._unique_id",
+        "gen3_discovery.is_synthetic",
+        "gen3_discovery.subject_cancer_type",
+        "gen3_discovery.subject_primary_disease",
+        "gen3_discovery.subject_metastasis",
+        "gen3_discovery.subject_cancer_grade",
+        "gen3_discovery.subject_gender",
+        "gen3_discovery.subject_race",
+        "gen3_discovery.subject_ethnicity",
+        "gen3_discovery.commons_name"
       ],
       "columns": {
-        "whatever_lab_result_value": {
-          "sortable": false
+        "gen3_discovery._unique_id": {
+          "title": "MC2DP GLOBAL ID"
+        },
+        "gen3_discovery.is_synthetic": {
+          "title": "SYNTHETIC DATA"
+        },
+        "gen3_discovery.subject_cancer_type": {
+          "title": "CANCER TYPE"
+        },
+        "gen3_discovery.subject_primary_disease": {
+          "title": "PRIMARY DISEASE"
+        },
+        "gen3_discovery.subject_metastasis": {
+          "title": "METASTASIS"
+        },
+        "gen3_discovery.subject_cancer_grade": {
+          "title": "CANCER GRADE"
+        },
+        "gen3_discovery.subject_gender": {
+          "title": "BIOLOGICAL SEX"
+        },
+        "gen3_discovery.subject_race": {
+          "title": "RACE"
+        },
+        "gen3_discovery.subject_ethnicity": {
+          "title": "ETHNICITY"
+        },
+        "gen3_discovery.commons_name": {
+          "title": "DATA COMMONS"
         }
       }
     },
@@ -73,8 +154,8 @@
             "leftIcon": "datafile",
             "rightIcon": "download",
             "action": "data-json",
-            "actionArgs" : {
-              "filename": "MIDRC_Series_table.json",
+            "actionArgs": {
+              "filename": "murtha_studies.json",
               "rootPath": "gen3_discovery"
             }
           },
@@ -85,88 +166,21 @@
             "leftIcon": "datafile",
             "rightIcon": "download",
             "action": "data-csv",
-            "actionArgs" : {
+            "actionArgs": {
               "filename": "data_table.csv"
             }
           }
         ]
       }
     },
-    "buttons": [
-      {
-        "enabled": true,
-        "type": "data-json",
-        "title": "JSON",
-        "dropdownId": "download-table",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.json"
-        }
-      },
-      {
-        "enabled": true,
-        "type": "data-tsv",
-        "title": "TSV",
-        "dropdownId": "download-table",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.tsv"
-        }
-      },
-      {
-        "enabled": true,
-        "type": "data-csv",
-        "title": "CSV",
-        "dropdownId": "download-table",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.csv"
-        }
-      },
-      {
-        "enabled": true,
-        "type": "manifest",
-        "action": "manifest",
-        "title": "Download File Manifest for Cases",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "fileName": "case_manifest.json",
-        "actionArgs": {
-          "resourceIndexType": "file",
-          "resourceIdField": "object_id",
-          "referenceIdFieldInResourceIndex": "project_id",
-          "referenceIdFieldInDataIndex": "project_id",
-          "fileFields": ["file_name", "file_size", "md5sum", "object_id"]
-        }
-      }
-    ],
     "loginForDownload": false,
     "guppyConfig": {
-      "dataType": "subject",
-      "nodeCountTitle": "Subjects",
+      "dataType": "metadata",
+      "nodeCountTitle": "Subject",
       "fieldMapping": [
         {
-          "field": "_samples_count",
-          "name": "Samples Count"
-        },
-        {
-          "field": "_imaging_files_count",
-          "name": "Imaging Files Count"
-        },
-        {
-          "field": "_unaligned_reads_files_count",
-          "name": "Unaligned Reads Count"
-        },
-        {
-          "field": "_aligned_reads_files_count",
-          "name": "Aligned Reads Count"
-        },
-        {
-          "field": "_expression_arrays_count",
-          "name": "Expression Arrays Count"
+          "field": "gen3_discovery._unique_id",
+          "name": "Subject ID"
         }
       ],
       "manifestMapping": {
@@ -175,27 +189,30 @@
         "referenceIdFieldInResourceIndex": "subject_id",
         "referenceIdFieldInDataIndex": "subject_id"
       },
-      "accessibleFieldCheckList": ["project"],
-      "accessibleValidationField": "project"
+      "accessibleFieldCheckList": ["gen3_discovery.authz"],
+      "accessibleValidationField": "gen3_discovery.study_id"
     }
   },
   {
-    "tabTitle": "Data Files",
+    "tabTitle": "Studies",
     "charts": {
-      "file_type": {
-        "chartType": "stackedBar",
-        "title": "File Type"
-      },
-      "file_format": {
-        "chartType": "stackedBar",
-        "title": "File Format"
+      "gen3_discovery.subject_cancer_grade": {
+        "chartType": "fullPie",
+        "title": "Cancer Grade"
       }
     },
     "filters": {
       "tabs": [
         {
-          "title": "File",
-          "fields": ["subject_id"]
+          "title": "Subjects",
+          "fields": [
+            "gen3_discovery.subject_primary_disease",
+            "gen3_discovery.subject_cancer_type",
+            "gen3_discovery.subject_metastasis",
+            "gen3_discovery.subject_type_of_exposure",
+            "gen3_discovery.subject_cancer_stage",
+            "gen3_discovery.subject_cancer_grade"
+          ]
         }
       ]
     },
@@ -204,20 +221,51 @@
       "detailsConfig": {
         "panel": "fileDetails",
         "mode": "click",
-        "idField": "file_name",
-        "title": "File Details"
+        "idField": "gen3_discovery.subject_id",
+        "title": "Subject Details"
       },
-      "fields": ["subject_id", "file_type", "file_size", "object_id"]
+      "fields": [
+        "gen3_discovery.subject_id",
+        "gen3_discovery.is_synthetic",
+        "gen3_discovery.subject_cancer_grade",
+        "gen3_discovery.subject_cancer_type"
+      ],
+      "columns": {
+        "gen3_discovery.mc2dp_global_id": {
+          "title": "MC2DP GLOBAL ID"
+        },
+        "gen3_discovery.subject_primary_disease": {
+          "title": "Primary Disease"
+        },
+        "gen3_discovery.subject_cancer_grade": {
+          "title": "Cancer Grade"
+        },
+        "gen3_discovery.subject_cancer_type": {
+          "title": "Cancer Type"
+        }
+      }
     },
     "guppyConfig": {
-      "dataType": "file",
+      "dataType": "metadata",
       "fieldMapping": [
         {
-          "field": "file_id",
-          "name": "GUID"
+          "field": "gen3_discovery.mc2dp_global_id",
+          "name": "Subject ID"
+        },
+        {
+          "field": "gen3_discovery.subject_primary_disease",
+          "name": "Primary Disease"
+        },
+        {
+          "field": "gen3_discovery.subject_cancer_grade",
+          "name": "Cancer Grade"
+        },
+        {
+          "field": "gen3_discovery.subject_cancer_type",
+          "name": "Cancer Type"
         }
       ],
-      "nodeCountTitle": "Files",
+      "nodeCountTitle": "Study",
       "manifestMapping": {
         "resourceIndexType": "subject",
         "resourceIdField": "subject_id",
@@ -231,28 +279,6 @@
     "buttons": [
       {
         "enabled": true,
-        "type": "data-json",
-        "title": "JSON",
-        "dropdownId": "download-table",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.json"
-        }
-      },
-      {
-        "enabled": true,
-        "type": "data-tsv",
-        "title": "TSV",
-        "dropdownId": "download-table",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.tsv"
-        }
-      },
-      {
-        "enabled": true,
         "type": "data-csv",
         "title": "CSV",
         "dropdownId": "download-table",
@@ -260,16 +286,6 @@
         "rightIcon": "download",
         "actionArgs": {
           "filename": "data_table.csv"
-        }
-      },
-      {
-        "enabled": true,
-        "type": "file-manifest",
-        "title": "Download File Manifest",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table_manifest.csv"
         }
       }
     ],

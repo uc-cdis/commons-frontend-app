@@ -135,7 +135,7 @@ const StatsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={{
         title: 'Stats',
         content: 'Stats',
         key: 'gen3-stats-page',

@@ -15,7 +15,7 @@ import {
 } from '@gen3/frontend';
 
 interface AppConfig extends NavPageLayoutProps {
-  config?: object;
+  config?: Record<string, any>;
 }
 
 const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
@@ -26,13 +26,21 @@ const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
     () => selectGen3AppByName(appName), // TODO update ById to ByName
   ) as React.ElementType;
 
+  if (!GdcApp)
+    return (
+      <div className="text-utility-warning font-bold m-10 border-base-darkest">
+        App not found
+      </div>
+    );
+
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={{
         title: 'Gen3 App Page',
         content: 'App Data',
         key: 'gen3-app-page',
+        ...(config?.headerMetadata ? config.headerMetadata : {}),
       }}
     >
       {GdcApp && <GdcApp {...config} />}
@@ -57,7 +65,6 @@ export const getServerSideProps: GetServerSideProps<
     const config: any = await ContentSource.getContentDatabase().get(
       `${GEN3_COMMONS_NAME}/apps/${appName}.json`,
     );
-
     return {
       props: {
         ...(await getNavPageLayoutPropsFromConfig()),

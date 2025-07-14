@@ -22,7 +22,7 @@ const NotebookViewer = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={{
         title: 'Notebook Viewer',
         content: 'Static Notebook',
         key: 'gen3-notebook-viewer-page',

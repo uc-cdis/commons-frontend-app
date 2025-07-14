@@ -1,0 +1,108 @@
+{
+  "name": "CohortDiscovery",
+  "remoteSupportService": {
+    "service": "zenDesk",
+    "configuration" : {
+        "zendeskSubdomainName": "self-22514"
+    }
+  },
+  "emptySelection": {
+    "image": "cohort_none.png",
+    "imageAlt": "three circled portraits connected by lines",
+    "title": "Build Your Cohort",
+    "subHead": "Select the criteria on the left to include an item."
+  },
+  "leftNav": {
+    "build": {
+      "image": "/images/apps/cohort_none.png",
+      "imageAlt": "",
+      "title": "Build Cohorts"
+    },
+    "saved": {
+      "image": "/images/apps/cohort_saved.png",
+      "imageAlt": "",
+      "title": "Saved Cohorts"
+    },
+    "request": {
+      "image": "/images/apps/cohort_requests.png",
+      "imageAlt": "",
+      "title": "Request"
+    }
+  },
+  "dataIndexes": [
+    {
+      "dataConfig": {
+        "dataType": "metadata",
+        "nodeCountTitle": "Subjects"
+      },
+      "tabTitle": "Studies",
+      "resourcePath" : "/studies",
+      "resourceField" : "gen3_discovery.study_id",
+      "tabs": [
+        {
+          "title": "Studies",
+          "fields": [
+            "gen3_discovery.is_synthetic",
+            "gen3_discovery.subject_cancer_type",
+            "gen3_discovery.subject_primary_disease",
+            "gen3_discovery.subject_metastasis",
+            "gen3_discovery.subject_cancer_grade",
+            "gen3_discovery.subject_gender",
+            "gen3_discovery.subject_race",
+            "gen3_discovery.subject_ethnicity"
+          ],
+          "fieldsConfig" : {
+            "gen3_discovery.is_synthetic": {
+              "field": "gen3_discovery.is_synthetic",
+              "dataField": "gen3_discovery.is_synthetic",
+              "index": "metadata",
+              "label": "Synthetic"
+            },
+            "gen3_discovery.subject_cancer_type": {
+              "field": "gen3_discovery.subject_cancer_type",
+              "dataField": "gen3_discovery.subject_cancer_type",
+              "index": "metadata",
+              "label": "Cancer Type"
+            },
+            "gen3_discovery.subject_primary_disease": {
+              "field": "gen3_discovery.subject_primary_disease",
+              "dataField": "gen3_discovery.subject_primary_disease",
+              "index": "metadata",
+              "label": "Primary Disease"
+            },
+            "gen3_discovery.subject_metastasis": {
+              "field": "gen3_discovery.subject_metastasis",
+              "dataField": "gen3_discovery.subject_metastasis",
+              "index": "metadata",
+              "label": "Metastasis"
+            },
+            "gen3_discovery.subject_cancer_grade": {
+              "field": "gen3_discovery.subject_cancer_grade",
+              "dataField": "gen3_discovery.subject_cancer_grade",
+              "index": "metadata",
+              "label": "Cancer Grade"
+            },
+            "gen3_discovery.subject_gender": {
+              "field": "gen3_discovery.subject_gender",
+              "dataField": "gen3_discovery.subject_gender",
+              "index": "metadata",
+              "label": "Biological Sex"
+            },
+            "gen3_discovery.subject_race": {
+              "field": "gen3_discovery.subject_race",
+              "dataField": "gen3_discovery.subject_race",
+              "index": "metadata",
+              "label": "Race"
+            },
+            "gen3_discovery.subject_ethnicity": {
+              "field": "gen3_discovery.subject_ethnicity",
+              "dataField": "gen3_discovery.subject_ethnicity",
+              "index": "metadata",
+              "label": "Ethnicity"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
