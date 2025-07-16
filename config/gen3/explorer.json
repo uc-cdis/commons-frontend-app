@@ -32,7 +32,8 @@
             "race",
             "ethnicity",
             "vital_status",
-            "whatever_lab_result_value"
+            "whatever_lab_result_value",
+            "submitter_id"
           ],
           "fieldsConfig": {
             "gender" : {
