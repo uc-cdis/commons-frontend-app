@@ -19,7 +19,10 @@
       "tabs": [
         {
           "title": "Study Selection",
-          "fields": ["project"]
+          "fields": [
+            "project",
+            "project_id"
+          ]
         },
         {
           "title": "Subjects",
