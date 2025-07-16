@@ -60,7 +60,7 @@
         "ethnicity"
       ],
       "columns": {
-        "whatever_lab_result_value": {
+        "project": {
           "sortable": false
         }
       }
