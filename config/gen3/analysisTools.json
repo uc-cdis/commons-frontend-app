@@ -1,31 +1,4 @@
 {
   "tools": [
-    {
-      "title": "Proteome Data Commons (PDC) Clustergram",
-      "type": "notebook",
-      "icon": "/images/apps/icons/jupyter.png",
-      "image": "/images/apps/PDC_clustergram.png",
-      "description": "Use the Proteome Data Commons (PDC) API to retreive protein relative expression data for a CPTAC study. The PDC uses values produced by the Common Data Analysis Pipeline (CDAP). The results are intended to help identify clusters of samples (tumors) displaying similar patterns of protein expression.",
-      "loginRequired": false,
-      "href": "/staticNotebook/PDC_clustergram.html",
-      "btnText": "Show Analysis"
-    },
-    {"title": "VPODC Cohort File Selection & Download Guide",
-      "type": "notebook",
-      "icon": "/images/apps/icons/jupyter.png",
-      "image": "/images/apps/vpodc-logo.png",
-      "description": "This notebook provides a step-by-step walkthrough for: Selecting a VPODC cohort from Gen3, listing associated VCF object IDs and downloading files using the gen3-client",
-      "loginRequired": false,
-      "href": "/staticNotebook/VPODC_data_download_guide.html",
-      "btnText": "Show Analysis"
-    },
-    {"title": "Metabolomics Analysis using Data from Metabolomics Workbench",
-      "type": "notebook",
-      "icon": "/images/apps/icons/jupyter.png",
-      "image": "/images/apps/metabolomics.png",
-      "description": "This notebook demonstrates a real-world data integration pipeline involving the Murtha Cancer Center Data Platform and external public resources like the Metabolomics Workbench",
-      "loginRequired": false,
-      "href": "/staticNotebook/metabolomics_notebook.html",
-      "btnText": "Show Analysis"}
   ]
 }
