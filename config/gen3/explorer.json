@@ -20,7 +20,7 @@
         },
         "gen3_discovery.subject_cancer_grade": {
           "chartType": "horizontalStacked",
-          "title": "Cancer Stage",
+          "title": "Cancer Grade",
           "showLegendInChart" : false
         },
         "gen3_discovery.subject_gender": {
@@ -93,27 +93,22 @@
       "detailsConfig": {
         "panel": "default",
         "mode": "click",
-        "idField": "submitter_id",
+        "idField": "gen3_discovery._unique_id",
         "title": "Details"
       },
       "fields": [
         "gen3_discovery._unique_id",
-        "gen3_discovery.is_synthetic",
         "gen3_discovery.subject_cancer_type",
         "gen3_discovery.subject_primary_disease",
         "gen3_discovery.subject_metastasis",
         "gen3_discovery.subject_cancer_grade",
         "gen3_discovery.subject_gender",
-        "gen3_discovery.subject_race",
-        "gen3_discovery.subject_ethnicity",
+        "gen3_discovery.is_synthetic",
         "gen3_discovery.commons_name"
       ],
       "columns": {
         "gen3_discovery._unique_id": {
           "title": "MC2DP GLOBAL ID"
-        },
-        "gen3_discovery.is_synthetic": {
-          "title": "SYNTHETIC DATA"
         },
         "gen3_discovery.subject_cancer_type": {
           "title": "CANCER TYPE"
@@ -130,11 +125,8 @@
         "gen3_discovery.subject_gender": {
           "title": "BIOLOGICAL SEX"
         },
-        "gen3_discovery.subject_race": {
-          "title": "RACE"
-        },
-        "gen3_discovery.subject_ethnicity": {
-          "title": "ETHNICITY"
+        "gen3_discovery.is_synthetic": {
+          "title": "SYNTHETIC DATA"
         },
         "gen3_discovery.commons_name": {
           "title": "DATA COMMONS"
@@ -192,103 +184,5 @@
       "accessibleFieldCheckList": ["gen3_discovery.authz"],
       "accessibleValidationField": "gen3_discovery.study_id"
     }
-  },
-  {
-    "tabTitle": "Studies",
-    "charts": {
-      "gen3_discovery.subject_cancer_grade": {
-        "chartType": "fullPie",
-        "title": "Cancer Grade"
-      }
-    },
-    "filters": {
-      "tabs": [
-        {
-          "title": "Subjects",
-          "fields": [
-            "gen3_discovery.subject_primary_disease",
-            "gen3_discovery.subject_cancer_type",
-            "gen3_discovery.subject_metastasis",
-            "gen3_discovery.subject_type_of_exposure",
-            "gen3_discovery.subject_cancer_stage",
-            "gen3_discovery.subject_cancer_grade"
-          ]
-        }
-      ]
-    },
-    "table": {
-      "enabled": true,
-      "detailsConfig": {
-        "panel": "fileDetails",
-        "mode": "click",
-        "idField": "gen3_discovery.subject_id",
-        "title": "Subject Details"
-      },
-      "fields": [
-        "gen3_discovery.subject_id",
-        "gen3_discovery.is_synthetic",
-        "gen3_discovery.subject_cancer_grade",
-        "gen3_discovery.subject_cancer_type"
-      ],
-      "columns": {
-        "gen3_discovery.mc2dp_global_id": {
-          "title": "MC2DP GLOBAL ID"
-        },
-        "gen3_discovery.subject_primary_disease": {
-          "title": "Primary Disease"
-        },
-        "gen3_discovery.subject_cancer_grade": {
-          "title": "Cancer Grade"
-        },
-        "gen3_discovery.subject_cancer_type": {
-          "title": "Cancer Type"
-        }
-      }
-    },
-    "guppyConfig": {
-      "dataType": "metadata",
-      "fieldMapping": [
-        {
-          "field": "gen3_discovery.mc2dp_global_id",
-          "name": "Subject ID"
-        },
-        {
-          "field": "gen3_discovery.subject_primary_disease",
-          "name": "Primary Disease"
-        },
-        {
-          "field": "gen3_discovery.subject_cancer_grade",
-          "name": "Cancer Grade"
-        },
-        {
-          "field": "gen3_discovery.subject_cancer_type",
-          "name": "Cancer Type"
-        }
-      ],
-      "nodeCountTitle": "Study",
-      "manifestMapping": {
-        "resourceIndexType": "subject",
-        "resourceIdField": "subject_id",
-        "referenceIdFieldInResourceIndex": "object_id",
-        "referenceIdFieldInDataIndex": "object_id"
-      },
-      "accessibleFieldCheckList": ["subject_id"],
-      "accessibleValidationField": "subject_id",
-      "downloadAccessor": "subject_id"
-    },
-    "buttons": [
-      {
-        "enabled": true,
-        "type": "data-csv",
-        "title": "CSV",
-        "dropdownId": "download-table",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.csv"
-        }
-      }
-    ],
-    "loginForDownload": true
   }
 ]
