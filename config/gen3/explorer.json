@@ -57,8 +57,7 @@
         "project",
         "gender",
         "race",
-        "ethnicity",
-        "whatever_lab_result_value"
+        "ethnicity"
       ],
       "columns": {
         "whatever_lab_result_value": {
