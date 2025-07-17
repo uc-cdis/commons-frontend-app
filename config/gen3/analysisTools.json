@@ -1,22 +1,12 @@
 {
   "tools": [
-    {
-      "title": "Proteome Data Commons (PDC) Clustergram",
+    {"title": "Cross-Commons Radiogenomic Integration Notebook",
       "type": "notebook",
       "icon": "/images/apps/icons/jupyter.png",
-      "image": "/images/apps/PDC_clustergram.png",
-      "description": "Use the Proteome Data Commons (PDC) API to retreive protein relative expression data for a CPTAC study. The PDC uses values produced by the Common Data Analysis Pipeline (CDAP). The results are intended to help identify clusters of samples (tumors) displaying similar patterns of protein expression.",
+      "image": "/images/apps/tcia_thumbnail.png",
+      "description": "Utilizing cross-commons data from TCIA and VPODC, demonstrate a complete research loop (discover → merge → preview) that can be adapted for any multi-source cohorts in MC2DP.",
       "loginRequired": false,
-      "href": "/staticNotebook/PDC_clustergram.html",
-      "btnText": "Show Analysis"
-    },
-    {"title": "VPODC Cohort File Selection & Download Guide",
-      "type": "notebook",
-      "icon": "/images/apps/icons/jupyter.png",
-      "image": "/images/apps/vpodc-logo.png",
-      "description": "This notebook provides a step-by-step walkthrough for: Selecting a VPODC cohort from Gen3, listing associated VCF object IDs and downloading files using the gen3-client",
-      "loginRequired": false,
-      "href": "/staticNotebook/VPODC_data_download_guide.html",
+      "href": "/staticNotebook/TCIA_notebook.html",
       "btnText": "Show Analysis"
     },
     {"title": "Metabolomics Analysis using Data from Metabolomics Workbench",
@@ -28,13 +18,24 @@
       "href": "/staticNotebook/metabolomics_notebook.html",
       "btnText": "Show Analysis"
     },
-    {"title": "Cross-Commons Radiogenomic Integration Notebook",
+    {"title": "VPODC Cohort File Selection & Download Guide",
       "type": "notebook",
       "icon": "/images/apps/icons/jupyter.png",
-      "image": "/images/apps/tcia_thumbnail.png",
-      "description": "Demonstrate a full research loop (discover → merge → preview) that can be forked and adapted for multi-source cohorts in MC2DP.",
+      "image": "/images/apps/vpodc-logo.png",
+      "description": "This notebook provides a step-by-step walkthrough for: Selecting a VPODC cohort from Gen3, listing associated VCF object IDs and downloading files using the gen3-client",
       "loginRequired": false,
-      "href": "/staticNotebook/TCIA_notebook.html",
-      "btnText": "Show Analysis"}
+      "href": "/staticNotebook/VPODC_data_download_guide.html",
+      "btnText": "Show Analysis"
+    },
+    {
+      "title": "Proteome Data Commons (PDC) Clustergram",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.png",
+      "image": "/images/apps/PDC_clustergram.png",
+      "description": "Use the Proteome Data Commons (PDC) API to retreive protein relative expression data for a CPTAC study. The PDC uses values produced by the Common Data Analysis Pipeline (CDAP). The results are intended to help identify clusters of samples (tumors) displaying similar patterns of protein expression.",
+      "loginRequired": false,
+      "href": "/staticNotebook/PDC_clustergram.html",
+      "btnText": "Show Analysis"
+    }
   ]
 }
