@@ -14,7 +14,7 @@
           },
           {
             "link": {
-              "href": "/submission",
+              "href": "/Submission",
               "linkType": "portal",
               "text": "Submit Data",
               "rightIcon": "gen3:upload"
@@ -42,28 +42,28 @@
             "icon": "MdOutlineSearch",
             "bodyText": "The VPO Data Commons defines the data in a general way. Please study the dictionary before you start browsing.",
             "btnText": "Define Data Field",
-            "href": "/DD",
+            "href": "/DataDictionary",
             "linkType": "portal"
           },
           {
             "icon": "MdOutlineSearch",
             "bodyText": "View or submit data to a project.",
             "btnText": "View/Submit Data",
-            "href": "/submission",
+            "href": "/Submission",
             "linkType": "portal"
           },
           {
             "icon": "MdOutlineSearch",
             "bodyText": "Use our selected tool to filter out the data you need.",
             "btnText": "Access Data",
-            "href": "/query",
+            "href": "/Query",
             "linkType": "portal"
           },
           {
             "icon": "MdOutlineSearch",
             "bodyText": "Analyze your selected cases using Jupyter Notebooks in our secure cloud environment",
             "btnText": "Analyze Data",
-            "href": "/workspace",
+            "href": "/Workspace",
             "linkType": "portal"
           }
         ]
