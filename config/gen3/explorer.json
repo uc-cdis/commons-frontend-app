@@ -91,10 +91,21 @@
     "table": {
       "enabled": true,
       "detailsConfig": {
-        "panel": "default",
+        "panel": "queryRowDetails",
         "mode": "click",
         "idField": "gen3_discovery._unique_id",
-        "title": "Details"
+        "title": "Details",
+        "dataPath": "gen3_discovery",
+        "fields" : [
+          "gen3_discovery.subject_cancer_type",
+          "gen3_discovery.subject_primary_disease",
+          "gen3_discovery.subject_metastasis",
+          "gen3_discovery.subject_cancer_grade",
+          "gen3_discovery.subject_gender",
+          "gen3_discovery.subject_race",
+          "gen3_discovery.subject_ethnicity",
+          "gen3_discovery.commons_name"
+        ]
       },
       "fields": [
         "gen3_discovery._unique_id",
