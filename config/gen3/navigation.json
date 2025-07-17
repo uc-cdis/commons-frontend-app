@@ -27,19 +27,13 @@
       {
         "icon": "gen3:mdd",
         "href": "/app/MetadataDictionary",
-        "name": "MDD",
+        "name": "Mesh Metadata",
         "tooltip": "View the metadata data schemas."
       },
       {
         "icon": "gen3:analysis",
-        "href": "/stats",
-        "name": "Stats"
-      },
-      {
-        "icon": "gen3:dictionary",
-        "href": "/DataDictionary",
-        "name": "Dictionary",
-        "tooltip": "The Data Dictionary serves to inform the data model and is updated as new data is ingested."
+        "href": "/DataConnections",
+        "name": "Data Connections"
       },
       {
         "icon": "gen3:analysis",
@@ -75,10 +69,6 @@
   },
   "topBar": {
     "items": [
-      {
-        "href": "/MDD",
-        "name": "Minimal Metadata Elements"
-      },
       {
         "href": "https://gen3.org/resources/user/",
         "name": "Documentation"

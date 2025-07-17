@@ -111,7 +111,7 @@ const StatsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
       "description": "Longitudinal clinical, targeted sequencing",
       "type": "API",
       "status": "[Data Pending]",
-      "patients": ""
+      "patients": "106/106"
     }
   ];
   type BgColorsType = {[key: string]: string};
@@ -136,13 +136,13 @@ const StatsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
     <NavPageLayout
       {...{ headerProps, footerProps }}
       headerMetadata={{
-        title: 'Stats',
-        content: 'Stats',
-        key: 'gen3-stats-page',
+        title: 'Data Connections',
+        content: 'Data Connections',
+        key: 'gen3-DataConnections-page',
       }}
     >
       <div className="w-full m-10">
-        <Title order={1}>Stats</Title>
+        <Title order={1}>Data Connections</Title>
         <Table striped tabularNums withTableBorder withColumnBorders>
           <Table.Thead>
             <Table.Tr>
