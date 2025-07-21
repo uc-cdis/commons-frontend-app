@@ -17,7 +17,7 @@ import SelectModelAndParameters from './Steps/SelectModelAndParameters/SelectMod
 //import MakeFullscreenButton from './Components/MakeFullscreenButton/MakeFullscreenButton';
 import InitializeCurrentState from './Utils/StateManagement/InitializeCurrentState';
 import TeamProjectHeader from '../SharedUtils/TeamProject/TeamProjectHeader/TeamProjectHeader';
-// import WorkflowLimitsDashboard from '../SharedUtils/WorkflowLimitsDashboard/WorkflowLimitsDashboard';
+import WorkflowLimitsDashboard from '../SharedUtils/WorkflowLimitsDashboard/WorkflowLimitsDashboard';
 import JobSubmitModal from './Components/JobSubmitModal/JobSubmitModal';
 import DismissibleMessage from '../SharedUtils/DismissibleMessage/DismissibleMessage';
 
@@ -189,6 +189,7 @@ const PLPContainer = () => {
 
   return (
     <SourceContextProvider>
+    <WorkflowLimitsDashboard />
     <React.Fragment>
       <div>
         <div className="flex justify-between pb-4">

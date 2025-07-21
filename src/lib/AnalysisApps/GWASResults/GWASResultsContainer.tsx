@@ -10,7 +10,7 @@ import TeamProjectHeader from '../SharedUtils/TeamProject/TeamProjectHeader/Team
 import { GWASResultsJobs } from './Views/Home/HomeTable/HomeTable';
 import Link from 'next/link';
 import { Anchor, Title } from '@mantine/core';
-// import WorkflowLimitsDashboard from '../SharedUtils/WorkflowLimitsDashboard/WorkflowLimitsDashboard';
+import WorkflowLimitsDashboard from '../SharedUtils/WorkflowLimitsDashboard/WorkflowLimitsDashboard';
 
 const GWASResultsContainer = () => {
   const [currentView, setCurrentView] = useState('home');
@@ -45,7 +45,7 @@ const GWASResultsContainer = () => {
           <TeamProjectHeader isEditable={false} />
         </div>
       </div>
-      {/* <WorkflowLimitsDashboard /> */}
+      <WorkflowLimitsDashboard />
       <SharedContext.Provider
         value={{
           setCurrentView,
