@@ -1,5 +1,5 @@
 import React, { useReducer, Reducer } from 'react';
-import { Button, Group } from '@mantine/core';
+import { Button, Group, Title } from '@mantine/core';
 import ProgressBar from './Components/ProgressBar/ProgressBar';
 import { PLPAppSteps } from  './Utils/constants';
 import { SourceContextProvider } from '../SharedUtils/Source';
@@ -189,15 +189,15 @@ const PLPContainer = () => {
 
   return (
     <SourceContextProvider>
-    <WorkflowLimitsDashboard />
     <React.Fragment>
       <div>
         <div className="flex justify-between pb-4">
-          <h1 className="text-3xl pb-5 font-medium">Patient Level Prediction</h1>
+          <Title order={1}>Patient Level Prediction</Title>
           <TeamProjectHeader isEditable={false} />
         </div>
       </div>
-      <p className="pb-8 text-sm">
+      <WorkflowLimitsDashboard />
+      <p className="pt-4 pb-8 text-sm">
       Use this app for building Patient Level Prediction (PLP) models
       </p>
       <ProgressBar

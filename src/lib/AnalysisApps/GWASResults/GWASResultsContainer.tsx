@@ -55,7 +55,7 @@ const GWASResultsContainer = () => {
           setHomeTableState,
         }}
       >
-        <div data-testid="view">{generateStep()}</div>
+        <div data-testid="view" className="pt-4">{generateStep()}</div>
       </SharedContext.Provider>
     </div>
   );
