@@ -42,7 +42,6 @@
         {
           "title": "Studies",
           "fields": [
-            "gen3_discovery.is_synthetic",
             "gen3_discovery.subject_cancer_type",
             "gen3_discovery.subject_primary_disease",
             "gen3_discovery.subject_metastasis",
@@ -52,12 +51,6 @@
             "gen3_discovery.subject_ethnicity"
           ],
           "fieldsConfig" : {
-            "gen3_discovery.is_synthetic": {
-              "field": "gen3_discovery.is_synthetic",
-              "dataField": "gen3_discovery.is_synthetic",
-              "index": "metadata",
-              "label": "Synthetic"
-            },
             "gen3_discovery.subject_cancer_type": {
               "field": "gen3_discovery.subject_cancer_type",
               "dataField": "gen3_discovery.subject_cancer_type",
