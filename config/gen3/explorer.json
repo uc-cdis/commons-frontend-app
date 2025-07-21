@@ -35,6 +35,7 @@
         {
           "title": "Subjects",
           "fields": [
+            "gen3_discovery.commons_name",
             "gen3_discovery.subject_primary_disease",
             "gen3_discovery.subject_cancer_type",
             "gen3_discovery.subject_metastasis",
@@ -43,6 +44,13 @@
             "gen3_discovery.subject_cancer_grade"
           ],
           "fieldsConfig" : {
+            "gen3_discovery.commons_name": {
+              "field": "gen3_discovery.commons_name",
+              "label": "Data Commons",
+              "moveValuesToBottom": [
+                "no data"
+              ]
+            },
             "gen3_discovery.subject_primary_disease": {
               "field": "gen3_discovery.subject_primary_disease",
               "label": "Primary Disease",
