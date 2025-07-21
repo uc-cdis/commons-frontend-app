@@ -18,9 +18,9 @@
           "title": "Type of Exposure",
           "showLegendInChart" : false
         },
-        "gen3_discovery.subject_cancer_grade": {
+        "gen3_discovery.subject_cancer_stage": {
           "chartType": "horizontalStacked",
-          "title": "Cancer Grade",
+          "title": "Cancer Stage",
           "showLegendInChart" : false
         },
         "gen3_discovery.subject_gender": {
@@ -74,6 +74,7 @@
             },
             "gen3_discovery.subject_type_of_exposure": {
               "field": "gen3_discovery.subject_type_of_exposure",
+              "label": "Type of Exposure",
               "moveValuesToBottom": [
                 "no data"
               ]
@@ -89,7 +90,7 @@
               "field": "gen3_discovery.subject_cancer_grade",
               "label": "Cancer Grade",
               "moveValuesToBottom": [
-                "no data"
+                "Unknown", "no data"
               ]
             }
           }
@@ -99,10 +100,81 @@
     "table": {
       "enabled": true,
       "detailsConfig": {
-        "panel": "default",
+        "panel": "queryRowDetails",
         "mode": "click",
         "idField": "gen3_discovery._unique_id",
-        "title": "Details"
+        "title": "Details",
+        "dataPath": "gen3_discovery",
+        "simpleDetailsView": {
+          "fieldsToShow": [
+            {
+              "groupWidth": "full",
+              "includeName": false,
+              "fields": [
+                  {
+                      "name": "MC2DP Global ID",
+                      "field": "_unique_id",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Data Commons",
+                      "field": "commons_name",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Synthetic Data",
+                      "field": "is_synthetic",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Race",
+                      "field": "subject_race",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Biological Sex",
+                      "field": "subject_gender",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Ethnicity",
+                      "field": "subject_ethnicity",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Primary Disease",
+                      "field": "subject_primary_disease",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Cancer Type",
+                      "field": "subject_cancer_type",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Metastasis",
+                      "field": "subject_metastasis",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Cancer Grade",
+                      "field": "subject_cancer_grade",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Cancer Stage",
+                      "field": "subject_cancer_stage",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Type of Exposure",
+                      "field": "subject_type_of_exposure",
+                      "contentType": "string"
+                  }
+              ]
+            }
+          ]
+        }
       },
       "fields": [
         "gen3_discovery._unique_id",
@@ -110,9 +182,13 @@
         "gen3_discovery.subject_primary_disease",
         "gen3_discovery.subject_metastasis",
         "gen3_discovery.subject_cancer_grade",
+        "gen3_discovery.subject_cancer_stage",
+        "gen3_discovery.subject_type_of_exposure",
         "gen3_discovery.subject_gender",
+        "gen3_discovery.subject_race",
+        "gen3_discovery.subject_ethnicity",
         "gen3_discovery.is_synthetic",
-        "gen3_discovery.commons_name"
+        "gen3_discovery.data_source"
       ],
       "columns": {
         "gen3_discovery._unique_id": {
@@ -136,7 +212,7 @@
         "gen3_discovery.is_synthetic": {
           "title": "SYNTHETIC DATA"
         },
-        "gen3_discovery.commons_name": {
+        "gen3_discovery.data_source": {
           "title": "DATA COMMONS"
         }
       }
@@ -190,7 +266,107 @@
         "referenceIdFieldInDataIndex": "subject_id"
       },
       "accessibleFieldCheckList": ["gen3_discovery.authz"],
-      "accessibleValidationField": "gen3_discovery.study_id"
+      "accessibleValidationField": "gen3_discovery.subject_id"
     }
+  },
+  {
+    "tabTitle": "Studies",
+    "filters": {
+      "tabs":  [
+        {
+          "title": "Studies",
+          "fields": [
+            "gen3_discovery.primary_site",
+            "gen3_discovery.disease_type"
+          ],
+          "fieldsConfig" : {
+            "gen3_discovery.primary_site": {
+              "field": "gen3_discovery.primary_site",
+              "label": "Primary Site",
+              "moveValuesToBottom": [
+                "no data"
+              ]
+            },
+            "gen3_discovery.disease_type": {
+              "field": "gen3_discovery.disease_type",
+              "label": "Disease Type",
+              "moveValuesToBottom": [
+                "no data"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "table": {
+      "enabled": true,
+      "detailsConfig": {
+        "panel": "fileDetails",
+        "mode": "click",
+        "idField": "gen3_discovery._unique_id",
+        "title": "Subject Details"
+      },
+      "fields": [
+        "gen3_discovery._unique_id",
+        "gen3_discovery.data_source",
+        "gen3_discovery.is_synthetic",
+        "gen3_discovery.full_name"
+      ],
+      "columns": {
+        "gen3_discovery._unique_id": {
+          "title": "STUDY ID"
+        },
+        "gen3_discovery.data_source": {
+          "title": "DATA SOURCE"
+        },
+        "gen3_discovery.is_synthetic": {
+          "title": "SYNTHETIC DATA"
+        },
+        "gen3_discovery.full_name": {
+          "title": "STUDY NAME"
+        }
+      }
+    },
+    "guppyConfig": {
+      "dataType": "metadata",
+      "fieldMapping": [
+        {
+          "field": "gen3_discovery._unique_id",
+          "name": "Study ID"
+        },
+        {
+          "field": "gen3_discovery.data_source",
+          "name": "Data Source"
+        },
+        {
+          "field": "gen3_discovery._subjects_count",
+          "name": "Subject Count"
+        }
+      ],
+      "nodeCountTitle": "Study",
+      "manifestMapping": {
+        "resourceIndexType": "study",
+        "resourceIdField": "_unique_id",
+        "referenceIdFieldInResourceIndex": "object_id",
+        "referenceIdFieldInDataIndex": "object_id"
+      },
+      "accessibleFieldCheckList": ["_unique_id"],
+      "accessibleValidationField": "_unique_id",
+      "downloadAccessor": "_unique_id"
+    },
+    "buttons": [
+      {
+        "enabled": true,
+        "type": "data-csv",
+        "title": "CSV",
+        "dropdownId": "download-table",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": {
+          "filename": "data_table.csv"
+        }
+      }
+    ],
+    "loginForDownload": true
   }
 ]
