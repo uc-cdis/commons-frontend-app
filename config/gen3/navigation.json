@@ -19,12 +19,6 @@
         "tooltip": "The Exploration Page enables discovery of the data at the subject level and features a cohort builder."
       },
       {
-        "icon": "gen3:query",
-        "href": "/Discovery",
-        "name": "Discovery",
-        "tooltip": "Use free-text search and tags to rapidly find relevant studies."
-      },
-      {
         "icon": "gen3:mdd",
         "href": "/app/MetadataDictionary",
         "name": "Mesh Metadata",

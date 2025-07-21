@@ -15,7 +15,7 @@ const StatsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
       "description": "Genomics",
       "type": "API",
       "status": "[Established - Real Data]",
-      "patients": "100/100"
+      "patients": "87/87"
     },
     {
       "source": "PDC",
