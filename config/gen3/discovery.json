@@ -14,6 +14,7 @@
           "dataFetchFunction": "IndexedAggMDSAllLocal",
           "dataFetchArgs": {
             "indexKeys": [
+              "aggregated-subject-level-metadata",
               "BloodPAC-subject-level-metadata",
               "VPODC-subject-level-metadata",
               "APOLLO-subject-level-metadata",
@@ -21,8 +22,7 @@
               "VMOAT-subject-level-metadata",
               "Metabolomic-subject-level-metadata",
               "TCIA-subject-level-metadata",
-              "Windber-subject-level-metadata",
-              "aggregated-subject-level-metadata"
+              "Windber-subject-level-metadata"
             ]
           }
         },
