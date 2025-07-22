@@ -42,6 +42,7 @@
             "gen3_discovery.subject_cancer_stage",
             "gen3_discovery.subject_cancer_grade"
           ],
+          "fieldsConfig" : {
             "gen3_discovery.subject_primary_disease": {
               "field": "gen3_discovery.subject_primary_disease",
               "label": "Primary Disease",
