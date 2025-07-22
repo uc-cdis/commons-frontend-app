@@ -35,7 +35,7 @@
         {
           "title": "Subjects",
           "fields": [
-            "gen3_discovery.commons_name",
+            "gen3_discovery.data_source",
             "gen3_discovery.subject_primary_disease",
             "gen3_discovery.subject_cancer_type",
             "gen3_discovery.subject_metastasis",
@@ -44,9 +44,9 @@
             "gen3_discovery.subject_cancer_grade"
           ],
           "fieldsConfig" : {
-            "gen3_discovery.commons_name": {
-              "field": "gen3_discovery.commons_name",
-              "label": "Data Commons",
+            "gen3_discovery.data_source": {
+              "field": "gen3_discovery.data_source",
+              "label": "Data Source",
               "moveValuesToBottom": [
                 "no data"
               ]
@@ -101,6 +101,7 @@
       "enabled": true,
       "detailsConfig": {
         "panel": "queryRowDetails",
+        "panelContainer" : "drawer",
         "mode": "click",
         "idField": "gen3_discovery._unique_id",
         "title": "Details",
