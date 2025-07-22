@@ -12,7 +12,8 @@
               "logo": "/icons/gen3.png",
               "width": 132,
               "height": 60,
-              "description": "Gen3 Logo"
+              "description": "Gen3",
+              "href": "https://gen3.org"
             }
           }
         ]
@@ -24,7 +25,8 @@
               "logo": "/icons/createdby.png",
               "width": 170,
               "height": 60,
-              "description": "Created by CTDS"
+              "description": "Center for Translational Data Science at the University of Chicago",
+              "href": "https://ctds.uchicago.edu/"
             }
           }
         ]
@@ -36,7 +38,8 @@
               "logo": "/icons/OCC.png",
               "width": 150,
               "height": 60,
-              "description": "Open Commons Consortium"
+              "description": "Open Commons Consortium",
+              "href": "https://www.occ-data.org/"
             }
           }
         ]
