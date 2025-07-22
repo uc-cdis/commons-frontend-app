@@ -199,8 +199,20 @@
         "gen3_discovery.subject_cancer_grade": {
           "title": "CANCER GRADE"
         },
+        "gen3_discovery.subject_cancer_stage": {
+          "title": "CANCER STAGE"
+        },
+        "gen3_discovery.subject_type_of_exposure": {
+          "title": "TYPE OF EXPOSURE"
+        },
         "gen3_discovery.subject_gender": {
           "title": "BIOLOGICAL SEX"
+        },
+        "gen3_discovery.subject_race": {
+          "title": "RACE"
+        },
+        "gen3_discovery.subject_ethnicity": {
+          "title": "ETHNICITY"
         },
         "gen3_discovery.is_synthetic": {
           "title": "SYNTHETIC DATA"
