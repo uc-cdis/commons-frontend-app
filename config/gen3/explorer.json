@@ -35,6 +35,7 @@
         {
           "title": "Subjects",
           "fields": [
+            "gen3_discovery.data_source",
             "gen3_discovery.subject_primary_disease",
             "gen3_discovery.subject_cancer_type",
             "gen3_discovery.subject_metastasis",
@@ -43,6 +44,13 @@
             "gen3_discovery.subject_cancer_grade"
           ],
           "fieldsConfig" : {
+            "gen3_discovery.data_source": {
+              "field": "gen3_discovery.data_source",
+              "label": "Data Source",
+              "moveValuesToBottom": [
+                "no data"
+              ]
+            },
             "gen3_discovery.subject_primary_disease": {
               "field": "gen3_discovery.subject_primary_disease",
               "label": "Primary Disease",
