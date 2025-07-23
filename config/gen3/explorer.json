@@ -123,6 +123,11 @@
                       "contentType": "string"
                   },
                   {
+                      "name": "Commons ID",
+                      "field": "_unique_id",
+                      "contentType": "string"
+                  },
+                  {
                       "name": "Data Commons",
                       "field": "data_source",
                       "contentType": "string"
@@ -235,6 +240,7 @@
           "title": "DATA COMMONS"
         },
         "gen3_discovery._unique_id": {
+          "title": "COMMONS ID",
           "visible": false
         }
       }
