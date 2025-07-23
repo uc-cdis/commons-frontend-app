@@ -47,6 +47,11 @@
             "gen3_discovery.data_source": {
               "field": "gen3_discovery.data_source",
               "label": "Data Source",
+              "excludeValues": [
+                "GDC,PDC",
+                "VPODC,TCIA",
+                "GDC,VPODC,TCIA"
+              ],
               "moveValuesToBottom": [
                 "no data"
               ]
@@ -119,7 +124,7 @@
                   },
                   {
                       "name": "Data Commons",
-                      "field": "commons_name",
+                      "field": "data_source",
                       "contentType": "string"
                   },
                   {
