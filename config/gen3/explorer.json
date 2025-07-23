@@ -95,7 +95,7 @@
         "panel": "queryRowDetails",
         "panelContainer" : "drawer",
         "mode": "click",
-        "idField": "gen3_discovery._unique_id",
+        "idField": "gen3_discovery.mc2dp_global_id",
         "title": "Details",
         "dataPath": "gen3_discovery",
         "simpleDetailsView": {
@@ -106,7 +106,7 @@
               "fields": [
                   {
                       "name": "MC2DP Global ID",
-                      "field": "_unique_id",
+                      "field": "mc2dp_global_id",
                       "contentType": "string"
                   },
                   {
@@ -170,7 +170,7 @@
         }
       },
       "fields": [
-        "gen3_discovery._unique_id",
+        "gen3_discovery.mc2dp_global_id",
         "gen3_discovery.subject_cancer_type",
         "gen3_discovery.subject_primary_disease",
         "gen3_discovery.subject_metastasis",
@@ -184,7 +184,7 @@
         "gen3_discovery.data_source"
       ],
       "columns": {
-        "gen3_discovery._unique_id": {
+        "gen3_discovery.mc2dp_global_id": {
           "title": "MC2DP GLOBAL ID"
         },
         "gen3_discovery.subject_cancer_type": {
@@ -260,7 +260,7 @@
       "nodeCountTitle": "Subject",
       "fieldMapping": [
         {
-          "field": "gen3_discovery._unique_id",
+          "field": "gen3_discovery.mc2dp_global_id",
           "name": "Subject ID"
         }
       ],
