@@ -20,32 +20,32 @@
           "title": "ActionableMutations",
           "fields": [
             "project_id",
-            "ActionableMutations.Lab",
-            "ActionableMutations.Gene",
-            "ActionableMutations.DaysFromAnchorDateToBxDate"
+            "Lab",
+            "Gene",
+            "DaysFromAnchorDateToBxDate"
           ]
         },
         {
           "title": "Oncology Primary",
           "fields": [
             "project_id",
-            "Oncology_Primary.Multiplicitycounter",
-            "Oncology_Primary.ICDOSite",
-            "Oncology_Primary.Radiation",
-            "Oncology_Primary.Chemotherapy",
-            "Oncology_Primary.DaysFromAnchorDateToDiagnosisDate",
-            "Oncology_Primary.Gradedifferentiation",
-            "Oncology_Primary.Laterality",
-            "Oncology_Primary.Stagegroupbest",
-            "Oncology_Primary.RadiationsurgerySequence",
-            "Oncology_Primary.Histologyicdo3X",
-            "Oncology_Primary.Lymphvascularinvasionl",
-            "Oncology_Primary.SeerSummaryStage2000",
-            "Oncology_Primary.PhysiciansStage",
-            "Oncology_Primary.DaysFromAnchorDateToMostdefinitivesurgDate",
-            "Oncology_Primary.ChemotherapyFac",
-            "Oncology_Primary.TumorSize",
-            "Oncology_Primary.SequenceNumber"
+            "Multiplicitycounter",
+            "ICDOSite",
+            "Radiation",
+            "Chemotherapy",
+            "DaysFromAnchorDateToDiagnosisDate",
+            "Gradedifferentiation",
+            "Laterality",
+            "Stagegroupbest",
+            "RadiationsurgerySequence",
+            "Histologyicdo3X",
+            "Lymphvascularinvasionl",
+            "SeerSummaryStage2000",
+            "PhysiciansStage",
+            "DaysFromAnchorDateToMostdefinitivesurgDate",
+            "ChemotherapyFac",
+            "TumorSize",
+            "SequenceNumber"
           ]
         }
       ]
@@ -67,9 +67,9 @@
         "Race",
         "Ethnicity",
         "Gender",
-        "ActionableMutations.Lab",
-        "Oncology_Primary.Multiplicitycounter",
-        "Oncology_Primary.ICDOSite"
+        "Lab",
+        "Multiplicitycounter",
+        "ICDOSite"
       ]
     },
     "guppyConfig": {
