@@ -53,6 +53,8 @@
                 "GDC,VPODC,TCIA"
               ],
               "moveValuesToBottom": [
+                "aggregated data",
+                "Metabolomics",
                 "no data"
               ]
             },
@@ -128,8 +130,18 @@
                       "contentType": "string"
                   },
                   {
-                      "name": "Data Commons",
+                      "name": "Subject ID",
+                      "field": "subject_id",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Data Source",
                       "field": "data_source",
+                      "contentType": "string"
+                  },
+                  {
+                      "name": "Data Commons",
+                      "field": "commons",
                       "contentType": "string"
                   },
                   {
@@ -200,7 +212,9 @@
         "gen3_discovery.subject_ethnicity",
         "gen3_discovery.is_synthetic",
         "gen3_discovery.data_source",
-        "gen3_discovery._unique_id"
+        "gen3_discovery.commons",
+        "gen3_discovery._unique_id",
+        "gen3_discovery.subject_id"
       ],
       "columns": {
         "gen3_discovery.mc2dp_global_id": {
@@ -237,10 +251,17 @@
           "title": "SYNTHETIC DATA"
         },
         "gen3_discovery.data_source": {
+          "title": "DATA SOURCE"
+        },
+        "gen3_discovery.commons": {
           "title": "DATA COMMONS"
         },
         "gen3_discovery._unique_id": {
           "title": "COMMONS ID",
+          "visible": false
+        },
+        "gen3_discovery.subject_id": {
+          "title": "SUBJECT ID",
           "visible": false
         }
       }
