@@ -78,7 +78,7 @@ const StatsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
       "cohortStudy": "PROMETHEUS 8A",
       "description": "Metabolomics",
       "type": "CBDX*",
-      "status": "[Data Pending]",
+      "status": "[Synthetic Data]",
       "patients": ""
     },
     {
