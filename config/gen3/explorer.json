@@ -14,7 +14,13 @@
             "Ethnicity",
             "Gender",
             "Race"
-          ]
+          ],
+          "fieldsConfig" : {
+            "DeceasedFlag": {
+              "field": "DeceasedFlag",
+              "label": "Deceasedflag"
+            }
+          }
         },
         {
           "title": "ActionableMutations",
@@ -46,7 +52,25 @@
             "ChemotherapyFac",
             "TumorSize",
             "SequenceNumber"
-          ]
+          ],
+          "fieldsConfig" : {
+            "ICDOSite": {
+              "field": "ICDOSite",
+              "label": "Icdosite"
+            },
+            "PhysiciansStage": {
+              "field": "PhysiciansStage",
+              "label": "Physiciansstage"
+            },
+            "TumorSize": {
+              "field": "TumorSize",
+              "label": "Tumorsize"
+            },
+            "SequenceNumber": {
+              "field": "SequenceNumber",
+              "label": "Sequencenumber"
+            }
+          }
         }
       ]
     },
