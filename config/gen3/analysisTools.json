@@ -1,4 +1,14 @@
 {
   "tools": [
+    {
+      "title": "Patient Level Prediction (PLP) Model Analysis",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.png",
+      "image": "/images/apps/PLP_covariate_importance.png",
+      "description": "This notebook demonstrates how to download and analyze the results of successful PLP workflow.",
+      "loginRequired": false,
+      "href": "/staticNotebook/rf_model_analysis.html",
+      "btnText": "Show Analysis"
+    }
   ]
 }
