@@ -1,0 +1,24 @@
+{
+  "projectTable": {
+    "columns": [
+      {
+        "name": "Patient",
+        "field": "_case_count",
+        "errorIfNotAvailable": false,
+        "valueIfNotAvailable": "n/a"
+      },
+      {
+        "name": "Submitted Unaligned Reads",
+        "field": "_unaligned_reads_file_count",
+        "errorIfNotAvailable": false,
+        "valueIfNotAvailable": "n/a"
+      },
+      {
+        "name": "Image File",
+        "field": "_imaging_file_count",
+        "errorIfNotAvailable": false,
+        "valueIfNotAvailable": "n/a"
+      }
+    ]
+  }
+}

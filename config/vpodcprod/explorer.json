@@ -1,0 +1,160 @@
+[
+  {
+    "tabTitle": "Patients",
+    "charts": {},
+    "filters": {
+      "tabs": [
+        {
+          "title": "Demographic",
+          "fields": [
+            "project_id",
+            "Days_To_Birth",
+            "Days_To_Death",
+            "DeceasedFlag",
+            "Ethnicity",
+            "Gender",
+            "Race"
+          ],
+          "fieldsConfig" : {
+            "DeceasedFlag": {
+              "field": "DeceasedFlag",
+              "label": "Deceasedflag"
+            }
+          }
+        },
+        {
+          "title": "ActionableMutations",
+          "fields": [
+            "project_id",
+            "ActionableMutations.Lab",
+            "ActionableMutations.Gene",
+            "ActionableMutations.DaysFromAnchorDateToBxDate"
+          ]
+        },
+        {
+          "title": "Oncology Primary",
+          "fields": [
+            "project_id",
+            "Oncology_Primary.Multiplicitycounter",
+            "Oncology_Primary.ICDOSite",
+            "Oncology_Primary.Radiation",
+            "Oncology_Primary.Chemotherapy",
+            "Oncology_Primary.DaysFromAnchorDateToDiagnosisDate",
+            "Oncology_Primary.Gradedifferentiation",
+            "Oncology_Primary.Laterality",
+            "Oncology_Primary.Stagegroupbest",
+            "Oncology_Primary.RadiationsurgerySequence",
+            "Oncology_Primary.Histologyicdo3X",
+            "Oncology_Primary.Lymphvascularinvasionl",
+            "Oncology_Primary.SeerSummaryStage2000",
+            "Oncology_Primary.PhysiciansStage",
+            "Oncology_Primary.DaysFromAnchorDateToMostdefinitivesurgDate",
+            "Oncology_Primary.ChemotherapyFac",
+            "Oncology_Primary.TumorSize",
+            "Oncology_Primary.SequenceNumber"
+          ],
+          "fieldsConfig" : {
+            "ICDOSite": {
+              "field": "Oncology_Primary.ICDOSite",
+              "label": "Icdosite"
+            },
+            "PhysiciansStage": {
+              "field": "Oncology_Primary.PhysiciansStage",
+              "label": "Physiciansstage"
+            },
+            "TumorSize": {
+              "field": "Oncology_Primary.TumorSize",
+              "label": "Tumorsize"
+            },
+            "SequenceNumber": {
+              "field": "Oncology_Primary.SequenceNumber",
+              "label": "Sequencenumber"
+            }
+          }
+        }
+      ]
+    },
+    "buttons": [
+      {
+        "enabled": false,
+        "type": "manifest",
+        "title": "Download Manifest",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "fileName": "manifest.json"
+      }
+    ],
+    "table": {
+      "enabled": true,
+      "fields": [
+        "project_id",
+        "Race",
+        "Ethnicity",
+        "Gender",
+        "ActionableMutations.Lab",
+        "Oncology_Primary.Multiplicitycounter",
+        "Oncology_Primary.ICDOSite"
+      ]
+    },
+    "guppyConfig": {
+      "dataType": "patients",
+      "nodeCountTitle": "Patient",
+      "fieldMapping": [],
+      "manifestMapping": {
+        "resourceIndexType": "file",
+        "resourceIdField": "object_id",
+        "referenceIdFieldInResourceIndex": "case_id",
+        "referenceIdFieldInDataIndex": "Chicago_ID"
+      }
+    }
+  },
+  {
+    "tabTitle": "Files",
+    "charts": {},
+    "filters": {
+      "tabs": [
+        {
+          "title": "Files",
+          "fields": [
+            "project_id",
+            "data_type",
+            "data_format",
+            "file_size"
+          ]
+        }
+      ]
+    },
+    "buttons": [
+      {
+        "enabled": false,
+        "type": "file-manifest",
+        "title": "Download Manifest",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "fileName": "manifest.json"
+      }
+    ],
+    "table": {
+      "enabled": true,
+      "fields": [
+        "submitter_id",
+        "data_type",
+        "data_format",
+        "file_name",
+        "file_size",
+        "object_id"
+      ]
+    },
+    "guppyConfig": {
+      "dataType": "file",
+      "nodeCountTitle": "File",
+      "fieldMapping": [],
+      "manifestMapping": {
+        "resourceIndexType": "file",
+        "resourceIdField": "object_id",
+        "referenceIdFieldInResourceIndex": "object_id",
+        "referenceIdFieldInDataIndex": "Chicago_ID"
+      }
+    }
+  }
+]
