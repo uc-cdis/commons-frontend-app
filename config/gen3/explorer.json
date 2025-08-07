@@ -263,7 +263,7 @@
     "buttons": []
   },
   {
-    "tabTitle": "Subject",
+    "tabTitle": "Subjects",
     "charts": {
       "commons_name": {
         "chartType": "fullPie",

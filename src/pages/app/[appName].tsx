@@ -18,7 +18,7 @@ interface AppConfig extends NavPageLayoutProps {
   config?: object;
 }
 
-const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
+const AppsPage = ({ headerProps, footerProps, headerMetadata, config }: AppConfig) => {
   const router = useRouter();
   const appName = getAppName(router);
 
@@ -29,7 +29,7 @@ const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
-      headerData={{
+      headerMetadata={headerMetadata ?? {
         title: 'Gen3 App Page',
         content: 'App Data',
         key: 'gen3-app-page',

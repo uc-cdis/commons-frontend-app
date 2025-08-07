@@ -1,4 +1,9 @@
 {
+  "headerMetadata" : {
+    "title": "BIH Metadata Dictionary",
+    "content": "Metadata Data Dictionary",
+    "key": "bih-data-dictionary-page"
+  },
   "schemas": [
     {
       "label": "Metadata",
