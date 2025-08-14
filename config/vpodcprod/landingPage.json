@@ -56,7 +56,7 @@
             "icon": "MdOutlineSearch",
             "bodyText": "Use our selected tool to filter out the data you need.",
             "btnText": "Access Data",
-            "href": "/Query",
+            "href": "/Explorer",
             "linkType": "portal"
           },
           {
