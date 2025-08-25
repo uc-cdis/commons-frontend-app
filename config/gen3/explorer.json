@@ -125,22 +125,17 @@
                       "contentType": "string"
                   },
                   {
-                      "name": "Commons ID",
+                      "name": "Data Source ID",
                       "field": "_unique_id",
                       "contentType": "string"
                   },
                   {
-                      "name": "Subject ID",
-                      "field": "subject_id",
-                      "contentType": "string"
-                  },
-                  {
-                      "name": "Data Source",
+                      "name": "Related Project",
                       "field": "data_source",
                       "contentType": "string"
                   },
                   {
-                      "name": "Data Commons",
+                      "name": "Data Source",
                       "field": "commons",
                       "contentType": "string"
                   },
@@ -251,18 +246,10 @@
           "title": "SYNTHETIC DATA"
         },
         "gen3_discovery.data_source": {
-          "title": "DATA SOURCE"
+          "title": "RELATED PROJECT"
         },
         "gen3_discovery.commons": {
-          "title": "DATA COMMONS"
-        },
-        "gen3_discovery._unique_id": {
-          "title": "COMMONS ID",
-          "visible": false
-        },
-        "gen3_discovery.subject_id": {
-          "title": "SUBJECT ID",
-          "visible": false
+          "title": "DATA SOURCE"
         }
       }
     },
