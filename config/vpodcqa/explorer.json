@@ -23,7 +23,7 @@
           }
         },
         {
-          "title": "ActionableMutations",
+          "title": "actionable_mutations",
           "fields": [
             "project_id",
             "Lab",
@@ -32,7 +32,7 @@
           ]
         },
         {
-          "title": "Oncology Primary",
+          "title": "oncology_primaries",
           "fields": [
             "project_id",
             "Multiplicitycounter",
