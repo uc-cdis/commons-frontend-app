@@ -71,14 +71,14 @@ const StatsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
       "description": "Proteomics",
       "type": "CBDX",
       "status": "[Synthetic Data]",
-      "patients": "2/2"
+      "patients": "144/144"
     },
     {
       "source": "Ellison",
       "cohortStudy": "PROMETHEUS 8A",
       "description": "Metabolomics",
       "type": "CBDX*",
-      "status": "[Synthetic Data]",
+      "status": "[Data Pending]",
       "patients": ""
     },
     {
