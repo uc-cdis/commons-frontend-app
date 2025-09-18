@@ -118,6 +118,7 @@
               "IDC": "https://portal.imaging.datacommons.cancer.gov/explore/",
               "MIDRC": "https://data.midrc.org",
               "NIHCC": "https://www.cc.nih.gov/",
+              "OpenNeuro": "https://openneuro.org/",
               "Stanford AIMI": "https://stanfordaimi.azurewebsites.net/",
               "TCIA": "https://www.cancerimagingarchive.net/"
             }
@@ -145,7 +146,7 @@
     },
     "guppyConfig": {
       "dataType": "imaging_study",
-      "nodeCountTitle": "Imaging Studies",
+      "nodeCountTitle": "Imaging Study",
       "fieldMapping": [
         {
           "field": "study_viewer_url",
@@ -348,6 +349,7 @@
               "IDC": "https://portal.imaging.datacommons.cancer.gov/explore/",
               "MIDRC": "https://data.midrc.org",
               "NIHCC": "https://www.cc.nih.gov/",
+              "OpenNeuro": "https://openneuro.org/",
               "Stanford AIMI": "https://stanfordaimi.azurewebsites.net/",
               "TCIA": "https://www.cancerimagingarchive.net/"
             }
@@ -360,7 +362,7 @@
     },
     "guppyConfig": {
       "dataType": "subject",
-      "nodeCountTitle": "Subjects",
+      "nodeCountTitle": "Subject",
       "fieldMapping": [
         {
           "field": "data_url_doi",
@@ -559,6 +561,7 @@
               "IDC": "https://portal.imaging.datacommons.cancer.gov/explore/",
               "MIDRC": "https://data.midrc.org",
               "NIHCC": "https://www.cc.nih.gov/",
+              "OpenNeuro": "https://openneuro.org/",
               "Stanford AIMI": "https://stanfordaimi.azurewebsites.net/",
               "TCIA": "https://www.cancerimagingarchive.net/"
             }
@@ -793,9 +796,9 @@
               "IDC": "https://portal.imaging.datacommons.cancer.gov/explore/",
               "MIDRC": "https://data.midrc.org",
               "NIHCC": "https://www.cc.nih.gov/",
+              "OpenNeuro": "https://openneuro.org/",
               "Stanford AIMI": "https://stanfordaimi.azurewebsites.net/",
-              "TCIA": "https://www.cancerimagingarchive.net/",
-              "OpenNeuro": "https://www.openeuro.org/"
+              "TCIA": "https://www.cancerimagingarchive.net/"
             }
           }
         },
@@ -815,7 +818,7 @@
     },
     "guppyConfig": {
       "dataType": "dataset",
-      "nodeCountTitle": "Datasets",
+      "nodeCountTitle": "Dataset",
       "fieldMapping": [
         {
           "field": "data_url_doi",
