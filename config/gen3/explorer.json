@@ -197,14 +197,12 @@
         "gen3_discovery.subject_cancer_grade",
         "gen3_discovery.subject_cancer_stage",
         "gen3_discovery.subject_type_of_exposures",
-        "gen3_discovery.subject_id_list",
         "gen3_discovery.subject_gender",
         "gen3_discovery.subject_race",
         "gen3_discovery.subject_ethnicity",
         "gen3_discovery.is_synthetic",
         "gen3_discovery.data_source",
-        "gen3_discovery._unique_id",
-        "gen3_discovery.subject_id"
+        "gen3_discovery.subject_id_list"
       ],
       "columns": {
         "gen3_discovery.mc2dp_global_id": {
@@ -227,6 +225,9 @@
         },
         "gen3_discovery.subject_type_of_exposures": {
           "title": "TYPE OF EXPOSURE"
+        },
+        "gen3_discovery.subject_id_list": {
+          "title": "DATA SOURCE ID"
         },
         "gen3_discovery.subject_gender": {
           "title": "BIOLOGICAL SEX"
