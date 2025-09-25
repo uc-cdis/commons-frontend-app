@@ -105,7 +105,7 @@
         "panel": "queryRowDetails",
         "panelContainer" : "drawer",
         "mode": "click",
-        "idField": "gen3_discovery._unique_id",
+        "idField": "gen3_discovery.mc2dp_global_id",
         "title": "Details",
         "dataPath": "gen3_discovery",
         "simpleDetailsView": {
