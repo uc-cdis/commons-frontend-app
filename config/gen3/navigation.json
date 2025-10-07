@@ -64,7 +64,7 @@
   "topBar": {
     "items": [
       {
-        "href": "https://gen3.org/resources/user/",
+        "href": "https://uc-cdis.github.io/mc2dp-docs/",
         "name": "Documentation"
       }
     ],
