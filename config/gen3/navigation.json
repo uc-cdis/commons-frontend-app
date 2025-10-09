@@ -64,6 +64,10 @@
   "topBar": {
     "items": [
       {
+        "href": "https://uc-cdis.github.io/platform-citation/mc2dp-cite/",
+        "name": "Cite MC2DP"
+      },
+      {
         "href": "https://uc-cdis.github.io/mc2dp-docs/",
         "name": "Documentation"
       }
