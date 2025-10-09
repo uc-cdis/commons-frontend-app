@@ -1,6 +1,6 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.11.18",
+  "version": "0.11.43",
   "private": "true",
   "engines": {
     "npm": ">=10.9.0",
@@ -23,24 +23,22 @@
     "@fontsource/montserrat": "^5.0.19",
     "@fontsource/poppins": "^5.0.15",
     "@fontsource/source-sans-pro": "^5.0.8",
-    "@gen3/core": "0.11.19",
-    "@gen3/frontend": "0.11.19",
-    "@mantine/core": "^7.16.0",
-    "@mantine/dates": "^7.16.0",
-    "@mantine/form": "^7.16.0",
-    "@mantine/hooks": "^7.16.0",
-    "@mantine/modals": "^7.16.0",
-    "@mantine/notifications": "^7.16.0",
+    "@gen3/core": "0.11.43",
+    "@gen3/frontend": "0.11.43",
+    "@mantine/core": "^7.17.8",
+    "@mantine/dates": "^7.17.8",
+    "@mantine/form": "^7.17.8",
+    "@mantine/hooks": "^7.17.8",
+    "@mantine/modals": "^7.17.8",
+    "@mantine/notifications": "^7.17.8",
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
-    "@next/mdx": "^15.2.4",
+    "@next/mdx": "^15.5.3",
     "cookies-next": "^4.3.0",
     "idb": "^8.0.0",
     "jsonpath-plus": "^10.3.0",
     "react": "^18.3.1",
-    "react-dom": "18.3.1",
-    "sharp": "^0.34.2",
-    "swr": "^2.2.5"
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.1",
@@ -60,7 +58,7 @@
     "@typescript-eslint/parser": "^8.7.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.21.0",
-    "eslint-config-next": "^15.2.4",
+    "eslint-config-next": "^15.5.3",
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -69,7 +67,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "jest-fixed-jsdom": "^0.0.9",
     "msw": "^2.7.0",
-    "next": "^15.2.4",
+    "next": "^15.5.3",
     "postcss": "^8.4.29",
     "postcss-import": "^16.1.0",
     "postcss-loader": "^7.3.2",
@@ -81,6 +79,8 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.26.0",
+    "sharp": "^0.34.4",
+    "swr": "^2.3.6"
   }
 }
