@@ -49,7 +49,18 @@ export const getServerSideProps: GetServerSideProps<
     console.error(err);
     return {
       props: {
-        ...(await getNavPageLayoutPropsFromConfig()),
+        headerProps: {
+          top: { items: [] },
+          navigation: {
+            items: [],
+          },
+        },
+        footerProps: {},
+        headerMetadata: {
+          title: 'Gen3 Gradio App',
+          content: 'Huggingface Gradio app',
+          key: 'gen3-gradio-page',
+        },
       },
     };
   }
