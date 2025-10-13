@@ -31,7 +31,7 @@
     "@mantine/hooks": "^7.17.8",
     "@mantine/modals": "^7.17.8",
     "@mantine/notifications": "^7.17.8",
-    "@mdx-js/loader": "^3.0.0",
+    "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^15.5.3",
     "cookies-next": "^4.3.0",
