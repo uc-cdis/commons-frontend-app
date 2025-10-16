@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps<
     return {
       props: {
         headerProps: {
-          top: { items: [] },
+          topBar: { items: [] },
           navigation: {
             items: [],
           },
