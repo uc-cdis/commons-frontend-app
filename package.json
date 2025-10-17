@@ -1,6 +1,6 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.11.44",
+  "version": "0.11.46",
   "private": "true",
   "engines": {
     "npm": ">=10.9.0",
@@ -23,8 +23,8 @@
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "@gen3/core": "0.11.45",
-    "@gen3/frontend": "0.11.45",
+    "@gen3/core": "0.11.46",
+    "@gen3/frontend": "0.11.46",
     "@mantine/core": "^7.17.8",
     "@mantine/dates": "^7.17.8",
     "@mantine/form": "^7.17.8",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
-    "@gen3/toolsff": "0.11.45",
+    "@gen3/toolsff": "0.11.46",
     "@next/eslint-plugin-next": "^15.5.5",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
