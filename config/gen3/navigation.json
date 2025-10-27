@@ -65,11 +65,13 @@
     "items": [
       {
         "href": "https://uc-cdis.github.io/platform-citation/mc2dp-cite/",
-        "name": "Cite MC2DP"
+        "name": "Cite MC2DP",
+        "newWindow": true
       },
       {
         "href": "https://uc-cdis.github.io/mc2dp-docs/",
-        "name": "Documentation"
+        "name": "Documentation",
+        "newWindow": true
       }
     ],
     "loginButtonVisibility": "hidden"
