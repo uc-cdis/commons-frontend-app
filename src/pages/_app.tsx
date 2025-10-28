@@ -15,7 +15,6 @@ import {
   registerMetadataSchemaApp,
   registerCohortDiscoveryApp,
 } from '@gen3/frontend';
-import { registerDefaultRemoteSupport } from '@gen3/core';
 
 import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
 import { registerCustomExplorerDetailsPanels } from '@/lib/CohortBuilder/FileDetailsPanel';
@@ -25,10 +24,11 @@ import '@fontsource/montserrat';
 import '@fontsource/source-sans-pro';
 import '@fontsource/poppins';
 
-import { setDRSHostnames } from '@gen3/core';
+import { setDRSHostnames, registerDefaultRemoteSupport } from '@gen3/core';
 import drsHostnames from '../../config/drsHostnames.json';
 import { loadContent } from '@/lib/content/loadContent';
 import Loading from '../components/Loading';
+import DatadogInit from '@/components/DatadogInit';
 
 if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
@@ -86,6 +86,7 @@ const Gen3App = ({
     <React.Fragment>
       {isClient ? (
         <Suspense fallback={<Loading />}>
+          <DatadogInit />
           <FaroErrorBoundary>
             <MantineProvider theme={mantinetheme}>
               <Gen3Provider
