@@ -4,7 +4,7 @@ This is the base REPOSITORY for Gen3.2 data commons.
 
 
 ## Getting Started
- Creating a Gen3 Data Commons web portal using the Gen3 Frontend Framework is a matter of the following:
+Gen3 Data Commons using the Gen3 Frontend Framework is a matter of the following:
 
 * create a clone of [Gen3 Data Commons Application](https://github.com/uc-cdis/commons-frontend-app/)  
 
@@ -84,7 +84,7 @@ The following steps usually apply to update a forked commons.
 
 Get the changes from the parent fork:
 ```bash
-git remote add upstream git@github.com:uc-cdis/commons-frontend-app.git 
+git remote add upstream git@github.com:uc-cdis/commons-frontend-app.git
 git fetch upstream
 ```
 Create a branch and merge changes from upstream:
@@ -101,4 +101,3 @@ If you use this flag, it is recommended that you carefully review the changes an
 
 You will see merge conflicts. In general: **take the remote's version for everything except the config files**, as those are customized to the commons config. Resolve any remaining config issues and open a PR.
 Test the new common by running it locally or in a staging environment.
-
