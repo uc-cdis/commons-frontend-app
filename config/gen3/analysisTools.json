@@ -2,7 +2,7 @@
   "tools": [
     {"title": "GDC QAG",
       "type": "application",
-      "icon": "/images/apps/icons/hf-logo-pirate.png",
+      "icon": "/images/apps/icons/gen3_app.png",
       "image": "/images/apps/generic_image.png",
       "description": "AI Model to create cohorts from a text description",
       "loginRequired": false,
@@ -12,7 +12,7 @@
     {
       "title": "Cohort Copilot",
       "type": "application",
-      "icon": "/images/apps/icons/hf-logo-pirate.png",
+      "icon": "/images/apps/icons/gen3_app.png",
       "image": "/images/apps/generic_image.png",
       "description": "AI Model to create cohorts from a text description",
       "loginRequired": false,
@@ -21,7 +21,7 @@
     },
     {"title": "Data Model Generator",
       "type": "application",
-      "icon": "/images/apps/icons/hf-logo-pirate.png",
+      "icon": "/images/apps/icons/gen3_app.png",
       "image": "/images/apps/generic_image.png",
       "description": "AI Model to create cohorts from a text description",
       "loginRequired": false,
