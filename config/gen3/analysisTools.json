@@ -2,9 +2,9 @@
   "tools": [
     {"title": "GDC QAG",
       "type": "application",
-      "icon": "/images/apps/icons/hf-logo-pirate.png",
+      "icon": "/images/apps/icons/ai_spark.svg",
       "image": "/images/apps/generic_image.png",
-      "description": "AI Model to create cohorts from a text description",
+      "description": "Get specific answers to complex, multi-step, free-text genomics questions using factually grounded information retrieved from the GDC.",
       "loginRequired": false,
       "href": "/gradio/uc-ctds-gdc-qag",
       "btnText": "Run Model"
@@ -12,18 +12,18 @@
     {
       "title": "Cohort Copilot",
       "type": "application",
-      "icon": "/images/apps/icons/hf-logo-pirate.png",
+      "icon": "/images/apps/icons/ai_spark.svg",
       "image": "/images/apps/generic_image.png",
-      "description": "AI Model to create cohorts from a text description",
+      "description": " Construct GDC cohorts using natural language queries describing the cases you're looking for. The resulting cohorts can be used with standard GDC utilities and APIs.",
       "loginRequired": false,
       "href": "/gradio/uc-ctds-gdc-cohort-copilot",
       "btnText": "Run Model"
     },
     {"title": "Data Model Generator",
       "type": "application",
-      "icon": "/images/apps/icons/hf-logo-pirate.png",
+      "icon": "/images/apps/icons/ai_spark.svg",
       "image": "/images/apps/generic_image.png",
-      "description": "AI Model to create cohorts from a text description",
+      "description": "AI tool to assist with data curation and harmonization. This model is a fined-tuned LoRA layer based on Llama-3.1-8B that is optimized for the specific task of generating structured data models in JSON format from a dump of tabular data files.",
       "loginRequired": false,
       "href": "/gradio/uc-ctds-llama-data-model-generator-demo",
       "btnText": "Run Model"
