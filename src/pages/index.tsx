@@ -136,15 +136,15 @@ const SamplePage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
           </div>
           <Stack align="stretch" justify="center" gap="md">
             <ArrowLink
-              href="https://www.m3.chicagolabs.org/m3-midscale-models-initiative"
+              href="https://m3initiative.uchicago.edu/"
               text="M3 Initiative"
             />
             <ArrowLink
-              href="https://www.m3.chicagolabs.org/m3-midscale-models-initiative"
+              href="https://m3initiative.uchicago.edu/ai-models/"
               text="M3 AI Models"
             />
             <ArrowLink
-              href="https://www.m3.chicagolabs.org/m3-midscale-models-initiative"
+              href="https://m3initiative.uchicago.edu/ai-tools/"
               text="M3 AI Tools"
             />
           </Stack>
