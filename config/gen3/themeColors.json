@@ -52,7 +52,7 @@
     "lightest": "#c3c3d8",
     "lighter": "#9a9abd",
     "light": "#7070a2",
-    "DEFAULT": "#474787",
+    "DEFAULT": "#006287",
     "vivid": "#3d3d91",
     "dark": "#373769",
     "darker": "#27274a",
@@ -127,9 +127,9 @@
     "DEFAULT": "#ECECEC",
     "vivid": "#eeeaea",
     "dark": "#b7b7b7",
-    "darker": "#404040",
-    "darkest": "#404040",
-    "min": "#181818"
+    "darker": "#111111",
+    "darkest": "#111111",
+    "min": "#111111"
   },
   "base-contrast": {
     "max": "#111111",
@@ -216,7 +216,7 @@
     "min": "#fefefe"
   },
   "navigation": {
-    "footer": "#373A3C",
+    "footer": "#111111",
     "topbar_hover": "#FFFFFF",
     "light": "#111111",
     "DEFAULT": "#111111",

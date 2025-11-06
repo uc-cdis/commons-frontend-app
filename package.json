@@ -1,6 +1,6 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.11.43",
+  "version": "0.11.51",
   "private": "true",
   "engines": {
     "npm": ">=10.9.0",
@@ -23,8 +23,8 @@
     "@fontsource/montserrat": "^5.0.19",
     "@fontsource/poppins": "^5.0.15",
     "@fontsource/source-sans-pro": "^5.0.8",
-    "@gen3/core": "0.11.43",
-    "@gen3/frontend": "0.11.43",
+    "@gen3/core": "0.11.51",
+    "@gen3/frontend": "file:.yalc/@gen3/frontend",
     "@mantine/core": "^7.17.8",
     "@mantine/dates": "^7.17.8",
     "@mantine/form": "^7.17.8",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.1",
-    "@gen3/toolsff": "0.11.19",
+    "@gen3/toolsff": "0.11.51",
     "@next/eslint-plugin-next": "^15.2.4",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.3",
@@ -75,12 +75,12 @@
     "postcss-preset-env": "^8.4.2",
     "postcss-preset-mantine": "^1.17.0",
     "prettier": "^3.3.3",
+    "sharp": "^0.34.4",
+    "swr": "^2.3.6",
     "tailwindcss": "^3.4.10",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
-    "typescript-eslint": "^8.26.0",
-    "sharp": "^0.34.4",
-    "swr": "^2.3.6"
+    "typescript-eslint": "^8.26.0"
   }
 }
