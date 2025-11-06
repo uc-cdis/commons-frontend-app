@@ -26,46 +26,56 @@ const SamplePage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
       }}
     >
       <div className="flex flex-col w-full">
-        <div className="w-full h-96 relative">
-          <BackgroundImage
-            src="/images/frequency-wave-7776034_1920-3.png"
-            className="p-20"
+        <div className="w-full h-[424px] relative bg-black">
+          <div
+            className="p-20 relative"
+            style={{
+              backgroundImage: 'url(/images/frequency-wave-7776034_1920-3.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
           >
-            <div className="justify-start text-white text-4xl font-bold font-['Poppins']">
-              M3 AI Commons
-            </div>
-            <div className="justify-start text-white text-2xl font-semibold font-['Poppins'] my-4">
-              Powerful AI tools available alongside core data commons
-              capabilities.
-            </div>
-            <div className="w-[1040px] h-20 justify-start">
-              <span className="text-white text-sm font-bold font-['Poppins']">
-                The M3 AI commons
-              </span>
-              <span className="text-white text-sm font-normal font-['Poppins']">
-                {' '}
-                is a cloud-based data platform with a governance structure and
-                architecture for managing, analyzing, and sharing data and AI
-                resources supporting: multi-modal AI embeddings, AI inferencing,
-                building AI models, and natural language interactions. One
-                over-arching mission of the M3 AI Commons is to make readily
-                accessible small to midscale AI models trained over high-quality
-                data leveraging affordable compute resources without sacrificing
-                performance comparable to high-cost frontier models.
-              </span>
-            </div>
-            <UnstyledButton
-              className={
-                'mt-10 px-4 py-3 bg-white/25 rounded outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-start items-center gap-2.5'
-              }
-            >
-              <div className="justify-start text-white text-sm font-semibold font-['Poppins'] leading-4">
-                Explore M3 AI Commons
+            {/* Overlay for opacity */}
+            <div className="absolute inset-0 bg-black opacity-[.45] z-5"></div>
+
+            <div className="relative z-10">
+              <div className="justify-start text-white text-4xl font-bold font-['Poppins']">
+                M3 AI Commons
               </div>
-            </UnstyledButton>
-          </BackgroundImage>
+              <div className="justify-start text-white text-2xl font-semibold font-['Poppins'] my-4">
+                Powerful AI tools available alongside core data commons
+                capabilities.
+              </div>
+              <div className="w-[1040px] h-20 justify-start">
+                <span className="text-white text-sm font-bold font-['Poppins']">
+                  The M3 AI commons
+                </span>
+                <span className="text-white text-sm font-normal font-['Poppins']">
+                  {' '}
+                  is a cloud-based data platform with a governance structure and
+                  architecture for managing, analyzing, and sharing data and AI
+                  resources supporting: multi-modal AI embeddings, AI
+                  inferencing, building AI models, and natural language
+                  interactions. One over-arching mission of the M3 AI Commons is
+                  to make readily accessible small to midscale AI models trained
+                  over high-quality data leveraging affordable compute resources
+                  without sacrificing performance comparable to high-cost
+                  frontier models.
+                </span>
+              </div>
+              <UnstyledButton
+                className={
+                  'mt-10 px-4 py-3 bg-white/25 rounded outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-start items-center gap-2.5'
+                }
+              >
+                <div className="justify-start text-white text-sm font-semibold font-['Poppins'] leading-4">
+                  Explore M3 AI Commons
+                </div>
+              </UnstyledButton>
+            </div>
+          </div>
         </div>
-        <div className="bg-[#f3f6f9] p-20 flex flex-col">
+        <div className="bg-[#f3f6f9] px-20 py-10 flex flex-col">
           <div className="flex flex-col justify-center items-center">
             <div className="w-16 h-16">
               <Image
@@ -118,37 +128,48 @@ const SamplePage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
             </SimpleGrid>
           </div>
         </div>
-
-        <BackgroundImage
-          src="/images/mesh-1430107_1920_top.png"
-          className="flex justify-between p-20 h-96"
-        >
-          <div className="w-[32rem] h-32 justify-start">
-            <span className="text-[#002a3a] text-4xl font-normal font-['Poppins'] leading-snug">
-              Learn More About <br />
-              the University of Chicago
-            </span>
-            <span className="text-[#002a3a] text-4xl font-bold font-['Poppins'] leading-snug">
-              {' '}
-              <br />
-              M3 Meshes of Midscale Models Initiative
-            </span>
+        <div className="bg-white">
+          <div
+            className="relative h-[360px]"
+            style={{
+              backgroundImage: 'url(/images/mesh-1430107_1920_top.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            {/* Overlay for opacity */}
+            <div className="absolute inset-0 bg-white opacity-[.45] z-5"></div>
+            <div className="flex justify-between align-middle px-20 py-16 relative z-10">
+              <div className="flex flex-col justify-center">
+              <div className="w-[32rem]">
+                <span className="text-[#002a3a] text-4xl font-normal font-['Poppins'] leading-snug">
+                  Learn More About <br />
+                  the University of Chicago
+                </span>
+                <span className="text-[#002a3a] text-4xl font-bold font-['Poppins'] leading-snug">
+                  {' '}
+                  <br />
+                  M3 Meshes of Midscale Models Initiative
+                </span>
+              </div>
+              </div>
+              <Stack align="stretch" justify="center" gap="md">
+                <ArrowLink
+                  href="https://m3initiative.uchicago.edu/"
+                  text="M3 Initiative"
+                />
+                <ArrowLink
+                  href="https://m3initiative.uchicago.edu/ai-models/"
+                  text="M3 AI Models"
+                />
+                <ArrowLink
+                  href="https://m3initiative.uchicago.edu/ai-tools/"
+                  text="M3 AI Tools"
+                />
+              </Stack>
+            </div>
           </div>
-          <Stack align="stretch" justify="center" gap="md">
-            <ArrowLink
-              href="https://m3initiative.uchicago.edu/"
-              text="M3 Initiative"
-            />
-            <ArrowLink
-              href="https://m3initiative.uchicago.edu/ai-models/"
-              text="M3 AI Models"
-            />
-            <ArrowLink
-              href="https://m3initiative.uchicago.edu/ai-tools/"
-              text="M3 AI Tools"
-            />
-          </Stack>
-        </BackgroundImage>
+        </div>
       </div>
     </NavPageLayout>
   );

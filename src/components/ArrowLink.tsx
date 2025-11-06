@@ -18,7 +18,7 @@ const ArrowLink = ({ href, text }: ArrowLinkProps) => {
           height={24}
         />
       </div>
-    <a href={href}>
+    <a href={href} target="_blank" rel="noopener noreferrer">
       <Text c="black" td="underline" fw={700} className="text-2xl">{text}</Text>
 
     </a>
