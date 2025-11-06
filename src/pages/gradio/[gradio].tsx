@@ -50,15 +50,15 @@ export const getServerSideProps: GetServerSideProps<
     return {
       props: {
         headerProps: {
-          top: { items: [] },
+          topBar: { items: [] },
           navigation: {
             items: [],
           },
         },
         footerProps: {},
         headerMetadata: {
-          title: 'Gen3 Gradio App',
-          content: 'Huggingface Gradio app',
+          title: 'AI Commons App',
+          content: 'radio app',
           key: 'gen3-gradio-page',
         },
       },
