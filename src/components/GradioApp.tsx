@@ -11,7 +11,7 @@ const GradioApp = ({ app }: { app: string }) => {
       />
 
       <div className="m-2 w-full">
-        <gradio-app src={`https://${app}.hf.space`}></gradio-app>
+        <gradio-app src={`https://${app}`}></gradio-app>
       </div>
     </>
   );

@@ -6,7 +6,7 @@
       "image": "/images/apps/gdc_qag.png",
       "description": "Get specific answers to complex, multi-step, free-text genomics questions using factually grounded information retrieved from the GDC.",
       "loginRequired": false,
-      "href": "/gradio/uc-ctds-gdc-qag",
+      "href": "/gradio/apps.m3aicommons.org/gdc-qag/",
       "btnText": "Run Model"
     },
     {
@@ -16,7 +16,7 @@
       "image": "/images/apps/cohort_copilot_image.png",
       "description": " Construct GDC cohorts using natural language queries describing the cases you're looking for. The resulting cohorts can be used with standard GDC utilities and APIs.",
       "loginRequired": false,
-      "href": "/gradio/uc-ctds-gdc-cohort-copilot",
+      "href": "/gradio/apps.m3aicommons.org/gdc-cohort-copilot/",
       "btnText": "Run Model"
     },
     {"title": "Data Model Generator",
@@ -25,7 +25,7 @@
       "image": "/images/apps/data_model_generator.png",
       "description": "AI tool to assist with data curation and harmonization. This model is a fined-tuned LoRA layer based on Llama-3.1-8B that is optimized for the specific task of generating structured data models in JSON format from a dump of tabular data files.",
       "loginRequired": false,
-      "href": "/gradio/uc-ctds-llama-data-model-generator-demo",
+      "href": "/gradio/uc-ctds-llama-data-model-generator-demo.hf.space/",
       "btnText": "Run Model"
     }
   ]
