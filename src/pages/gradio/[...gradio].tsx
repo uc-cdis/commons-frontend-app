@@ -18,9 +18,9 @@ const GradioAppsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
     <NavPageLayout
       {...{ headerProps, footerProps }}
       headerMetadata={{
-        title: 'Gen3 Gradio App',
-        content: 'Huggingface Gradio app',
-        key: 'gen3-gradio-page',
+        title: 'Gen3 AI Application',
+        content: 'AI Application',
+        key: 'gen3-ai-app-page',
       }}
     >
       <GradioApp app={app} />
@@ -31,7 +31,8 @@ const GradioAppsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
 const getGradioName = (router: NextRouter): string => {
   const { gradio } = router.query;
   if (typeof gradio === 'string') return gradio;
-  else if (typeof gradio === 'object') return gradio[0];
+  else if (typeof gradio === 'object') return gradio.join('/');
+
 
   return 'notFound';
 };
@@ -57,9 +58,9 @@ export const getServerSideProps: GetServerSideProps<
         },
         footerProps: {},
         headerMetadata: {
-          title: 'AI Commons App',
-          content: 'radio app',
-          key: 'gen3-gradio-page',
+          title: 'Gen3 AI Application',
+          content: 'AI Application',
+          key: 'gen3-ai-app-page',
         },
       },
     };
