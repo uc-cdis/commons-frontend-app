@@ -14,7 +14,7 @@
           },
           {
             "link": {
-              "href": "/discovery",
+              "href": "/Discovery",
               "linkType": "portal",
               "text": "Explore Gen3 Data"
             }
@@ -54,10 +54,17 @@
             "linkType": "portal"
           },
           {
-            "icon": "MdOutlineBarChart",
-            "bodyText": "Explore Tutorials and Example Analysis.",
-            "btnText": "Analyze",
-            "href": "/resource-browser",
+            "icon": "MdOutlineSearch",
+            "bodyText": "Use our selected tool to filter out the data you need.",
+            "btnText": "Explorer",
+            "href": "/Explorer",
+            "linkType": "portal"
+          },
+          {
+            "icon": "MdOutlineSearch",
+            "bodyText": "Analyze your selected cases using Jupyter Notebooks in our secure cloud environment.",
+            "btnText": "Analyze Data",
+            "href": "/Workspace",
             "linkType": "portal"
           }
         ]
