@@ -11,7 +11,7 @@ jobs:
     secrets: inherit # pragma: allowlist-secret
   ci:
     name: Build Image and Push to Quay
-    uses: uc-cdis/.github/.github/workflows/image_build_push.yaml@master
+    uses: uc-cdis/.github/.github/workflows/image_build_push_native.yaml@master
     with:
       USE_QUAY_ONLY: true
     secrets:

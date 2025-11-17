@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  BackgroundImage,
   Image,
   SimpleGrid,
   Stack,
@@ -63,6 +62,7 @@ const SamplePage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
                   frontier models.
                 </span>
               </div>
+              { /*--
               <UnstyledButton
                 className={
                   'mt-10 px-4 py-3 bg-white/25 rounded outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-start items-center gap-2.5'
@@ -72,6 +72,7 @@ const SamplePage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
                   Explore M3 AI Commons
                 </div>
               </UnstyledButton>
+              --- */ }
             </div>
           </div>
         </div>
