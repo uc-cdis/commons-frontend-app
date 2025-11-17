@@ -19,12 +19,6 @@
         "tooltip": "The Data Dictionary serves to inform the data model and is updated as new data is ingested."
       },
       {
-        "icon": "gen3:query",
-        "href": "/Query",
-        "name": "Query",
-        "tooltip": "Query the databases using GraphiQL."
-      },
-      {
         "icon": "gen3:analysis",
         "href": "/Analysis",
         "name": "Analysis",
