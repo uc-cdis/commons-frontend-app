@@ -139,7 +139,9 @@
         "title": "Download Manifest",
         "leftIcon": "datafile",
         "rightIcon": "download",
-        "fileName": "file-manifest.json",
+        "actionArgs": {
+          "filename": "file-manifest.json"
+        },
         "dropdownId": "download"
       },
       {
@@ -213,7 +215,9 @@
           "dropdownId": "download-table",
           "leftIcon": "datafile",
           "rightIcon": "download",
-          "fileName": "Imaging_Studies_table.json"
+          "actionArgs": {
+            "filename": "Imaging_Studies_table.json"
+          }
           },
           {
           "enabled": true,
@@ -222,7 +226,9 @@
           "dropdownId": "download-table",
           "leftIcon": "datafile",
           "rightIcon": "download",
-          "fileName": "Imaging_Studies_table.tsv"
+          "actionArgs": {
+            "filename": "Imaging_Studies_table.tsv"
+          }
           },
           {
           "enabled": true,
@@ -231,7 +237,9 @@
           "dropdownId": "download-table",
           "leftIcon": "datafile",
           "rightIcon": "download",
-          "fileName": "Imaging_Studies_table.csv"
+          "actionArgs": {
+            "filename": "Imaging_Studies_table.csv"
+          }
           },
           {
           "enabled": true,
@@ -239,7 +247,9 @@
           "title": "Download File Manifest for Imaging Studies",
           "leftIcon": "datafile",
           "rightIcon": "download",
-          "fileName": "imaging_study_manifest.json"
+          "actionArgs": {
+            "filename": "imaging_study_manifest.json"
+          }
           },
           {
           "enabled": false,
