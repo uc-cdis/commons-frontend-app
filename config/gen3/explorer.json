@@ -1,195 +1,83 @@
 [
   {
-    "tabTitle": "Cases",
+    "tabTitle": "Data",
     "charts": {
-      "race": {
-        "chartType": "fullPie",
-        "title": "Race"
-      },
-      "ethnicity": {
-        "chartType": "horizontalStacked",
-        "title": "Ethnicity"
-      },
-      "gender": {
-        "chartType": "bar",
-        "title": "Gender"
+      "project_id": {
+        "chartType": "count",
+        "title": "Projects"
       }
     },
     "filters": {
       "tabs": [
         {
-          "title": "Study Selection",
-          "fields": ["project"]
-        },
-        {
-          "title": "Subjects",
+          "title": "Project",
           "fields": [
-            "study",
-            "gender",
-            "race",
-            "ethnicity",
-            "vital_status",
-            "whatever_lab_result_value"
-          ],
-          "fieldsConfig": {
-            "gender" : {
-              "type" : "multiselect"
-            }
-          }
+            "project_id",
+            "data_type",
+            "data_format"
+          ]
         }
       ]
     },
     "table": {
       "enabled": true,
-      "detailsConfig": {
-        "panel": "default",
-        "mode" : "click",
-        "idField": "submitter_id",
-        "title": "Row Details"
-      },
-      "pageLimit": {
-        "limit": 10000
-      },
       "fields": [
-        "project",
-        "gender",
-        "race",
-        "ethnicity",
-        "whatever_lab_result_value"
-      ],
-      "columns": {
-        "whatever_lab_result_value": {
-          "sortable": false
-        }
-      }
+        "project_id",
+        "data_format"
+      ]
     },
     "dropdowns": {
-      "download-table": {
-        "title": "Download Table",
-        "leftIcon": "gen3:download",
-        "rightIcon": "gen3:chevron-down",
-        "dropdownItems": [
-          {
-            "enabled": true,
-            "type": "data-json",
-            "title": "JSON",
-            "leftIcon": "datafile",
-            "rightIcon": "download",
-            "action": "data-json",
-            "actionArgs" : {
-              "filename": "MIDRC_Series_table.json",
-              "rootPath": "gen3_discovery"
-            }
-          },
-          {
-            "enabled": true,
-            "type": "data-csv",
-            "title": "CSV",
-            "leftIcon": "datafile",
-            "rightIcon": "download",
-            "action": "data-csv",
-            "actionArgs" : {
-              "filename": "data_table.csv"
-            }
-          }
-        ]
+      "download": {
+        "title": "Download"
       }
     },
     "buttons": [
       {
         "enabled": true,
-        "type": "data-json",
-        "title": "JSON",
-        "dropdownId": "download-table",
+        "type": "export-to-pfb",
+        "title": "Export to PFB",
         "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.json"
-        }
+        "rightIcon": "download"
       },
       {
         "enabled": true,
-        "type": "data-tsv",
-        "title": "TSV",
-        "dropdownId": "download-table",
+        "type": "export-to-workspace",
+        "title": "Export to Workspace",
         "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.tsv"
-        }
-      },
-      {
-        "enabled": true,
-        "type": "data-csv",
-        "title": "CSV",
-        "dropdownId": "download-table",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.csv"
-        }
-      },
-      {
-        "enabled": true,
-        "type": "manifest",
-        "action": "manifest",
-        "title": "Download File Manifest for Cases",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "fileName": "case_manifest.json",
-        "actionArgs": {
-          "resourceIndexType": "file",
-          "resourceIdField": "object_id",
-          "referenceIdFieldInResourceIndex": "project_id",
-          "referenceIdFieldInDataIndex": "project_id",
-          "fileFields": ["file_name", "file_size", "md5sum", "object_id"]
-        }
+        "rightIcon": "download"
       }
     ],
-    "loginForDownload": false,
+    "loginForDownload": true,
     "guppyConfig": {
       "dataType": "subject",
       "nodeCountTitle": "Subjects",
       "fieldMapping": [
-        {
-          "field": "_samples_count",
-          "name": "Samples Count"
-        },
-        {
-          "field": "_imaging_files_count",
-          "name": "Imaging Files Count"
-        },
-        {
-          "field": "_unaligned_reads_files_count",
-          "name": "Unaligned Reads Count"
-        },
-        {
-          "field": "_aligned_reads_files_count",
-          "name": "Aligned Reads Count"
-        },
-        {
-          "field": "_expression_arrays_count",
-          "name": "Expression Arrays Count"
-        }
+        { "field": "disease_id", "name": "Disease ID" },
+        { "field": "age_of_onset", "name": "Age of Onset" },
+        { "field": "project_dbgap_accession_number", "name": "Project dbGaP Accession Number" },
+        { "field": "project_dbgap_consent_text", "name":"Project dbGaP Consent Text"},
+        { "field": "project_dbgap_phs", "name":"Project dbGaP Phs"}
       ],
       "manifestMapping": {
         "resourceIndexType": "file",
         "resourceIdField": "object_id",
-        "referenceIdFieldInResourceIndex": "subject_id",
-        "referenceIdFieldInDataIndex": "subject_id"
+        "referenceIdFieldInResourceIndex": "_subject_id",
+        "referenceIdFieldInDataIndex": "_subject_id"
       },
-      "accessibleFieldCheckList": ["project"],
-      "accessibleValidationField": "project"
+      "accessibleFieldCheckList": [
+        "project_id"
+      ],
+      "accessibleValidationField": "project_id"
     }
   },
   {
-    "tabTitle": "Data Files",
+    "tabTitle": "File",
     "charts": {
-      "file_type": {
+      "data_type": {
         "chartType": "stackedBar",
         "title": "File Type"
       },
-      "file_format": {
+      "data_format": {
         "chartType": "stackedBar",
         "title": "File Format"
       }
@@ -198,84 +86,202 @@
       "tabs": [
         {
           "title": "File",
-          "fields": ["subject_id"]
+          "fields": [
+            "project_id",
+            "data_category",
+            "data_type",
+            "data_format"
+          ],
+          "searchFields": [
+            "file_name"
+          ]
         }
       ]
     },
     "table": {
       "enabled": true,
-      "detailsConfig": {
-        "panel": "fileDetails",
-        "mode": "click",
-        "idField": "file_name",
-        "title": "File Details"
-      },
-      "fields": ["subject_id", "file_type", "file_size", "object_id"]
+      "fields": [
+        "project_id",
+        "file_name",
+        "file_size",
+        "object_id"      ]
     },
+    "loginForDownload": true,
     "guppyConfig": {
       "dataType": "file",
       "fieldMapping": [
         {
-          "field": "file_id",
+          "field": "object_id",
           "name": "GUID"
+        },
+        {
+          "field": "programs_name",
+          "name": "Program"
         }
       ],
       "nodeCountTitle": "Files",
       "manifestMapping": {
         "resourceIndexType": "subject",
-        "resourceIdField": "subject_id",
+        "resourceIdField": "_subject_id",
         "referenceIdFieldInResourceIndex": "object_id",
         "referenceIdFieldInDataIndex": "object_id"
       },
-      "accessibleFieldCheckList": ["subject_id"],
-      "accessibleValidationField": "subject_id",
-      "downloadAccessor": "subject_id"
+      "accessibleFieldCheckList": [
+        "project_id"
+      ],
+      "accessibleValidationField": "project_id",
+      "downloadAccessor": "object_id"
     },
     "buttons": [
       {
         "enabled": true,
-        "type": "data-json",
-        "title": "JSON",
-        "dropdownId": "download-table",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.json"
-        }
-      },
-      {
-        "enabled": true,
-        "type": "data-tsv",
-        "title": "TSV",
-        "dropdownId": "download-table",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.tsv"
-        }
-      },
-      {
-        "enabled": true,
-        "type": "data-csv",
-        "title": "CSV",
-        "dropdownId": "download-table",
-        "leftIcon": "datafile",
-        "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table.csv"
-        }
-      },
-      {
-        "enabled": true,
         "type": "file-manifest",
-        "title": "Download File Manifest",
+        "title": "Download Manifest",
         "leftIcon": "datafile",
         "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table_manifest.csv"
-        }
+        "fileName": "file-manifest.json",
+        "dropdownId": "download"
+      },
+      {
+        "enabled": true,
+        "type": "export-files-to-workspace",
+        "title": "Export to Workspace",
+        "leftIcon": "datafile",
+        "rightIcon": "download"
+      },
+      {
+        "enabled": true,
+        "type": "export-files-to-pfb",
+        "title": "Export All to PFB",
+        "rightIcon": "external-link"
       }
     ],
-    "loginForDownload": true
+    "enableLimitedFilePFBExport": {
+      "sourceNodeField": "source_node"
+    },
+    "dropdowns": {}
+  },
+  {
+      "tabTitle": "Imaging Studies",
+      "charts": {},
+      "filters": {
+          "tabs": [
+          {
+              "title": "Study Properties",
+              "searchFields": [
+              "study_uid"
+              ],
+              "fields": [
+              "study_modality",
+              "study_description",
+              "age_at_imaging",
+              "study_year",
+              "study_year_shifted",
+              "body_part_examined",
+              "days_from_study_to_pos_covid_test",
+              "days_from_study_to_neg_covid_test",
+              "project_id"
+              ]
+          }
+          ]
+      },
+      "table": {
+          "enabled": true,
+          "fields": [
+          "submitter_id",
+          "study_uid",
+          "case_ids",
+          "object_id",
+          "project_id"
+          ],
+          "dicomViewerId": "submitter_id",
+          "dicomViewerUrl": "ohif-viewer",
+          "linkFields": [
+          "submitter_id"
+          ]
+      },
+      "dropdowns": {
+          "download-table": {
+          "title": "Download Table"
+          }
+      },
+      "buttons": [
+          {
+          "enabled": true,
+          "type": "data-json",
+          "title": "JSON",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "Imaging_Studies_table.json"
+          },
+          {
+          "enabled": true,
+          "type": "data-tsv",
+          "title": "TSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "Imaging_Studies_table.tsv"
+          },
+          {
+          "enabled": true,
+          "type": "data-csv",
+          "title": "CSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "Imaging_Studies_table.csv"
+          },
+          {
+          "enabled": true,
+          "type": "manifest",
+          "title": "Download File Manifest for Imaging Studies",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "imaging_study_manifest.json"
+          },
+          {
+          "enabled": false,
+          "type": "export-to-workspace",
+          "title": "Export to Workspace",
+          "leftIcon": "datafile",
+          "rightIcon": "download"
+          }
+      ],
+      "loginForDownload": true,
+      "guppyConfig": {
+          "dataType": "imaging_study",
+          "nodeCountTitle": "Imaging Studies",
+          "fieldMapping": [
+          {
+              "field": "project_id",
+              "name": "Project ID"
+          },
+          {
+              "field": "study_uid",
+              "name": "Study UID"
+          },
+          {
+              "field": "submitter_id",
+              "name": "Browse in DICOM viewer"
+          },
+          {
+              "field": "case_ids",
+              "name": "Patient ID"
+          }
+          ],
+          "manifestMapping": {
+          "resourceIndexType": "data_file",
+          "resourceIdField": "object_id",
+          "referenceIdFieldInResourceIndex": "_imaging_study_id",
+          "referenceIdFieldInDataIndex": "_imaging_study_id",
+          "useFilterForCounts": false
+          },
+          "accessibleFieldCheckList": [
+          "project_id"
+          ],
+          "accessibleValidationField": "project_id"
+      }
   }
 ]
