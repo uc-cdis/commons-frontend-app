@@ -190,57 +190,61 @@
       "table": {
           "enabled": true,
           "fields": [
-          "submitter_id",
-          "study_uid",
-          "case_ids",
-          "object_id",
-          "project_id"
+            "submitter_id",
+            "study_uid",
+            "case_ids",
+            "object_id",
+            "project_id"
           ],
           "dicomViewerId": "submitter_id",
           "dicomViewerUrl": "ohif-viewer",
           "linkFields": [
-          "submitter_id"
+            "submitter_id"
           ]
       },
       "dropdowns": {
           "download-table": {
-          "title": "Download Table"
+            "title": "Download Table",
+            "leftIcon": "gen3:download",
+            "rightIcon": "gen3:chevron-down",
+            "dropdownItems": [
+              {
+                "enabled": true,
+                "type": "data-json",
+                "title": "JSON",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "actionArgs": {
+                  "filename": "Imaging_Studies_table.json"
+                }
+              },
+              {
+                "enabled": true,
+                "type": "data-tsv",
+                "title": "TSV",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "actionArgs": {
+                  "filename": "Imaging_Studies_table.tsv"
+                }
+              },
+              {
+                "enabled": true,
+                "type": "data-csv",
+                "title": "CSV",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "actionArgs": {
+                  "filename": "Imaging_Studies_table.csv"
+                }
+              }
+            ]
           }
       },
       "buttons": [
-          {
-          "enabled": true,
-          "type": "data-json",
-          "title": "JSON",
-          "dropdownId": "download-table",
-          "leftIcon": "datafile",
-          "rightIcon": "download",
-          "actionArgs": {
-            "filename": "Imaging_Studies_table.json"
-          }
-          },
-          {
-          "enabled": true,
-          "type": "data-tsv",
-          "title": "TSV",
-          "dropdownId": "download-table",
-          "leftIcon": "datafile",
-          "rightIcon": "download",
-          "actionArgs": {
-            "filename": "Imaging_Studies_table.tsv"
-          }
-          },
-          {
-          "enabled": true,
-          "type": "data-csv",
-          "title": "CSV",
-          "dropdownId": "download-table",
-          "leftIcon": "datafile",
-          "rightIcon": "download",
-          "actionArgs": {
-            "filename": "Imaging_Studies_table.csv"
-          }
-          },
           {
           "enabled": true,
           "type": "manifest",
@@ -282,11 +286,11 @@
           }
           ],
           "manifestMapping": {
-          "resourceIndexType": "data_file",
-          "resourceIdField": "object_id",
-          "referenceIdFieldInResourceIndex": "_imaging_study_id",
-          "referenceIdFieldInDataIndex": "_imaging_study_id",
-          "useFilterForCounts": false
+            "resourceIndexType": "data_file",
+            "resourceIdField": "object_id",
+            "referenceIdFieldInResourceIndex": "_imaging_study_id",
+            "referenceIdFieldInDataIndex": "_imaging_study_id",
+            "useFilterForCounts": false
           },
           "accessibleFieldCheckList": [
           "project_id"
