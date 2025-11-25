@@ -1,10 +1,10 @@
 {
   "name": "mc2dp-data-commons",
-  "version": "0.11.46",
+  "version": "0.11.59",
   "private": "true",
   "engines": {
-    "npm": ">=10.9.0",
-    "node": ">=22.11.0"
+    "npm": ">=10.9.2",
+    "node": ">=22.16.0"
   },
   "scripts": {
     "lint": "next lint",
@@ -23,8 +23,8 @@
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "@gen3/core": "0.11.50",
-    "@gen3/frontend": "0.11.50",
+    "@gen3/core": "0.11.59",
+    "@gen3/frontend": "0.11.59",
     "@grafana/faro-react": "^1.9.1",
     "@grafana/faro-web-sdk": "^1.9.1",
     "@grafana/faro-web-tracing": "^1.9.1",
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
-    "@gen3/toolsff": "0.11.50",
+    "@gen3/toolsff": "0.11.59",
     "@next/eslint-plugin-next": "^15.5.5",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",

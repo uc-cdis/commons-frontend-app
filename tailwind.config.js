@@ -75,6 +75,19 @@ module.exports = {
         6: '6px',
         8: '8px',
       },
+      height: {
+        '100px': '100px',
+        '200px': '200px',
+        'workspace': '100vh'
+      },
+      screens: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1420px',
+        '3xl': '1536px',
+      },
     },
   },
   variants: {
