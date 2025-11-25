@@ -1,6 +1,26 @@
 name: CI
 on: push
 jobs:
+  interaction-and-accessibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4.1.0
+        with:
+          node-version: 22.11.0
+      - name: Install dependencies
+        run: npm install --include=optional
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+      - name: Build Storybook
+        run: npm run build-storybook --quiet
+      - name: Serve Storybook and run tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --verbose" \
+            "npx wait-on tcp:6006 && yarn test-storybook"
   build:
     runs-on: ubuntu-latest
     steps:
