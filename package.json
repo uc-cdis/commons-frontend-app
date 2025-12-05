@@ -23,8 +23,8 @@
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "@gen3/core": "0.11.62",
-    "@gen3/frontend": "0.11.62",
+    "@gen3/core": "file:.yalc/@gen3/core",
+    "@gen3/frontend": "file:.yalc/@gen3/frontend",
     "@mantine/core": "^7.17.8",
     "@mantine/dates": "^7.17.8",
     "@mantine/form": "^7.17.8",
@@ -74,12 +74,12 @@
     "postcss-preset-env": "^10.4.0",
     "postcss-preset-mantine": "^1.18.0",
     "prettier": "^3.6.2",
+    "sharp": "^0.34.4",
+    "swr": "^2.3.6",
     "tailwindcss": "^3.4.18",
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.1",
-    "sharp": "^0.34.4",
-    "swr": "^2.3.6"
+    "typescript-eslint": "^8.46.1"
   }
 }
