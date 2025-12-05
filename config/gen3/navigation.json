@@ -1,5 +1,6 @@
 {
   "navigation": {
+    "hideUnauthorizedLinks": false,
     "classNames": {
       "root": "pl-1 mr-6 bg-base-max text-primary opacity-100 hover:opacity-100",
       "item": "py-2 px-4 hover:bg-base-lightest hover:text-base-contrast",
