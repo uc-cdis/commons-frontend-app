@@ -2,9 +2,10 @@
   "navigation": {
     "hideUnauthorizedLinks": false,
     "classNames": {
-      "root": "pl-1 mr-6 bg-base-max text-primary opacity-100 hover:opacity-100",
+      "root": "pl-1 mr-6 bg-base-max text-primary opacity-100 hover:opacity-100 data-disabled:opacity-35 data-disabled:hover:text-primary data-disabled:hover:opacity-35",
       "item": "py-2 px-4 hover:bg-base-lightest hover:text-base-contrast",
-      "navigationPanel": "bg-base-max text-primary"
+      "navigationPanel": "bg-base-max text-primary",
+      "icon": "data-disabled:opacity-50"
     },
     "logo": {
       "src": "/icons/gen3-dark.svg",
