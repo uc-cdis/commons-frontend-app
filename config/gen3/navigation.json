@@ -1,9 +1,11 @@
 {
   "navigation": {
+    "hideUnauthorizedLinks": false,
     "classNames": {
-      "root": "pl-1 mr-0.5 bg-base-max text-primary opacity-100 hover:opacity-100",
+      "root": "pl-1 mr-0.5 bg-base-max text-primary opacity-100 hover:opacity-100 data-disabled:opacity-35 data-disabled:hover:text-primary data-disabled:hover:opacity-35",
       "item": "py-2 px-4 hover:bg-base-lightest hover:text-base-contrast",
-      "navigationPanel": "bg-base-max text-primary"
+      "navigationPanel": "bg-base-max text-primary",
+      "icon": "data-disabled:opacity-50"
     },
     "logo": {
       "src": "/images/murtha_cancer_center_logo.jpg",
@@ -27,7 +29,8 @@
       {
         "icon": "gen3:analysis",
         "href": "/DataConnections",
-        "name": "Data Connections"
+        "name": "Data Connections",
+        "tooltip": "View the metadata data schemas."
       },
       {
         "icon": "gen3:analysis",

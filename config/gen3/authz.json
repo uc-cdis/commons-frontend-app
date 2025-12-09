@@ -1,0 +1,23 @@
+{
+  "routes": {
+    "/DataLibrary": {
+      "loginRequired": true
+    },
+    "/DataConnections": { "loginRequired": true },
+    "/Analysis": {
+      "loginRequired": true
+    },
+    "/Workspace": {
+      "loginRequired": true
+    },
+    "/Profile": {
+      "loginRequired": true
+    },
+    "/Explorer": {
+      "loginRequired": true
+    },
+    "*": {
+      "loginRequired": false
+    }
+  }
+}

@@ -18,5 +18,5 @@
     }
   ],
   "image": "images/gene_side_texture.svg",
-  "showCredentialsLogin" : false
+  "showCredentialsLogin" : true
 }
