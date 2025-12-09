@@ -9,23 +9,12 @@
         "advSearchFilters": {
           "enabled": false,
           "field": "advSearchFilters",
-          "displayName": "Filters",
           "filters": [
-            {
-              "key": "Study Type"
-            },
-            {
-              "key": "Data Type"
-            },
-            {
-              "key": "Subject Type"
-            },
-            {
-              "key": "Gender"
-            },
-            {
-              "key": "Age"
-            }
+            { "key": "Research Focus Area" },
+            { "key": "Administering IC(s)" },
+            { "key": "Simulated vs. Real Data" },
+            { "key": "Year Grant Awarded" },
+            { "key": "Study Description" }
           ]
         },
         "tagsColumn": {
@@ -37,33 +26,39 @@
         "exportToWorkspace": {
           "enabled": true,
           "manifestFieldName": "__manifest",
-          "enableDownloadManifest": true,
-          "enableDownloadZip": true,
+          "downloadManifestButtonText": "Download",
+          "enableDownloadManifest": false,
           "downloadZipButtonText": "Download Zip",
-          "downloadManifestButtonText": "Download Manifest",
-          "documentationLinks": {
-            "gen3Client": "https://gen3.org/resources/user/gen3-client/",
-            "gen3Workspaces": "https://docs.gen3.org/gen3-resources/user-guide/analyze-data/"
-          },
-          "verifyExternalLogins": true
+          "enableDownloadZip": true
         },
         "pageTitle": {
-          "enabled": true,
-          "title": "Discover Datasets"
+          "enabled": false
         },
         "search": {
           "searchBar": {
             "enabled": true,
-            "inputSubtitle": "Search studies by keywords",
             "searchableTextFields": [
-              "study_description",
-              "_unique_id",
-              "full_name"
+              "summary",
+              "location",
+              "study_name",
+              "institutions",
+              "investigators",
+              "project_title",
+              "project_number",
+              "dataset_1_title",
+              "dataset_2_title",
+              "dataset_3_title",
+              "dataset_4_title",
+              "administering_ic",
+              "research_program",
+              "research_question",
+              "dataset_description",
+              "dataset_1_description",
+              "dataset_2_description",
+              "dataset_3_description",
+              "dataset_4_description",
+              "data_dictionary"
             ]
-          },
-          "tagSearchDropdown": {
-            "enabled": true,
-            "collapsibleButtonText": "Data Repository"
           }
         },
         "authorization": {
@@ -72,156 +67,249 @@
           "supportedValues": {
             "accessible": {
               "enabled": true,
-              "menuText": "Available"
+              "menuText": "Accessible"
             },
             "unaccessible": {
-              "enabled": false,
+              "enabled": true,
               "menuText": "Not Accessible"
             },
             "pending": {
-              "enabled": true,
-              "menuText": "Pending"
+              "enabled": false
             },
             "notAvailable": {
-              "enabled": true,
-              "menuText": "Not Available"
+              "enabled": false
             }
           }
         }
       },
       "aggregations": [
-        {
-          "name": "Studies",
-          "field": "_unique_id",
-          "type": "count"
-        }
+          {
+              "name": "Studies",
+              "field": "project_number",
+              "type": "count"
+          }
       ],
       "tagSelector": {
+        "title": "Tags by category",
         "showTagCategoryNames": true
       },
       "studies": [],
       "studyColumns": [
         {
-          "name": "Study ID",
-          "field": "_unique_id",
-          "contentType": "string",
+          "name": "Project Title",
+          "field": "project_title",
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "n/a"
         },
         {
-          "name": "Study Name",
-          "field": "full_name",
-          "contentType": "string",
+          "name": "Research Focus Area",
+          "field": "research_focus_area",
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "n/a"
         },
         {
-          "name": "Study Title",
-          "field": "study_title",
-          "contentType": "string",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "n/a"
-        },
-        {
-          "name": "Source",
-          "field": "source",
-          "contentType": "string",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "n/a"
-        },
-        {
-          "name": "Data Files",
-          "field": "__manifest",
-          "contentType": "manifest",
-          "errorIfNotAvailable": false,
-          "valueIfNotAvailable": "n/a"
-        },
-        {
-          "name": "Subjects",
-          "field": "subjects_count",
-          "contentType": "string",
+          "name": "Investigator(s)",
+          "field": "investigators",
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "n/a"
         }
       ],
       "studyPreviewField": {
-        "name": "Study Description",
-        "field": "study_description",
+        "name": "Summary",
+        "field": "summary",
         "contentType": "string",
-        "includeName": true,
-        "includeIfNotAvailable": false,
+        "includeName": false,
+        "includeIfNotAvailable": true,
         "valueIfNotAvailable": "No summary has been provided for this study."
       },
       "simpleDetailsView": {
         "header": {
-          "field": "study_title"
-        },
-        "downloadLinks": {
-          "field": "data_download_links"
+          "field": "project_title"
         },
         "fieldsToShow": [
           {
-            "groupWidth": "half",
+            "groupName": "HEAL Research Initiatives",
+            "groupWidth": "full",
+            "includeName": false,
             "fields": [
               {
+                "name": "Project Number",
+                "field": "project_number"
+              },
+              {
+                "name": "Research Focus Area",
+                "field": "research_focus_area"
+              },
+              {
+                "name": "Research Program",
+                "field": "research_program"
+              },
+              {
+                "name": "Research Question",
+                "field": "research_question"
+              }
+            ]
+          },
+          {
+            "groupName": "Host Institution",
+            "groupWidth": "half",
+            "includeName": false,
+            "fields": [
+              {
+                "name": "Institution(s)",
+                "field": "institutions"
+              },
+              {
+                "name": "Location",
+                "field": "location"
+              },
+              {
+                "name": "Investigator(s)",
+                "field": "investigators"
+              },
+              {
+                "name": "Administering IC(s)",
+                "field": "administering_ic"
+              },
+              {
+                "name": "Year Grant Awarded",
+                "field": "year_awarded"
+              }
+            ]
+          },
+          {
+            "groupName": "Clinical Trial",
+            "groupWidth": "half",
+            "includeName": false,
+            "fields": [
+              {
+                "name": "Study Type",
+                "field": "study_type"
+              },
+              {
                 "name": "Study Name",
-                "field": "full_name",
-                "contentType": "string",
-                "includeIfNotAvailable": false
+                "field": "study_name"
               },
               {
-                "name": "Study Title",
-                "field": "study_title",
-                "contentType": "string",
-                "includeIfNotAvailable": false
+                "name": "Study Description",
+                "field": "study_description"
               },
               {
-                "name": "Funding",
-                "field": "funding",
-                "contentType": "string",
-                "includeIfNotAvailable": false
+                "name": "Number of Subjects",
+                "field": "subjects"
               },
               {
-                "name": "Source",
-                "field": "source",
-                "contentType": "string",
-                "includeIfNotAvailable": false
+                "name": "Number of Sites",
+                "field": "sites"
               },
               {
-                "name": "Data Files",
-                "field": "data_files_count",
-                "contentType": "string",
-                "includeIfNotAvailable": false
+                "name": "Clinical Trial Link",
+                "field": "clinical_trial_link"
               },
               {
-                "name": "Subjects",
-                "field": "subjects_count",
-                "contentType": "string",
-                "includeIfNotAvailable": false
+                "name": "Protocol Name",
+                "field": "protocol_name"
               },
               {
-                "name": "Project ID",
-                "field": "project_id",
-                "contentType": "string",
-                "includeIfNotAvailable": false
+                "name": "Dataset Description",
+                "field": "dataset_description"
               },
               {
-                "name": "Link",
-                "field": "link",
-                "contentType": "link",
+                "name": "Dataset Category",
+                "field": "dataset_category"
+              }
+            ]
+          },
+          {
+            "groupName": "Tags",
+            "includeName": false,
+            "groupWidth": "full",
+            "fields": [
+              {
+                "name": "Tags",
+                "field": "tags",
+                "contentType": "tags",
                 "includeIfNotAvailable": false
               }
             ]
           },
           {
-            "groupWidth": "half",
+            "groupWidth": "full",
             "fields": [
               {
-                "name": "Study Description",
-                "field": "study_description",
-                "contentType": "paragraph",
-                "includeIfNotAvailable": false,
+                "name": "Summary",
+                "field": "summary",
+                "contentType": "paragraphs",
+                "includeName": true,
+                "includeIfNotAvailable": true,
                 "valueIfNotAvailable": "No summary has been provided for this study."
+              }
+            ]
+          },
+          {
+            "groupName": "Datasets",
+            "groupWidth": "full",
+            "includeName": false,
+            "fields": [
+              {
+                "name": "Dataset 1 - Title",
+                "field": "dataset_1_title"
+              },
+              {
+                "name": "Dataset 1 - Description",
+                "field": "dataset_1_description"
+              },
+              {
+                "name": "Dataset 1 - Type",
+                "field": "dataset_1_type"
+              },
+              {
+                "name": "Dataset 2 - Title",
+                "field": "dataset_2_title"
+              },
+              {
+                "name": "Dataset 2 - Description",
+                "field": "dataset_2_description"
+              },
+              {
+                "name": "Dataset 2 - Type",
+                "field": "dataset_2_type"
+              },
+              {
+                "name": "Dataset 3 - Title",
+                "field": "dataset_3_title"
+              },
+              {
+                "name": "Dataset 3 - Description",
+                "field": "dataset_3_description"
+              },
+              {
+                "name": "Dataset 3 - Type",
+                "field": "dataset_3_type"
+              },
+              {
+                "name": "Dataset 4 - Title",
+                "field": "dataset_4_title"
+              },
+              {
+                "name": "Dataset 4 - Description",
+                "field": "dataset_4_description"
+              },
+              {
+                "name": "Dataset 4 - Type",
+                "field": "dataset_4_type"
+              },
+              {
+                "name": "Dataset 5 - Title",
+                "field": "dataset_5_title"
+              },
+              {
+                "name": "Dataset 5 - Description",
+                "field": "dataset_5_description"
+              },
+              {
+                "name": "Dataset 5 - Type",
+                "field": "dataset_5_type"
               }
             ]
           }
@@ -233,18 +321,33 @@
         "authzField": "authz",
         "tagsListFieldName": "tags",
         "dataAvailabilityField": "data_availability",
-        "uid": "_hdp_uid"
+        "uid": "project_number"
       },
       "tagCategories": [
         {
-          "name": "Condition",
-          "color": "#532565",
-          "display": false
+          "name": "Demographic Info",
+          "color": "rgba(64, 34, 100, 1)",
+          "display": true
         },
         {
-          "name": "Data Type",
-          "color": "#982568",
-          "display": false
+          "name": "Study Design",
+          "color": "rgba(153, 40, 107, 1)",
+          "display": true
+        },
+        {
+          "name": "HEAL Specific",
+          "color": "rgba(161, 36, 46, 1)",
+          "display": true
+        },
+        {
+          "name": "Other",
+          "color": "rgba(207, 54, 38, 1)",
+          "display": true
+        },
+        {
+          "name": "Commons",
+          "displayName": "Data Resources",
+          "color": "rgba(21, 6, 76, 1)"
         }
       ]
     }
