@@ -24,7 +24,7 @@
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
     "@gen3/core": "0.12.0",
-    "@gen3/frontend": "file:.yalc/@gen3/frontend",
+    "@gen3/frontend": "0.12.0",
     "@mantine/core": "^7.17.8",
     "@mantine/dates": "^7.17.8",
     "@mantine/form": "^7.17.8",
