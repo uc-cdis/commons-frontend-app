@@ -1,14 +1,14 @@
 {
+  "enableAuthz": false,
   "routes": {
     "/DataLibrary": {
-      "loginRequired": true
+      "loginRequired": false
     },
     "/Workspace": {
-      "loginRequired": true,
-      "authz": ["/workspace"]
+      "loginRequired": false
     },
     "/Profile": {
-      "loginRequired": true
+      "loginRequired": false
     },
     "*": {
       "loginRequired": false

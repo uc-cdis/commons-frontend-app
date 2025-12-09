@@ -1,13 +1,13 @@
 {
   "routes": {
     "/DataLibrary": {
-      "loginRequired": true
+      "loginRequired": false
     },
     "/Workspace": {
-      "loginRequired": true
+      "loginRequired": false
     },
     "/Profile": {
-      "loginRequired": true
+      "loginRequired": false
     },
     "*": {
       "loginRequired": false
