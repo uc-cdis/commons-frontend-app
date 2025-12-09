@@ -72,8 +72,13 @@ const Gen3App = ({
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      setIsClient(false); // Only on client-side
+    }
+    else
     setIsClient(true); // Only on client-side
   }, []);
+
   return (
     <React.Fragment>
       {isClient ? (
@@ -96,6 +101,7 @@ const Gen3App = ({
         </Suspense>
       ) : (
         // Show some fallback UI while waiting for the client to load
+        console.log('Loading...'),
         <Loading />
       )}
     </React.Fragment>
