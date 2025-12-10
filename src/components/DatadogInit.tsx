@@ -1,6 +1,5 @@
 import { datadogRum } from "@datadog/browser-rum";
 
-const ENV = process.env.NODE_ENV;
 const DATACOMMONS = process.env.NEXT_PUBLIC_DATACOMMONS || "gen3.2_generic_datacommons";
 
 datadogRum.init({
@@ -8,7 +7,7 @@ datadogRum.init({
   clientToken: process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN || '',
   site: 'ddog-gov.com',
   service: 'frontend-framework',
-  env: `${DATACOMMONS}:${ENV}`,
+  env: `${DATACOMMONS}`,
   version: process.env.version || 'unknown',
   sessionSampleRate: 100,
   sessionReplaySampleRate: 0,
