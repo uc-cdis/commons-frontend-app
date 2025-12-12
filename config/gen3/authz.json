@@ -3,14 +3,7 @@
     "*": {
       "loginRequired": true,
       "authz":
-      ["/mds_gateway",
-       "/workspace",
-       "/data_file",
-       "/services",
-       "/open",
-       "/programs",
-       "/argo",
-       "/cohort-middleware"]
+      ["/workspace"]
     }
   }
 }
