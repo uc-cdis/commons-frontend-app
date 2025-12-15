@@ -5,7 +5,7 @@
       "loginRequired": false
     },
     "/Workspace": {
-      "loginRequired": false
+      "loginRequired": true
     },
     "/Profile": {
       "loginRequired": false
