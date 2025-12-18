@@ -12,21 +12,19 @@ const DEFAULT_TTL_SECONDS = 360;
  * to a simple string[] of resource paths.
  */
 export async function fetchArboristResources(
-  cookies?: string,
+  accessToken: string | null,
   useService: boolean = false,
   revalidate: number = DEFAULT_TTL_SECONDS,
 ): Promise<string[]> {
-  const headers: Record<string, string> = {};
-
-  if (cookies) {
-    headers.Cookie = cookies;
-  }
+  const headers: Record<string, string> = {
+    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+    credentials: 'include',
+  };
 
   const url = useService
-    ? `${GEN3_AUTHZ_SERVICE}/resource`
+    ? `${GEN3_AUTHZ_SERVICE}/auth/resources`
     : `${GEN3_AUTHZ_API}/resources`;
   const res = await fetch(url, { headers, next: { revalidate: revalidate } });
-
   if (!res.ok) {
     console.error(
       'commons:fetchArboristResources Arborist /resource failed:',
@@ -35,7 +33,6 @@ export async function fetchArboristResources(
     );
     return [];
   }
-
   const data = (await res.json()) as AuthzResourceResponse;
   return data.resources ?? [];
 }
