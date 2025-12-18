@@ -1,6 +1,6 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.12.2",
+  "version": "0.12.3",
   "private": "true",
   "engines": {
     "npm": ">=10.9.2",
@@ -9,12 +9,15 @@
   "scripts": {
     "lint": "next lint",
     "lint-fix": "next lint --fix",
+    "predev": "npm run build:middlewarePaths",
     "dev": "next dev",
+    "prebuild": "npm run build:middlewarePaths",
     "build": "next build",
     "start": "next start",
-    "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname",
+    "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname && npm run buildIcons && npm run build:middlewarePaths",
     "build:colors": "node ./node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/$npm_config_commons/colors.json --out=config/$npm_config_commons",
     "build:icons": "node ./node_modules/@gen3/toolsff/dist/bundleIcons.esm.js --inpath=config/icons --outpath=config/icons",
+    "build:middlewarePaths": "node ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js",
     "getSchema": "node ./node_modules/@gen3/toolsff/dist/getSchema.esm.js --out=config/",
     "getDRSToHostname": "node ./node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/"
   },
@@ -23,8 +26,8 @@
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "@gen3/core": "0.12.2",
-    "@gen3/frontend": "0.12.2",
+    "@gen3/core": "0.12.4",
+    "@gen3/frontend": "0.12.4",
     "@mantine/core": "^7.17.8",
     "@mantine/dates": "^7.17.8",
     "@mantine/form": "^7.17.8",
@@ -41,7 +44,7 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
-    "@gen3/toolsff": "0.12.2",
+    "@gen3/toolsff": "0.12.4",
     "@next/eslint-plugin-next": "^15.5.9",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
