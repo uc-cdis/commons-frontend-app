@@ -9,9 +9,9 @@
   "scripts": {
     "lint": "next lint",
     "lint-fix": "next lint --fix",
-    "predev": "npm run build:middlewarePaths",
+    "predev": " NODE_ENV=development npm run build:middlewarePaths",
     "dev": "next dev",
-    "prebuild": "npm run build:middlewarePaths",
+    "prebuild": "NODE_ENV=production npm run build:middlewarePaths",
     "build": "next build",
     "start": "next start",
     "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname && npm run buildIcons && npm run build:middlewarePaths",
