@@ -19,7 +19,7 @@
     "getDRSToHostname": "node ./node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/"
   },
   "dependencies": {
-    "@datadog/browser-rum": "^6.22.0",
+    "@datadog/browser-rum": "^6.24.1",
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
