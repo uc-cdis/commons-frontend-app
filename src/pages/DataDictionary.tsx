@@ -1,8 +1,8 @@
 import {
-  DictionaryPage,
+  DataDictionaryPage,
   DictionaryPageGetServerSideProps as getServerSideProps,
 } from '@gen3/frontend';
 
-export default DictionaryPage;
+export default DataDictionaryPage;
 
 export { getServerSideProps };
