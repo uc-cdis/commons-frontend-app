@@ -70,7 +70,7 @@ export const getServerSideProps: GetServerSideProps<
     return {
       props: {
         ...(await getNavPageLayoutPropsFromConfig()),
-        config: undefined,
+        config: null,
       },
     };
   }
