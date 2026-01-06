@@ -40,7 +40,15 @@
     "idb": "^8.0.3",
     "jsonpath-plus": "^10.3.0",
     "react": "^18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "react-icons": "^5.5.0",
+    "use-deep-compare": "^1.3.0",
+    "lodash": "^4.14.202",
+    "tailwind-styled-components": "^2.2.0",
+    "remark-gfm": "^4.0.1",
+    "react-markdown": "^10.1.0",
+    "validator": "13.15.23",
+    "victory": "^37.3.6"
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
@@ -52,7 +60,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
-    "@types/lodash": "^4.17.20",
+    "@types/lodash": "^4.14.202",
     "@types/mdx": "^2.0.13",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
