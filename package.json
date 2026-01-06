@@ -46,8 +46,6 @@
     "@axe-core/react": "^4.10.2",
     "@gen3/toolsff": "0.12.5",
     "@next/eslint-plugin-next": "^15.5.9",
-    "@gen3/toolsff": "0.12.2",
-    "@next/eslint-plugin-next": "^15.5.9",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/line-clamp": "^0.4.4",
