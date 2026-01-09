@@ -6,7 +6,7 @@
       "image": "/images/apps/gdc_qag.png",
       "description": "Get specific answers to complex, multi-step, free-text genomics questions using factually grounded information retrieved from the GDC.",
       "loginRequired": false,
-      "href": "/gradio/apps.m3aicommons.org/gdc-qag/",
+      "href": "/gradio/uc-ctds-gdc-qag.hf.space/",
       "btnText": "Run Model"
     },
     {
@@ -16,7 +16,7 @@
       "image": "/images/apps/cohort_copilot_image.png",
       "description": " Construct GDC cohorts using natural language queries describing the cases you're looking for. The resulting cohorts can be used with standard GDC utilities and APIs.",
       "loginRequired": false,
-      "href": "/gradio/apps.m3aicommons.org/gdc-cohort-copilot/",
+      "href": "/gradio/uc-ctds-gdc-cohort-copilot.hf.space/",
       "btnText": "Run Model"
     },
     {"title": "Data Model Generator",
