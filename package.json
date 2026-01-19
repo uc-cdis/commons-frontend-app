@@ -1,6 +1,6 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.12.10",
+  "version": "0.12.12",
   "private": "true",
   "engines": {
     "npm": ">=11.6.2",
@@ -17,7 +17,7 @@
     "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname && npm run buildIcons && npm run build:middlewarePaths",
     "build:colors": "node ./node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/$npm_config_commons/colors.json --out=config/$npm_config_commons",
     "build:icons": "node ./node_modules/@gen3/toolsff/dist/bundleIcons.esm.js --inpath=config/icons --outpath=config/icons",
-    "build:middlewarePaths": "node ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js",
+    "build:middlewarePaths": "if [ ! -f ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js ]; then printf \"\\033[31mError: @gen3/toolsff not built (missing dist file). Run: npm run build:tools\\033[0m\\n\"; exit 1; else node ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js || (printf \"\\033[31mError: @gen3/toolsff scanSitePaths failed. See above message\\033[0m\\n\" && exit 1); fi",
     "getSchema": "node ./node_modules/@gen3/toolsff/dist/getSchema.esm.js --out=config/",
     "getDRSToHostname": "node ./node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/"
   },
@@ -26,8 +26,8 @@
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "@gen3/core": "0.12.10",
-    "@gen3/frontend": "0.12.10",
+    "@gen3/core": "0.12.12",
+    "@gen3/frontend": "0.12.12",
     "@mantine/core": "^7.17.8",
     "@mantine/dates": "^7.17.8",
     "@mantine/form": "^7.17.8",
@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
-    "@gen3/toolsff": "0.12.10",
+    "@gen3/toolsff": "0.12.12",
     "@next/eslint-plugin-next": "^15.5.9",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
