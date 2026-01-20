@@ -83,7 +83,9 @@ const Gen3App = ({
     <React.Fragment>
       {isClient ? (
         <Suspense fallback={<Loading />}>
-          <DatadogInit />
+          {process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID
+            && process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN
+            && <DatadogInit /> }
           <MantineProvider theme={mantinetheme}>
             <Gen3Provider
               icons={icons}
