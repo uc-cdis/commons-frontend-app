@@ -1,0 +1,25 @@
+name: Sync fork with upstream
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Nightly at 6pm or 7pm Central (depending of daylight savings)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+
+      - name: Sync fork
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            gh auth setup-git
+            gh repo sync uc-cdis/ci-data-commons \
+                --source uc-cdis/commons-frontend-app \
+                --branch main
