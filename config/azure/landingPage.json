@@ -1,0 +1,72 @@
+{
+  "body": [
+    {
+      "title": {
+        "text": "Gen3 Data Platform – Azure Deployment",
+        "level": 2
+      }
+    },
+    {
+      "splitarea": {
+        "left": [
+          {
+            "text": "The <strong>Gen3 Data Platform (Azure Deployment)</strong> is a single web interface running on <strong>Microsoft Azure</strong> that allows users to <strong>discover, access, and analyze data</strong> in a secure, cloud-native environment. This deployment demonstrates how Gen3 operates on Azure infrastructure to support scalable data-driven research."
+          },
+          {
+            "link": {
+              "href": "/discovery",
+              "linkType": "portal",
+              "text": "Explore Gen3 Data"
+            }
+          },
+          {
+            "text": "This Azure-based Gen3 platform leverages open-source Gen3 services deployed using Azure cloud resources to support data ingestion, discovery, access control, and analysis workflows. The platform enables the creation and operation of cloud-based data commons and analysis workspaces while taking advantage of Azure scalability, security, and integration capabilities."
+          },
+          {
+            "link": {
+              "href": "https://gen3.datacommons.io",
+              "text": "Learn More"
+            }
+          }
+        ],
+        "right": [
+          {
+            "image": {
+              "src": "https://gen3.org/figs/kv.svg",
+              "alt": "Gen3 Data Platform on Azure"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "break": "standard"
+    },
+    {
+      "cardsArea": {
+        "title": "",
+        "cards": [
+          {
+            "icon": "MdOutlineSearch",
+            "bodyText": "Search studies and related datasets hosted on Azure for download or analysis in a workspace.",
+            "btnText": "Discover",
+            "href": "/Discovery",
+            "linkType": "portal"
+          },
+          {
+            "icon": "MdOutlineBarChart",
+            "bodyText": "Explore tutorials and example analyses using Azure-based Gen3 workflows.",
+            "btnText": "Analyze",
+            "href": "/resource-browser",
+            "linkType": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "quoteArea": {
+        "quote": "Our vision is a world in which researchers have ready access to cloud-hosted data and tools that enable scalable, data-driven discoveries and accelerate scientific progress."
+      }
+    }
+  ]
+}
