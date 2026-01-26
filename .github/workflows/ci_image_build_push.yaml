@@ -10,11 +10,12 @@ jobs:
       python-poetry: 'false'
     secrets: inherit # pragma: allowlist-secret
   ci:
-    name: Build Image and Push to Quay
+    name: Build Image and Push to Quay for CI
     uses: uc-cdis/.github/.github/workflows/image_build_push_native.yaml@master
     with:
       USE_QUAY_ONLY: true
-      DOCKERFILE_LOCATION: "Dockerfile.production"
+      DOCKERFILE_LOCATION: "Dockerfile.test"
+      OVERRIDE_TAG_NAME: "test"
     secrets:
       ECR_AWS_ACCESS_KEY_ID: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
       ECR_AWS_SECRET_ACCESS_KEY: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
