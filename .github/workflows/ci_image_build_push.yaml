@@ -14,7 +14,8 @@ jobs:
     uses: uc-cdis/.github/.github/workflows/image_build_push_native.yaml@master
     with:
       USE_QUAY_ONLY: true
-      DOCKERFILE_LOCATION: "Docker.production"
+      DOCKERFILE_LOCATION: "Docker.test"
+      OVERRIDE_TAG_NAME: "test"
     secrets:
       ECR_AWS_ACCESS_KEY_ID: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
       ECR_AWS_SECRET_ACCESS_KEY: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
