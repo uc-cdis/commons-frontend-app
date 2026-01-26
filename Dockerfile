@@ -1,7 +1,7 @@
 # docker build -t ff .
 # docker run -p 3000:3000 -it ff
 # Build stage
-FROM --platform=$BUILDPLATFORM node:24-alpine AS builder
+FROM --platform=$BUILDPLATFORM node:24.13.0-trixie-slim AS builder
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
@@ -33,7 +33,7 @@ RUN npm run build && \
     npm prune --production
 
 # Production stage
-FROM node:24-alpine AS runner
+FROM node:24.13.0-trixie-slim AS runner
 
 WORKDIR /gen3
 
