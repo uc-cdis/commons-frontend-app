@@ -5,8 +5,10 @@ FROM --platform=$BUILDPLATFORM node:24-alpine AS builder
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
+ARG NEXT_PUBLIC_GEN3_COMMONS_NAME
+ARG NEXT_PUBLIC_DATACOMMONS
 
-WORKDIR /ci
+WORKDIR /gen3
 
 # Copy dependency files first for better caching
 COPY package.json package-lock.json ./
@@ -20,7 +22,7 @@ RUN npm config set fetch-retries 5 && \
 
 # Copy necessary config files
 COPY next.config.js tsconfig.json tailwind.config.js postcss.config.js ./
-COPY .env.test ./
+COPY .env.production ./
 
 # Copy source files
 COPY ./src ./src
@@ -35,18 +37,18 @@ RUN npm run build && \
 # Production stage
 FROM node:24-alpine AS runner
 
-WORKDIR /ci
+WORKDIR /gen3
 
 RUN addgroup --system --gid 1001 nextjs && \
     adduser --system --uid 1001 nextjs
 
 # Copy only production dependencies
-COPY --from=builder --chown=nextjs:nextjs /ci/package.json ./
-COPY --from=builder --chown=nextjs:nextjs /ci/node_modules ./node_modules
-COPY --from=builder --chown=nextjs:nextjs /ci/config ./config
-COPY --from=builder --chown=nextjs:nextjs /ci/.next ./.next
-COPY --from=builder --chown=nextjs:nextjs /ci/public ./public
-COPY --from=builder --chown=nextjs:nextjs /ci/start.sh ./start.sh
+COPY --from=builder --chown=nextjs:nextjs /gen3/package.json ./
+COPY --from=builder --chown=nextjs:nextjs /gen3/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nextjs /gen3/config ./config
+COPY --from=builder --chown=nextjs:nextjs /gen3/.next ./.next
+COPY --from=builder --chown=nextjs:nextjs /gen3/public ./public
+COPY --from=builder --chown=nextjs:nextjs /gen3/start.sh ./start.sh
 
 RUN mkdir -p .next/cache/images && \
     chmod +x start.sh && \
@@ -54,7 +56,7 @@ RUN mkdir -p .next/cache/images && \
 
 USER nextjs:nextjs
 
-ENV NODE_ENV=test \
+ENV NODE_ENV=production \
     PORT=3000 \
     NEXT_TELEMETRY_DISABLED=1
 
