@@ -20,7 +20,7 @@ RUN npm config set fetch-retries 5 && \
 
 # Copy necessary config files
 COPY next.config.js tsconfig.json tailwind.config.js postcss.config.js ./
-COPY .env.production ./
+COPY .env.test ./
 
 # Copy source files
 COPY ./src ./src

@@ -1,4 +1,4 @@
-name: Build Image and Push to Quay
+name: Build Image and Push to Quay for CI
 
 on: push
 
