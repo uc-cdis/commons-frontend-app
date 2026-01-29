@@ -6,16 +6,16 @@ FROM --platform=$BUILDPLATFORM node:24.13.0-trixie-slim AS builder
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 
-WORKDIR /gen3
+WORKDIR /ci
 
 # Copy dependency files first for better caching
 COPY package.json package-lock.json ./
 
-# Install ALL dependengen3es once (including dev deps for build)
+# Install ALL dependencies once (including dev deps for build)
 RUN npm config set fetch-retries 5 && \
     npm config set fetch-retry-mintimeout 20000 && \
     npm config set fetch-retry-maxtimeout 120000 && \
-    npm gen3 && \
+    npm ci && \
     npm cache clean --force
 
 # Copy necessary config files
@@ -35,18 +35,18 @@ RUN npm run build && \
 # Production stage
 FROM node:24.13.0-trixie-slim AS runner
 
-WORKDIR /gen3
+WORKDIR /ci
 
 RUN addgroup --system --gid 1001 nextjs && \
     adduser --system --uid 1001 nextjs
 
-# Copy only production dependengen3es
-COPY --from=builder --chown=nextjs:nextjs /gen3/package.json ./
-COPY --from=builder --chown=nextjs:nextjs /gen3/node_modules ./node_modules
-COPY --from=builder --chown=nextjs:nextjs /gen3/config ./config
-COPY --from=builder --chown=nextjs:nextjs /gen3/.next ./.next
-COPY --from=builder --chown=nextjs:nextjs /gen3/public ./public
-COPY --from=builder --chown=nextjs:nextjs /gen3/start.sh ./start.sh
+# Copy only production dependencies
+COPY --from=builder --chown=nextjs:nextjs /ci/package.json ./
+COPY --from=builder --chown=nextjs:nextjs /ci/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nextjs /ci/config ./config
+COPY --from=builder --chown=nextjs:nextjs /ci/.next ./.next
+COPY --from=builder --chown=nextjs:nextjs /ci/public ./public
+COPY --from=builder --chown=nextjs:nextjs /ci/start.sh ./start.sh
 
 RUN mkdir -p .next/cache/images && \
     chmod +x start.sh && \
