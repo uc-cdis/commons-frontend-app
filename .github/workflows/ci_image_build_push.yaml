@@ -15,7 +15,7 @@ jobs:
     with:
       USE_QUAY_ONLY: true
       DOCKERFILE_LOCATION: "Dockerfile.test"
-      OVERRIDE_TAG_NAME: "test"
+      OVERRIDE_TAG_NAME: "${{ replace(github.ref_name, '/', '_') }}_test"
     secrets:
       ECR_AWS_ACCESS_KEY_ID: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
       ECR_AWS_SECRET_ACCESS_KEY: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
