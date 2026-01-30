@@ -1,0 +1,63 @@
+# docker build -t ff .
+# docker run -p 3000:3000 -it ff
+# Build stage
+FROM --platform=$BUILDPLATFORM node:24.13.0-trixie-slim AS builder
+
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+
+WORKDIR /ci
+
+# Copy dependency files first for better caching
+COPY package.json package-lock.json ./
+
+# Install ALL dependencies once (including dev deps for build)
+RUN npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm ci && \
+    npm cache clean --force
+
+# Copy necessary config files
+COPY next.config.js tsconfig.json tailwind.config.js postcss.config.js ./
+COPY .env.test ./
+
+# Copy source files
+COPY ./src ./src
+COPY ./public ./public
+COPY ./config ./config
+COPY ./start.sh ./
+
+ENV NODE_ENV=test
+
+# Build and prune
+RUN npm run build && \
+    npm prune --test
+
+# Production stage
+FROM node:24.13.0-trixie-slim AS runner
+
+WORKDIR /ci
+
+RUN addgroup --system --gid 1001 nextjs && \
+    adduser --system --uid 1001 nextjs
+
+# Copy only production dependencies
+COPY --from=builder --chown=nextjs:nextjs /ci/package.json ./
+COPY --from=builder --chown=nextjs:nextjs /ci/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nextjs /ci/config ./config
+COPY --from=builder --chown=nextjs:nextjs /ci/.next ./.next
+COPY --from=builder --chown=nextjs:nextjs /ci/public ./public
+COPY --from=builder --chown=nextjs:nextjs /ci/start.sh ./start.sh
+
+RUN mkdir -p .next/cache/images && \
+    chmod +x start.sh && \
+    chown -R nextjs:nextjs .next/cache
+
+USER nextjs:nextjs
+
+ENV NODE_ENV=test \
+    PORT=3000 \
+    NEXT_TELEMETRY_DISABLED=1
+
+CMD ["sh", "./start.sh"]
