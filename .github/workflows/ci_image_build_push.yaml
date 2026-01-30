@@ -9,13 +9,30 @@ jobs:
     with:
       python-poetry: 'false'
     secrets: inherit # pragma: allowlist-secret
+  compute_tag:
+    name: Compute tag name
+    runs-on: ubuntu-latest
+    outputs:
+      OVERRIDE_TAG_NAME: ${{ steps.set_tag.outputs.OVERRIDE_TAG_NAME }}
+
+    steps:
+      - name: Compute OVERRIDE_TAG_NAME
+        id: set_tag
+        run: |
+          CLEAN_BRANCH=$(echo "$GITHUB_REF_NAME" | tr '/' '_')
+          OVERRIDE_TAG_NAME="${CLEAN_BRANCH}_test"
+
+          # Set output so the job can pass it to another workflow
+          echo "::set-output name=OVERRIDE_TAG_NAME::$OVERRIDE_TAG_NAME"
+          echo "Computed OVERRIDE_TAG_NAME: $OVERRIDE_TAG_NAME"
   ci:
     name: Build Image and Push to Quay for CI
+    needs: compute_tag
     uses: uc-cdis/.github/.github/workflows/image_build_push_native.yaml@master
     with:
       USE_QUAY_ONLY: true
       DOCKERFILE_LOCATION: "Dockerfile.test"
-      OVERRIDE_TAG_NAME: "${{ replace(github.ref_name, '/', '_') }}_test"
+      OVERRIDE_TAG_NAME: ${{ needs.compute_tag.outputs.OVERRIDE_TAG_NAME }}
     secrets:
       ECR_AWS_ACCESS_KEY_ID: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
       ECR_AWS_SECRET_ACCESS_KEY: ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}
