@@ -23,7 +23,7 @@ jobs:
           OVERRIDE_TAG_NAME="${CLEAN_BRANCH}_test"
 
           # Set output so the job can pass it to another workflow
-          echo "::set-output name=OVERRIDE_TAG_NAME::$OVERRIDE_TAG_NAME"
+          echo "OVERRIDE_TAG_NAME=$OVERRIDE_TAG_NAME" >> "$GITHUB_OUTPUT"
           echo "Computed OVERRIDE_TAG_NAME: $OVERRIDE_TAG_NAME"
   ci:
     name: Build Image and Push to Quay for CI
