@@ -28,6 +28,8 @@ COPY ./public ./public
 COPY ./config ./config
 COPY ./start.sh ./
 
+ENV NODE_ENV=test
+
 # Build and prune
 RUN npm run build && \
     npm prune --test
