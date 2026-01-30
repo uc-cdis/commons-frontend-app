@@ -12,7 +12,7 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/features/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@gen3/frontend/dist/esm/index.js',
+    './node_modules/@gen3/frontend/dist/index/esm/*.js',
   ],
   theme: {
     extend: {
@@ -75,6 +75,19 @@ module.exports = {
         6: '6px',
         8: '8px',
       },
+      height: {
+        '100px': '100px',
+        '200px': '200px',
+        'workspace': '100vh'
+      },
+      screens: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1420px',
+        '3xl': '1536px',
+      },
     },
   },
   variants: {
@@ -96,6 +109,15 @@ module.exports = {
       addVariant('api-in-range', '&[api-in-range]');
       addVariant('api-first-in-range', '&[api-first-in-range]');
       addVariant('api-last-in-range', '&[api-last-in-range]');
+      addVariant('data-checked', '&[data-checked]');
+      addVariant('data-active', '&[data-active]');
+      addVariant('data-selected', '&[data-selected]');
+      addVariant('data-hovered', '&[data-hovered]');
+      addVariant('data-disabled', '&[data-disabled]');
+      addVariant('data-in-range', '&[data-in-range]');
+      addVariant('data-first-in-range', '&[data-first-in-range]');
+      addVariant('data-last-in-range', '&[data-last-in-range]');
+      addVariant('data-with-icon', '&[data-with-icon]');
     }),
     plugin(function ({ addUtilities }) {
       const newUtilities = {

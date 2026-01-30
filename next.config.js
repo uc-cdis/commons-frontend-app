@@ -23,6 +23,9 @@ const nextConfig = {
   serverRuntimeConfig: {
     HOSTNAME: '0.0.0.0',
   },
+  env: {
+    version: process.env.npm_package_version,
+  },
   reactStrictMode: true,
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
   basePath: process.env.BASE_PATH || '',

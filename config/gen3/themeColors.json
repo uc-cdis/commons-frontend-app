@@ -127,8 +127,8 @@
     "DEFAULT": "#ECECEC",
     "vivid": "#eeeaea",
     "dark": "#b7b7b7",
-    "darker": "#828282",
-    "darkest": "#4d4d4d",
+    "darker": "#4d4d4d",
+    "darkest": "#404040",
     "min": "#181818"
   },
   "base-contrast": {
@@ -216,7 +216,7 @@
     "min": "#fefefe"
   },
   "navigation": {
-    "footer": "#373A3C",
+    "footer": "#18191b",
     "topbar_hover": "#FFFFFF",
     "light": "#111111",
     "DEFAULT": "#111111",

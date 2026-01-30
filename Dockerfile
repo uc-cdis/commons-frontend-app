@@ -1,36 +1,64 @@
 # docker build -t ff .
 # docker run -p 3000:3000 -it ff
 # Build stage
-FROM node:22-slim AS builder
+FROM --platform=$BUILDPLATFORM node:24.13.0-trixie-slim AS builder
+
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
 
 WORKDIR /gen3
 
-COPY ./package.json ./package-lock.json ./next.config.js ./tsconfig.json ./.env.development  ./tailwind.config.js ./postcss.config.js ./start.sh ./.env.production ./
-RUN npm ci
+# Copy dependency files first for better caching
+COPY package.json package-lock.json ./
+
+# Install ALL dependencies once (including dev deps for build)
+RUN npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm ci && \
+    npm cache clean --force
+
+# Copy necessary config files
+COPY next.config.js tsconfig.json tailwind.config.js postcss.config.js ./
+COPY .env.production ./
+
+# Copy source files
 COPY ./src ./src
 COPY ./public ./public
 COPY ./config ./config
 COPY ./start.sh ./
-RUN npm install @swc/core @napi-rs/magic-string && \
-    npm run build
+
+# Build and prune
+RUN npm run build && \
+    npm prune --production
 
 # Production stage
-FROM node:22-slim AS runner
-RUN apk add bash
+FROM node:24.13.0-trixie-slim AS runner
+
 WORKDIR /gen3
 
 RUN addgroup --system --gid 1001 nextjs && \
     adduser --system --uid 1001 nextjs
 
-#COPY --from=builder /gen3/config ./config
-COPY --from=builder /gen3/public ./public
-COPY --from=builder --chown=nextjs:nodejs /gen3/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /gen3/.next/static ./.next/static
+COPY --from=builder /gen3/package.json ./
+COPY --from=builder /gen3/node_modules ./node_modules
+COPY --from=builder /gen3/.next ./.next
 COPY --from=builder /gen3/start.sh ./start.sh
+RUN mkdir -p /gen3/.next/cache/images
+RUN chmod -R 777 /gen3/.next/cache
+RUN chown nextjs:nextjs /gen3/.next
 RUN rm -rf /gen3/config  /gen3/public
 VOLUME /gen3/config
 VOLUME /gen3/public
 
+RUN mkdir -p .next/cache/images && \
+    chmod +x start.sh && \
+    chown -R nextjs:nextjs .next/cache
+
 USER nextjs:nextjs
-ENV PORT=3000
-CMD bash ./start.sh
+
+ENV NODE_ENV=production \
+    PORT=3000 \
+    NEXT_TELEMETRY_DISABLED=1
+
+CMD ["sh", "./start.sh"]
