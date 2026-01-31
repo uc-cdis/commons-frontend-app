@@ -19,8 +19,12 @@ const withMDX = require('@next/mdx')({
 
 // Next configuration with support for rewrting API to existing common services
 const nextConfig = {
+  output: 'standalone',
+  serverRuntimeConfig: {
+    HOSTNAME: '0.0.0.0',
+  },
   env: {
-    version: process.env.npm_package_version
+    version: process.env.npm_package_version,
   },
   reactStrictMode: true,
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],

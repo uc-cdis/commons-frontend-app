@@ -2,4 +2,5 @@
 
 set -e
 echo "starting server"
-npm run start
+HOSTNAME=0.0.0.0
+node server.js
