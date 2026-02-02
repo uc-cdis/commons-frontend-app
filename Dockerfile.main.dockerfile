@@ -29,9 +29,8 @@ COPY ./start.sh ./
 
 # Build and prune
 RUN  npm run build:volume && \
-    npm prune --production; \
+    npm prune --omit=dev;
 
-# Shared production base
 FROM node:24.13.0-trixie-slim AS runner
 
 WORKDIR /gen3
@@ -39,21 +38,25 @@ WORKDIR /gen3
 RUN addgroup --system --gid 1001 nextjs && \
     adduser --system --uid 1001 nextjs
 
-COPY --from=builder /gen3/package.json ./
-COPY --from=builder /gen3/node_modules ./node_modules
-COPY --from=builder /gen3/.next ./.next
-COPY --from=builder /gen3/start.sh ./start.sh
+COPY --from=builder --chown=nextjs:nextjs /gen3/.next/standalone ./.next/standalone
+COPY --from=builder --chown=nextjs:nextjs /gen3/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nextjs /gen3/start.sh ./start.sh
 
 VOLUME /gen3/config
 VOLUME /gen3/public
 
-RUN mkdir -p /gen3/.next/cache/images
-RUN chmod -R 777 /gen3/.next/cache
-RUN chown nextjs:nextjs /gen3/.next
+RUN mkdir -p /gen3/.next/cache/images && \
+   chmod -R 777 /gen3/.next/cache && \
+   chown -R nextjs:nextjs /gen3/.next/cache
 
-RUN mkdir -p .next/cache/images && \
-    chmod +x start.sh && \
-    chown -R nextjs:nextjs .next/cache
+RUN chmod +x start.sh && \
+    chown -R nextjs:nextjs start.sh
+
+RUN rm -rf .next/standalone/config
+
+RUN cd .next/standalone && \
+    ln -s ../../config ./config && \
+    ln -s ../../public ./public
 
 USER nextjs:nextjs
 
