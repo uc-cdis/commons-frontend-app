@@ -39,11 +39,13 @@ RUN addgroup --system --gid 1001 nextjs && \
     adduser --system --uid 1001 nextjs
 
 COPY --from=builder --chown=nextjs:nextjs /gen3/.next/standalone ./.next/standalone
-COPY --from=builder --chown=nextjs:nextjs /gen3/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nextjs /gen3/.next/static ./.next/standalone/.next/static
 COPY --from=builder --chown=nextjs:nextjs /gen3/start.sh ./start.sh
+COPY --from=builder --chown=nextjs:nextjs /gen3/config ./config
+COPY --from=builder --chown=nextjs:nextjs /gen3/public ./public
 
-VOLUME /gen3/config
-VOLUME /gen3/public
+#VOLUME /gen3/config
+#VOLUME /gen3/public
 
 RUN mkdir -p /gen3/.next/cache/images && \
    chmod -R 777 /gen3/.next/cache && \
