@@ -61,9 +61,4 @@ RUN cd .next/standalone && \
     ln -s ../../public ./public
 
 USER nextjs:nextjs
-
-ENV NODE_ENV=production \
-    PORT=3000 \
-    NEXT_TELEMETRY_DISABLED=1
-
 CMD ["sh", "./start.sh"]
