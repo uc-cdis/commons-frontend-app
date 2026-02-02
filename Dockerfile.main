@@ -32,7 +32,7 @@ RUN  npm run build:volume && \
     npm prune --production; \
 
 # Shared production base
-FROM node:24.13.0-trixie-slim AS runner-base
+FROM node:24.13.0-trixie-slim AS runner
 
 WORKDIR /gen3
 
@@ -43,6 +43,9 @@ COPY --from=builder /gen3/package.json ./
 COPY --from=builder /gen3/node_modules ./node_modules
 COPY --from=builder /gen3/.next ./.next
 COPY --from=builder /gen3/start.sh ./start.sh
+
+VOLUME /gen3/config
+VOLUME /gen3/public
 
 RUN mkdir -p /gen3/.next/cache/images
 RUN chmod -R 777 /gen3/.next/cache
@@ -59,7 +62,3 @@ ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1
 
 CMD ["sh", "./start.sh"]
-
-FROM runner-base AS runner-with-volume-config
-VOLUME /gen3/config
-VOLUME /gen3/public
