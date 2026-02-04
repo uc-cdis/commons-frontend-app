@@ -79,6 +79,8 @@ const Gen3App = ({
     setIsClient(true); // Only on client-side
   }, []);
 
+  console.log('NEXT_PUBLIC_DATADOG_APPLICATION_ID', process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID);
+
   return (
     <React.Fragment>
       {isClient ? (
