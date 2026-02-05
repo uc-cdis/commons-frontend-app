@@ -1,6 +1,8 @@
 
 import React, { useEffect, useRef } from 'react';
 
+
+
 type IgvBrowserProps = {
   genome?: string;
   locus?: string;
@@ -14,6 +16,7 @@ const IgvBrowser = ({
 }: IgvBrowserProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const browserRef = useRef<any>(null);
+
 
   useEffect(() => {
     let cancelled = false;
@@ -47,6 +50,8 @@ const IgvBrowser = ({
       browserRef.current = null;
     };
   }, [genome, locus]);
+
+
 
   return (
     <div
