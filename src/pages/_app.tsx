@@ -1,6 +1,6 @@
 import App, { AppProps, AppContext, AppInitialProps } from 'next/app';
 import React, { useState, useEffect, useRef, Suspense } from 'react';
-import { MantineProvider } from '@mantine/core';
+import { LoadingOverlay, MantineProvider } from '@mantine/core';
 import mantinetheme from '../mantineTheme';
 
 import {
@@ -37,11 +37,18 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
   axe(React, ReactDOM, 1000);
 }
 
+type PublicConfig = {
+  dataDogAppId: string | null;
+  dataDogClientToken: string | null;
+  dataCommons: string;
+};
+
 interface Gen3AppProps {
   icons: Array<RegisteredIcons>;
   modalsConfig: ModalsConfig;
   sessionConfig: SessionConfiguration;
   protectedRoutes: AuthorizedRoutesConfig;
+  publicConfig?: PublicConfig;
 }
 
 const Gen3App = ({
@@ -51,6 +58,7 @@ const Gen3App = ({
   sessionConfig,
   modalsConfig,
   protectedRoutes,
+  publicConfig,
 }: AppProps & Gen3AppProps) => {
   const isFirstRender = useRef(true);
 
@@ -65,7 +73,7 @@ const Gen3App = ({
       registerCohortTableCustomCellRenderers();
       registerCustomExplorerDetailsPanels();
       isFirstRender.current = false;
-      console.log('Gen3 App initialized');
+      console.log('publicConfig', publicConfig);
     }
   }, []);
 
@@ -79,15 +87,15 @@ const Gen3App = ({
     setIsClient(true); // Only on client-side
   }, []);
 
-  console.log('NEXT_PUBLIC_DATADOG_APPLICATION_ID', process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID);
 
   return (
     <React.Fragment>
       {isClient ? (
         <Suspense fallback={<Loading />}>
-          {process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID
-            && process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN
-            && <DatadogInit /> }
+          {publicConfig?.dataDogAppId != null &&
+            publicConfig?.dataDogClientToken != null && (
+            <DatadogInit  appId={publicConfig.dataDogAppId} clientToken={publicConfig.dataDogClientToken} dataCommons={publicConfig.dataCommons}/>
+          )}
           <MantineProvider theme={mantinetheme}>
             <Gen3Provider
               icons={icons}
@@ -95,15 +103,12 @@ const Gen3App = ({
               modalsConfig={modalsConfig}
               protectedRoutesConfig={protectedRoutes}
             >
-
               <Component {...pageProps} />
-
             </Gen3Provider>
           </MantineProvider>
         </Suspense>
       ) : (
         // Show some fallback UI while waiting for the client to load
-        console.log('Loading...'),
         <Loading />
       )}
     </React.Fragment>
@@ -115,12 +120,21 @@ Gen3App.getInitialProps = async (
   context: AppContext,
 ): Promise<Gen3AppProps & AppInitialProps> => {
   const ctx = await App.getInitialProps(context);
+  const publicConfig: PublicConfig = {
+    dataDogAppId: process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID || null,
+    dataDogClientToken: process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN || null,
+    dataCommons: process.env.NEXT_PUBLIC_DATACOMMONS || 'commons_frontend_app',
+  };
+
+  console.log('publicConfig', publicConfig);
+
 
   try {
     const res = await loadContent();
     return {
       ...ctx,
       ...res,
+      publicConfig,
     };
   } catch (error: any) {
     console.error('Provider Wrapper error loading config', error.toString());
@@ -139,7 +153,8 @@ Gen3App.getInitialProps = async (
     ],
     modalsConfig: {},
     sessionConfig: {},
-    protectedRoutes: DefaultAuthorizedRoutesConfig
+    protectedRoutes: DefaultAuthorizedRoutesConfig,
+    publicConfig,
   };
 };
 export default Gen3App;
