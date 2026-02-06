@@ -4,6 +4,8 @@ export { middleware } from './middleware-impl';
 
 export const config = {
   matcher: [
-  "/((?!_next/static|_next/image|_next/data|Login|api|403|404|no-workspace-access|favicon.ico|.*\\.ico$|.*\\.png$|.*\\.jpg$|.*\\.svg$|.*\\.json$).*)"
+  "/DataLibrary",
+  "/Workspace",
+  "/Profile"
 ],
 };
