@@ -73,7 +73,6 @@ const Gen3App = ({
       registerCohortTableCustomCellRenderers();
       registerCustomExplorerDetailsPanels();
       isFirstRender.current = false;
-      console.log('publicConfig', publicConfig);
     }
   }, []);
 
@@ -125,9 +124,6 @@ Gen3App.getInitialProps = async (
     dataDogClientToken: process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN || null,
     dataCommons: process.env.NEXT_PUBLIC_DATACOMMONS || 'commons_frontend_app',
   };
-
-  console.log('publicConfig', publicConfig);
-
 
   try {
     const res = await loadContent();
