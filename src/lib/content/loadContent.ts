@@ -45,6 +45,7 @@ export const loadContent = async () => {
     sessionConfig: 'sessionConfig' in session ? session.sessionConfig : session,
     themeFonts: fonts as Fonts,
     colors: colors,
+    themeColors: themeColors,
     icons: icons as RegisteredIcons[],
     protectedRoutes: protectedRoutes ?? DefaultAuthorizedRoutesConfig
   };

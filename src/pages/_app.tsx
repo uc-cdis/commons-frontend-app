@@ -1,12 +1,12 @@
 import App, { AppProps, AppContext, AppInitialProps } from 'next/app';
 import React, { useState, useEffect, useRef, Suspense } from 'react';
-import { LoadingOverlay, MantineProvider, mergeThemeOverrides } from '@mantine/core';
-import mantinetheme, { registerCSSVariables } from '../mantineTheme';
+import { MantineProvider, mergeThemeOverrides } from '@mantine/core';
 
 const USE_CSS_VARS = process.env.NEXT_PUBLIC_USE_CSS_VARS === 'true';
 
 import {
-  type AuthorizedRoutesConfig, createMantineTheme,
+  type AuthorizedRoutesConfig,
+  createMantineTheme,
   DefaultAuthorizedRoutesConfig,
   Gen3Provider,
   type ModalsConfig,
@@ -15,7 +15,9 @@ import {
   RegisteredIcons,
   registerExplorerDefaultCellRenderers,
   registerMetadataSchemaApp,
-  SessionConfiguration, TenStringArray,
+  SessionConfiguration,
+  TenStringArray,
+  createCSSVariables,
 } from '@gen3/frontend';
 import { registerDefaultRemoteSupport, setDRSHostnames } from '@gen3/core';
 import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
@@ -52,6 +54,7 @@ interface Gen3AppProps {
   protectedRoutes: AuthorizedRoutesConfig;
   publicConfig?: PublicConfig;
   colors: Record<string, TenStringArray>;
+  themeColors: Record<string, string>;
 }
 
 const Gen3App = ({
@@ -59,12 +62,15 @@ const Gen3App = ({
   pageProps,
   icons,
   colors,
+  themeColors,
   sessionConfig,
   modalsConfig,
   protectedRoutes,
   publicConfig,
 }: AppProps & Gen3AppProps) => {
   const isFirstRender = useRef(true);
+  const [mantineTheme, setMantineTheme] =
+    useState<Partial<ReturnType<typeof mergeThemeOverrides>>>();
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -78,8 +84,6 @@ const Gen3App = ({
       registerCustomExplorerDetailsPanels();
       isFirstRender.current = false;
       if (USE_CSS_VARS) {
-        console.log('Registering CSS variables');
-        registerCSSVariables(colors);
         // TODO: add support for dynamic fonts
         const gen3ThemeDynamic = createMantineTheme(
           {
@@ -89,8 +93,9 @@ const Gen3App = ({
           },
           colors,
         );
-        console.log('colors', colors);
-        mergeThemeOverrides(gen3ThemeDynamic);
+        const mergedTheme = mergeThemeOverrides(gen3ThemeDynamic);
+        setMantineTheme(mergedTheme);
+        createCSSVariables(themeColors);
         console.log('Registered CSS variables and dynamic mantine theme', USE_CSS_VARS);
       }
     }
@@ -112,9 +117,13 @@ const Gen3App = ({
         <Suspense fallback={<Loading />}>
           {publicConfig?.dataDogAppId != null &&
             publicConfig?.dataDogClientToken != null && (
-            <DatadogInit  appId={publicConfig.dataDogAppId} clientToken={publicConfig.dataDogClientToken} dataCommons={publicConfig.dataCommons}/>
-          )}
-          <MantineProvider theme={mantinetheme}>
+              <DatadogInit
+                appId={publicConfig.dataDogAppId}
+                clientToken={publicConfig.dataDogClientToken}
+                dataCommons={publicConfig.dataCommons}
+              />
+            )}
+          <MantineProvider theme={mantineTheme}>
             <Gen3Provider
               icons={icons}
               sessionConfig={sessionConfig}
@@ -167,6 +176,7 @@ Gen3App.getInitialProps = async (
       },
     ],
     colors: {},
+    themeColors: {},
     modalsConfig: {},
     sessionConfig: {},
     protectedRoutes: DefaultAuthorizedRoutesConfig,
