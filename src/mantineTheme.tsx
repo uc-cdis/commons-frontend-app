@@ -1,6 +1,10 @@
 import { createTheme, mergeThemeOverrides } from '@mantine/core';
 import { GEN3_COMMONS_NAME } from '@gen3/core';
-import { TenStringArray, createMantineTheme } from '@gen3/frontend';
+import {
+  TenStringArray,
+  createMantineTheme,
+  createCSSVariables,
+} from '@gen3/frontend';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const themeColors: Record<string, TenStringArray> = require(`../config/${GEN3_COMMONS_NAME}/themeColors.json`);
@@ -16,5 +20,10 @@ const gen3Theme = createMantineTheme(
 const localTheme = createTheme({
   components: {/*Add components overrides here},*/}
 });
+
+export const registerCSSVariables = (themeColors: Record<string, TenStringArray>) => {
+  createCSSVariables(themeColors);
+};
+
 
 export default mergeThemeOverrides(gen3Theme, localTheme);

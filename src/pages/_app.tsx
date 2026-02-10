@@ -1,10 +1,12 @@
 import App, { AppProps, AppContext, AppInitialProps } from 'next/app';
 import React, { useState, useEffect, useRef, Suspense } from 'react';
-import { LoadingOverlay, MantineProvider } from '@mantine/core';
-import mantinetheme from '../mantineTheme';
+import { LoadingOverlay, MantineProvider, mergeThemeOverrides } from '@mantine/core';
+import mantinetheme, { registerCSSVariables } from '../mantineTheme';
+
+const USE_CSS_VARS = process.env.NEXT_PUBLIC_USE_CSS_VARS === 'true';
 
 import {
-  type AuthorizedRoutesConfig,
+  type AuthorizedRoutesConfig, createMantineTheme,
   DefaultAuthorizedRoutesConfig,
   Gen3Provider,
   type ModalsConfig,
@@ -13,7 +15,7 @@ import {
   RegisteredIcons,
   registerExplorerDefaultCellRenderers,
   registerMetadataSchemaApp,
-  SessionConfiguration,
+  SessionConfiguration, TenStringArray,
 } from '@gen3/frontend';
 import { registerDefaultRemoteSupport, setDRSHostnames } from '@gen3/core';
 import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
@@ -49,12 +51,14 @@ interface Gen3AppProps {
   sessionConfig: SessionConfiguration;
   protectedRoutes: AuthorizedRoutesConfig;
   publicConfig?: PublicConfig;
+  colors: Record<string, TenStringArray>;
 }
 
 const Gen3App = ({
   Component,
   pageProps,
   icons,
+  colors,
   sessionConfig,
   modalsConfig,
   protectedRoutes,
@@ -73,6 +77,22 @@ const Gen3App = ({
       registerCohortTableCustomCellRenderers();
       registerCustomExplorerDetailsPanels();
       isFirstRender.current = false;
+      if (USE_CSS_VARS) {
+        console.log('Registering CSS variables');
+        registerCSSVariables(colors);
+        // TODO: add support for dynamic fonts
+        const gen3ThemeDynamic = createMantineTheme(
+          {
+            heading: ['Poppins', 'sans-serif'],
+            content: ['Poppins', 'sans-serif'],
+            fontFamily: 'Poppins',
+          },
+          colors,
+        );
+        console.log('colors', colors);
+        mergeThemeOverrides(gen3ThemeDynamic);
+        console.log('Registered CSS variables and dynamic mantine theme', USE_CSS_VARS);
+      }
     }
   }, []);
 
@@ -85,7 +105,6 @@ const Gen3App = ({
     else
     setIsClient(true); // Only on client-side
   }, []);
-
 
   return (
     <React.Fragment>
@@ -147,6 +166,7 @@ Gen3App.getInitialProps = async (
         height: 0,
       },
     ],
+    colors: {},
     modalsConfig: {},
     sessionConfig: {},
     protectedRoutes: DefaultAuthorizedRoutesConfig,

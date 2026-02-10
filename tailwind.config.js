@@ -4,8 +4,13 @@
 const plugin = require('tailwindcss/plugin');
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { GEN3_COMMONS_NAME } = require('@gen3/core');
+const USE_CSS_VARS = process.env.NEXT_PUBLIC_USE_CSS_VARS === 'true';
 const themeColors = require(`./config/${GEN3_COMMONS_NAME}/themeColors.json`);
 const themeFonts = require(`./config/${GEN3_COMMONS_NAME}/themeFonts.json`);
+const themeColorCSSVars = require(`./config/themeColorCSSVars.json`);
+
+console.log('Using CSS variables:', USE_CSS_VARS);
+console.log('themeColorCSSVars:', themeColorCSSVars);
 
 module.exports = {
   content: [
@@ -56,7 +61,7 @@ module.exports = {
           titanium: '#707070',
           obsidian: '#757575',
         },
-        ...themeColors,
+        ...(USE_CSS_VARS ? themeColorCSSVars : themeColors),
       },
       fontFamily: {
         heading: themeFonts.heading,
@@ -78,7 +83,7 @@ module.exports = {
       height: {
         '100px': '100px',
         '200px': '200px',
-        'workspace': '100vh'
+        workspace: '100vh',
       },
       screens: {
         sm: '640px',
