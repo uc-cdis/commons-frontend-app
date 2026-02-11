@@ -7,9 +7,6 @@ const { GEN3_COMMONS_NAME } = require('@gen3/core');
 const themeFonts = require(`./config/${GEN3_COMMONS_NAME}/themeFonts.json`);
 const themeColorCSSVars = require(`./config/themeColorCSSVars.json`);
 
-console.log('Using CSS variables:', USE_CSS_VARS);
-console.log('themeColorCSSVars:', themeColorCSSVars);
-
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
