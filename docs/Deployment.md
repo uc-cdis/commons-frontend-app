@@ -1,8 +1,8 @@
 # Deployment types for commons-frontend-app
 
-Therre are two chocies for deployment:
+There are two choices for deployment:
 
-Fork or create from template this repository to deploy commons-frontend-app with your own configuration and repository.
+Fork or create from a template this repository to deploy commons-frontend-app with your own configuration and repository.
 
 Deploy commons-frontend-app with helm chart. To do this you need create a config repository (or use existing).
 The config repository contains the config and public directories used by the gen3-frontend-framework, it needs to have the
