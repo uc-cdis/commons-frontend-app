@@ -1,10 +1,10 @@
 import App, { AppProps, AppContext, AppInitialProps } from 'next/app';
 import React, { useState, useEffect, useRef, Suspense } from 'react';
-import { LoadingOverlay, MantineProvider } from '@mantine/core';
-import mantinetheme from '../mantineTheme';
+import { MantineProvider, mergeThemeOverrides } from '@mantine/core';
 
 import {
   type AuthorizedRoutesConfig,
+  createMantineTheme,
   DefaultAuthorizedRoutesConfig,
   Gen3Provider,
   type ModalsConfig,
@@ -14,6 +14,8 @@ import {
   registerExplorerDefaultCellRenderers,
   registerMetadataSchemaApp,
   SessionConfiguration,
+  TenStringArray,
+  Fonts,
 } from '@gen3/frontend';
 import { registerDefaultRemoteSupport, setDRSHostnames } from '@gen3/core';
 import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
@@ -49,18 +51,24 @@ interface Gen3AppProps {
   sessionConfig: SessionConfiguration;
   protectedRoutes: AuthorizedRoutesConfig;
   publicConfig?: PublicConfig;
+  colors: Record<string, TenStringArray>;
+  fonts: Fonts;
 }
 
 const Gen3App = ({
   Component,
   pageProps,
   icons,
+  colors,
+  fonts,
   sessionConfig,
   modalsConfig,
   protectedRoutes,
   publicConfig,
 }: AppProps & Gen3AppProps) => {
   const isFirstRender = useRef(true);
+  const [mantineTheme, setMantineTheme] =
+    useState<Partial<ReturnType<typeof mergeThemeOverrides>>>();
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -73,6 +81,11 @@ const Gen3App = ({
       registerCohortTableCustomCellRenderers();
       registerCustomExplorerDetailsPanels();
       isFirstRender.current = false;
+      const gen3ThemeDynamic = createMantineTheme(fonts, colors);
+      const mergedTheme = mergeThemeOverrides(gen3ThemeDynamic);
+      setMantineTheme(mergedTheme);
+      setMantineTheme(mergedTheme);
+      console.log('Gen3 App initialized');
     }
   }, []);
 
@@ -86,16 +99,19 @@ const Gen3App = ({
     setIsClient(true); // Only on client-side
   }, []);
 
-
   return (
     <React.Fragment>
       {isClient ? (
         <Suspense fallback={<Loading />}>
           {publicConfig?.dataDogAppId != null &&
             publicConfig?.dataDogClientToken != null && (
-            <DatadogInit  appId={publicConfig.dataDogAppId} clientToken={publicConfig.dataDogClientToken} dataCommons={publicConfig.dataCommons}/>
-          )}
-          <MantineProvider theme={mantinetheme}>
+              <DatadogInit
+                appId={publicConfig.dataDogAppId}
+                clientToken={publicConfig.dataDogClientToken}
+                dataCommons={publicConfig.dataCommons}
+              />
+            )}
+          <MantineProvider theme={mantineTheme}>
             <Gen3Provider
               icons={icons}
               sessionConfig={sessionConfig}
@@ -147,6 +163,12 @@ Gen3App.getInitialProps = async (
         height: 0,
       },
     ],
+    colors: {},
+    fonts: {
+      heading: ['Poppins', 'sans-serif'],
+      content: ['Poppins', 'sans-serif'],
+      fontFamily: 'Poppins',
+    },
     modalsConfig: {},
     sessionConfig: {},
     protectedRoutes: DefaultAuthorizedRoutesConfig,
