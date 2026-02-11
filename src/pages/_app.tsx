@@ -2,8 +2,6 @@ import App, { AppProps, AppContext, AppInitialProps } from 'next/app';
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { MantineProvider, mergeThemeOverrides } from '@mantine/core';
 
-const USE_CSS_VARS = process.env.NEXT_PUBLIC_USE_CSS_VARS === 'true';
-
 import {
   type AuthorizedRoutesConfig,
   createMantineTheme,
@@ -17,7 +15,7 @@ import {
   registerMetadataSchemaApp,
   SessionConfiguration,
   TenStringArray,
-  createCSSVariables,
+  Fonts,
 } from '@gen3/frontend';
 import { registerDefaultRemoteSupport, setDRSHostnames } from '@gen3/core';
 import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
@@ -54,7 +52,7 @@ interface Gen3AppProps {
   protectedRoutes: AuthorizedRoutesConfig;
   publicConfig?: PublicConfig;
   colors: Record<string, TenStringArray>;
-  themeColors: Record<string, string>;
+  fonts: Fonts;
 }
 
 const Gen3App = ({
@@ -62,7 +60,7 @@ const Gen3App = ({
   pageProps,
   icons,
   colors,
-  themeColors,
+  fonts,
   sessionConfig,
   modalsConfig,
   protectedRoutes,
@@ -83,21 +81,11 @@ const Gen3App = ({
       registerCohortTableCustomCellRenderers();
       registerCustomExplorerDetailsPanels();
       isFirstRender.current = false;
-      if (USE_CSS_VARS) {
-        // TODO: add support for dynamic fonts
-        const gen3ThemeDynamic = createMantineTheme(
-          {
-            heading: ['Poppins', 'sans-serif'],
-            content: ['Poppins', 'sans-serif'],
-            fontFamily: 'Poppins',
-          },
-          colors,
-        );
-        const mergedTheme = mergeThemeOverrides(gen3ThemeDynamic);
-        setMantineTheme(mergedTheme);
-        createCSSVariables(themeColors);
-        console.log('Registered CSS variables and dynamic mantine theme', USE_CSS_VARS);
-      }
+      const gen3ThemeDynamic = createMantineTheme(fonts, colors);
+      const mergedTheme = mergeThemeOverrides(gen3ThemeDynamic);
+      setMantineTheme(mergedTheme);
+      setMantineTheme(mergedTheme);
+      console.log('Gen3 App initialized');
     }
   }, []);
 
@@ -176,7 +164,11 @@ Gen3App.getInitialProps = async (
       },
     ],
     colors: {},
-    themeColors: {},
+    fonts: {
+      heading: ['Poppins', 'sans-serif'],
+      content: ['Poppins', 'sans-serif'],
+      fontFamily: 'Poppins',
+    },
     modalsConfig: {},
     sessionConfig: {},
     protectedRoutes: DefaultAuthorizedRoutesConfig,
