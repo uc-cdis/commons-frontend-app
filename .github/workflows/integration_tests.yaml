@@ -9,7 +9,6 @@ jobs:
     with:
       CI_ENV: gen3ff
       SERVICE_TO_TEST: frontend
-      TEST_REPO_BRANCH: chore/setup_gen3ff_images_ci
     secrets:
       CI_TEST_ORCID_USERID: ${{ secrets.CI_TEST_ORCID_USERID }}
       CI_TEST_ORCID_PASSWORD: ${{ secrets.CI_TEST_ORCID_PASSWORD }}
