@@ -8,6 +8,15 @@ import {
 import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import Loading from '@/components/Loading';
+import { NextRouter, useRouter } from 'next/dist/client/router';
+
+const getBamFileURL = (router: NextRouter): string => {
+  const { bam } = router.query;
+  if (typeof bam === 'string') return bam;
+  else if (typeof bam === 'object') return bam[0];
+
+  return 'notFound';
+};
 
 const IGVBrowser = dynamic(() => import('@/components/genomic/IgvBrowser'), {
   ssr: false,
@@ -15,10 +24,11 @@ const IGVBrowser = dynamic(() => import('@/components/genomic/IgvBrowser'), {
 });
 
 const IGVPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
+  const router = useRouter();
+  console.log(router.query);
+  const bamId = getBamFileURL(router);
 
-  const { data, isFetching, isSuccess, isError } = useGetDownloadQuery(
-    '0576ed72-7633-43ba-86f0-7b33eb836fb6',
-  );
+  const { data, isFetching, isSuccess, isError } = useGetDownloadQuery(bamId);
 
   if (isFetching) return <Loading />
 
@@ -27,9 +37,9 @@ const IGVPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
       <NavPageLayout
         {...{ headerProps, footerProps }}
         headerMetadata={{
-          title: 'Gen3 Sample Page',
-          content: 'Sample Data',
-          key: 'gen3-sample-page',
+          title: 'Gen3 IGV Browser Page',
+          content: 'IGV Viewer',
+          key: 'gen3-igv-page',
         }}
       >
         <div className="w-full m-10">

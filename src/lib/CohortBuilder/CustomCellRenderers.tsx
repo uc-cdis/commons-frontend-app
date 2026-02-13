@@ -3,8 +3,9 @@ import {
   ExplorerTableCellRendererFactory,
   type CellRendererFunctionProps,
 } from '@gen3/frontend';
-import { ActionIcon, Text, Tooltip } from '@mantine/core';
+import { ActionIcon, Button, Text, Tooltip } from '@mantine/core';
 import { FaExternalLinkAlt } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 const RenderDicomLink = ({ cell }: CellRendererFunctionProps) => {
   if (!cell?.getValue() || cell?.getValue() === '') {
@@ -103,6 +104,53 @@ const RenderLinkWithIcon = ({ cell }: CellRendererFunctionProps,
 };
 
 
+/**
+ * RenderLinkWithIcon is a functional component that renders a hyperlink with an associated icon inside a tooltip.
+ *
+ * This component primarily checks if a value exists in the `cell` object provided as a property. If there is no
+ * value or the value is an empty string, it returns an empty span. Otherwise, a link is rendered with customizable
+ * icon appearance and tooltip functionality.
+ *
+ * Parameters for styling and behavior can be passed through `params`, which override the default configurations.
+ *
+ * @param {Object} props - The component props.
+ * @param {CellRendererFunctionProps} props.cell - Contains the value for the hyperlink.
+ * @param {...Array<Record<string, unknown>>} params - Additional configuration parameters for the rendered link and its icon. Defaults are defined in `RenderLinkIconDefaultParameters`.
+ * @returns {React.ReactNode} A React element representing a tooltip-wrapped link with an icon, or an empty span if no value is present in `cell`.
+ */
+const RenderOpenAppLink = ({ cell, row }: CellRendererFunctionProps,
+                            ...params: Array<Record<string, unknown>>) => {
+
+  const router = useRouter();
+
+  if (
+    !cell?.getValue() ||
+    cell?.getValue() === '' ||
+    row?.original?.data_format !== 'BAM'
+  ) {
+    return <span></span>;
+  } else {
+    const mergedParams = {
+      ...RenderLinkIconDefaultParameters,
+      ...(params ? params[0] : {}),
+    };
+    const { variant, color, size, tooltip } = mergedParams;
+    return (
+      <Tooltip
+        label={cell.getValue() as string}
+        disabled={tooltip ? !tooltip : true}
+      >
+        <Button onClick={() => router.push(`/igv/${cell.getValue()}`)}>
+          <ActionIcon size={size} variant={variant} color={color}>
+            <FaExternalLinkAlt />
+          </ActionIcon>
+        </Button>
+      </Tooltip>
+    );
+  }
+};
+
+
 export const registerCohortTableCustomCellRenderers = () => {
   ExplorerTableCellRendererFactory().registerRenderer(
     'link',
@@ -123,5 +171,10 @@ export const registerCohortTableCustomCellRenderers = () => {
     'link',
     'linkWithIconAndTooltip',
     RenderLinkWithIcon,
+  );
+  ExplorerTableCellRendererFactory().registerRenderer(
+    'link',
+    'linkOpenApp',
+    RenderOpenAppLink,
   );
 };

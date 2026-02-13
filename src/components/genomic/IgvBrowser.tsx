@@ -23,7 +23,6 @@ interface ProgressState {
 
 const IgvBrowser = ({
   bamUrl,
-  height = 500,
 }: IgvBrowserProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const browserRef = useRef<any>(null);
@@ -131,7 +130,7 @@ const IgvBrowser = ({
       }
 
       const options = {
-        genome: 'hg38',
+        genome: 'canFam3',
         tracks: [
           {
             type: 'alignment',
