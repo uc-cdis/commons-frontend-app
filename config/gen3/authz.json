@@ -28,10 +28,6 @@
       "loginRequired": true,
       "authz": ["/pages/see-explorer"]
     },
-    "/no-workspace-access": {
-      "loginRequired": true,
-      "authz": ["/workspace"]
-    },
     "/notebook": {
       "loginRequired": true,
       "authz": ["/workspace"]
