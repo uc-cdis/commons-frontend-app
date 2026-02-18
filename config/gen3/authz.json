@@ -33,8 +33,7 @@
       "authz": ["/workspace"]
     },
     "/Profile": {
-      "loginRequired": true,
-      "authz": ["/pages/see-profile"]
+      "loginRequired": true
     },
     "/Query": {
       "loginRequired": true,

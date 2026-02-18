@@ -9,7 +9,7 @@
         "rows": [
           {
             "Icon": {
-              "logo": "/images/gen3.png",
+              "logo": "/icons/gen3.png",
               "width": 132,
               "height": 60,
               "description": "Gen3",
@@ -22,7 +22,7 @@
         "rows": [
           {
             "Icon": {
-              "logo": "/images/createdby.png",
+              "logo": "/icons/createdby.png",
               "width": 170,
               "height": 60,
               "description": "Center for Translational Data Science at the University of Chicago",
@@ -35,7 +35,7 @@
         "rows": [
           {
             "Icon": {
-              "logo": "/images/OCC.png",
+              "logo": "/icons/OCC.png",
               "width": 150,
               "height": 60,
               "description": "OCC"
