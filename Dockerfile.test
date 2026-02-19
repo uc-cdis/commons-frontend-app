@@ -32,7 +32,7 @@ ENV NODE_ENV=test
 
 # Build and prune
 RUN npm run build && \
-    npm prune --test
+    npm prune --omit=dev;
 
 # Production stage
 FROM node:24.13.0-trixie-slim AS runner
