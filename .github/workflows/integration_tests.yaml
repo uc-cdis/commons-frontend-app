@@ -3,7 +3,6 @@ name: Integration Tests
 on: pull_request
 
 jobs:
-  if: !github.event.repository.fork
   integration_tests:
     name: Integration tests
     uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@master
