@@ -3,6 +3,7 @@ name: Build Image and Push to Quay for CI
 on: push
 
 jobs:
+  if: !github.event.repo.fork
   compute_tag:
     name: Compute tag name
     runs-on: ubuntu-latest
