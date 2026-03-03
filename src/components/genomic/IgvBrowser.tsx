@@ -8,6 +8,7 @@ const SERVICE_URL = 'http://localhost:8000/genomic_viz';
 type IgvBrowserProps = {
   bamUrl: string;
   height?: number;
+  locus?: string;
 };
 
 interface ProgressState {
@@ -23,6 +24,7 @@ interface ProgressState {
 
 const IgvBrowser = ({
   bamUrl,
+  locus = 'chr5:40,200,000-40,300,000', // TP53 region default
 }: IgvBrowserProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const browserRef = useRef<any>(null);
@@ -34,9 +36,7 @@ const IgvBrowser = ({
 
   const [ivg, setIvg] = useState<any>(null);
 
-
   useEffect(() => {
-
     (async () => {
       if (!containerRef.current) return;
 
@@ -45,7 +45,6 @@ const IgvBrowser = ({
       const igv = igvMod.default;
       setIvg(igv);
     })();
-
   }, []);
 
   // Check if index exists, or start creating it with progress
@@ -56,6 +55,11 @@ const IgvBrowser = ({
         const statusResponse = await fetch(
           `${SERVICE_URL}/bam/index/status?url=${encodeURIComponent(bamUrl)}`,
         );
+        if (!statusResponse.ok) {
+          throw new Error(
+            `Server returned ${statusResponse.status}: ${statusResponse.statusText}`,
+          );
+        }
         const statusData = await statusResponse.json();
 
         if (statusData.exists) {
@@ -103,11 +107,14 @@ const IgvBrowser = ({
           });
         };
       } catch (error) {
-        console.error('Error checking index:', error);
+        const isNetworkError =
+          error instanceof TypeError && error.message === 'Failed to fetch';
         setProgressState({
           status: 'error',
           progress: 0,
-          message: 'Failed to check index status',
+          message: isNetworkError
+            ? `Unable to connect to the genomic visualization service at ${SERVICE_URL}. Please ensure the service is running and accessible.`
+            : `Failed to check index status: ${error instanceof Error ? error.message : 'Unknown error'}`,
         });
       }
     };
@@ -131,13 +138,27 @@ const IgvBrowser = ({
 
       const options = {
         genome: 'canFam3',
+        locus,
         tracks: [
+          {
+            name: 'Canine OSA Genes',
+            type: 'annotation',
+            format: 'gff3',
+            url: '/canine/Canis_familiaris.CanFam3.1.98.gff3.gz',
+            indexURL:
+              '/canine/Canis_familiaris.CanFam3.1.98.gff3.gz/Canis_familiaris.CanFam3.1.98.gff3.gz.tbi',
+            displayMode: 'EXPANDED',
+            color: '#005a9c',
+          },
           {
             type: 'alignment',
             format: 'bam',
             url: bamUrl,
             indexURL: indexUrl,
             name: 'Alignments',
+            colorBy: 'strand',
+            viewAsPairs: true,
+            coverageThreshold: 0.2,
           },
         ],
       };
@@ -258,7 +279,6 @@ const IgvBrowser = ({
       />
     </Stack>
   );
-
 };
 
 export default IgvBrowser;
