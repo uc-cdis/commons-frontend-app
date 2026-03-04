@@ -81,8 +81,8 @@ const nextConfig = {
           destination: `${GEN3_TARGET}/requestor/:path*`,
         },
         {
-          source: '/analysis/:path*',
-          destination: `${GEN3_TARGET}/analysis/:path*`,
+          source: '/genomic_viz/:path*',
+          destination: `http://localhost:8000/genomic_viz/:path*`,
         },
       ];
     } else {

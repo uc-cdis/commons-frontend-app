@@ -139,23 +139,24 @@ const IgvBrowser = ({
       const options = {
         genome: 'canFam3',
         locus,
+        showDefaultTracks: false,
         tracks: [
           {
             name: 'Canine OSA Genes',
             type: 'annotation',
             format: 'gff3',
-            url: '/canine/Canis_familiaris.CanFam3.1.98.gff3.gz',
+            url: '/canine/Canis_familiaris.CanFam3.1.98.sorted.gff3.gz',
             indexURL:
-              '/canine/Canis_familiaris.CanFam3.1.98.gff3.gz/Canis_familiaris.CanFam3.1.98.gff3.gz.tbi',
+              '/canine/Canis_familiaris.CanFam3.1.98.sorted.gff3.gz.tbi',
             displayMode: 'EXPANDED',
             color: '#005a9c',
           },
           {
+            name: 'Tumor Alignments',
             type: 'alignment',
             format: 'bam',
             url: bamUrl,
             indexURL: indexUrl,
-            name: 'Alignments',
             colorBy: 'strand',
             viewAsPairs: true,
             coverageThreshold: 0.2,
@@ -273,7 +274,7 @@ const IgvBrowser = ({
         ref={containerRef}
         style={{
           width: '100%',
-          height: '500px',
+          height: '100%',
           display: progressState.status === 'complete' ? 'block' : 'none',
         }}
       />
