@@ -3,7 +3,7 @@ import {
   ExplorerTableCellRendererFactory,
   type CellRendererFunctionProps,
 } from '@gen3/frontend';
-import { ActionIcon, Button, Text, Tooltip } from '@mantine/core';
+import { ActionIcon, Text, Tooltip } from '@mantine/core';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 
@@ -61,12 +61,28 @@ interface LinkCellOptions {
 }
 
 const RenderLinkIconDefaultParameters : LinkCellOptions = {
-  icon: 'gen3:external-link', // TODO
-  color: 'accent.5',
+  icon: 'gen3:external-link',
+  color: 'accent.4',
   variant: 'filled',
   size: 'md',
   tooltip: false,
 }
+
+interface OpenAppLinkOptions {
+  baseUrl: string;
+  color: string;
+  variant: string;
+  size: string;
+  tooltip: string;
+}
+
+const RenderOpenAppLinkDefaultParameters: OpenAppLinkOptions = {
+  baseUrl: '',
+  color: 'accent.4',
+  variant: 'filled',
+  size: 'md',
+  tooltip: '',
+};
 
 /**
  * RenderLinkWithIcon is a functional component that renders a hyperlink with an associated icon inside a tooltip.
@@ -119,32 +135,40 @@ const RenderLinkWithIcon = ({ cell }: CellRendererFunctionProps,
  * @returns {React.ReactNode} A React element representing a tooltip-wrapped link with an icon, or an empty span if no value is present in `cell`.
  */
 const RenderOpenAppLink = ({ cell, row }: CellRendererFunctionProps,
-                            ...params: Array<Record<string, unknown>>) => {
+                            ...params: Array<Record<string, string>>) => {
 
   const router = useRouter();
 
+  if (!cell?.getValue() || cell?.getValue() === '') {
+    return <span></span>;
+  }
+
   if (
-    !cell?.getValue() ||
-    cell?.getValue() === '' ||
+    cell?.getValue() &&
     row?.original?.data_format !== 'BAM'
   ) {
-    return <span></span>;
+    return <span>{cell.getValue() as string}</span>;
   } else {
     const mergedParams = {
-      ...RenderLinkIconDefaultParameters,
+      ...RenderOpenAppLinkDefaultParameters,
       ...(params ? params[0] : {}),
     };
-    const { variant, color, size, tooltip } = mergedParams;
+    const { variant, color = 'accent.4', size=24, tooltip= '',   baseUrl } = mergedParams;
     return (
       <Tooltip
-        label={cell.getValue() as string}
+        label={tooltip}
         disabled={tooltip ? !tooltip : true}
       >
-        <Button onClick={() => router.push(`/igv/${cell.getValue()}`)}>
-          <ActionIcon size={size} variant={variant} color={color}>
+
+          <ActionIcon
+            size={size}
+            variant={variant}
+            color={color}
+            onClick={() => router.push(`${baseUrl}/${cell.getValue()}`)}
+          >
             <FaExternalLinkAlt />
           </ActionIcon>
-        </Button>
+
       </Tooltip>
     );
   }

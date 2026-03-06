@@ -1,15 +1,17 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Progress, Text, Stack, Paper, Alert } from '@mantine/core';
-import { IconAlertCircle, IconCheck } from '@tabler/icons-react';
+import { IconAlertCircle } from '@tabler/icons-react';
+import { IgvBrowserConfiguration } from './types';
+// import { GEN3_ANALYSIS_API } from '@gen3/core';
+import { GEN3_API } from '@gen3/core';
 
-const SERVICE_URL = 'http://localhost:8000/genomic_viz';
+export const GEN3_ANALYSIS_API =
+  process.env.NEXT_PUBLIC_GEN3_ANALYSIS_API || `${GEN3_API}/analysis/v0`;
 
-type IgvBrowserProps = {
-  bamUrl: string;
-  height?: number;
-  locus?: string;
-};
+
+const SERVICE_URL = `${GEN3_ANALYSIS_API}/genomic_viz`;
+
 
 interface ProgressState {
   status: 'idle' | 'processing' | 'complete' | 'error';
@@ -22,9 +24,17 @@ interface ProgressState {
   estimated_seconds?: number;
 }
 
+interface IgvBrowserProps extends IgvBrowserConfiguration{
+  bamUrl: string;
+}
+
+
 const IgvBrowser = ({
   bamUrl,
-  locus = 'chr5:40,200,000-40,300,000', // TP53 region default
+  locus = 'chr5:40,200,000-40,300,000',
+  track,
+  genome = 'canFam3',
+  showDefaultTracks = true,
 }: IgvBrowserProps) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const browserRef = useRef<any>(null);
@@ -129,7 +139,7 @@ const IgvBrowser = ({
     let disposed = false;
 
     const init = async () => {
-      if (!containerRef.current || disposed) return;
+      if (!containerRef.current || browserRef.current || disposed) return;
 
       if (browserRef.current) {
         ivg.removeBrowser(browserRef.current);
@@ -137,20 +147,11 @@ const IgvBrowser = ({
       }
 
       const options = {
-        genome: 'canFam3',
+        genome,
         locus,
         showDefaultTracks: false,
         tracks: [
-          {
-            name: 'Canine OSA Genes',
-            type: 'annotation',
-            format: 'gff3',
-            url: '/canine/Canis_familiaris.CanFam3.1.98.sorted.gff3.gz',
-            indexURL:
-              '/canine/Canis_familiaris.CanFam3.1.98.sorted.gff3.gz.tbi',
-            displayMode: 'EXPANDED',
-            color: '#005a9c',
-          },
+          track,
           {
             name: 'Tumor Alignments',
             type: 'alignment',
@@ -160,6 +161,45 @@ const IgvBrowser = ({
             colorBy: 'strand',
             viewAsPairs: true,
             coverageThreshold: 0.2,
+            visibilityWindow: 300000,
+            getPopupData: function (feature: any) {
+              const data: { name: string; value: string }[] = [];
+              if (!feature) return data;
+
+              // Core read fields
+              const coreFields: [string, keyof typeof feature][] = [
+                ['Read Name', 'readName'],
+                ['Chr', 'chr'],
+                ['Start', 'start'],
+                ['End', 'end'],
+                ['Strand', 'strand'],
+                ['MAPQ', 'mq'],
+                ['CIGAR', 'cigar'],
+                ['Flags', 'flags'],
+              ];
+
+              for (const [label, key] of coreFields) {
+                if (feature[key] != null) {
+                  data.push({ name: label, value: String(feature[key]) });
+                }
+              }
+
+              // BAM tags - safely handle object or Map
+              if (feature.tags) {
+                const tags = feature.tags;
+                if (tags instanceof Map) {
+                  tags.forEach((v: any, k: string) => {
+                    data.push({ name: k, value: String(v) });
+                  });
+                } else if (typeof tags === 'object') {
+                  Object.entries(tags).forEach(([k, v]) => {
+                    data.push({ name: k, value: String(v) });
+                  });
+                }
+              }
+
+              return data;
+            },
           },
         ],
       };
