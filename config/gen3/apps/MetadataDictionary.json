@@ -6,9 +6,9 @@
       "definitionsFieldName": "subject_metadata_elements"
     },
     {
-      "label": "Study Metadata",
-      "schemaID": "study_minimal_metadata_schema",
-      "definitionsFieldName": "study_metadata_elements"
+      "label": "Subject Object Metadata",
+      "schemaID": "subject_object_minimal_metadata_schema",
+      "definitionsFieldName": "subject_object_metadata_elements"
     }
   ]
 }
