@@ -133,7 +133,7 @@ const PLPContainer = () => {
             <React.Fragment key={state.jobName}>
               <DismissibleMessage
                 title={"Success"}
-                description={`Workflow [${state.jobName}] submitted successfully!`}
+                description={`Workflow [${state.jobName}] ID:[${state.workflowSubmissionId}] submitted successfully!`}
                 messageType={"success"}
               />
             </React.Fragment>
@@ -248,7 +248,7 @@ const PLPContainer = () => {
                 data-tour="next-button"
                 className="GWASUI-navBtn GWASUI-navBtn__next"
                 onClick={() => {
-                  dispatch({ type: ACTIONS.SET_WORKFLOW_SUBMISSION_STATUS, payload: ''});
+                  dispatch({ type: ACTIONS.SET_WORKFLOW_SUBMISSION_STATUS, payload: {status: '', response: null}});
                   dispatch({ type: ACTIONS.SHOW_JOB_SUBMIT_MODAL });
                 }}
                 disabled={!nextButtonEnabled}

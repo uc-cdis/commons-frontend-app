@@ -25,6 +25,7 @@ export interface State {
   showJobSubmitModal: boolean;
   jobName: string;
   workflowSubmissionStatus: string | null;
+  workflowSubmissionId: string | null;
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -78,7 +79,7 @@ const reducer = (state: State, action: Action): State => {
     case ACTIONS.SET_SELECTED_MODEL_PARAMETERS:
       return { ...state, modelParameters: action.payload };
     case ACTIONS.SET_WORKFLOW_SUBMISSION_STATUS:
-      return { ...state, workflowSubmissionStatus: action.payload };
+      return { ...state, workflowSubmissionStatus: action.payload.status, workflowSubmissionId: action.payload.response };
     default:
       throw new Error(`Unknown action passed to reducer: ${action}`);
   }

@@ -123,7 +123,7 @@ const JobSubmitModal: React.FC<Props> = ({
       // Dispatch success-related actions
       dispatch({
         type: ACTIONS.SET_WORKFLOW_SUBMISSION_STATUS,
-        payload: 'success',
+        payload: {status: 'success', response: responseData},
       });
       dispatch({ type: ACTIONS.HIDE_JOB_SUBMIT_MODAL });
     } catch (error: any) {
@@ -131,7 +131,7 @@ const JobSubmitModal: React.FC<Props> = ({
       // Dispatch error-related actions
       dispatch({
         type: ACTIONS.SET_WORKFLOW_SUBMISSION_STATUS,
-        payload: 'error',
+        payload: {status: 'error', response: error},
       });
       console.error('Error submitting workflow:', error);
     } finally {

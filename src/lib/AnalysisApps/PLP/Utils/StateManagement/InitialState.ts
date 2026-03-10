@@ -17,6 +17,7 @@ const initialState = {
   showJobSubmitModal: false,
   jobName: '',
   workflowSubmissionStatus: null,
+  workflowSubmissionId: null,
   selectedTeamProject: '',
 };
 
