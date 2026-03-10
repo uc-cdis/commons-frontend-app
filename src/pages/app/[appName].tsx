@@ -22,16 +22,9 @@ const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
   const router = useRouter();
   const appName = getAppName(router);
 
-  const GdcApp = useCoreSelector(
+  const Gen3App = useCoreSelector(
     () => selectGen3AppByName(appName), // TODO update ById to ByName
   ) as React.ElementType;
-
-  if (!GdcApp)
-    return (
-      <div className="text-utility-warning font-bold m-10 border-base-darkest">
-        App not found
-      </div>
-    );
 
   return (
     <NavPageLayout
@@ -43,7 +36,7 @@ const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
         ...(config?.headerMetadata ? config.headerMetadata : {}),
       }}
     >
-      {GdcApp && <GdcApp {...config} />}
+      {Gen3App && <Gen3App {...config} />}
     </NavPageLayout>
   );
 };
@@ -65,6 +58,7 @@ export const getServerSideProps: GetServerSideProps<
     const config: any = await ContentSource.getContentDatabase().get(
       `${GEN3_COMMONS_NAME}/apps/${appName}.json`,
     );
+
     return {
       props: {
         ...(await getNavPageLayoutPropsFromConfig()),

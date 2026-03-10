@@ -30,7 +30,7 @@ COPY ./start.sh ./
 
 # Build and prune
 RUN npm run build && \
-    npm prune --production
+    npm prune --omit=dev;
 
 # Production stage
 FROM node:24.13.0-trixie-slim AS runner
