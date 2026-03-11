@@ -41,6 +41,7 @@ const AttritionTableWithHooks = () => {
         datasetObservationWindow={state.datasetObservationWindow}
         selectedOutcomeCohort={state.selectedOutcomeCohort}
         outcomeObservationWindow={state.outcomeObservationWindow}
+        removeIndividualsWithPriorOutcome={state.removeIndividualsWithPriorOutcome}
         selectedTeamProject={state.selectedTeamProject}
         minimumCovariateOccurrence={state.minimumCovariateOccurrence}
         percentageOfDataToUseAsTest={25}

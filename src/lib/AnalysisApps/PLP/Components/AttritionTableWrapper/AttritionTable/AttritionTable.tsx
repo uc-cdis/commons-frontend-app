@@ -10,6 +10,7 @@ interface AttritionTableProps {
   datasetObservationWindow: number;
   selectedOutcomeCohort: cohort;
   outcomeObservationWindow: number;
+  removeIndividualsWithPriorOutcome: boolean;
   percentageOfDataToUseAsTest: number | null;
 }
 
@@ -37,6 +38,7 @@ export const AttritionTable: React.FC<AttritionTableProps> = ({
   datasetObservationWindow,
   selectedOutcomeCohort,
   outcomeObservationWindow,
+  removeIndividualsWithPriorOutcome,
   percentageOfDataToUseAsTest,
 }) => {
   const { sourceId } = useSourceContext();
@@ -44,7 +46,7 @@ export const AttritionTable: React.FC<AttritionTableProps> = ({
   const descriptions = [
     'Initial data cohort',
     `Observation window (${datasetObservationWindow} days)`,
-    `Time-at-risk (${outcomeObservationWindow} days)`,
+    `Time-at-risk (${outcomeObservationWindow} days), Remove prior (${removeIndividualsWithPriorOutcome})`,
     `Training set (${percentageOfDataToUseAsTest? 100-percentageOfDataToUseAsTest : '...'}%)`,
   ];
 
@@ -117,7 +119,7 @@ export const AttritionTable: React.FC<AttritionTableProps> = ({
     if (! (selectedStudyPopulationCohort && selectedOutcomeCohort && datasetObservationWindow && outcomeObservationWindow) ) {
       return null;
     }
-    const endpoint = CohortsEndpoint + `/${sourceId}/by-cohort-definition-ids/${selectedStudyPopulationCohort.cohort_definition_id}/${selectedOutcomeCohort.cohort_definition_id}/by-observation-window-1st-cohort/${datasetObservationWindow}/by-outcome-window-2nd-cohort/${outcomeObservationWindow}`;
+    const endpoint = CohortsEndpoint + `/${sourceId}/by-cohort-definition-ids/${selectedStudyPopulationCohort.cohort_definition_id}/${selectedOutcomeCohort.cohort_definition_id}/by-observation-window-1st-cohort/${datasetObservationWindow}/by-outcome-window-2nd-cohort/${outcomeObservationWindow}/remove-prior-outcome/${removeIndividualsWithPriorOutcome}`;
     const response = await fetch(endpoint, {
       method: 'GET',
     });
@@ -211,6 +213,7 @@ export const AttritionTable: React.FC<AttritionTableProps> = ({
     datasetObservationWindow,
     selectedOutcomeCohort,
     outcomeObservationWindow,
+    removeIndividualsWithPriorOutcome,
     percentageOfDataToUseAsTest,
   ]);
 

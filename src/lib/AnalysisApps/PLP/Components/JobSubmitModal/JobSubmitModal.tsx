@@ -12,6 +12,7 @@ interface Props {
   datasetObservationWindow: number;
   selectedOutcomeCohort: cohort;
   outcomeObservationWindow: number;
+  removeIndividualsWithPriorOutcome: boolean;
   selectedTeamProject: string;
   minimumCovariateOccurrence: number;
   percentageOfDataToUseAsTest: number;
@@ -34,6 +35,7 @@ const JobSubmitModal: React.FC<Props> = ({
   datasetObservationWindow,
   selectedOutcomeCohort,
   outcomeObservationWindow,
+  removeIndividualsWithPriorOutcome,
   selectedTeamProject,
   minimumCovariateOccurrence,
   percentageOfDataToUseAsTest,
@@ -91,7 +93,7 @@ const JobSubmitModal: React.FC<Props> = ({
         min_time_at_risk: 364,  // TODO - advanced option
         include_all_outcomes:  true, // TODO - advanced option
         first_exposure_only: false, // TODO - advanced option
-        remove_subjects_with_prior_outcome: false, // TODO - advanced option
+        remove_subjects_with_prior_outcome: removeIndividualsWithPriorOutcome,
         source_id: sourceId,
         covariate_min_fraction: minimumCovariateOccurrence,
         test_fraction: percentageOfDataToUseAsTest/100,
@@ -206,6 +208,14 @@ const JobSubmitModal: React.FC<Props> = ({
                 </td>
                 <td className="align-top">
                   {outcomeObservationWindow} days
+                </td>
+              </tr>
+              <tr>
+                <td className="font-semibold pr-4 text-right align-top whitespace-nowrap">
+                  Remove indiv. with prior outcome:
+                </td>
+                <td className="align-top">
+                  {removeIndividualsWithPriorOutcome ? 'Yes' : 'No'}
                 </td>
               </tr>
               <tr>

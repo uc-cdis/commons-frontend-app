@@ -4,6 +4,7 @@ const ACTIONS = {
   SET_DATASET_OBSERVATION_WINDOW: 'setDatasetObservationWindow',
   SET_DATASET_REMAINING_SIZE: 'setDatasetRemainingSize',
   SET_OUTCOME_OBSERVATION_WINDOW: 'setOutcomeObservationWindow',
+  SET_REMOVE_INDIVIDUALS_WITH_PRIOR_OUTCOME: 'setRemoveIndividualsWithPriorOutcome',
   SET_MINIMUM_COVARIATE_OCCURRENCE: 'setMinimumCovariateOccurrence',
   SET_USE_ALL_COVARIATES: 'setUseAllCovariates',
   SET_NUMBER_OF_CROSS_VALIDATION_FOLDS: 'setNumberOfCrossValidationFolds',

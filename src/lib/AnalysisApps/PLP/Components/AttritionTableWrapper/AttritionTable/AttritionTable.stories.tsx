@@ -65,6 +65,7 @@ const AttritionTableWithHooks = () => {
         datasetObservationWindow={365}
         selectedOutcomeCohort={selectedOutcomeCohort}
         outcomeObservationWindow={365}
+        removeIndividualsWithPriorOutcome={false}
         percentageOfDataToUseAsTest={25}
       />
     </SourceContextProvider>
@@ -89,7 +90,7 @@ export const AttritionTableMockedSuccess: Story = {
         http.get(CohortsEndpoint + '/:sourceId/by-cohort-definition-ids/:cohort1_definition_id/:cohort2_definition_id/by-observation-window-1st-cohort/:observationwindow', async () => {
           return HttpResponse.json(TestStatsData2);
         }),
-        http.get(CohortsEndpoint + '/:sourceId/by-cohort-definition-ids/:cohort1_definition_id/:cohort2_definition_id/by-observation-window-1st-cohort/:observationwindow/by-outcome-window-2nd-cohort/:outcomeWindow2ndCohort', async () => {
+        http.get(CohortsEndpoint + '/:sourceId/by-cohort-definition-ids/:cohort1_definition_id/:cohort2_definition_id/by-observation-window-1st-cohort/:observationwindow/by-outcome-window-2nd-cohort/:outcomeWindow2ndCohort/remove-prior-outcome/:removeIndividualsWithPriorOutcome', async () => {
           return HttpResponse.json(TestStatsData3);
         }),
       ],
