@@ -24,7 +24,7 @@ const TableData = [
     wf_name: 'User Added WF Name 3',
     name: 'Workflow 3',
     gen3username: 'janedoe@aol.com',
-    startedAt: '2022-02-16T10:00:00Z',
+    startedAt: '2026-03-10T20:08:03Z',
     finishedAt: null,
     phase: 'Running',
     submittedAt: '2022-02-16T10:30:00Z',
