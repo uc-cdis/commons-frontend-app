@@ -1,0 +1,28 @@
+name: Update package dependencies
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+
+jobs:
+  update-package-dependencies:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.title contains 'bump @gen3/frontend'
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.14.0'
+      - name: Install Dependencies
+        run: npm install
+      - name: Update @gen3/core and @gen3/toolsff
+        run: |
+          npm install @gen3/core@latest @gen3/toolsff@latest
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -am "Update @gen3/core and @gen3/toolsff"
+          git push
