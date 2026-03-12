@@ -4,6 +4,7 @@ on: pull_request
 
 jobs:
   integration_tests:
+    if: ${{ !github.event.repository.fork }}
     name: Integration tests
     uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@master
     with:
