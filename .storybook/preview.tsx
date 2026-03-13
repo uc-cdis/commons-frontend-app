@@ -1,13 +1,28 @@
 import React from 'react';
 import type { Preview } from '@storybook/nextjs';
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, mergeThemeOverrides } from '@mantine/core';
+import { GEN3_COMMONS_NAME } from '@gen3/core';
+import { TenStringArray, createMantineTheme } from '@gen3/frontend';
 import { initialize, mswLoader } from 'msw-storybook-addon';
-import theme from '../src/mantineTheme';
 
 import '../src/styles/globals.css';
 import '@fontsource/montserrat';
 import '@fontsource/source-sans-pro';
 import '@fontsource/poppins';
+const themeColors: Record<string, TenStringArray> = require(`../config/${GEN3_COMMONS_NAME}/themeColors.json`);
+
+
+
+
+const gen3ThemeDynamic = createMantineTheme(
+  {
+    heading: ['Poppins', 'sans-serif'],
+    content: ['Poppins', 'sans-serif'],
+    fontFamily: 'Poppins',
+  },
+  themeColors
+);
+const mantineTheme = mergeThemeOverrides(gen3ThemeDynamic);
 
 /*
  * Initializes MSW
@@ -32,7 +47,7 @@ const preview: Preview = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <MantineProvider theme={theme}>
+      <MantineProvider theme={mantineTheme}>
         <Story />
       </MantineProvider>
     ),

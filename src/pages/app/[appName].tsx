@@ -22,7 +22,7 @@ const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
   const router = useRouter();
   const appName = getAppName(router);
 
-  const GdcApp = useCoreSelector(
+  const Gen3App = useCoreSelector(
     () => selectGen3AppByName(appName), // TODO update ById to ByName
   ) as React.ElementType;
 
@@ -36,7 +36,7 @@ const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
         ...(config?.headerMetadata ? config.headerMetadata : {}),
       }}
     >
-      {GdcApp && <GdcApp {...config} />}
+      {Gen3App && <Gen3App {...config} />}
     </NavPageLayout>
   );
 };
