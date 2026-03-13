@@ -25,6 +25,9 @@ const DefineDatasetObservationWindow = ({
       <NumberInput
         label="Dataset observation window "
         placeholder="Enter number of days"
+        classNames={{
+          section: 'text-gray-500'
+        }}
         w={400}
         min={0}
         value={datasetObservationWindow}

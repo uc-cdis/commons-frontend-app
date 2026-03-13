@@ -23,7 +23,7 @@ const TestSourcesData = {
 }
 
 const TestOverlapData = {
-  cohort_overlap: { case_control_overlap: 111 }
+  cohort_overlap: { case_control_overlap: 90 }
 }
 
 const TestStatsData1 = {
@@ -31,11 +31,15 @@ const TestStatsData1 = {
 }
 
 const TestStatsData2 = {
-  cohort_definition_and_stats: { size: 107 }
+  cohort_definition_and_stats: { size: 87 }
 }
 
 const TestStatsData3 = {
-  cohort_definition_and_stats: { size: 105 }
+  cohort_definition_and_stats: { size: 85 }
+}
+
+const TestStatsData4 = {
+  cohort_definition_and_stats: { size: 5 }
 }
 
 interface cohort { // TODO - centralize this interface
@@ -65,6 +69,7 @@ const AttritionTableWithHooks = () => {
         datasetObservationWindow={365}
         selectedOutcomeCohort={selectedOutcomeCohort}
         outcomeObservationWindow={365}
+        removeIndividualsWithPriorOutcome={true}
         percentageOfDataToUseAsTest={25}
       />
     </SourceContextProvider>
@@ -91,6 +96,9 @@ export const AttritionTableMockedSuccess: Story = {
         }),
         http.get(CohortsEndpoint + '/:sourceId/by-cohort-definition-ids/:cohort1_definition_id/:cohort2_definition_id/by-observation-window-1st-cohort/:observationwindow/by-outcome-window-2nd-cohort/:outcomeWindow2ndCohort', async () => {
           return HttpResponse.json(TestStatsData3);
+        }),
+        http.get(CohortsEndpoint + '/:sourceId/by-cohort-definition-ids/:cohort1_definition_id/:cohort2_definition_id/by-observation-window-1st-cohort/:observationwindow/and-cohort2-entry-first', async () => {
+          return HttpResponse.json(TestStatsData4);
         }),
       ],
     },

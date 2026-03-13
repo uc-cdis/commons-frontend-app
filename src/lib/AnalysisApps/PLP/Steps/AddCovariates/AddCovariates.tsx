@@ -27,6 +27,9 @@ const AddCovariates = ({
         min={0.1}
         step={0.1}
         defaultValue={0.1}
+        classNames={{
+          section: 'text-gray-500'
+        }}
         rightSection="%"
         value={minimumCovariateOccurrence * 100} // Convert decimal to percentage
         onChange={(value) => {

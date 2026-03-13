@@ -38,6 +38,9 @@ const DefineTestAndValidationDatasets = ({
         min={2}
         max={15}
         value={numberOfCrossValidationFolds}
+        classNames={{
+          section: 'text-gray-500'
+        }}
         rightSection="folds"
         rightSectionWidth={50}
         onChange={(e) => handleNumberOfCrossValidationFolds(toInteger(e))}
@@ -49,6 +52,9 @@ const DefineTestAndValidationDatasets = ({
         min={0}
         max={99}
         value={percentageOfDataToUseAsTest}
+        classNames={{
+          section: 'text-gray-500'
+        }}
         rightSection="%"
         onChange={(value) => {
           handlePercentageOfDataToUseAsTest(toNumber(value));

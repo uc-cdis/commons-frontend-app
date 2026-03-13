@@ -11,6 +11,7 @@ export interface State {
   datasetRemainingSize: number | null;
   selectedOutcomeCohort: any;
   outcomeObservationWindow: number;
+  removeIndividualsWithPriorOutcome: boolean;
   minimumCovariateOccurrence: number;
   useAllCovariates: boolean;
   numberOfCrossValidationFolds: number,
@@ -40,6 +41,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, datasetRemainingSize: action.payload };
     case ACTIONS.SET_OUTCOME_OBSERVATION_WINDOW:
       return { ...state, outcomeObservationWindow: action.payload };
+    case ACTIONS.SET_REMOVE_INDIVIDUALS_WITH_PRIOR_OUTCOME:
+      return { ...state, removeIndividualsWithPriorOutcome: action.payload };  
     case ACTIONS.SET_MINIMUM_COVARIATE_OCCURRENCE:
       return { ...state, minimumCovariateOccurrence: action.payload };
     case ACTIONS.SET_USE_ALL_COVARIATES:

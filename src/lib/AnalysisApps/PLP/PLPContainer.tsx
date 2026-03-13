@@ -79,11 +79,13 @@ const PLPContainer = () => {
           <div>
             In this step, you can define an outcome period in days. This period specifies how many days to look for the outcome
             of interest to occur for each patient relative to their cohort entry date in the initial dataset.
-            This is also known as the time-at-risk window.
+            This is also known as the outcome window or time-at-risk window.
+            Here you can also choose remove any individuals that have any record of the outcome in the period <i>before</i> the outcome window.
           </div>
           <br/>
           <DefineOutcomeObservationWindow
             outcomeObservationWindow={state.outcomeObservationWindow}
+            removeIndividualsWithPriorOutcome={state.removeIndividualsWithPriorOutcome}
             dispatch={dispatch}
           />
           <br/>
@@ -157,6 +159,7 @@ const PLPContainer = () => {
               datasetObservationWindow={state.datasetObservationWindow}
               selectedOutcomeCohort={state.selectedOutcomeCohort}
               outcomeObservationWindow={state.outcomeObservationWindow}
+              removeIndividualsWithPriorOutcome={state.removeIndividualsWithPriorOutcome}
               selectedTeamProject={state.selectedTeamProject}
               minimumCovariateOccurrence={state.minimumCovariateOccurrence}
               percentageOfDataToUseAsTest={state.percentageOfDataToUseAsTest}
@@ -210,6 +213,7 @@ const PLPContainer = () => {
         datasetObservationWindow={state.datasetObservationWindow}
         selectedOutcomeCohort={state.selectedOutcomeCohort}
         outcomeObservationWindow={state.outcomeObservationWindow}
+        removeIndividualsWithPriorOutcome={state.removeIndividualsWithPriorOutcome}
         percentageOfDataToUseAsTest={state.percentageOfDataToUseAsTest}
       />
       <div data-testid="GWASApp" className="p-4">
