@@ -8,6 +8,6 @@ NODE_ENV=production
 PORT=3000
 NEXT_TELEMETRY_DISABLED=1
 HOSTNAME=0.0.0.0
-ls -la config/$GEN3_COMMONS_NAME/ 2>/dev/null || echo "Config not yet mounted"
+ls -la config/gen3/ 2>/dev/null || echo "Config not yet mounted"
 
 exec node .next/standalone/server.js
