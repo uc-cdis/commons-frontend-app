@@ -10,7 +10,8 @@ on:
 jobs:
   update-package-dependencies:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.title contains 'bump @gen3/frontend'
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.event.pull_request.title contains 'bump @gen3/frontend'}}
     steps:
       - uses: actions/checkout@v6
       - name: Set up Node
