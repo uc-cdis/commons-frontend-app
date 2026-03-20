@@ -215,6 +215,7 @@ const PLPContainer = () => {
         outcomeObservationWindow={state.outcomeObservationWindow}
         removeIndividualsWithPriorOutcome={state.removeIndividualsWithPriorOutcome}
         percentageOfDataToUseAsTest={state.percentageOfDataToUseAsTest}
+        isOpen={state.showExpandedAttritionTable}
       />
       <div data-testid="GWASApp" className="p-4">
         <div className="steps-wrapper">
@@ -252,6 +253,7 @@ const PLPContainer = () => {
                 data-tour="next-button"
                 className="GWASUI-navBtn GWASUI-navBtn__next"
                 onClick={() => {
+                  dispatch({ type: ACTIONS.SET_ATTRITION_TABLE_OPEN, payload: true });
                   dispatch({ type: ACTIONS.SET_WORKFLOW_SUBMISSION_STATUS, payload: {status: '', response: null}});
                   dispatch({ type: ACTIONS.SHOW_JOB_SUBMIT_MODAL });
                 }}

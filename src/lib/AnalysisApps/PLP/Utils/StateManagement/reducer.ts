@@ -27,6 +27,7 @@ export interface State {
   jobName: string;
   workflowSubmissionStatus: string | null;
   workflowSubmissionId: string | null;
+  showExpandedAttritionTable: boolean;
 };
 
 const reducer = (state: State, action: Action): State => {
@@ -83,6 +84,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, modelParameters: action.payload };
     case ACTIONS.SET_WORKFLOW_SUBMISSION_STATUS:
       return { ...state, workflowSubmissionStatus: action.payload.status, workflowSubmissionId: action.payload.response };
+    case ACTIONS.SET_ATTRITION_TABLE_OPEN:
+      return { ...state, showExpandedAttritionTable: action.payload };
     default:
       throw new Error(`Unknown action passed to reducer: ${action}`);
   }

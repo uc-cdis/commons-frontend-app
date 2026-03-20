@@ -29,6 +29,7 @@ const ACTIONS = {
   SET_SELECTED_MODEL: 'setSelectedModel',
   SET_SELECTED_MODEL_PARAMETERS: 'setSelectedModelParameters',
   SET_WORKFLOW_SUBMISSION_STATUS: 'setWorkflowSubmissionStatus',
+  SET_ATTRITION_TABLE_OPEN: 'setAttritionTableOpen',
 };
 
 export default ACTIONS;
