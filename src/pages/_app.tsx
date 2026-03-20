@@ -141,6 +141,8 @@ Gen3App.getInitialProps = async (
     dataCommons: process.env.NEXT_PUBLIC_DATACOMMONS || 'commons_frontend_app',
   };
 
+  console.log('publicConfig', publicConfig);
+
   try {
     const res = await loadContent();
     return {
