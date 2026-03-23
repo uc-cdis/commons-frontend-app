@@ -26,6 +26,8 @@ const AppsPage = ({ headerProps, footerProps, config }: AppConfig) => {
     () => selectGen3AppByName(appName), // TODO update ById to ByName
   ) as React.ElementType;
 
+  console.log("loading app", appName, 'app', Gen3App);
+
   return (
     <NavPageLayout
       {...{ headerProps, footerProps }}
@@ -53,6 +55,8 @@ export const getServerSideProps: GetServerSideProps<
   NavPageLayoutProps
 > = async (context) => {
   const appName = context.query.appName as string;
+
+  console.log("loading app", appName);
 
   try {
     const config: any = await ContentSource.getContentDatabase().get(

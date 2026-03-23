@@ -13,6 +13,7 @@ import {
   RegisteredIcons,
   registerExplorerDefaultCellRenderers,
   registerMetadataSchemaApp,
+  registerIGVApp,
   SessionConfiguration,
   TenStringArray,
   Fonts,
@@ -76,6 +77,7 @@ const Gen3App = ({
       registerDefaultRemoteSupport();
       registerMetadataSchemaApp();
       registerCohortDiscoveryApp();
+      registerIGVApp();
       registerExplorerDefaultCellRenderers();
       registerCohortBuilderDefaultPreviewRenderers();
       registerCohortTableCustomCellRenderers();
