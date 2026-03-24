@@ -3,18 +3,51 @@ name: Build Image and Push to Quay
 on: push
 
 jobs:
+  compute_tag:
+    name: Compute tag name
+    runs-on: ubuntu-latest
+    outputs:
+      OVERRIDE_TAG_NAME: ${{ steps.set_tag.outputs.OVERRIDE_TAG_NAME }}
+    steps:
+      - name: Compute OVERRIDE_TAG_NAME
+        id: set_tag
+        shell: bash
+        run: |
+          CLEAN_BRANCH=$(echo "$GITHUB_REF_NAME" | tr '/' '_')
+          echo "OVERRIDE_TAG_NAME=${CLEAN_BRANCH}" >> "$GITHUB_OUTPUT"
+
+  select_build:
+    name: Select build settings
+    runs-on: ubuntu-latest
+    outputs:
+      DOCKERFILE_LOCATION: ${{ steps.pick.outputs.DOCKERFILE_LOCATION }}
+    steps:
+      - name: Pick Dockerfile
+        id: pick
+        shell: bash
+        run: |
+          if [ "${{ github.event.repository.fork }}" = "true" ]; then
+            echo "DOCKERFILE_LOCATION=Dockerfile.production" >> "$GITHUB_OUTPUT"
+          else
+            echo "DOCKERFILE_LOCATION=Dockerfile.config" >> "$GITHUB_OUTPUT"
+          fi
+
   Security:
     name: Security Pipeline
     uses: uc-cdis/.github/.github/workflows/securitypipeline.yaml@master
     with:
       python-poetry: 'false'
     secrets: inherit # pragma: allowlist-secret
+
   ci:
     name: Build Image and Push to Quay
+    needs:
+      - compute_tag
+      - select_build
     uses: uc-cdis/.github/.github/workflows/image_build_push_native.yaml@master
     with:
       USE_QUAY_ONLY: true
-      DOCKERFILE_LOCATION: "Dockerfile.config"
+      DOCKERFILE_LOCATION: ${{ needs.select_build.outputs.DOCKERFILE_LOCATION }}
       OVERRIDE_TAG_NAME: ${{ needs.compute_tag.outputs.OVERRIDE_TAG_NAME }}
     secrets:
       ECR_AWS_ACCESS_KEY_ID: ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}
