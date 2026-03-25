@@ -1,5 +1,14 @@
 {
   "tools": [
+    {"title": "Train classic logistic regression models over clinical data from TCGA",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.png",
+      "image": "/images/apps/lr_TCGA.png",
+      "description": "5 year cancer survival predictions were performed by obtaining TCGA clinical data from GDC portal and training logistic regression models. Input data includes both demographics and cancer type and models were evaluated via AUC.",
+      "loginRequired": false,
+      "href": "/staticNotebook/logistical_regression_TCGA.html",
+      "btnText": "Show Analysis"
+    },
     {"title": "Metastasis free survival prediction using transcriptomics and proteomics data from the APOLLO-LUAD study",
       "type": "notebook",
       "icon": "/images/apps/icons/jupyter.png",
