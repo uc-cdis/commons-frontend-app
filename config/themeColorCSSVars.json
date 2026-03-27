@@ -69,7 +69,7 @@
   "base-contrast-light": "var(--mantine-color-base-contrast-3)",
   "base-vivid": "var(--mantine-color-base-4)",
   "base-contrast-vivid": "var(--mantine-color-base-contrast-4)",
-  "base": "var(--mantine-color-base-5)",
+  "base-default": "var(--mantine-color-base-5)",
   "base-contrast": "var(--mantine-color-base-contrast-5)",
   "base-dark": "var(--mantine-color-base-6)",
   "base-contrast-dark": "var(--mantine-color-base-contrast-6)",
