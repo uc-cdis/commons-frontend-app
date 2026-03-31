@@ -48,22 +48,22 @@
     "min": "#fefefe"
   },
   "accent": {
-    "max": "#ededf3",
-    "lightest": "#c3c3d8",
-    "lighter": "#9a9abd",
-    "light": "#7070a2",
+    "max": "#e6eff3",
+    "lightest": "#acccd8",
+    "lighter": "#73a9bd",
+    "light": "#3985a2",
     "DEFAULT": "#006287",
-    "vivid": "#3d3d91",
-    "dark": "#373769",
-    "darker": "#27274a",
-    "darkest": "#17172c",
-    "min": "#07070d"
+    "vivid": "#006287",
+    "dark": "#004c69",
+    "darker": "#00364a",
+    "darkest": "#00202c",
+    "min": "#000a0d"
   },
   "accent-contrast": {
     "max": "#111111",
     "lightest": "#111111",
     "lighter": "#111111",
-    "light": "#fefefe",
+    "light": "#111111",
     "DEFAULT": "#fefefe",
     "vivid": "#fefefe",
     "dark": "#fefefe",
@@ -79,9 +79,9 @@
     "DEFAULT": "#ECECEC",
     "vivid": "#eeeaea",
     "dark": "#b7b7b7",
-    "darker": "#111111",
-    "darkest": "#111111",
-    "min": "#111111"
+    "darker": "#828282",
+    "darkest": "#4d4d4d",
+    "min": "#181818"
   },
   "base-contrast": {
     "max": "#111111",
@@ -190,62 +190,5 @@
     "category2": "#000000",
     "category3": "#f1f1f1",
     "category4": "#1b1b1b"
-  },
-  "chart": {
-    "max": "#e7f4f6",
-    "lightest": "#b0dde0",
-    "lighter": "#7ac5cb",
-    "light": "#43adb6",
-    "DEFAULT": "#0d95A1",
-    "vivid": "#049caa",
-    "dark": "#0a737d",
-    "darker": "#075259",
-    "darkest": "#043034",
-    "min": "#010f10"
-  },
-  "chart-contrast": {
-    "max": "#111111",
-    "lightest": "#111111",
-    "lighter": "#111111",
-    "light": "#111111",
-    "DEFAULT": "#111111",
-    "vivid": "#111111",
-    "dark": "#fefefe",
-    "darker": "#fefefe",
-    "darkest": "#fefefe",
-    "min": "#fefefe"
-  },
-  "table": {
-    "max": "#ffffff",
-    "lightest": "#ffffff",
-    "lighter": "#ffffff",
-    "light": "#ffffff",
-    "DEFAULT": "#ffffff",
-    "vivid": "#ffffff",
-    "dark": "#c6c6c6",
-    "darker": "#8c8c8c",
-    "darkest": "#535353",
-    "min": "#191919"
-  },
-  "table-contrast": {
-    "max": "#111111",
-    "lightest": "#111111",
-    "lighter": "#111111",
-    "light": "#111111",
-    "DEFAULT": "#111111",
-    "vivid": "#111111",
-    "dark": "#111111",
-    "darker": "#111111",
-    "darkest": "#fefefe",
-    "min": "#fefefe"
-  },
-  "navigation": {
-    "footer": "#111111",
-    "topbar_hover": "#FFFFFF",
-    "light": "#111111",
-    "DEFAULT": "#111111",
-    "dark": "#111111",
-    "darker": "#111111",
-    "darkest": "#111111",
-    "min": "#111111"}
+  }
 }
