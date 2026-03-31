@@ -1,31 +1,32 @@
 {
   "tools": [
-    {
-      "title": "Cohort Discovery",
+    {"title": "GDC QAG",
       "type": "application",
-      "icon": "/images/apps/icons/gen3_app.png",
-      "image": "/images/apps/cohort_discovery.png",
-      "description": "The cohort discovery application is designed to assist researchers, clinicians, and data scientists in quickly identifying and exploring subsets of individuals from large datasets based on specific criteria.",
+      "icon": "/images/apps/icons/ai_spark.svg",
+      "image": "/images/apps/gdc_qag.png",
+      "description": "Get specific answers to complex, multi-step, free-text genomics questions using factually grounded information retrieved from the GDC.",
       "loginRequired": false,
-      "href": "/app/CohortDiscovery"
+       "href": "/gradio/gdc-qag.m3aicommons.org",
+      "btnText": "Run Model"
     },
     {
-      "title": "Crosswalk",
+      "title": "Cohort Copilot",
       "type": "application",
-      "icon": "/images/apps/icons/gen3_app.png",
-      "image": "/images/apps/crosswalk.png",
-      "description": "Map a set of ids to a set of foreign ids.",
+      "icon": "/images/apps/icons/ai_spark.svg",
+      "image": "/images/apps/cohort_copilot_image.png",
+      "description": " Construct GDC cohorts using natural language queries describing the cases you're looking for. The resulting cohorts can be used with standard GDC utilities and APIs.",
       "loginRequired": false,
-      "href": "Crosswalk"
+      "href": "/gradio/gdc-cohort-copilot.m3aicommons.org",
+      "btnText": "Run Model"
     },
-    {
-      "title": "Clinical Data Analysis",
+    {"title": "Data Model Generator",
       "type": "application",
-      "icon": "/images/apps/icons/gen3_app.png",
-      "image": "/images/apps/ClinicalData.png",
-      "description": "Use clinical variables to perform basic statistical analysis of your cohort.",
+      "icon": "/images/apps/icons/ai_spark.svg",
+      "image": "/images/apps/data_model_generator.png",
+      "description": "AI tool to assist with data curation and harmonization. This model is a fined-tuned LoRA layer based on Llama-3.1-8B that is optimized for the specific task of generating structured data models in JSON format from a dump of tabular data files.",
       "loginRequired": false,
-      "href": "ClinicalDataAnalysis"
+      "href": "/gradio/uc-ctds-llama-data-model-generator-demo.hf.space/",
+      "btnText": "Run Model"
     }
   ]
 }

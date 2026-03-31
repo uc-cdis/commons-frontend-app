@@ -4,7 +4,7 @@ This is the base REPOSITORY for Gen3.2 data commons.
 
 
 ## Getting Started
-Gen3 Data Commons using the Gen3 Frontend Framework is a matter of the following:
+ Creating a Gen3 Data Commons web portal using the Gen3 Frontend Framework is a matter of the following:
 
 * create a clone of [Gen3 Data Commons Application](https://github.com/uc-cdis/commons-frontend-app/)  
 
