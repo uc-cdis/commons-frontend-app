@@ -1,0 +1,16 @@
+name: Sync from FEF Template Repo
+
+on:
+  # 1. Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # 2. Runs on a schedule (the 1st of the month and the 23rd to pick up any changes)
+  schedule:
+  - cron: '0 3 1,23 * *'
+
+jobs:
+  sync:
+    if: ${{ github.event.repository.fork }}
+    uses: uc-cdis/.github/.github/workflows/gen3_Sync_FeF.yaml@master
+    secrets:
+      GH_TOKEN: ${{ secrets.PLANXCYBORG_PAT }}
