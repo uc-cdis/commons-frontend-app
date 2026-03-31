@@ -11,6 +11,19 @@ import { RouteConfig } from '@gen3/frontend/server';
 const WILDCARD_ROUTE_KEY = '*';
 
 function getRouteRuleForPath(pathname: string, routeConfig: RouteConfig) {
+  // handle wildcards
+  // get subdirectory
+  const pathParts = pathname.split('/');
+  // has subdirectory
+  if (pathParts.length > 2) {
+    const startsWithPath = `/${pathParts[1]}`;
+    // look through config for subdirectory
+    const routeConfigMatch = Object.keys(routeConfig).find(key => key.startsWith(startsWithPath));
+    // check if subdirectory ends with wildcard
+    if (routeConfigMatch && routeConfigMatch.endsWith('(.*)')) {
+      return routeConfig?.[routeConfigMatch];
+    }
+  }
   return routeConfig?.[pathname] ?? routeConfig?.[WILDCARD_ROUTE_KEY];
 }
 
