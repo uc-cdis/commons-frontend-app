@@ -84,6 +84,10 @@ const nextConfig = {
           source: '/index/:path*',
           destination: `${GEN3_TARGET}/index/:path*`,
         },
+        {
+          source: '/login',
+          destination: `${GEN3_TARGET}/login`,
+        },
       ];
     } else {
       return [];
