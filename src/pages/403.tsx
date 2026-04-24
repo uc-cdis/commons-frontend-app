@@ -1,5 +1,5 @@
 import {
-    Custom403Page
+    Custom403Page,
     Custom403PageGetServerSideProps as getServerSideProps
 } from '@gen3/frontend';
 
