@@ -47,27 +47,23 @@ export async function middleware(req: NextRequest) {
   }
 
   const loginRequired = rule.loginRequired ?? true;
-  const needsAuthz = Array.isArray(rule?.authz) && rule?.authz.length > 0;
 
-  // Gen3 login check
-  const loginStatus = await getLoginStatus(req.headers.get('Cookie') || '');
-  const loggedIn = await isLoggedIn(loginStatus);
-
-  // Enforce login if required
-  if (loginRequired && !loggedIn) {
-    const loginUrl = new URL('/Login', req.url);
-    loginUrl.searchParams.set('referer', pathname);
-    return NextResponse.redirect(loginUrl);
+  if (!loginRequired) {
+    return NextResponse.next();
   }
+
+  const needsAuthz = Array.isArray(rule?.authz) && rule?.authz.length > 0;
 
   // If no authz resources configured, login is enough
   if (!needsAuthz) {
     return NextResponse.next();
   }
 
-  // if authz is required but we somehow aren't logged in,
-  // send to login (even though in practice loginRequired will almost
-  // always be true when authz is configured).
+  // Gen3 login check
+  const loginStatus = await getLoginStatus(req.headers.get('Cookie') || '');
+  const loggedIn = await isLoggedIn(loginStatus);
+
+  // Enforce login if required
   if (!loggedIn) {
     const loginUrl = new URL('/Login', req.url);
     loginUrl.searchParams.set('referer', pathname);
@@ -87,7 +83,7 @@ export async function middleware(req: NextRequest) {
   const allowed = rule?.authz!.some((needed) => resources.includes(needed));
   if (!allowed) {
     // Already logged in if required; they just lack authz for this resource
-    return NextResponse.redirect(new URL('/403', req.url));
+    return NextResponse.rewrite(new URL('/403', req.url));
   }
 
   return NextResponse.next();
