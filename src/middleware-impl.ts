@@ -59,7 +59,7 @@ export async function middleware(req: NextRequest) {
   const loggedIn = await isLoggedIn(loginStatus);
 
   // If no authz resources configured, login is enough
-  if (loggedIn && !needsAuthz) { // check if logged in
+  if (loggedIn && !needsAuthz) {
     return NextResponse.next();
   }
 
