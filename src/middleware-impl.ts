@@ -54,14 +54,14 @@ export async function middleware(req: NextRequest) {
 
   const needsAuthz = Array.isArray(rule?.authz) && rule?.authz.length > 0;
 
-  // If no authz resources configured, login is enough
-  if (!needsAuthz) {
-    return NextResponse.next();
-  }
-
   // Gen3 login check
   const loginStatus = await getLoginStatus(req.headers.get('Cookie') || '');
   const loggedIn = await isLoggedIn(loginStatus);
+
+  // If no authz resources configured, login is enough
+  if (loggedIn && !needsAuthz) { // check if logged in
+    return NextResponse.next();
+  }
 
   // Enforce login if required
   if (!loggedIn) {
