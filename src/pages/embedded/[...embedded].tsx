@@ -8,11 +8,11 @@ import {
   NavPageLayoutProps,
 } from '@gen3/frontend';
 
-const GradioApp = dynamic(() => import('../../components/GradioApp'));
+const EmbeddedApp = dynamic(() => import('../../components/EmbeddedApp'));
 
-const GradioAppsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
+const EmbeddedAppsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
   const router = useRouter();
-  const app = getGradioName(router);
+  const app = getEmbeddedName(router);
 
   return (
     <NavPageLayout
@@ -23,15 +23,15 @@ const GradioAppsPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
         key: 'gen3-ai-app-page',
       }}
     >
-      <GradioApp app={app} />
+      <EmbeddedApp app={app} />
     </NavPageLayout>
   );
 };
 
-const getGradioName = (router: NextRouter): string => {
-  const { gradio } = router.query;
-  if (typeof gradio === 'string') return gradio;
-  else if (typeof gradio === 'object') return gradio.join('/');
+const getEmbeddedName = (router: NextRouter): string => {
+  const { embedded } = router.query;
+  if (typeof embedded === 'string') return embedded;
+  else if (typeof embedded === 'object') return embedded.join('/');
 
 
   return 'notFound';
@@ -67,4 +67,4 @@ export const getServerSideProps: GetServerSideProps<
   }
 };
 
-export default GradioAppsPage;
+export default EmbeddedAppsPage;
