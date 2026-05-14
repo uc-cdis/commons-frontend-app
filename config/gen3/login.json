@@ -11,8 +11,8 @@
   ],
   "bottomContent": [
     {
-      "text": "Need access or onboarding support? Contact",
-      "email": "support@vectis.io",
+      "type": "markdown",
+      "text": "Need access or onboarding support? Contact [support@vectis.io](mailto:support@vectis.io)",
       "className": "text-center text-sm"
     }
   ],

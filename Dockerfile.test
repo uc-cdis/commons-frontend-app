@@ -10,6 +10,9 @@ WORKDIR /ci
 
 # Copy dependency files first for better caching
 COPY package.json package-lock.json ./
+COPY /.vendor/gen3-jupyter-workspaces-0.1.1.tgz .
+
+RUN npm install --save-dev ./gen3-jupyter-workspaces-0.1.1.tgz
 
 # Install ALL dependencies once (including dev deps for build)
 RUN npm config set fetch-retries 5 && \

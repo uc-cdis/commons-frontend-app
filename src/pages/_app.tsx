@@ -13,6 +13,7 @@ import {
   registerCohortDiscoveryApp,
   RegisteredIcons,
   registerMetadataSchemaApp,
+  registerIGVApp,
   SessionConfiguration,
   TenStringArray,
   Fonts,
@@ -201,9 +202,9 @@ Gen3App.getInitialProps = async (
 ): Promise<Gen3AppProps & AppInitialProps> => {
   const ctx = await App.getInitialProps(context);
   const publicConfig: PublicConfig = {
-    dataDogAppId: process.env.NEXT_PUBLIC_DATADOG_APPLICATION_ID || null,
-    dataDogClientToken: process.env.NEXT_PUBLIC_DATADOG_CLIENT_TOKEN || null,
-    dataCommons: process.env.NEXT_PUBLIC_DATACOMMONS || 'commons_frontend_app',
+    dataDogAppId: process.env.DATADOG_APPLICATION_ID || null,
+    dataDogClientToken: process.env.DATADOG_CLIENT_TOKEN || null,
+    dataCommons: process.env.DATACOMMONS || 'commons_frontend_app',
   };
 
   try {

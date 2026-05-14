@@ -83,7 +83,7 @@
     "darkest": "#3a2000",
     "min": "#140b00"
   },
-  "accent-warm-contrast": {
+  "accentWarm-contrast": {
     "max": "#111111",
     "lightest": "#111111",
     "lighter": "#111111",
@@ -95,19 +95,19 @@
     "darkest": "#fefefe",
     "min": "#fefefe"
   },
-  "accent-cool": {
-    "max": "#e6f0f5",
-    "lightest": "#a8cfe0",
-    "lighter": "#6aaeca",
-    "light": "#358db5",
-    "DEFAULT": "#007396",
-    "vivid": "#007da3",
-    "dark": "#005770",
-    "darker": "#003b4d",
-    "darkest": "#002A3A",
-    "min": "#000e13"
+  "accentCool": {
+    "max": "#e9eef4",
+    "lightest": "#b8c9db",
+    "lighter": "#87a4c2",
+    "light": "#567ea9",
+    "DEFAULT": "#255990",
+    "vivid": "#1c5999",
+    "dark": "#1d4570",
+    "darker": "#14314f",
+    "darkest": "#0c1d2f",
+    "min": "#04090e"
   },
-  "accent-cool-contrast": {
+  "accentCool-contrast": {
     "max": "#111111",
     "lightest": "#111111",
     "lighter": "#111111",
@@ -119,6 +119,17 @@
     "darkest": "#fefefe",
     "min": "#fefefe"
   },
+  "chart": {
+    "max": "#e7f4f6",
+    "lightest": "#b0dde0",
+    "lighter": "#7ac5cb",
+    "light": "#43adb6",
+    "DEFAULT": "#0d95A1",
+    "vivid": "#049caa",
+    "dark": "#0a737d",
+    "darker": "#075259",
+    "darkest": "#043034",
+    "min": "#010f10"
   "base": {
     "max": "#fdfcfb",
     "lightest": "#f7f5f4",
@@ -131,15 +142,15 @@
     "darkest": "#404040",
     "min": "#181818"
   },
-  "base-contrast": {
+  "chart-contrast": {
     "max": "#111111",
     "lightest": "#111111",
     "lighter": "#111111",
     "light": "#111111",
     "DEFAULT": "#111111",
     "vivid": "#111111",
-    "dark": "#111111",
-    "darker": "#111111",
+    "dark": "#fefefe",
+    "darker": "#fefefe",
     "darkest": "#fefefe",
     "min": "#fefefe"
   },
@@ -163,9 +174,9 @@
     "emergency": "#f1f1f1",
     "info": "#f1f1f1",
     "category1": "#f1f1f1",
-    "category2": "#1b1b1b",
-    "category3": "#111111",
-    "category4": "#f1f1f1"
+    "category2": "#000000",
+    "category3": "#f1f1f1",
+    "category4": "#1b1b1b"
   },
   "chart": {
     "max": "#eaf7fa",
