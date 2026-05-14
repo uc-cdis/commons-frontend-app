@@ -3,14 +3,14 @@
     "hideUnauthorizedLinks": false,
     "classNames": {
       "root": "pl-1 mr-6 bg-base-max text-primary opacity-100 hover:opacity-100 data-disabled:opacity-35 data-disabled:hover:text-primary data-disabled:hover:opacity-35",
-      "item": "py-2 px-4 hover:bg-secondary-darker hover:text-secondary-contrast-darker",
+      "item": "py-2 px-4 hover:bg-base-lightest hover:text-base-contrast",
       "navigationPanel": "bg-base-max text-primary",
       "icon": "data-disabled:opacity-50"
     },
     "logo": {
-      "src": "/icons/Vectis_Logo_Colored_LightTheme.svg",
-      "width": 112,
-      "height": 36,
+      "src": "/icons/gen3-dark.svg",
+      "width": 120,
+      "height": 60,
       "href": "/"
     },
     "items": [
@@ -18,59 +18,69 @@
         "icon": "gen3:query",
         "href": "/Discovery",
         "name": "Discovery",
-        "tooltip": "Use free-text search and tags to rapidly find relevant studies."
+        "tooltip": {
+          "authorized": "Use free-text search and tags to rapidly find relevant studies."
+        }
       },
       {
         "icon": "gen3:dictionary",
         "href": "/DataDictionary",
         "name": "Dictionary",
-        "tooltip": "The Data Dictionary serves to inform the data model and is updated as new data is ingested."
+        "tooltip": {
+          "authorized": "The Data Dictionary serves to inform the data model and is updated as new data is ingested."
+        }
       },
       {
         "icon": "gen3:exploration",
         "href": "/Explorer",
         "name": "Exploration",
-        "tooltip": "The Exploration Page enables discovery of the data at the subject level and features a cohort builder."
+        "tooltip": {
+          "authorized": "The Exploration Page enables discovery of the data at the subject level and features a cohort builder."
+        }
       },
       {
         "icon": "gen3:query",
         "href": "/Query",
         "name": "Query",
-        "tooltip": "Query the databases using GraphiQL."
+        "tooltip": {
+          "authorized": "Query the databases using GraphiQL."
+        }
       },
       {
         "icon": "gen3:analysis",
         "href": "/Analysis",
         "name": "Analysis",
-        "tooltip": "Learn how to use Jupyter Notebooks to explore and visualize data available by running a tutorial notebook, or use one of these examples as a launching point for your own custom analysis."
+        "tooltip": {
+          "authorized": "Learn how to use Jupyter Notebooks to explore and visualize data available by running a tutorial notebook, or use one of these examples as a launching point for your own custom analysis."
+        }
       },
       {
         "icon": "gen3:workspace",
-        "href": "/workspaces/jupyter",
+        "href": "/Workspace",
         "name": "Workspace",
-        "tooltip": "Gen3 workspaces are secure data analysis environments in the cloud that can access data from one or more data resources."
+        "tooltip": {
+          "authorized": "Gen3 workspaces are secure data analysis environments in the cloud that can access data from one or more data resources."
+        }
       },
       {
         "icon": "gen3:profile",
         "href": "/Profile",
         "name": "Profile",
-        "tooltip": "Create API keys for programmatic data access, and review your authorization privileges to datasets and services."
+        "tooltip": {
+          "authorized": "Create API keys for programmatic data access, and review your authorization privileges to datasets and services."
+        }
+      },
+      {
+        "icon": "gen3:profile",
+        "href": "/DataLibrary",
+        "name": "Data Library",
+        "tooltip": {
+          "authorized": "library of data"
+        }
       }
     ]
   },
   "topBar": {
-    "classNames": {
-      "root": "flex justify-end items-center align-middle w-100 bg-primary text-primary-contrast",
-      "divider": "border-primary-light my-2",
-      "login": "font-content text-primary-contrast hover:text-primary-contrast hover:border-primary-light"
-    },
-    "itemClassnames": {
-      "root": "flex items-center align-middle px-2 my-2",
-      "button": "flex flex-nowrap items-center align-middle border-b-2 border-transparent hover:border-primary-light",
-      "leftIcon": "text-primary-contrast pr-1",
-      "label": "font-content text-primary-contrast block",
-      "rightIcon": "text-primary-contrast pl-1"
-    },
     "items": [
       {
         "rightIcon": "gen3:upload",
