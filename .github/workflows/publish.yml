@@ -77,7 +77,10 @@ jobs:
           build-args: |
             NEXT_PUBLIC_GEN3_API_TARGET=${{ vars.NEXT_PUBLIC_GEN3_API_TARGET || 'https://gen3.example.com' }}
             NEXT_PUBLIC_MICRO_CONTAINER_TAG=${{ vars.NEXT_PUBLIC_MICRO_CONTAINER_TAG || 'micro-notebook-dev' }}
-          # GHA cache: npm ci layer cached when package-lock.json unchanged (~30s on hit)
-          # Next.js build layer cached when src/ unchanged (near-instant on hit)
+            NEXT_PUBLIC_JEG_ENABLED=true
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          # Multi-layer caching:
+          # - npm install layer cached when package-lock.json unchanged (~30s on hit)
+          # - Next.js build layer cached when src/ and pages/ unchanged (near-instant on hit)
+          # - Final layer cached when everything unchanged (skip build entirely)
