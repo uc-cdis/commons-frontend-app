@@ -8,8 +8,13 @@ import {
 import { useUserAuth } from '@gen3/core';
 import {
   HostedWorkspaceExperience,
+  DataToolsPanel,
   type WorkspaceAuthContext,
 } from '@gen3/jupyter-workspaces';
+
+const dictionarySchemaUrl =
+  process.env.NEXT_PUBLIC_DICTIONARY_SCHEMA_URL ||
+  '/api/v0/submission/_dictionary/_all';
 
 const JupyterLiteWorkspacePage = ({
   headerProps,
@@ -70,7 +75,7 @@ const JupyterLiteWorkspacePage = ({
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-    fetch('/workspace-api/workspace/kernel/api/status', {
+    fetch('/api/workspace/kernel/api/status', {
       method: 'GET',
       signal: controller.signal,
     })
@@ -110,7 +115,7 @@ const JupyterLiteWorkspacePage = ({
       ) : isDevelopment ? (
         <HostedWorkspaceExperience
           initialTier="free"
-          leftPanel={null}
+          leftPanel={<DataToolsPanel schemaUrl={dictionarySchemaUrl} />}
           authContext={authContext}
           accessPolicy={{
             requireUsername: false,
@@ -118,10 +123,10 @@ const JupyterLiteWorkspacePage = ({
             allowLocalDevBypass: true,
           }}
           localDevBypassEnabled={true}
-          gatewayBaseUrl="/workspace-api/workspace/kernel"
-          hatcheryBaseUrl="/workspace-api/workspace/hatchery"
-          freeAssetBaseUrl="/workspace-api/workspace-assets/free"
-          remoteAssetBaseUrl="/workspace-api/workspace-assets/remote"
+          gatewayBaseUrl="/api/workspace/kernel"
+          hatcheryBaseUrl="/api/workspace/hatchery"
+          freeAssetBaseUrl="/api/workspace-assets/free"
+          remoteAssetBaseUrl="/api/workspace-assets/remote"
           onToggleHostChrome={setWorkspaceMaximized}
         />
       ) : isAuthLoading ? (
@@ -137,14 +142,14 @@ const JupyterLiteWorkspacePage = ({
       ) : (
         <HostedWorkspaceExperience
           initialTier="free"
-          leftPanel={null}
+          leftPanel={<DataToolsPanel schemaUrl={dictionarySchemaUrl} />}
           authContext={authContext}
           accessPolicy={{ requireUsername: true, requireJwt: false }}
           localDevBypassEnabled={false}
-          gatewayBaseUrl="/workspace-api/workspace/kernel"
-          hatcheryBaseUrl="/workspace-api/workspace/hatchery"
-          freeAssetBaseUrl="/workspace-api/workspace-assets/free"
-          remoteAssetBaseUrl="/workspace-api/workspace-assets/remote"
+          gatewayBaseUrl="/api/workspace/kernel"
+          hatcheryBaseUrl="/api/workspace/hatchery"
+          freeAssetBaseUrl="/api/workspace-assets/free"
+          remoteAssetBaseUrl="/api/workspace-assets/remote"
           onToggleHostChrome={setWorkspaceMaximized}
         />
       )}

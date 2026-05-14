@@ -1,38 +1,35 @@
 [
   {
-    "tabTitle": "Subjects",
+    "tabTitle": "Audit Events",
     "charts": {
-      "experimental_group": {
+      "action_name": {
         "chartType": "fullPie",
-        "title": "Experimental Group",
-        "label": {
-          "show": true
-        },
-        "showLegendInChart": false
+        "title": "Top Actions",
+        "showLegendInChart": true
       },
-      "ethnicity": {
-        "chartType": "horizontalStacked",
-        "title": "Ethnicity"
+      "event_source": {
+        "chartType": "fullPie",
+        "title": "Event Source",
+        "showLegendInChart": true
       }
     },
     "filters": {
       "tabs": [
         {
-          "title": "Project Selection",
-          "fields": ["project_id"]
-        },
-        {
-          "title": "Subjects",
+          "title": "Filter",
           "fields": [
-            "gender",
-            "race",
-            "ethnicity",
-            "age_at_enrollment",
-            "experimental_group"
+            "timestamp",
+            "action_name",
+            "event_source",
+            "result",
+            "event_type",
+            "cloud_region",
+            "cloud_account_id"
           ],
           "fieldsConfig": {
-            "gender": {
-              "label": "Sex"
+            "timestamp": {
+              "label": "Timestamp",
+              "type": "exact"
             }
           }
         }
@@ -40,175 +37,327 @@
     },
     "table": {
       "enabled": true,
-      "detailsConfig": {
-        "panel": "default",
-        "mode": "click",
-        "idField": "subject_id",
-        "title": "Row Details"
+      "fields": [
+        "submitter_id",
+        "timestamp",
+        "src_ip",
+        "user_id",
+        "resource",
+        "action_name",
+        "event_source",
+        "result",
+        "event_type",
+        "cloud_region",
+        "cloud_account_id"
+      ],
+      "columns": {
+        "submitter_id": { "sortable": false },
+        "user_id": { "sortable": false },
+        "resource": { "sortable": false }
       },
       "pageLimit": {
         "limit": 10000
-      },
-      "fields": [
-        "project_id",
-        "submitter_id",
-        "race",
-        "ethnicity",
-        "age_at_enrollment",
-        "experimental_group"
-      ],
-      "columns": {
-        "submitter_id": {
-          "sortable": false
-        }
       }
     },
-    "dropdowns": {
-      "download-table": {
-        "title": "Download Table",
-        "leftIcon": "gen3:download",
-        "rightIcon": "gen3:chevron-down",
-        "dropdownItems": [
-          {
-            "enabled": true,
-            "type": "data-json",
-            "title": "JSON",
-            "leftIcon": "datafile",
-            "rightIcon": "download",
-            "action": "data-json",
-            "actionArgs": {
-              "filename": "gen3_datacommon_subjects.json"
-            }
-          },
-          {
-            "enabled": true,
-            "type": "data-csv",
-            "title": "CSV",
-            "leftIcon": "datafile",
-            "rightIcon": "download",
-            "action": "data-csv",
-            "actionArgs": {
-              "filename": "gen3_datacommon_data_table.csv"
-            }
-          }
-        ]
-      }
-    },
+    "dropdowns": {},
     "buttons": [
       {
         "enabled": true,
-        "type": "manifest",
-        "action": "manifest",
-        "title": "Download File Manifest for Subjects",
+        "type": "data-json",
+        "title": "Export JSON",
         "leftIcon": "datafile",
         "rightIcon": "download",
-        "fileName": "subject_files_manifest.json",
-        "actionArgs": {
-          "resourceIndexType": "file",
-          "resourceIdField": "_subject_id",
-          "referenceIdFieldInResourceIndex": "_subject_id",
-          "referenceIdFieldInDataIndex": "_file_id",
-          "fileFields": ["file_name", "file_size", "md5sum", "object_id"]
-        }
+        "actionArgs": { "filename": "audit_events.json" }
+      },
+      {
+        "enabled": true,
+        "type": "data-csv",
+        "title": "Export CSV",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": { "filename": "audit_events.csv" }
+      },
+      {
+        "enabled": true,
+        "type": "copy-filter-python",
+        "title": "Copy Filter as Python",
+        "leftIcon": "code",
+        "rightIcon": "copy",
+        "actionArgs": {}
       }
     ],
     "loginForDownload": false,
     "guppyConfig": {
-      "dataType": "subject",
-      "nodeCountTitle": "Subject",
+      "dataType": "audit_event",
+      "nodeCountTitle": "Audit Events",
       "fieldMapping": [
-        {
-          "field": "_samples_count",
-          "name": "Samples Count"
-        },
-        {
-          "field": "_imaging_files_count",
-          "name": "Imaging Files Count"
-        },
-        {
-          "field": "_unaligned_reads_files_count",
-          "name": "Unaligned Reads Count"
-        },
-        {
-          "field": "_aligned_reads_files_count",
-          "name": "Aligned Reads Count"
-        },
-        {
-          "field": "_expression_arrays_count",
-          "name": "Expression Arrays Count"
-        }
+        { "field": "submitter_id", "name": "Event ID" },
+        { "field": "timestamp", "name": "Timestamp" },
+        { "field": "src_ip", "name": "Source IP" },
+        { "field": "user_id", "name": "Principal (User/Role)" },
+        { "field": "resource", "name": "Target Resource" },
+        { "field": "action_name", "name": "API Action" },
+        { "field": "event_source", "name": "Log Source" },
+        { "field": "result", "name": "Outcome" },
+        { "field": "event_type", "name": "Event Type" },
+        { "field": "cloud_region", "name": "Region" },
+        { "field": "cloud_account_id", "name": "Account ID" },
+        { "field": "http_user_agent", "name": "User Agent" }
       ],
-      "manifestMapping": {
-        "resourceIndexType": "file",
-        "resourceIdField": "object_id",
-        "referenceIdFieldInResourceIndex": "subject_id",
-        "referenceIdFieldInDataIndex": "subject_id"
-      },
-      "accessibleFieldCheckList": ["project"],
-      "accessibleValidationField": "project"
+      "manifestMapping": {},
+      "accessibleFieldCheckList": [],
+      "accessibleValidationField": ""
+    },
+    "crossPivot": {
+      "enabled": true,
+      "fields": {
+        "src_ip": {
+          "pivotTo": [{"tab": "WAF", "filterKey": "src_ip"}],
+          "contextMenu": "Show this IP in WAF Events"
+        },
+        "cloud_account_id": {
+          "pivotTo": [{"tab": "WAF", "filterKey": "cloud_account_id"}],
+          "contextMenu": "Show this Account in WAF Events"
+        },
+        "action_name": {
+          "pivotTo": [{"tab": "WAF", "filterKey": "action"}],
+          "contextMenu": "Show related WAF actions"
+        }
+      }
     }
   },
   {
-    "tabTitle": "Data Files",
+    "tabTitle": "Threat Intelligence",
     "charts": {
-      "file_type": {
-        "chartType": "stackedBar",
-        "title": "File Type"
-      },
-      "file_format": {
-        "chartType": "stackedBar",
-        "title": "File Format"
+      "description": {
+        "chartType": "fullPie",
+        "title": "Indicator Type",
+        "showLegendInChart": true
       }
     },
     "filters": {
       "tabs": [
         {
-          "title": "File",
-          "fields": ["project_id", "data_type", "data_format", "data_category"]
+          "title": "Filter",
+          "fields": [
+            "description",
+            "pattern_type"
+          ]
         }
       ]
     },
     "table": {
       "enabled": true,
-      "detailsConfig": {
-        "panel": "fileDetails",
-        "mode": "click",
-        "idField": "_file_id",
-        "title": "File Details"
-      },
-      "fields": ["project_id", "file_name", "file_size", "_file_id"]
-    },
-    "guppyConfig": {
-      "dataType": "file",
-      "fieldMapping": [
-        {
-          "field": "file_id",
-          "name": "GUID"
-        }
+      "fields": [
+        "description",
+        "name",
+        "pattern",
+        "valid_from"
       ],
-      "nodeCountTitle": "Files",
-      "manifestMapping": {
-        "resourceIndexType": "subject",
-        "resourceIdField": "subject_id",
-        "referenceIdFieldInResourceIndex": "object_id",
-        "referenceIdFieldInDataIndex": "object_id"
-      },
-      "accessibleFieldCheckList": ["subject_id"],
-      "accessibleValidationField": "subject_id",
-      "downloadAccessor": "subject_id"
+      "pageLimit": {
+        "limit": 10000
+      }
     },
+    "dropdowns": {},
     "buttons": [
       {
         "enabled": true,
-        "type": "manifest",
-        "title": "Download File Manifest",
+        "type": "data-json",
+        "title": "Export JSON",
         "leftIcon": "datafile",
         "rightIcon": "download",
-        "actionArgs": {
-          "filename": "data_table_manifest.csv"
-        }
+        "actionArgs": { "filename": "threat_indicators.json" }
+      },
+      {
+        "enabled": true,
+        "type": "data-csv",
+        "title": "Export CSV",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": { "filename": "threat_indicators.csv" }
+      },
+      {
+        "enabled": true,
+        "type": "copy-filter-python",
+        "title": "Copy Filter as Python",
+        "leftIcon": "code",
+        "rightIcon": "copy",
+        "actionArgs": {}
       }
     ],
-    "loginForDownload": true
+    "loginForDownload": false,
+    "guppyConfig": {
+      "dataType": "threat_indicator",
+      "nodeCountTitle": "Threat Indicators",
+      "fieldMapping": [
+        { "field": "description", "name": "Indicator Type" },
+        { "field": "name", "name": "Indicator Value" },
+        { "field": "pattern", "name": "STIX Pattern" },
+        { "field": "valid_from", "name": "Valid From" },
+        { "field": "pattern_type", "name": "Pattern Language" }
+      ],
+      "manifestMapping": {},
+      "accessibleFieldCheckList": [],
+      "accessibleValidationField": ""
+    },
+    "crossPivot": {
+      "enabled": true,
+      "fields": {
+        "pattern": {
+          "pivotTo": [{"tab": "WAF", "filterKey": "src_ip", "searchStrategy": "ip_match"}, {"tab": "Audit Events", "filterKey": "src_ip", "searchStrategy": "ip_match"}],
+          "contextMenu": "Find matching IP addresses"
+        },
+        "name": {
+          "pivotTo": [{"tab": "WAF", "filterKey": "src_ip", "searchStrategy": "value_match"}, {"tab": "Audit Events", "filterKey": "src_ip", "searchStrategy": "value_match"}],
+          "contextMenu": "Show events from this value"
+        }
+      }
+    }
+  },
+  {
+    "tabTitle": "WAF",
+    "charts": {},
+    "filters": {
+      "tabs": [
+        {
+          "title": "Filter",
+          "fields": [
+            "timestamp",
+            "action",
+            "severity",
+            "finding_type",
+            "user_country_name",
+            "rule_id",
+            "src_ip",
+            "http_request",
+            "http_verb",
+            "http_status_code",
+            "cloud_account_id"
+          ],
+          "fieldsConfig": {
+            "timestamp": {
+              "label": "Timestamp",
+              "type": "exact"
+            },
+            "action": {
+              "label": "Action",
+              "type": "select"
+            },
+            "finding_type": {
+              "label": "Finding Type",
+              "type": "select"
+            },
+            "severity": {
+              "label": "Severity",
+              "type": "select"
+            },
+            "cloud_account_id": {
+              "label": "AWS Account ID",
+              "type": "select"
+            }
+          }
+        }
+      ]
+    },
+    "table": {
+      "enabled": true,
+      "fields": [
+        "cloud_account_id",
+        "rule_id",
+        "src_ip",
+        "http_request",
+        "action",
+        "severity",
+        "user_country_name",
+        "timestamp",
+        "http_verb",
+        "http_status_code",
+        "finding_type"
+      ],
+      "columns": {
+        "rule_id": { "sortable": true },
+        "src_ip": { "sortable": true },
+        "http_request": { "sortable": false },
+        "action": { "sortable": true },
+        "severity": { "sortable": true },
+        "cloud_account_id": { "sortable": true },
+        "user_country_name": { "sortable": true },
+        "timestamp": { "sortable": true }
+      },
+      "pageLimit": {
+        "limit": 5000
+      }
+    },
+    "dropdowns": {},
+    "buttons": [
+      {
+        "enabled": true,
+        "type": "data-json",
+        "title": "Export JSON",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": { "filename": "waf_events.json" }
+      },
+      {
+        "enabled": true,
+        "type": "data-csv",
+        "title": "Export CSV",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": { "filename": "waf_events.csv" }
+      },
+      {
+        "enabled": true,
+        "type": "copy-filter-python",
+        "title": "Copy Filter as Python",
+        "leftIcon": "code",
+        "rightIcon": "copy",
+        "actionArgs": {}
+      }
+    ],
+    "loginForDownload": false,
+    "guppyConfig": {
+      "dataType": "security_event",
+      "nodeCountTitle": "WAF Events (All AWS Accounts)",
+      "fieldMapping": [
+        { "field": "cloud_account_id", "name": "AWS Account ID" },
+        { "field": "timestamp", "name": "Timestamp" },
+        { "field": "src_ip", "name": "Source IP" },
+        { "field": "user_country_name", "name": "Country" },
+        { "field": "action", "name": "Action (ALLOW/BLOCK/etc)" },
+        { "field": "rule_id", "name": "Rule ID" },
+        { "field": "http_request", "name": "Request URI" },
+        { "field": "http_verb", "name": "HTTP Method" },
+        { "field": "http_status_code", "name": "Response Code" },
+        { "field": "http_user_agent", "name": "User Agent" },
+        { "field": "severity", "name": "Severity" },
+        { "field": "finding_type", "name": "Finding Type" },
+        { "field": "resource_id", "name": "Resource" }
+      ],
+      "manifestMapping": {},
+      "accessibleFieldCheckList": [],
+      "accessibleValidationField": ""
+    },
+    "crossPivot": {
+      "enabled": true,
+      "fields": {
+        "src_ip": {
+          "pivotTo": [{"tab": "Audit Events", "filterKey": "src_ip"}],
+          "contextMenu": "Show Audit logs from this IP"
+        },
+        "cloud_account_id": {
+          "pivotTo": [{"tab": "Audit Events", "filterKey": "cloud_account_id"}],
+          "contextMenu": "Show Audit logs for this Account"
+        },
+        "rule_id": {
+          "pivotTo": [{"tab": "WAF", "filterKey": "rule_id"}],
+          "contextMenu": "Show other events for this rule"
+        },
+        "user_country_name": {
+          "pivotTo": [{"tab": "Audit Events", "filterKey": "cloud_region"}],
+          "contextMenu": "Show Audit logs from this region"
+        }
+      }
+    }
   }
 ]

@@ -1,0 +1,186 @@
+/*
+ * Gen3-Vectis Perspective theme.
+ *
+ * Targets `perspective-viewer.gen3-theme` (specificity 0-1-1) which beats
+ * perspective's default `perspective-viewer` rule (0-0-1) from pro.css, so
+ * our colors/fonts always win without !important.
+ *
+ * All vars use `var(--mantine-color-*, <hardcoded_gen3_fallback>)` so they
+ * resolve correctly before Mantine's runtime theme is applied, and stay
+ * correct after it is.
+ *
+ * Palette source: config/gen3/themeColors.json
+ *   primary  = #800000 (maroon)
+ *   accent   = #3EB1C8 (teal)
+ *   accentCool = #007396 (dark teal)
+ *   accentWarm = #DE7C00 (orange)
+ *   base-max = #fdfcfb (near-white)
+ *   base-lightest = #f7f5f4
+ *   base-vivid = #e0dbd6
+ *   base-darker = #4d4d4d
+ *   base-min = #181818
+ */
+
+perspective-viewer.gen3-theme,
+perspective-viewer.gen3-theme * {
+  font-family: var(--mantine-font-family, 'Poppins', sans-serif) !important;
+}
+
+perspective-viewer.gen3-theme {
+  /* Base surface */
+  background-color: transparent;
+  color: var(--mantine-color-base-min, #181818);
+
+  /* Plugin / panel backgrounds */
+  --root--background: var(--mantine-color-base-0, #fdfcfb);
+  --plugin--background: var(--mantine-color-base-lightest, #f7f5f4);
+  --modal-target--background: rgba(249, 249, 249, 0.95);
+
+  /* Interactive states — gen3 teal, not IBM blue */
+  --active--color: var(--mantine-color-accent-5, #3eb1c8);
+  --active--background: rgba(62, 177, 200, 0.15);
+
+  /* Icons and inactive elements */
+  --icon--color: var(--mantine-color-base-darker, #4d4d4d);
+  --inactive--color: var(--mantine-color-secondary-dark, #737373);
+  --inactive--border-color: var(--mantine-color-base-vivid, #e0dbd6);
+
+  /* Status */
+  --error--color: #a4343a;
+  --warning--color: var(--mantine-color-base-0, #fdfcfb);
+  --warning--background: var(--mantine-color-accentWarm-5, #de7c00);
+
+  /* Expression editor */
+  --expression--operator-color: var(--mantine-color-base-darker, #4d4d4d);
+  --expression--function-color: var(--mantine-color-accent-dark, #2f8a9c);
+  --expression--error-color: #a4343a;
+
+  /* ── d3fc chart variables ── */
+
+  /* Grid + axis */
+  --d3fc-gridline--color: var(--mantine-color-base-light, #eeeae7);
+  --d3fc-axis--lines: var(--mantine-color-base-vivid, #e0dbd6);
+  --d3fc-axis-ticks--color: var(--mantine-color-base-darker, #4d4d4d);
+
+  /* Legend + tooltip */
+  --d3fc-legend--background: var(--mantine-color-base-0, #fdfcfb);
+  --d3fc-tooltip--background--color: rgba(247, 245, 244, 0.93);
+  --d3fc-tooltip--color: var(--mantine-color-base-min, #181818);
+  --d3fc-tooltip--border-color: var(--mantine-color-base-vivid, #e0dbd6);
+
+  /* Series palette — gen3 brand colors in order */
+  --d3fc-series:          var(--mantine-color-accent-5,       #3eb1c8); /* teal      */
+  --d3fc-series-1:        var(--mantine-color-accent-5,       #3eb1c8);
+  --d3fc-series-2:        var(--mantine-color-accentCool-5,   #007396); /* dark teal */
+  --d3fc-series-3:        var(--mantine-color-primary-5,      #800000); /* maroon    */
+  --d3fc-series-4:        var(--mantine-color-accentWarm-5,   #de7c00); /* orange    */
+  --d3fc-series-5:        var(--mantine-color-secondary-5,    #a6a6a6); /* gray      */
+  --d3fc-series-6:        var(--mantine-color-accent-dark,    #2f8a9c); /* teal dark */
+  --d3fc-series-7:        var(--mantine-color-accentCool-dark,#005770); /* navy      */
+  --d3fc-series-8:        var(--mantine-color-primary-vivid,  #8c0000); /* dk maroon */
+  --d3fc-series-9:        var(--mantine-color-accentWarm-dark,#a75d00); /* dk orange */
+  --d3fc-series-10:       var(--mantine-color-base-dark,      #b7b7b7); /* lt gray   */
+
+  /* Positive / negative cell highlighting */
+  --rt-pos-cell--color: var(--mantine-color-accent-5, #3eb1c8);
+  --rt-neg-cell--color: var(--mantine-color-primary-5, #800000);
+}
+
+/* Datagrid header cells */
+perspective-viewer.gen3-theme regular-table thead th {
+  background-color: var(--mantine-color-base-lightest, #f7f5f4);
+  color: var(--mantine-color-base-min, #181818);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid var(--mantine-color-accent-5, #3eb1c8);
+}
+
+/* Datagrid row hover */
+perspective-viewer.gen3-theme regular-table tbody tr:hover td {
+  background-color: rgba(62, 177, 200, 0.07);
+}
+
+/* Datagrid alternating rows */
+perspective-viewer.gen3-theme regular-table tbody tr:nth-child(even) td {
+  background-color: var(--mantine-color-base-0, #fdfcfb);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   perspective-workspace — white/gray gen3 theme
+   CSS custom properties inherit through Shadow DOM boundaries,
+   so vars set here apply to the workspace chrome AND cascade
+   into all slotted perspective-viewer children.
+   ══════════════════════════════════════════════════════════════ */
+perspective-workspace {
+  /* Override Lumino's default hsl(210deg 18% 90%) blue-gray host background */
+  background-color: var(--mantine-color-base-lightest, #f7f5f4) !important;
+  font-family: var(--mantine-font-family, 'Poppins', sans-serif);
+  display: block;
+
+  /* ── Workspace surface vars ── */
+  --root--background:   var(--mantine-color-base-0,        #fdfcfb);
+  --plugin--background: var(--mantine-color-base-0,        #fdfcfb);
+  --detail--background-color: var(--mantine-color-base-lightest, #f7f5f4);
+  --modal-target--background: rgba(249, 249, 249, 0.95);
+
+  /* ── Icon / interactive ── */
+  --icon--color:           var(--mantine-color-base-darker, #4d4d4d);
+  --inactive--color:       var(--mantine-color-base-vivid,  #e0dbd6);
+  --inactive--border-color:var(--mantine-color-base-vivid,  #e0dbd6);
+  --active--color:         var(--mantine-color-accent-5,    #3eb1c8);
+  --active--background:    rgba(62, 177, 200, 0.15);
+
+  /* ── Tab bar ── */
+  --workspace-tabbar--border:            1px solid var(--mantine-color-base-vivid, #e0dbd6);
+  --workspace-tabbar--border-color:      var(--mantine-color-base-vivid,  #e0dbd6);
+  --workspace-tabbar--border-width:      1px 1px 0px 1px;
+  --workspace-tabbar--border-radius:     6px 6px 0 0;
+  --workspace-tabbar--background-color:  var(--mantine-color-base-0,      #ffffff);
+  --workspace-tabbar--color:             var(--mantine-color-base-min,    #181818);
+  --workspace-secondary--color:          var(--mantine-color-base-darker, #4d4d4d);
+  --workspace-inactive-blur--background-color: transparent;
+
+  /* ── Resize handle ── */
+  --workspace-split-panel-handle--background-color: var(--mantine-color-base-vivid, #e0dbd6);
+
+  /* ── Master panel ── */
+  --workspace-master--background-color: var(--mantine-color-base-lightest, #f7f5f4);
+
+  /* ── perspective-viewer vars (cascade into slotted viewers) ── */
+  --expression--operator-color: var(--mantine-color-base-darker, #4d4d4d);
+  --expression--function-color: var(--mantine-color-accent-dark, #2f8a9c);
+  --expression--error-color: #a4343a;
+  --error--color: #a4343a;
+  --warning--color: var(--mantine-color-base-0, #fdfcfb);
+  --warning--background: var(--mantine-color-accentWarm-5, #de7c00);
+  --rt-pos-cell--color: var(--mantine-color-accent-5, #3eb1c8);
+  --rt-neg-cell--color: var(--mantine-color-primary-5, #800000);
+
+  /* ── d3fc chart vars (cascade into slotted viewers) ── */
+  --d3fc-gridline--color:           var(--mantine-color-base-light, #eeeae7);
+  --d3fc-axis--lines:               var(--mantine-color-base-vivid, #e0dbd6);
+  --d3fc-axis-ticks--color:         var(--mantine-color-base-darker, #4d4d4d);
+  --d3fc-legend--background:        var(--mantine-color-base-0, #fdfcfb);
+  --d3fc-tooltip--background--color:rgba(247, 245, 244, 0.93);
+  --d3fc-tooltip--color:            var(--mantine-color-base-min, #181818);
+  --d3fc-tooltip--border-color:     var(--mantine-color-base-vivid, #e0dbd6);
+  --d3fc-series:          var(--mantine-color-accent-5,        #3eb1c8);
+  --d3fc-series-1:        var(--mantine-color-accent-5,        #3eb1c8);
+  --d3fc-series-2:        var(--mantine-color-accentCool-5,    #007396);
+  --d3fc-series-3:        var(--mantine-color-primary-5,       #800000);
+  --d3fc-series-4:        var(--mantine-color-accentWarm-5,    #de7c00);
+  --d3fc-series-5:        var(--mantine-color-secondary-5,     #a6a6a6);
+  --d3fc-series-6:        var(--mantine-color-accent-dark,     #2f8a9c);
+  --d3fc-series-7:        var(--mantine-color-accentCool-dark, #005770);
+  --d3fc-series-8:        var(--mantine-color-primary-vivid,   #8c0000);
+  --d3fc-series-9:        var(--mantine-color-accentWarm-dark, #a75d00);
+  --d3fc-series-10:       var(--mantine-color-base-dark,       #b7b7b7);
+}
+
+/* Font stack cascades into slotted perspective-viewers */
+perspective-workspace perspective-viewer,
+perspective-workspace perspective-viewer * {
+  font-family: var(--mantine-font-family, 'Poppins', sans-serif) !important;
+}

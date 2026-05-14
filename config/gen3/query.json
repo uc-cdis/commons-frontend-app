@@ -1,4 +1,5 @@
 {
+	"graphQLEndpoint": "/api/v0/submission/vectis/graphql/",
 	"headerMetadata": {
 		"title": "Vectis Query",
 		"content": "Vectis query page",

@@ -9,6 +9,9 @@
 
 @import 'graphiql/graphiql.css';
 @import '@graphiql/react/dist/style.css';
+@import '@finos/perspective-viewer/dist/css/pro.css';
+@import '@finos/perspective-workspace/dist/css/pro.css';
+@import './siem-perspective-theme.css';
 
 @layer base {
   html {
@@ -36,6 +39,12 @@ main.flex.grow.relative {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  /* overflow intentionally NOT set here — Explorer and other pages need to scroll.
+     The landing-page viewport-lock is applied conditionally via :has() below. */
+}
+
+/* Landing page only: lock to viewport height */
+main.flex.grow.relative:has([class*="sm:mt-8"][class*="bg-base-max"]) {
   overflow: hidden;
 }
 
@@ -300,4 +309,27 @@ div[class*="bg-secondary-lightest"][class*="text-center"][class*="sm:p-16"] > di
 /* Suppress footer when workspace is in fullscreen/maximized mode */
 html.gen3-workspace-maximized footer {
   display: none !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Analysis page — fix card layout when few cards are present.
+   AnalysisCard uses h-full + h-4/5 that rely on a definite
+   row height. Give rows a minimum and clip the description
+   so the "Run App" button stays visible and clickable below.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Definite row height so h-full → h-4/5 resolve correctly */
+.grid[class*="gap-6"][class*="overflow-y-auto"] {
+  grid-auto-rows: minmax(420px, auto);
+}
+
+/* Clip content area so description text can't spill over the button */
+.grid[class*="gap-6"][class*="overflow-y-auto"] > div > .relative {
+  overflow: hidden;
+}
+
+/* Center and constrain width when only one card is present */
+.grid[class*="gap-6"][class*="overflow-y-auto"]:has(> :only-child) {
+  grid-template-columns: minmax(280px, 380px);
+  justify-content: center;
 }

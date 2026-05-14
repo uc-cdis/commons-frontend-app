@@ -1,10 +1,11 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import {
   ExplorerTableCellRendererFactory,
   type CellRendererFunctionProps,
 } from '@gen3/frontend';
-import { ActionIcon, Text, Tooltip } from '@mantine/core';
-import { FaExternalLinkAlt } from 'react-icons/fa';
+import { ActionIcon, Text, Tooltip, Menu, Stack } from '@mantine/core';
+import { FaExternalLinkAlt, FaLink } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 const RenderDicomLink = ({ cell }: CellRendererFunctionProps) => {
   if (!cell?.getValue() || cell?.getValue() === '') {
@@ -103,6 +104,89 @@ const RenderLinkWithIcon = ({ cell }: CellRendererFunctionProps,
 };
 
 
+/**
+ * CrossPivotCell enables cross-tab navigation with pre-filled filters.
+ * Renders a clickable cell with right-click context menu for drill-down options.
+ * 
+ * Usage: Register with field name and pivot config from explorer.json crossPivot section
+ * Example: renderCellWithCrossPivot({ cell }, { pivotTo: [...], contextMenu: "..." })
+ */
+const CrossPivotCell = (
+  { cell, row }: CellRendererFunctionProps,
+  ...args: Array<Record<string, unknown>>
+) => {
+  const router = useRouter();
+  const [showMenu, setShowMenu] = useState(false);
+  const cellValue = cell?.getValue() as string | number;
+
+  if (!cellValue || cellValue === '') {
+    return <span></span>;
+  }
+
+  if (!args[0] || !args[0].pivotTo) {
+    return <Text>{cellValue}</Text>;
+  }
+
+  const pivotConfig = args[0] as {
+    pivotTo: Array<{ tab: string; filterKey: string; searchStrategy?: string }>;
+    contextMenu?: string;
+  };
+
+  const handlePivotTo = (tab: string, filterKey: string, _searchStrategy?: string) => {
+    const tabMapping: Record<string, string> = {
+      'WAF': 'security_event',
+      'Audit Events': 'audit_event',
+      'Threat Intelligence': 'threat_indicator',
+    };
+
+    const guppyType = tabMapping[tab] || tab;
+    const filterParam = encodeURIComponent(JSON.stringify({ [filterKey]: cellValue }));
+    
+    router.push({
+      pathname: '/explorer',
+      query: {
+        tab: guppyType,
+        filters: filterParam,
+      },
+    });
+  };
+
+  const menuItems = pivotConfig.pivotTo.map((pivot, idx) => (
+    <Menu.Item
+      key={idx}
+      onClick={() => handlePivotTo(pivot.tab, pivot.filterKey, pivot.searchStrategy)}
+      leftSection={<FaLink size={14} />}
+    >
+      {pivotConfig.contextMenu || `Show in ${pivot.tab}`}
+    </Menu.Item>
+  ));
+
+  return (
+    <Menu opened={showMenu} onOpenChange={setShowMenu} position="bottom-start">
+      <Menu.Target>
+        <Text
+          component="span"
+          c="blue"
+          td="underline"
+          fw={600}
+          style={{ cursor: 'pointer', display: 'inline-block' }}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            setShowMenu(true);
+          }}
+        >
+          {cellValue}
+        </Text>
+      </Menu.Target>
+      {menuItems.length > 0 && (
+        <Menu.Dropdown>
+          <Stack gap={0}>{menuItems}</Stack>
+        </Menu.Dropdown>
+      )}
+    </Menu>
+  );
+};
+
 export const registerCohortTableCustomCellRenderers = () => {
   ExplorerTableCellRendererFactory().registerRenderer(
     'link',
@@ -123,5 +207,10 @@ export const registerCohortTableCustomCellRenderers = () => {
     'link',
     'linkWithIconAndTooltip',
     RenderLinkWithIcon,
+  );
+  ExplorerTableCellRendererFactory().registerRenderer(
+    'string',
+    'crossPivot',
+    CrossPivotCell,
   );
 };

@@ -38,12 +38,6 @@
         "tooltip": "Learn how to use Jupyter Notebooks to explore and visualize data available by running a tutorial notebook, or use one of these examples as a launching point for your own custom analysis."
       },
       {
-        "icon": "gen3:profile",
-        "href": "/DataLibrary",
-        "name": "Data Library",
-        "tooltip": "library of data"
-      },
-      {
         "icon": "gen3:workspace",
         "href": "/workspaces/jupyter",
         "name": "Workspace",

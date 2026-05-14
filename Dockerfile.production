@@ -12,6 +12,9 @@ WORKDIR /gen3
 COPY package.json package-lock.json ./
 # Workspace package tarball — referenced as file:.vendor/... in package.json
 COPY .vendor ./.vendor
+# Also place the workspace tarball at the ../gen3-workspace-apps path expected by package.json.
+RUN mkdir -p /gen3-workspace-apps
+COPY .vendor/gen3-jupyter-workspaces-0.1.1.tgz /gen3-workspace-apps/gen3-jupyter-workspaces-0.1.1.tgz
 
 # Install ALL dependencies once (including dev deps for build).
 # BuildKit cache mount keeps the npm cache across builds — avoids re-downloading

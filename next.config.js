@@ -104,7 +104,11 @@ const nextConfig = {
       ];
     }
 
-    return [workspaceApiRewrite];
+    return [
+      workspaceApiRewrite,
+      // Redirect /mds/* to the local API route that translates search data to MDS format.
+      { source: '/mds/:path*', destination: '/api/mds/:path*' },
+    ];
   },
   async headers() {
     return [

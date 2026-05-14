@@ -46,7 +46,7 @@
       },
       {
         "icon": "gen3:workspace",
-        "href": "/workspaces/jupyter-kernel",
+        "href": "/workspaces/jupyter",
         "name": "Workspace",
         "tooltip": "Gen3 workspaces are secure data analysis environments in the cloud that can access data from one or more data resources."
       },
@@ -55,12 +55,6 @@
         "href": "/Profile",
         "name": "Profile",
         "tooltip": "Create API keys for programmatic data access, and review your authorization privileges to datasets and services."
-      },
-      {
-        "icon": "gen3:profile",
-        "href": "/DataLibrary",
-        "name": "Data Library",
-        "tooltip": "library of data"
       }
     ]
   },
