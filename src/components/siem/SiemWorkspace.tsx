@@ -14,6 +14,7 @@ type UnifiedEvent = {
 
 type SiemWorkspaceProps = {
   rows: UnifiedEvent[];
+  workspaceConfig?: Record<string, unknown>;
 };
 
 type PSPWorkspaceElement = HTMLElement & {
@@ -33,9 +34,49 @@ declare global {
   }
 }
 
-export default function SiemWorkspace({ rows }: SiemWorkspaceProps) {
+export default function SiemWorkspace({ rows, workspaceConfig }: SiemWorkspaceProps) {
   const wsRef = useRef<PSPWorkspaceElement | null>(null);
   const [initError, setInitError] = useState<string | null>(null);
+
+  const defaultWorkspaceConfig: Record<string, unknown> = {
+    sizes: [0, 1],
+    master: {
+      widgets: [],
+      sizes: [],
+    },
+    detail: {
+      main: {
+        type: 'split-area',
+        orientation: 'vertical',
+        sizes: [0.35, 0.65],
+        children: [
+          { type: 'tab-area', widgets: ['v0'], currentIndex: 0 },
+          { type: 'tab-area', widgets: ['v1'], currentIndex: 0 },
+        ],
+      },
+      sizes: [1],
+    },
+    viewers: {
+      v0: {
+        title: 'Event Velocity',
+        table: 'events',
+        plugin: 'Y Line',
+        group_by: ['timeSlot'],
+        split_by: ['eventType'],
+        aggregates: { count: 'sum' },
+        columns: ['count'],
+        settings: true,
+      },
+      v1: {
+        title: 'Event Log',
+        table: 'events',
+        plugin: 'Datagrid',
+        columns: ['timestampLocal', 'eventType', 'severity', 'source', 'target', 'account', 'action'],
+        sort: [['timestampLocal', 'desc']],
+        settings: true,
+      },
+    },
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -102,53 +143,7 @@ export default function SiemWorkspace({ rows }: SiemWorkspaceProps) {
         await table.update(tableData as any);
         workspace.tables.set('events', table);
 
-        await workspace.restore({
-          sizes: [0, 1],
-          master: {
-            widgets: [],
-            sizes: [],
-          },
-          detail: {
-            main: {
-              type: 'split-area',
-              orientation: 'vertical',
-              sizes: [0.35, 0.65],
-              children: [
-                { type: 'tab-area', widgets: ['v0'], currentIndex: 0 },
-                { type: 'tab-area', widgets: ['v1'], currentIndex: 0 },
-              ],
-            },
-            sizes: [1],
-          },
-          viewers: {
-            v0: {
-              title: 'Event Velocity',
-              table: 'events',
-              plugin: 'Y Line',
-              group_by: ['timeSlot'],
-              split_by: ['eventType'],
-              aggregates: { count: 'sum' },
-              columns: ['count'],
-              settings: true,
-            },
-            v1: {
-              title: 'Event Log',
-              table: 'events',
-              plugin: 'Datagrid',
-              columns: [
-                'timestampLocal',
-                'eventType',
-                'severity',
-                'source',
-                'target',
-                'account',
-                'action',
-              ],
-              sort: [['timestampLocal', 'desc']],
-              settings: true,
-            },
-          },
-        });
+        await workspace.restore(workspaceConfig ?? defaultWorkspaceConfig);
         await workspace.flush();
       } catch (error: unknown) {
         const message =
@@ -167,7 +162,7 @@ export default function SiemWorkspace({ rows }: SiemWorkspaceProps) {
     return () => {
       mounted = false;
     };
-  }, [rows]);
+  }, [rows, workspaceConfig]);
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
