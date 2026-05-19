@@ -34,6 +34,19 @@
         "pageTitle": {
           "enabled": false
         },
+        "exportFromDiscovery" : {
+          "enabled" : "true",
+          "exportDataFields" : {
+            "dataObjectField" : "objects",
+            "datasetIdField" : "study_id",
+            "dataObjectIdField" : "guid"
+          },
+          "buttons": [
+            {
+              "type" : "addToDataLibrary"
+            }
+          ]
+        },
         "search": {
           "searchBar": {
             "enabled": true,
