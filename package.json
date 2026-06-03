@@ -4,7 +4,7 @@
   "private": "true",
   "engines": {
     "npm": ">=11.9.0",
-    "node": ">=24.14.0"
+    "node": ">=24.15.0"
   },
   "scripts": {
     "lint": "next lint",
