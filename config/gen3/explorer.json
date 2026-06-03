@@ -40,12 +40,6 @@
     },
     "table": {
       "enabled": true,
-      "detailsConfig": {
-        "panel": "default",
-        "mode": "click",
-        "idField": "subject_id",
-        "title": "Row Details"
-      },
       "pageLimit": {
         "limit": 10000
       },
@@ -170,12 +164,6 @@
     },
     "table": {
       "enabled": true,
-      "detailsConfig": {
-        "panel": "fileDetails",
-        "mode": "click",
-        "idField": "_file_id",
-        "title": "File Details"
-      },
       "fields": ["project_id", "file_name", "file_size", "_file_id"]
     },
     "guppyConfig": {
