@@ -13,7 +13,7 @@
     "dev": "next dev --webpack",
     "prebuild": "NODE_ENV=production npm run build:middlewarePaths",
     "build": "next build --webpack",
-    "build:volume": "npm run build:middlewarePathsMatchAll && next build",
+    "build:volume": "npm run build:middlewarePathsMatchAll && next build --webpack",
     "start": "next start",
     "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname && npm run buildIcons && npm run build:middlewarePaths",
     "build:colors": "node ./node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/$npm_config_commons/colors.json --out=config/$npm_config_commons",
