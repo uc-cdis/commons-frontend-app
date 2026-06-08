@@ -13,12 +13,22 @@ export default [
   ...tsLint.configs.recommended,
 
   {
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+
+  {
     ignores: [
       '.nx/**/*',
       '**/build/*',
       '**/*.css',
       'setupTests.ts',
       'node_modules/*',
+      'public',
+      '.next'
     ],
   },
 
