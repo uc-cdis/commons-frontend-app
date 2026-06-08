@@ -27,7 +27,8 @@ export default [
       '**/*.css',
       'setupTests.ts',
       'node_modules/*',
-      'public'
+      'public',
+      '.next'
     ],
   },
 

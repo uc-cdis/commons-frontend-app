@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-/* eslint-disable @typescript-eslint/no-var-requires */
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const plugin = require('tailwindcss/plugin');
-/* eslint-disable @typescript-eslint/no-var-requires */
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { GEN3_COMMONS_NAME } = require('@gen3/core');
 /** @type {import('tailwindcss').Config} */
 /* eslint-disable @typescript-eslint/no-require-imports */
