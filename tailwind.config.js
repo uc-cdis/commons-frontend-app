@@ -1,9 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 /* eslint-disable @typescript-eslint/no-var-requires */
-
 const plugin = require('tailwindcss/plugin');
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { GEN3_COMMONS_NAME } = require('@gen3/core');
+/** @type {import('tailwindcss').Config} */
+/* eslint-disable @typescript-eslint/no-require-imports */
 const themeFonts = require(`./config/${GEN3_COMMONS_NAME}/themeFonts.json`);
 const themeColorCSSVars = require(`./config/themeColorCSSVars.json`);
 
