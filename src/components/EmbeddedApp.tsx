@@ -15,7 +15,7 @@ const EmbeddedApp = ({ app }: { app: string }) => {
         />
 
         <div className="m-2 w-full">
-          <gradio-app src={`https://${app}`}></gradio-app>
+          <gradio-app src={`https://${app}/`}></gradio-app>
         </div>
       </>
     );
@@ -24,7 +24,7 @@ const EmbeddedApp = ({ app }: { app: string }) => {
   return (
     <div className="m-2 w-full">
       <iframe
-        src={`https://${app}`}
+        src={`https://${app}/`}
         className="w-full h-full"
       />
     </div>
