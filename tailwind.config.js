@@ -15,6 +15,7 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/features/**/*.{js,ts,jsx,tsx}',
     './node_modules/@gen3/frontend/dist/index/esm/*.js',
+    './node_modules/@gen3/workspaces/dist/index/esm/*.js',
   ],
   theme: {
     extend: {
@@ -58,7 +59,7 @@ module.exports = {
           titanium: '#707070',
           obsidian: '#757575',
         },
-        ... themeColorCSSVars,
+        ...themeColorCSSVars,
       },
       fontFamily: {
         heading: themeFonts.heading,

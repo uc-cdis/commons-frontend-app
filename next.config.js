@@ -4,11 +4,16 @@
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const dns = require('dns');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { withJupyterWorkspaces } = require('@gen3/workspaces/server');
+
+const basePath = process.env.NEXT_PUBLIC_BASEPATH;
 
 dns.setDefaultResultOrder('ipv4first');
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-require('./src/lib/plugins/index.js');
+const isDev = process.env.NODE_ENV === 'development';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const withMDX = require('@next/mdx')({
@@ -19,19 +24,23 @@ const withMDX = require('@next/mdx')({
   },
 });
 
-const isDev = process.env.NODE_ENV === 'development';
-
 // Next configuration with support for writing API to existing common services
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   env: {
     version: process.env.npm_package_version,
   },
   reactStrictMode: true,
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
   basePath: process.env.BASE_PATH || '',
-  transpilePackages: ['@gen3/core', '@gen3/frontend'],
+  transpilePackages: ['@gen3/core', '@gen3/frontend', '@gen3/workspaces'],
+  images: {
+    localPatterns: [
+      {
+        pathname: '/icons/**',
+      },
+    ],
+  },
   webpack: (config) => {
     config.infrastructureLogging = {
       level: 'error',
@@ -39,10 +48,23 @@ const nextConfig = {
     return config;
   },
   async rewrites() {
+    const workspaceApiRewrite = [
+      {
+        source: '/workspace-api/:path*',
+        destination: '/api/:path*',
+      },
+      {
+        source:
+          '/lw-workspace/proxy/jeg-proxy/kernelspecs/:kernel/logo-:size.png',
+        destination: '/icons/kernels/logo-64.png',
+      },
+    ];
     if (isDev) {
       const GEN3_TARGET =
         process.env.NEXT_PUBLIC_GEN3_API_TARGET || 'https://localhost';
+
       return [
+        ...workspaceApiRewrite,
         { source: '/_status', destination: `${GEN3_TARGET}/_status` },
         { source: '/user/:path*', destination: `${GEN3_TARGET}/user/:path*` },
         {
@@ -104,8 +126,29 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/Workspaces/(.*)?',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Cross-Origin-Embedder-Policy',
+            // 'credentialless' is less strict than 'require-corp' — allows
+            // cross-origin iframes without CORP headers, needed in dev when
+            // the remote Jupyter server doesn't send COEP headers.
+            value: isDev ? 'credentialless' : 'require-corp',
+          },
+          {
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin',
+          },
+        ],
+      },
     ];
   },
 };
 
-module.exports = withMDX(nextConfig);
+// IMPORTANT: actually export your config (wrapped by plugins)
+module.exports = withMDX(withJupyterWorkspaces(nextConfig));
