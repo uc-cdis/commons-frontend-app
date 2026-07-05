@@ -18,6 +18,11 @@ RUN npm config set fetch-retries 5 && \
     npm ci && \
     npm cache clean --force
 
+# Install Python 3.13 for JupyterLite build (cached independently of source changes)
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3.13 python3.13-venv && \
+    rm -rf /var/lib/apt/lists/*
+
 # Copy necessary config files
 COPY next.config.js tsconfig.json tailwind.config.js postcss.config.js ./
 COPY .env.production ./
@@ -28,9 +33,11 @@ COPY ./public ./public
 COPY ./config ./config
 COPY ./start.sh ./
 
-# Build and prune
-RUN npm run build && \
-    npm prune --omit=dev;
+# Build JupyterLite static assets (outputs to public/ before Next.js build)
+RUN npm run build:jupyterlite
+
+# Build
+RUN npm run build
 
 # Production stage
 FROM node:24.15.0-trixie-slim AS runner
@@ -40,22 +47,27 @@ WORKDIR /gen3
 RUN addgroup --system --gid 1001 nextjs && \
     adduser --system --uid 1001 nextjs
 
-# Copy only production dependencies
-COPY --from=builder --chown=nextjs:nextjs /gen3/package.json ./
-COPY --from=builder --chown=nextjs:nextjs /gen3/node_modules ./node_modules
-COPY --from=builder --chown=nextjs:nextjs /gen3/config ./config
-COPY --from=builder --chown=nextjs:nextjs /gen3/.next ./.next
+COPY --from=builder --chown=nextjs:nextjs /gen3/.next/standalone ./.next/standalone
+COPY --from=builder --chown=nextjs:nextjs /gen3/.next/static ./.next/standalone/.next/static
 COPY --from=builder --chown=nextjs:nextjs /gen3/public ./public
+COPY --from=builder --chown=nextjs:nextjs /gen3/config ./config
 COPY --from=builder --chown=nextjs:nextjs /gen3/start.sh ./start.sh
 
-RUN mkdir -p .next/cache/images && \
+RUN mkdir -p .next/standalone/.next/cache/images && \
+    chmod -R 777 .next/standalone/.next/cache && \
+    chown -R nextjs:nextjs .next/standalone/.next/cache && \
     chmod +x start.sh && \
-    chown -R nextjs:nextjs .next/cache
+    chown -R nextjs:nextjs start.sh && \
+    rm -rf .next/standalone/config && \
+    cd .next/standalone && \
+    ln -s ../../config ./config && \
+    ln -s ../../public ./public
 
 USER nextjs:nextjs
 
 ENV NODE_ENV=production \
     PORT=3000 \
+    HOSTNAME=0.0.0.0 \
     NEXT_TELEMETRY_DISABLED=1
 
 CMD ["sh", "./start.sh"]

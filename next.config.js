@@ -27,6 +27,7 @@ const withMDX = require('@next/mdx')({
 // Next configuration with support for writing API to existing common services
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   env: {
     version: process.env.npm_package_version,
   },
