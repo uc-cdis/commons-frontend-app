@@ -18,9 +18,9 @@ RUN npm config set fetch-retries 5 && \
     npm ci && \
     npm cache clean --force
 
-# Install Python 3.13 for JupyterLite build (cached independently of source changes)
+# Install Python for JupyterLite build (cached independently of source changes)
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends python3.13 python3.13-venv && \
+    apt-get install -y --no-install-recommends python3 python3-venv && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy necessary config files
@@ -32,6 +32,13 @@ COPY ./src ./src
 COPY ./public ./public
 COPY ./config ./config
 COPY ./start.sh ./
+
+# Remove xeus-python (conda-only, not on PyPI, not needed by the config)
+RUN grep -v '^xeus-python' \
+    node_modules/@gen3/workspaces/dist/jupyterlite-builds/free-private/requirements.txt \
+    > /tmp/requirements-fixed.txt && \
+    cp /tmp/requirements-fixed.txt \
+    node_modules/@gen3/workspaces/dist/jupyterlite-builds/free-private/requirements.txt
 
 # Build JupyterLite static assets (outputs to public/ before Next.js build)
 RUN npm run build:jupyterlite
@@ -51,7 +58,6 @@ COPY --from=builder --chown=nextjs:nextjs /gen3/.next/standalone ./.next/standal
 COPY --from=builder --chown=nextjs:nextjs /gen3/.next/static ./.next/standalone/.next/static
 COPY --from=builder --chown=nextjs:nextjs /gen3/public ./public
 COPY --from=builder --chown=nextjs:nextjs /gen3/config ./config
-COPY --from=builder --chown=nextjs:nextjs /gen3/start.sh ./start.sh
 
 RUN mkdir -p .next/standalone/.next/cache/images && \
     chmod -R 777 .next/standalone/.next/cache && \
