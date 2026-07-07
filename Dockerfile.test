@@ -18,6 +18,11 @@ RUN npm config set fetch-retries 5 && \
     npm ci && \
     npm cache clean --force
 
+# Install Python for JupyterLite build (cached independently of source changes)
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3 python3-venv && \
+    rm -rf /var/lib/apt/lists/*
+
 # Copy necessary config files
 COPY next.config.js tsconfig.json tailwind.config.js postcss.config.js ./
 COPY .env.test ./
@@ -29,6 +34,9 @@ COPY ./config ./config
 COPY ./start.sh ./
 
 ENV NODE_ENV=test
+
+# Build JupyterLite static assets (outputs to public/ before Next.js build)
+RUN npm run build:jupyterlite
 
 # Build and prune
 RUN npm run build && \
@@ -49,6 +57,7 @@ COPY --from=builder --chown=nextjs:nextjs /ci/config ./config
 COPY --from=builder --chown=nextjs:nextjs /ci/.next ./.next
 COPY --from=builder --chown=nextjs:nextjs /ci/public ./public
 COPY --from=builder --chown=nextjs:nextjs /ci/start.sh ./start.sh
+COPY --from=builder --chown=nextjs:nextjs /ci/jupyter-workspaces ./jupyter-workspaces
 
 RUN mkdir -p .next/cache/images && \
     chmod +x start.sh && \
