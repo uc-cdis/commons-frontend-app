@@ -42,7 +42,12 @@ const nextConfig = {
       },
     ],
   },
-  webpack: (config) => {
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
+  webpack: (config, { dev }) => {
     config.infrastructureLogging = {
       level: 'error',
     };
@@ -56,7 +61,7 @@ const nextConfig = {
       },
       {
         source:
-          '/lw-workspace/proxy/jeg-proxy/kernelspecs/:kernel/logo-:size.png',
+          '/lw-workspace/proxy/jeg-proxy/kernelspecs/python_tf_kubernetes/logo-64x64.png',
         destination: '/icons/kernels/logo-64.png',
       },
     ];
@@ -94,7 +99,7 @@ const nextConfig = {
           source: '/library/lists/:path*',
           destination: `${GEN3_TARGET}/library/lists/:path*`,
         },
-        { source: '/jobs/:path*', destination: `${GEN3_TARGET}/jobs/:path*` },
+        { source: '/job/:path*', destination: `${GEN3_TARGET}/job/:path*` },
         {
           source: '/manifests/:path*',
           destination: `${GEN3_TARGET}/manifests/:path*`,
@@ -113,7 +118,7 @@ const nextConfig = {
         },
       ];
     } else {
-      return [];
+      return workspaceApiRewrite;
     }
   },
   async headers() {
