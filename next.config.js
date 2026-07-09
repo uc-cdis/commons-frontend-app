@@ -40,6 +40,9 @@ const nextConfig = {
       {
         pathname: '/icons/**',
       },
+      {
+        pathname: '/images/**',
+      },
     ],
   },
   logging: {
