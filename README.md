@@ -76,7 +76,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You build a Docker image by:
 
 ```bash
-docker build .
+docker build -f Dockerfile.production .
 ```
 ## Updating a forked commons
 
