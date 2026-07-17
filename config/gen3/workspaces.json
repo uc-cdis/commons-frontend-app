@@ -3,6 +3,7 @@
     "free": {
       "label": "Jupyter Lite",
       "tier": "free",
+      "tierLabel": "lite",
       "description": "Instant startup and lightweight notebooks directly in your browser.",
       "features": ["Instant startup", "Lightweight notebooks", "Browser-based"],
       "buttonLabel": "Launch Local Workspace",
@@ -14,6 +15,7 @@
     "remote": {
       "label": "Remote Kernel Runtime",
       "tier": "remote",
+      "tierLabel": "remote",
       "description": " Attach to remote compute for longer sessions and larger workloads.",
       "features": [
         "Persistent sessions and gateway routing",
@@ -22,8 +24,26 @@
       "buttonLabel": "Launch Remote Workspace",
       "baseColor": "#42f5d422",
       "runningLabel": {
-        "label": "Remote Browser Environment",
-        "description": "Running via Remote Kernels (Paid Tier)"
+        "label": "Remote Compute Environment",
+        "description": "Running via Remote Kernels"
+      }
+    }
+  },
+  "tierConfiguration": {
+    "free": {
+      "dataAndTools": {
+        "width": 300
+      },
+      "toolbar": {
+        "tierLabel": "lite"
+      }
+    },
+    "remote": {
+      "dataAndTools": {
+        "width": 300
+      },
+      "toolbar": {
+        "tierLabel": "remote"
       }
     }
   }
