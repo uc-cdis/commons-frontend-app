@@ -3,6 +3,7 @@
     "updateSessionTime": 5,
     "inactiveTimeLimit": 20,
     "logoutInactiveUsers": false,
-    "monitorWorkspace": true
+    "monitorWorkspace": true,
+    "expireWarningMinutes": 0
   }
 }
