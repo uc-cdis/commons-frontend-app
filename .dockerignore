@@ -2,3 +2,5 @@ node_modules
 builds
 .next
 .idea
+.swc
+.github
