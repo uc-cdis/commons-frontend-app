@@ -3,14 +3,15 @@
   "version": "0.12.53",
   "private": "true",
   "engines": {
-    "npm": ">=11.9.0",
-    "node": ">=24.15.0"
+    "npm": ">=11.16.0",
+    "node": ">=24.18.0"
   },
   "scripts": {
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
     "predev": " NODE_ENV=development npm run build:middlewarePaths",
     "dev": "next dev --webpack",
+    "dev:turbopack": "next dev",
     "prebuild": "NODE_ENV=production npm run build:middlewarePaths",
     "build": "next build --webpack",
     "build:volume": "npm run build:middlewarePathsMatchAll && next build --webpack",
@@ -32,9 +33,9 @@
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "@gen3/core": "0.12.53",
-    "@gen3/frontend": "0.12.53",
-    "@gen3/workspaces": "0.12.53",
+    "@gen3/core": "0.12.56",
+    "@gen3/frontend": "0.12.56",
+    "@gen3/workspaces": "0.12.56",
     "@mantine/core": "^9.4.0",
     "@mantine/dates": "^9.4.0",
     "@mantine/form": "^9.4.0",
@@ -59,7 +60,7 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
-    "@gen3/toolsff": "0.12.53",
+    "@gen3/toolsff": "0.12.56",
     "@graphiql/react": "^0.37.4",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
@@ -100,5 +101,11 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.1"
+  },
+  "allowScripts": {
+    "unrs-resolver": true,
+    "fsevents": true,
+    "msw": true,
+    "sharp": true
   }
 }

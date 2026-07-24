@@ -5,11 +5,7 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const dns = require('dns');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-const path = require('path');
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { withJupyterWorkspaces } = require('@gen3/workspaces/server');
-
-const basePath = process.env.NEXT_PUBLIC_BASEPATH;
 
 dns.setDefaultResultOrder('ipv4first');
 
@@ -50,7 +46,7 @@ const nextConfig = {
       fullUrl: true,
     },
   },
-  webpack: (config, { dev }) => {
+  webpack: (config) => {
     config.infrastructureLogging = {
       level: 'error',
     };
