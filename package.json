@@ -1,6 +1,6 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.12.53",
+  "version": "0.12.56",
   "private": "true",
   "engines": {
     "npm": ">=11.16.0",
@@ -107,5 +107,10 @@
     "fsevents": true,
     "msw": true,
     "sharp": true
+  },
+  "overrides": {
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "^6.1.4"
+    }
   }
 }
