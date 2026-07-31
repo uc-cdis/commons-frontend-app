@@ -9,6 +9,8 @@ const { withJupyterWorkspaces } = require('@gen3/workspaces/server');
 
 dns.setDefaultResultOrder('ipv4first');
 
+const basePath = process.env.BASE_PATH || '';
+
 const isDev = process.env.NODE_ENV === 'development';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -29,18 +31,8 @@ const nextConfig = {
   },
   reactStrictMode: true,
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
-  basePath: process.env.BASE_PATH || '',
+  basePath: basePath,
   transpilePackages: ['@gen3/core', '@gen3/frontend', '@gen3/workspaces'],
-  images: {
-    localPatterns: [
-      {
-        pathname: '/icons/**',
-      },
-      {
-        pathname: '/images/**',
-      },
-    ],
-  },
   logging: {
     fetches: {
       fullUrl: true,

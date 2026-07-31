@@ -11,6 +11,9 @@ WORKDIR /gen3
 # Copy dependency files first for better caching
 COPY package.json package-lock.json ./
 
+# Copy yalc-linked local packages so `file:.yalc/...` deps in package-lock.json resolve
+COPY .yalc ./.yalc
+
 # Install ALL dependencies once (including dev deps for build)
 RUN npm config set fetch-retries 5 && \
     npm config set fetch-retry-mintimeout 20000 && \
