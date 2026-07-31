@@ -8,7 +8,7 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 
 const RenderDicomLink = ({ cell }: CellRendererFunctionProps) => {
   if (!cell?.getValue() || cell?.getValue() === '') {
-    return <span></span>;
+    return <span />;
   } else
     return (
       <a href={`${cell.getValue()}`} target="_blank" rel="noreferrer">
@@ -24,7 +24,7 @@ const JoinFields = (
   ...args: Array<Record<string, unknown>>
 ) => {
   if (!cell?.getValue() || cell?.getValue() === '') {
-    return <span></span>;
+    return <span />;
   } else {
     if (
       typeof args[0] === 'object' &&
@@ -84,7 +84,7 @@ const RenderLinkIconDefaultParameters : LinkCellOptions = {
 const RenderLinkWithIcon = ({ cell }: CellRendererFunctionProps,
                             ...params: Array<Record<string, unknown>>) => {
   if (!cell?.getValue() || cell?.getValue() === '') {
-    return <span></span>;
+    return <span />;
   } else {
     const mergedParams = { ...RenderLinkIconDefaultParameters,  ...(params ? params[0] : {}) };
     const { variant, color, size, tooltip } = mergedParams;

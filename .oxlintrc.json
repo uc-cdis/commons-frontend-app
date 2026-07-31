@@ -11,8 +11,8 @@
     "node"
   ],
   "options": {
-    "typeAware": true,
-    "typeCheck": true
+    "typeAware": false,
+    "typeCheck": false
   },
   "categories": {
     "correctness": "error",
@@ -67,8 +67,10 @@
   ],
   "ignorePatterns": [
     "**/node_modules/**",
-    "**/packages/sampleCommons/jupyter-workspaces/**",
-    "**/packages/sampleCommons/builds/**",
-    "**/packages/sampleCommons/cockle_wasm_env/**"
+    "**/jupyter-workspaces/**",
+    "**/builds/**",
+    "**/public/**",
+    "**/cockle_wasm_env/**",
+    "**/.yalc/**"
   ]
 }

@@ -1,13 +1,30 @@
-import { NextRequest, NextResponse } from 'next/server';
+import type { NextRequest} from 'next/server';
+import { NextResponse } from 'next/server';
 import { getRouteConfig } from './lib/auth/arboristConfig';
-import { getLoginStatus, type LoginStatus } from './lib/auth/getLoginStatus';
+import {
+  getAccessToken,
+  getLoginStatus,
+  type LoginStatus,
+} from './lib/auth/getLoginStatus';
 import { fetchArboristResources } from './lib/auth/fetchAuthz';
 import type { RouteConfig } from '@gen3/frontend/server';
-import { getAccessToken } from '@gen3/frontend/server';
 
 const WILDCARD_ROUTE_KEY = '*';
 
 function getRouteRuleForPath(pathname: string, routeConfig: RouteConfig) {
+  // handle wildcards
+  // get subdirectory
+  const pathParts = pathname.split('/');
+  // has subdirectory
+  if (pathParts.length > 2) {
+    const startsWithPath = `/${pathParts[1]}`;
+    // look through config for subdirectory
+    const routeConfigMatch = Object.keys(routeConfig).find(key => key.startsWith(startsWithPath));
+    // check if subdirectory ends with wildcard
+    if (routeConfigMatch && routeConfigMatch.endsWith('(.*)')) {
+      return routeConfig?.[routeConfigMatch];
+    }
+  }
   return routeConfig?.[pathname] ?? routeConfig?.[WILDCARD_ROUTE_KEY];
 }
 
@@ -45,7 +62,7 @@ export async function proxy(req: NextRequest) {
     const loginUrl = req.nextUrl.clone();
     loginUrl.pathname = '/Login';
     loginUrl.searchParams.set('referer', pathname);
-    return NextResponse.rewrite(loginUrl);
+    return NextResponse.redirect(loginUrl);
   }
 
   const needsAuthz = Array.isArray(rule?.authz) && rule?.authz.length > 0;
