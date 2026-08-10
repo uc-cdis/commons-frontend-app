@@ -17,7 +17,7 @@
     "build:volume": "npm run build:middlewarePathsMatchAll && next build --webpack",
     "start": "next start",
     "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname && npm run buildIcons && npm run build:middlewarePaths",
-    "build:docker": "docker build -t gen3:fef_app .",
+    "build:docker": "docker build -t gen3:fef_app -f Dockerfile.production .",
     "build:colors": "node ./node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/$npm_config_commons/colors.json --out=config/$npm_config_commons",
     "build:icons": "node ./node_modules/@gen3/toolsff/dist/bundleIcons.esm.js --inpath=config/icons --outpath=config/icons",
     "build:middlewarePaths": "if [ ! -f ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js ]; then printf \"\\033[31mError: @gen3/toolsff not built (missing dist file). Run: npm run build:tools\\033[0m\\n\"; exit 1; else node ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js || (printf \"\\033[31mError: @gen3/toolsff scanSitePaths failed. See above message\\033[0m\\n\" && exit 1); fi",
@@ -34,9 +34,6 @@
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "@gen3/core": "file:.yalc/@gen3/core",
-    "@gen3/frontend": "file:.yalc/@gen3/frontend",
-    "@gen3/workspaces": "file:.yalc/@gen3/workspaces",
     "@mantine/core": "^9.4.0",
     "@mantine/dates": "^9.4.0",
     "@mantine/form": "^9.4.0",
@@ -61,12 +58,10 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
-    "@gen3/toolsff": "file:.yalc/@gen3/toolsff",
-    "@graphiql/react": "^0.37.4",
+    "@graphiql/react": "^0.37.7",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/line-clamp": "^0.4.4",
-    "@tailwindcss/typography": "^0.5.19",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@types/lodash": "^4.17.23",
@@ -74,7 +69,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.21",
-    "graphiql": "^5.2.3",
+    "graphiql": "^5.2.4",
     "jest-fixed-jsdom": "^0.0.10",
     "msw": "^2.11.5",
     "next": "^16.2.12",
@@ -100,10 +95,5 @@
     "fsevents": true,
     "msw": true,
     "sharp": true
-  },
-  "overrides": {
-    "@tailwindcss/typography": {
-      "postcss-selector-parser": "^6.1.4"
-    }
   }
 }

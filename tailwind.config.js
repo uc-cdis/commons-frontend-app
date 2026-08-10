@@ -8,6 +8,8 @@ const { GEN3_COMMONS_NAME } = require('@gen3/core');
 /* eslint-disable @typescript-eslint/no-require-imports */
 const themeFonts = require(`./config/${GEN3_COMMONS_NAME}/themeFonts.json`);
 const themeColorCSSVars = require(`./config/themeColorCSSVars.json`);
+const { typographyPlugin } = require('@gen3/frontend');
+
 
 module.exports = {
   content: [
@@ -98,7 +100,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
+    typographyPlugin,
     require('@tailwindcss/forms')({
       strategy: 'class',
     }),
