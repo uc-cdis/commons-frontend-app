@@ -46,7 +46,7 @@ COPY .env.test ./
 COPY ./src ./src
 COPY ./public ./public
 COPY ./config ./config
-COPY ./start.sh ./
+COPY ./start_ci.sh ./
 
 ENV NODE_ENV=test
 
