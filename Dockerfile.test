@@ -74,8 +74,8 @@ COPY --from=builder --chown=nextjs:nextjs /ci/jupyter-workspaces ./jupyter-works
 RUN mkdir -p .next/standalone/.next/cache/images && \
     chmod -R 777 .next/standalone/.next/cache && \
     chown -R nextjs:nextjs .next/standalone/.next/cache && \
-    chmod +x start.sh && \
-    chown -R nextjs:nextjs start.sh && \
+    chmod +x start_ci.sh && \
+    chown -R nextjs:nextjs start_ci.sh && \
     rm -rf .next/standalone/config && \
     cd .next/standalone && \
     ln -s ../../config ./config && \
