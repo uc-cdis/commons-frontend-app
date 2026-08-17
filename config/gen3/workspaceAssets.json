@@ -1,0 +1,16 @@
+{
+  "pageTitle": "Gen3 Test Workspaces",
+  "faviconUrl": "/icons/favicon.ico",
+  "gatewayBaseUrl": "/lw-workspace/proxy/",
+  "remoteKernelsPath": "/lw-workspace/proxy/jeg-proxy",
+  "additionalDisabledExtensions": [
+    "@jupyterlab/docmanager-extension:download",
+    "@jupyterlab/filebrowser-extension:download",
+    "@jupyterlab/notebook-extension:export",
+    "@jupyterlab/docmanager-extension:download",
+    "@jupyterlab/filebrowser-extension:download",
+    "@jupyterlab/notebook-extension:export",
+    "@jupyterlab/workspaces-extension:menu",
+    "@jupyterlab/workspaces-extension:commands"
+  ]
+}

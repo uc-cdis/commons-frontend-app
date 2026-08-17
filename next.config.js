@@ -22,12 +22,16 @@ const withMDX = require('@next/mdx')({
   },
 });
 
+// get the version of the frontend package
+const packageJson = require('@gen3/frontend/package.json');
+
 // Next configuration with support for writing API to existing common services
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
   env: {
     version: process.env.npm_package_version,
+    NEXT_PUBLIC_GEN3_VERSION: packageJson.version,
   },
   reactStrictMode: true,
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
