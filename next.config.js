@@ -1,7 +1,7 @@
 // @ts-check
 
 'use strict';
-
+const path = require('path');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const dns = require('dns');
 // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -23,7 +23,18 @@ const withMDX = require('@next/mdx')({
 });
 
 // get the version of the frontend package
-const packageJson = require('@gen3/frontend/package.json');
+const packageJson = require(
+  path.resolve(
+    __dirname,
+    'node_modules',
+    '@gen3',
+    'frontend',
+    'package.json',
+  ),
+);
+
+
+console.log('version:', packageJson.version);
 
 // Next configuration with support for writing API to existing common services
 /** @type {import('next').NextConfig} */
