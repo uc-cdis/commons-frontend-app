@@ -1,10 +1,10 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.12.62",
+  "version": "0.12.63",
   "private": "true",
   "engines": {
     "npm": ">=11.16.0",
-    "node": ">=24.18.0"
+    "node": ">=24.18.1"
   },
   "scripts": {
     "lint": "oxlint .",
@@ -34,9 +34,9 @@
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "@gen3/core": "^0.12.62",
-    "@gen3/frontend": "^0.12.62",
-    "@gen3/workspaces": "^0.12.62",
+    "@gen3/core": "^0.12.63",
+    "@gen3/frontend": "^0.12.63",
+    "@gen3/workspaces": "^0.12.63",
     "@mantine/core": "^9.4.0",
     "@mantine/dates": "^9.4.0",
     "@mantine/form": "^9.4.0",
@@ -62,7 +62,7 @@
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
     "@graphiql/react": "^0.37.7",
-    "@gen3/toolsff": "^0.12.62",
+    "@gen3/toolsff": "^0.12.63",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/line-clamp": "^0.4.4",

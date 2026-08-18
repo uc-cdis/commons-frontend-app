@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node-version: '24.18.0'
+          node-version: '24.18.1'
       - name: Install Dependencies
         run: npm install
       - name: Update @gen3/core, @gen3/frontend, @gen3/workspaces, and @gen3/toolsff

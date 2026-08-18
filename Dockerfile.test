@@ -1,7 +1,7 @@
 # docker build -t ff .
 # docker run -p 3000:3000 -it ff
 # Build stage
-FROM --platform=$BUILDPLATFORM node:24.18.0-alpine3.23 AS builder
+FROM --platform=$BUILDPLATFORM node:24.18.1-alpine3.23 AS builder
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
@@ -57,7 +57,7 @@ RUN npm run build:jupyterlite
 RUN npm run build
 
 # Production stage
-FROM node:24.18.0-alpine3.23 AS runner
+FROM node:24.18.1-alpine3.23 AS runner
 
 WORKDIR /ci
 
