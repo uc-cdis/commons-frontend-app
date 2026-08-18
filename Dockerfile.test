@@ -26,7 +26,8 @@ RUN chmod +x /usr/local/bin/micromamba
 
 # Download cockle WASM packages from emscripten-forge so prepare_wasm.js reuses
 # the existing env instead of running micromamba create.
-RUN WASM_ENV=cockle_wasm_env && \
+RUN LITE_DIR=node_modules/@gen3/workspaces/dist/jupyterlite-builds/remote-private && \
+    WASM_ENV="$LITE_DIR/cockle_wasm_env" && \
     mkdir -p "$WASM_ENV" && \
     for URL in \
       "https://repo.prefix.dev/emscripten-forge-4x/emscripten-wasm32/cockle_fs-0.3.0-h8b79025_1.tar.bz2" \
