@@ -24,8 +24,8 @@ RUN apk add --no-cache python3 py3-pip bash curl bzip2
 COPY docker/micromamba-stub.py /usr/local/bin/micromamba
 RUN chmod +x /usr/local/bin/micromamba
 
-# Download cockle WASM packages from emscripten-forge so prepare_wasm.js reuses
-# the existing env instead of running micromamba create.
+# Download cockle WASM packages into the remote-private lite-dir so prepare_wasm.js
+# finds cockle_wasm_env/bin/fs.js at the correct relative path (cwd = lite-dir).
 RUN LITE_DIR=node_modules/@gen3/workspaces/dist/jupyterlite-builds/remote-private && \
     WASM_ENV="$LITE_DIR/cockle_wasm_env" && \
     mkdir -p "$WASM_ENV" && \
