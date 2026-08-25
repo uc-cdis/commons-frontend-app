@@ -16,6 +16,6 @@
       ]
     },
     "expireDays": 365,
-    "showOnlyOnLogin": true
+    "showOnlyOnLogin": false
   }
 }
