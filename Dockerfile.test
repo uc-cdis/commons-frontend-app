@@ -55,7 +55,7 @@ ENV NODE_ENV=test
 RUN npm run build:jupyterlite
 
 # Build
-RUN npm run build
+RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build
 
 # Production stage
 FROM node:24.18.1-alpine3.23 AS runner
