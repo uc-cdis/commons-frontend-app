@@ -16,13 +16,13 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node-version: '24.15.0'
+          node-version: '24.18.1'
       - name: Install Dependencies
         run: npm install
-      - name: Update @gen3/core and @gen3/toolsff
+      - name: Update @gen3/core, @gen3/frontend, @gen3/workspaces, and @gen3/toolsff
         run: |
-          npm install @gen3/core@latest @gen3/toolsff@latest
+          npm install @gen3/core@latest @gen3/workspaces@latest @gen3/toolsff@latest
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -am "Update @gen3/core and @gen3/toolsff"
+          git commit -am "Update @gen3/core, @gen3/frontend, @gen3/workspaces, and @gen3/toolsff"
           git push

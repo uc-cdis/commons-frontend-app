@@ -1,13 +1,14 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
+@import 'graphiql/style.css';
+@import '@graphiql/react/style.css';
 
 @import '@mantine/core/styles.css';
 @import '@mantine/notifications/styles.css';
-@import 'mantine-react-table-open/styles.css';
-@import "tailwindcss/utilities";
 
-@import 'graphiql/style.css';
-@import '@graphiql/react/style.css';
+@import 'mantine-react-table-open/styles.css';
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer base {
   html {

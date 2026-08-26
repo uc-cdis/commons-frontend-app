@@ -1,0 +1,76 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "oxc",
+    "nextjs",
+    "jest",
+    "jsx-a11y",
+    "react",
+    "node"
+  ],
+  "options": {
+    "typeAware": false,
+    "typeCheck": false
+  },
+  "categories": {
+    "correctness": "error",
+    "nursery": "warn"
+  },
+  "rules": {
+    "typescript/no-explicit-any": "warn",
+    "typescript/consistent-type-imports": "warn",
+    "typescript/restrict-template-expressions": "warn",
+    "typescript/no-redundant-type-constituents": "warn",
+    "typescript/no-useless-default-assignment": "warn",
+    "typescript/unbound-method": "warn",
+    "typescript/no-base-to-string": "warn",
+    "typescript/no-misused-spread": "warn",
+    "typescript/no-floating-promises": "warn",
+    "eslint/no-unused-vars": "warn",
+
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-key": "error",
+    "react/no-string-refs": "error",
+    "react/self-closing-comp": "error",
+
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-perf/jsx-no-jsx-as-prop": "warn",
+
+    "eslint/no-console": ["warn", { "allow": ["warn", "error"] }],
+    "eslint/no-debugger": "error",
+
+    "jsx-a11y/prefer-tag-over-role": "warn"
+  },
+  "env": {
+    "builtin": true,
+    "browser": true,
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/setupTests.ts",
+        "**/jest.config.ts",
+        "**/__mocks__/**"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/jupyter-workspaces/**",
+    "**/builds/**",
+    "**/public/**",
+    "**/cockle_wasm_env/**",
+    "**/.yalc/**"
+  ]
+}

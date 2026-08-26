@@ -8,6 +8,8 @@ const { GEN3_COMMONS_NAME } = require('@gen3/core');
 /* eslint-disable @typescript-eslint/no-require-imports */
 const themeFonts = require(`./config/${GEN3_COMMONS_NAME}/themeFonts.json`);
 const themeColorCSSVars = require(`./config/themeColorCSSVars.json`);
+const { typographyPlugin } = require('@gen3/frontend');
+
 
 module.exports = {
   content: [
@@ -15,6 +17,7 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/features/**/*.{js,ts,jsx,tsx}',
     './node_modules/@gen3/frontend/dist/index/esm/*.js',
+    './node_modules/@gen3/workspaces/dist/index/esm/*.js',
   ],
   theme: {
     extend: {
@@ -58,7 +61,7 @@ module.exports = {
           titanium: '#707070',
           obsidian: '#757575',
         },
-        ... themeColorCSSVars,
+        ...themeColorCSSVars,
       },
       fontFamily: {
         heading: themeFonts.heading,
@@ -97,7 +100,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
+    typographyPlugin,
     require('@tailwindcss/forms')({
       strategy: 'class',
     }),

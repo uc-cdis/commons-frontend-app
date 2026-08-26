@@ -2,4 +2,4 @@
 
 set -e
 echo "starting server"
-node /gen3/.next/standalone/server.js
+node /ci/.next/standalone/server.js
