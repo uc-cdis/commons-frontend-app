@@ -16,6 +16,8 @@
     "build": "next build --webpack",
     "build:volume": "npm run build:middlewarePathsMatchAll && next build --webpack",
     "start": "next start",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname && npm run buildIcons && npm run build:middlewarePaths",
     "build:docker": "docker build -t gen3:fef_app -f Dockerfile.production .",
     "build:colors": "node ./node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/$npm_config_commons/colors.json --out=config/$npm_config_commons",
@@ -61,8 +63,14 @@
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
-    "@graphiql/react": "^0.37.7",
+    "@chromatic-com/storybook": "^5.1.2",
     "@gen3/toolsff": "^0.12.64",
+    "@graphiql/react": "^0.37.7",
+    "@storybook/addon-a11y": "^10.5.8",
+    "@storybook/addon-docs": "^10.5.8",
+    "@storybook/addon-onboarding": "^10.5.8",
+    "@storybook/nextjs": "^10.5.8",
+    "@storybook/test-runner": "^0.24.4",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/line-clamp": "^0.4.4",
@@ -73,10 +81,13 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.21",
+    "axe-playwright": "^2.2.2",
     "graphiql": "^5.2.4",
     "jest-fixed-jsdom": "^0.0.10",
     "msw": "^2.11.5",
+    "msw-storybook-addon": "^2.0.4",
     "next": "^16.3.0",
+    "next-router-mock": "^1.0.5",
     "oxlint": "^1.76.0",
     "oxlint-tsgolint": "^7.0.2001",
     "postcss": "^8.5.6",
@@ -87,6 +98,8 @@
     "postcss-preset-mantine": "^1.18.0",
     "prettier": "^3.6.2",
     "sharp": "^0.34.4",
+    "storybook": "^10.5.8",
+    "storybook-addon-deep-controls": "^0.10.0",
     "swr": "^2.3.6",
     "tailwindcss": "^3.4.18",
     "ts-jest": "^29.4.5",
@@ -95,9 +108,12 @@
     "typescript-eslint": "^8.46.1"
   },
   "allowScripts": {
+    "esbuild": true,
+    "core-js-pure": true,
     "unrs-resolver": true,
     "fsevents": true,
     "msw": true,
-    "sharp": true
+    "sharp": true,
+    "@swc/core": true
   }
 }
