@@ -21,6 +21,15 @@
     },
     "table": {
       "enabled": true,
+      "detailsConfig": {
+        "panel": "default",
+        "mode" : "click",
+        "idField": "submitter_id",
+        "title": "Row Details"
+      },
+      "pageLimit": {
+        "limit": 10000
+      },
       "fields": [
         "project_id",
         "data_format"
