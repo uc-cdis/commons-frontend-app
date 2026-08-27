@@ -26,10 +26,12 @@
     "build:middlewarePathsMatchAll": "if [ ! -f ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js ]; then printf \"\\033[31mError: @gen3/toolsff not built (missing dist file). Run: npm run build:tools\\033[0m\\n\"; exit 1; else node ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js --forceMatchAll || (printf \"\\033[31mError: @gen3/toolsff scanSitePaths failed. See above message\\033[0m\\n\" && exit 1); fi",
     "getSchema": "node ./node_modules/@gen3/toolsff/dist/getSchema.esm.js --out=config/",
     "getDRSToHostname": "node ./node_modules/@gen3/toolsff/dist/getDRSToHostname.esm.js --out=config/",
+    "build:jupyterlite:gen3sdk": "bash ./node_modules/@gen3/workspaces/dist/jupyterlite-builds/scripts/build-gen3sdk-lite.sh ./builds",
+    "build:jupyterlite:setupenv": "bash ./node_modules/@gen3/workspaces/dist/jupyterlite-builds/scripts/setup-env.sh ./builds",
     "build:jupyterlite:free": "bash ./node_modules/@gen3/workspaces/dist/jupyterlite-builds/scripts/build-jupyterlite.sh free ./builds",
     "build:jupyterlite:remote": "bash ./node_modules/@gen3/workspaces/dist/jupyterlite-builds/scripts/build-jupyterlite.sh remote ./builds",
     "build:jupyterlite:assets": "bash ./node_modules/@gen3/workspaces/dist/jupyterlite-builds/scripts/sync-jupyter-assets-into-package.sh ./builds",
-    "build:jupyterlite": "npm run build:jupyterlite:free && npm run build:jupyterlite:remote && npm run build:jupyterlite:assets"
+    "build:jupyterlite": "npm run build:jupyterlite:setupenv && npm run build:jupyterlite:gen3sdk && npm run build:jupyterlite:free && npm run build:jupyterlite:remote && npm run build:jupyterlite:assets"
   },
   "dependencies": {
     "@datadog/browser-rum": "^6.22.0",
@@ -38,7 +40,7 @@
     "@fontsource/source-sans-pro": "^5.2.5",
     "@gen3/core": "^0.12.64",
     "@gen3/frontend": "^0.12.64",
-    "@gen3/workspaces": "^0.12.64",
+    "@gen3/workspaces": "file:.yalc/@gen3/workspaces",
     "@mantine/core": "^9.4.0",
     "@mantine/dates": "^9.4.0",
     "@mantine/form": "^9.4.0",
