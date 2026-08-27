@@ -40,7 +40,7 @@
     "@fontsource/source-sans-pro": "^5.2.5",
     "@gen3/core": "^0.12.64",
     "@gen3/frontend": "^0.12.64",
-    "@gen3/workspaces": "file:.yalc/@gen3/workspaces",
+    "@gen3/workspaces": "^0.12.64",
     "@mantine/core": "^9.4.0",
     "@mantine/dates": "^9.4.0",
     "@mantine/form": "^9.4.0",

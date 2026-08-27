@@ -19,7 +19,7 @@ RUN npm config set fetch-retries 5 && \
     npm cache clean --force
 
 # Install Python for JupyterLite build
-RUN apk add --no-cache python3 py3-pip bash curl bzip2
+RUN apk add --no-cache python3 py3-pip bash curl bzip2 uv git coreutils
 
 COPY docker/micromamba-stub.py /usr/local/bin/micromamba
 RUN chmod +x /usr/local/bin/micromamba
