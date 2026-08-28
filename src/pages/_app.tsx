@@ -92,43 +92,28 @@ const Gen3App = ({
     }
   }, []);
 
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      setIsClient(false); // Only on client-side
-    }
-    else
-    setIsClient(true); // Only on client-side
-  }, []);
-
   return (
     <React.Fragment>
-      {isClient ? (
-        <Suspense fallback={<Loading />}>
-          {publicConfig?.dataDogAppId != null &&
-            publicConfig?.dataDogClientToken != null && (
-              <DatadogInit
-                appId={publicConfig.dataDogAppId}
-                clientToken={publicConfig.dataDogClientToken}
-                dataCommons={publicConfig.dataCommons}
-              />
-            )}
-          <MantineProvider theme={mantineTheme}>
-            <Gen3Provider
-              icons={icons}
-              sessionConfig={sessionConfig}
-              modalsConfig={modalsConfig}
-              protectedRoutesConfig={protectedRoutes}
-            >
-              <Component {...pageProps} />
-            </Gen3Provider>
-          </MantineProvider>
-        </Suspense>
-      ) : (
-        // Show some fallback UI while waiting for the client to load
-        <Loading />
-      )}
+      <Suspense fallback={<Loading />}>
+        {publicConfig?.dataDogAppId != null &&
+          publicConfig?.dataDogClientToken != null && (
+            <DatadogInit
+              appId={publicConfig.dataDogAppId}
+              clientToken={publicConfig.dataDogClientToken}
+              dataCommons={publicConfig.dataCommons}
+            />
+          )}
+        <MantineProvider theme={mantineTheme}>
+          <Gen3Provider
+            icons={icons}
+            sessionConfig={sessionConfig}
+            modalsConfig={modalsConfig}
+            protectedRoutesConfig={protectedRoutes}
+          >
+            <Component {...pageProps} />
+          </Gen3Provider>
+        </MantineProvider>
+      </Suspense>
     </React.Fragment>
   );
 };
