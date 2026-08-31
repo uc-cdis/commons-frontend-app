@@ -21,6 +21,11 @@
     },
     "table": {
       "enabled": true,
+      "detailsConfig": {
+        "mode" : "expand",
+        "idField": "submitter_id",
+        "title": "Row Details"
+      },
       "fields": [
         "project_id",
         "data_format"
