@@ -22,11 +22,12 @@
     "table": {
       "enabled": true,
       "detailsConfig": {
-        "panel": "fileDetails",
-        "mode" : "expand",
+        "mode": "expand",
+        "panelContainer": "drawer",
         "idField": "submitter_id",
         "title": "Row Details"
       },
+      "defaultIfEmpty": "NULL",
       "fields": [
         "project_id",
         "data_format"
