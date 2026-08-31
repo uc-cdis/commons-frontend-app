@@ -130,7 +130,7 @@
       "nodeCountTitle": "Files",
       "manifestMapping": {
         "resourceIndexType": "file",
-        "resourceIdField": "_subject_id",
+        "resourceIdField": "subject_id",
         "referenceIdFieldInResourceIndex": "object_id",
         "referenceIdFieldInDataIndex": "object_id"
       },
