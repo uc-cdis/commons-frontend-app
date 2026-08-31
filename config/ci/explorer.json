@@ -21,14 +21,6 @@
     },
     "table": {
       "enabled": true,
-      "detailsConfig": {
-        "mode" : "expand",
-        "idField": "submitter_id",
-        "title": "Row Details"
-      },
-      "pageLimit": {
-        "limit": 10000
-      },
       "fields": [
         "project_id",
         "data_format"
@@ -67,7 +59,7 @@
         { "field": "project_dbgap_phs", "name":"Project dbGaP Phs"}
       ],
       "manifestMapping": {
-        "resourceIndexType": "subject",
+        "resourceIndexType": "file",
         "resourceIdField": "object_id",
         "referenceIdFieldInResourceIndex": "_subject_id",
         "referenceIdFieldInDataIndex": "_subject_id"
@@ -129,8 +121,8 @@
       ],
       "nodeCountTitle": "Files",
       "manifestMapping": {
-        "resourceIndexType": "file",
-        "resourceIdField": "subject_id",
+        "resourceIndexType": "subject",
+        "resourceIdField": "_subject_id",
         "referenceIdFieldInResourceIndex": "object_id",
         "referenceIdFieldInDataIndex": "object_id"
       },
