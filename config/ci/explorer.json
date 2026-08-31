@@ -22,6 +22,7 @@
     "table": {
       "enabled": true,
       "detailsConfig": {
+        "panel": "fileDetails",
         "mode" : "expand",
         "idField": "submitter_id",
         "title": "Row Details"
@@ -30,11 +31,6 @@
         "project_id",
         "data_format"
       ]
-    },
-    "dropdowns": {
-      "download": {
-        "title": "Download"
-      }
     },
     "buttons": [
       {
