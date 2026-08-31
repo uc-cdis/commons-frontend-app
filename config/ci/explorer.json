@@ -68,7 +68,7 @@
         { "field": "project_dbgap_phs", "name":"Project dbGaP Phs"}
       ],
       "manifestMapping": {
-        "resourceIndexType": "file",
+        "resourceIndexType": "subject",
         "resourceIdField": "object_id",
         "referenceIdFieldInResourceIndex": "_subject_id",
         "referenceIdFieldInDataIndex": "_subject_id"
@@ -130,7 +130,7 @@
       ],
       "nodeCountTitle": "Files",
       "manifestMapping": {
-        "resourceIndexType": "subject",
+        "resourceIndexType": "file",
         "resourceIdField": "_subject_id",
         "referenceIdFieldInResourceIndex": "object_id",
         "referenceIdFieldInDataIndex": "object_id"
