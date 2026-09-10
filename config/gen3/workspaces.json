@@ -32,7 +32,7 @@
   "tierConfiguration": {
     "free": {
       "dataAndTools": {
-        "width": 300
+        "width": 340
       },
       "toolbar": {
         "tierLabel": "lite"

@@ -1,31 +1,34 @@
 {
   "tools": [
     {
-      "title": "Cohort Discovery",
+      "title": "GDC QAG (v2 - legacy)",
       "type": "application",
-      "icon": "/images/apps/icons/gen3_app.png",
-      "image": "/images/apps/cohort_discovery.png",
-      "description": "The cohort discovery application is designed to assist researchers, clinicians, and data scientists in quickly identifying and exploring subsets of individuals from large datasets based on specific criteria.",
-      "loginRequired": false,
-      "href": "/app/CohortDiscovery"
+      "icon": "/images/apps/icons/ai_spark.svg",
+      "image": "/images/apps/gdc_qag_gray.png",
+      "description": "Get specific answers to complex, multi-step, free-text genomics questions using factually grounded information retrieved from the GDC.",
+      "loginRequired": true,
+      "href": "/embedded/genomicaicommons.org/qag/v2",
+      "btnText": "Run Chat"
     },
     {
-      "title": "Crosswalk",
+      "title": "Cohort Copilot",
       "type": "application",
-      "icon": "/images/apps/icons/gen3_app.png",
-      "image": "/images/apps/crosswalk.png",
-      "description": "Map a set of ids to a set of foreign ids.",
-      "loginRequired": false,
-      "href": "Crosswalk"
+      "icon": "/images/apps/icons/ai_spark.svg",
+      "image": "/images/apps/cohort_copilot_image.png",
+      "description": " Construct GDC cohorts using natural language queries describing the cases you're looking for. The resulting cohorts can be used with standard GDC utilities and APIs.",
+      "loginRequired": true,
+      "href": "/embedded/genomicaicommons.org/cohort-copilot",
+      "btnText": "Run Builder"
     },
     {
-      "title": "Clinical Data Analysis",
+      "title": "GDC S&R MCP",
       "type": "application",
-      "icon": "/images/apps/icons/gen3_app.png",
-      "image": "/images/apps/ClinicalData.png",
-      "description": "Use clinical variables to perform basic statistical analysis of your cohort.",
-      "loginRequired": false,
-      "href": "ClinicalDataAnalysis"
+      "icon": "/images/apps/icons/ai_spark.svg",
+      "image": "/images/apps/data_model_generator.png",
+      "description": "GDC Search and Retrieval MCP demo.",
+      "loginRequired": true,
+      "href": "/embedded/genomicaicommons.org/qag/sr-chat",
+      "btnText": "Run Chat"
     }
   ]
 }
