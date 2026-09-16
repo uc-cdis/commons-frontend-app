@@ -61,7 +61,7 @@ export async function proxy(req: NextRequest) {
     const loginUrl = req.nextUrl.clone();
     loginUrl.pathname = '/Login';
     loginUrl.searchParams.set('referer', pathname);
-    return NextResponse.rewrite(loginUrl);
+    return NextResponse.redirect(loginUrl);
   }
 
   const needsAuthz = Array.isArray(rule?.authz) && rule?.authz.length > 0;
