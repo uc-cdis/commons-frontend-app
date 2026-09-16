@@ -1,11 +1,13 @@
 import React from 'react';
-import { GetServerSideProps } from 'next';
-import { NextRouter, useRouter } from 'next/dist/client/router';
+import type { GetServerSideProps } from 'next';
+import type { NextRouter} from 'next/dist/client/router';
+import { useRouter } from 'next/dist/client/router';
 
+import type {
+  NavPageLayoutProps} from '@gen3/frontend';
 import {
   getNavPageLayoutPropsFromConfig,
   NavPageLayout,
-  NavPageLayoutProps,
   StaticNotebookIFrame,
 } from '@gen3/frontend';
 
