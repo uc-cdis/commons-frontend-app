@@ -83,6 +83,7 @@ const nextConfig = {
           source: '/guppy/:path*',
           destination: `${GEN3_TARGET}/guppy/:path*`,
         },
+        { source: '/job/:path*', destination: `${GEN3_TARGET}/job/:path*` },
         { source: '/mds/:path*', destination: `${GEN3_TARGET}/mds/:path*` },
         {
           source: '/ai-search/:path*',
@@ -91,6 +92,10 @@ const nextConfig = {
         {
           source: '/authz/:path*',
           destination: `${GEN3_TARGET}/authz/:path*`,
+        },
+        {
+          source: '/lw-workspace/proxy/',
+          destination: `${GEN3_TARGET}/lw-workspace/proxy/`,
         },
         {
           source: '/lw-workspace/:path*',
@@ -105,10 +110,14 @@ const nextConfig = {
           source: '/library/lists/:path*',
           destination: `${GEN3_TARGET}/library/lists/:path*`,
         },
-        { source: '/job/:path*', destination: `${GEN3_TARGET}/job/:path*` },
+
         {
           source: '/manifests/:path*',
           destination: `${GEN3_TARGET}/manifests/:path*`,
+        },
+        {
+          source: '/dashboard/:path*',
+          destination: `${GEN3_TARGET}/dashboard/:path*`,
         },
         {
           source: '/requestor/:path*',
