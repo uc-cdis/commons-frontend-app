@@ -9,6 +9,9 @@
     "/Workspaces": {
       "loginRequired": true
     },
+    "/WorkspaceRequestAccess": {
+      "loginRequired": true
+    },
     "/Profile": {
       "loginRequired": true
     },

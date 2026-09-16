@@ -1,10 +1,12 @@
-import {
+import type {
   AuthorizedRoutesConfig,
-  ContentSource,
-  DefaultAuthorizedRoutesConfig,
   Fonts,
   RegisteredIcons,
   TenStringArray
+} from '@gen3/frontend';
+import {
+  ContentSource,
+  DefaultAuthorizedRoutesConfig
 } from '@gen3/frontend';
 import { GEN3_COMMONS_NAME } from '@gen3/core';
 
