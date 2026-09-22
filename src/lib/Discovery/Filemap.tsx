@@ -1,8 +1,9 @@
 import React from 'react';
-import {
+import type {
   CellRenderFunctionProps,
-  ReactECharts,
-  ReactEChartsProps,
+  ReactEChartsProps} from '@gen3/frontend';
+import {
+  ReactECharts
 } from '@gen3/frontend';
 import { Button, Popover, Text } from '@mantine/core';
 import { isArray } from 'lodash';

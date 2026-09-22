@@ -1,5 +1,6 @@
 import { parse } from 'cookie';
-import { decodeJwt, importSPKI, JWTPayload, jwtVerify } from 'jose';
+import type { JWTPayload} from 'jose';
+import { decodeJwt, importSPKI, jwtVerify } from 'jose';
 import { fetchJWTKey } from '@gen3/frontend/server';
 
 export const isExpired = (value: number) => value * 1000 < Date.now();

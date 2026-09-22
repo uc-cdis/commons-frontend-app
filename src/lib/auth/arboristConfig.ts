@@ -2,7 +2,7 @@
  * Frontend server side api to extract the frontend-protected resources
  */
 import { GEN3_COMMONS_NAME } from '@gen3/core/server';
-import { AuthorizedRoutesConfig } from '@gen3/frontend/server';
+import type { AuthorizedRoutesConfig } from '@gen3/frontend/server';
 
 let cachedConfig: AuthorizedRoutesConfig | null = null;
 

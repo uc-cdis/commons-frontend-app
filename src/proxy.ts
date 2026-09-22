@@ -7,6 +7,7 @@ export const config = {
   "/DataLibrary",
   "/Workspace",
   "/Workspaces",
+  "/WorkspaceRequestAccess",
   "/Profile"
 ],
 };

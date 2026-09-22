@@ -94,6 +94,10 @@ const nextConfig = {
           destination: `${GEN3_TARGET}/authz/:path*`,
         },
         {
+          source: '/lw-workspace/proxy/',
+          destination: `${GEN3_TARGET}/lw-workspace/proxy/`,
+        },
+        {
           source: '/lw-workspace/:path*',
           destination: `${GEN3_TARGET}/lw-workspace/:path*`,
         },

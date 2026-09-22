@@ -1,13 +1,10 @@
-import type { NextRequest} from 'next/server';
+import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { getRouteConfig } from './lib/auth/arboristConfig';
-import {
-  getAccessToken,
-  getLoginStatus,
-  type LoginStatus,
-} from './lib/auth/getLoginStatus';
+import { getLoginStatus, type LoginStatus } from './lib/auth/getLoginStatus';
 import { fetchArboristResources } from './lib/auth/fetchAuthz';
 import type { RouteConfig } from '@gen3/frontend/server';
+import { getAccessToken } from '@gen3/frontend/server';
 
 const WILDCARD_ROUTE_KEY = '*';
 
@@ -19,9 +16,11 @@ function getRouteRuleForPath(pathname: string, routeConfig: RouteConfig) {
   if (pathParts.length > 2) {
     const startsWithPath = `/${pathParts[1]}`;
     // look through config for subdirectory
-    const routeConfigMatch = Object.keys(routeConfig).find(key => key.startsWith(startsWithPath));
+    const routeConfigMatch = Object.keys(routeConfig).find((key) =>
+      key.startsWith(startsWithPath),
+    );
     // check if subdirectory ends with wildcard
-    if (routeConfigMatch && routeConfigMatch.endsWith('(.*)')) {
+    if (routeConfigMatch?.endsWith('(.*)')) {
       return routeConfig?.[routeConfigMatch];
     }
   }
@@ -86,6 +85,11 @@ export async function proxy(req: NextRequest) {
   if (!allowed) {
     // Already logged in if required; they just lack authz for this resource
     const forbiddenUrl = req.nextUrl.clone();
+    // Ceck for 403 redirect
+    if (rule?.redirect403 ) {
+      return NextResponse.redirect(new URL(rule.redirect403, req.url));
+    }
+
     forbiddenUrl.pathname = '/403';
     return NextResponse.rewrite(forbiddenUrl);
   }

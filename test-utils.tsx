@@ -1,11 +1,13 @@
-import React, { ComponentType, ReactElement } from 'react';
-import {
-  render,
-  renderHook,
+import type { ComponentType, ReactElement } from 'react';
+import React from 'react';
+import type {
   RenderHookOptions,
   RenderHookResult,
   RenderOptions,
-  RenderResult,
+  RenderResult} from '@testing-library/react';
+import {
+  render,
+  renderHook
 } from '@testing-library/react';
 import { CoreProvider, gen3Api, useCoreDispatch } from '@gen3/core';
 
