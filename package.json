@@ -17,7 +17,8 @@
     "build:volume": "npm run build:middlewarePathsMatchAll && next build --webpack",
     "start": "next start",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "storybook:build": "storybook build",
+    "storybook:test": "vitest --config vitest.config.mts",
     "setupCommons": "npm run build:colors && npm run build:icons && npm run build:middlewarePaths",
     "build:docker": "docker build -t gen3:fef_app -f Dockerfile.production .",
     "build:colors": "node ./node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/$npm_config_commons/colors.json --out=config/$npm_config_commons",
@@ -71,8 +72,8 @@
     "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-docs": "^10.6.0",
     "@storybook/addon-onboarding": "^10.6.0",
-    "@storybook/nextjs": "^10.6.0",
-    "@storybook/test-runner": "^0.24.5",
+    "@storybook/addon-vitest": "^10.6.0",
+    "@storybook/nextjs-vite": "^10.6.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/line-clamp": "^0.4.4",
@@ -108,16 +109,21 @@
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.46.1"
+    "typescript-eslint": "^8.46.1",
+    "vite": "^8.3.0",
+    "vitest": "^4.1.11",
+    "@vitest/browser-playwright": "^4.1.11",
+    "@vitest/browser": "^4.1.11",
+    "vite-plugin-svgr": "^5.2.0"
   },
   "allowScripts": {
-    "esbuild": true,
     "core-js-pure": true,
     "unrs-resolver": true,
     "fsevents": true,
     "msw": true,
     "sharp": true,
     "@swc/core": true,
-    "@parcel/watcher": true
+    "@parcel/watcher": true,
+    "esbuild@0.28.2": true
   }
 }
