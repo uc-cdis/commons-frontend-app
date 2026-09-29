@@ -1,7 +1,8 @@
 {
   "routes": {
     "/DataLibrary": {
-      "loginRequired": false
+      "loginRequired": true,
+      "authz": ["/pages/see-datalibrary"]
     },
     "/Workspace": {
       "loginRequired": true
