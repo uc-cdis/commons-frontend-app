@@ -1,6 +1,7 @@
 [
   {
     "tabTitle": "Subjects",
+    "flattenFields": true,
     "charts": {
       "experimental_group": {
         "chartType": "fullPie",
@@ -33,6 +34,14 @@
           "fieldsConfig": {
             "gender": {
               "label": "Sex"
+            },
+            "age_at_enrollment": {
+              "type": "age_in_years",
+              "range": {
+                "maximum": 32507,
+                "minimum": 0,
+                "step": 10
+              }
             }
           }
         }
