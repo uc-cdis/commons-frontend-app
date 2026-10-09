@@ -1,6 +1,6 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.12.83",
+  "version": "0.12.84",
   "private": "true",
   "engines": {
     "npm": ">=11.16.0",
@@ -39,9 +39,9 @@
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "@gen3/core": "^0.12.83",
-    "@gen3/frontend": "^0.12.83",
-    "@gen3/workspaces": "^0.12.83",
+    "@gen3/core": "^0.12.84",
+    "@gen3/frontend": "^0.12.84",
+    "@gen3/workspaces": "^0.12.84",
     "@mantine/core": "^9.6.2",
     "@mantine/dates": "^9.6.2",
     "@mantine/form": "^9.6.2",
@@ -67,7 +67,7 @@
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
     "@chromatic-com/storybook": "^5.3.1",
-    "@gen3/toolsff": "^0.12.83",
+    "@gen3/toolsff": "^0.12.84",
     "@graphiql/react": "^0.37.7",
     "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-docs": "^10.6.0",
@@ -83,6 +83,8 @@
     "@types/mdx": "^2.0.13",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@vitest/browser": "^4.1.11",
+    "@vitest/browser-playwright": "^4.1.11",
     "autoprefixer": "^10.4.21",
     "axe-playwright": "^2.2.2",
     "eslint-plugin-storybook": "10.6.0",
@@ -111,10 +113,8 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.46.1",
     "vite": "^8.3.0",
-    "vitest": "^4.1.11",
-    "@vitest/browser-playwright": "^4.1.11",
-    "@vitest/browser": "^4.1.11",
-    "vite-plugin-svgr": "^5.2.0"
+    "vite-plugin-svgr": "^5.2.0",
+    "vitest": "^4.1.11"
   },
   "allowScripts": {
     "core-js-pure": true,
