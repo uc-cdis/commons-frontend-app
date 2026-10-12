@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   ExplorerPage,
   ExplorerPageGetServerSideProps as getServerSideProps,
@@ -6,27 +6,32 @@ import {
 
 import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
 import { registerCustomExplorerDetailsPanels } from '@/lib/CohortBuilder/FileDetailsPanel';
-import { PortalCharts } from '@/lib/charts/spike/PortalCharts';
-import { SpikeChart } from '@/lib/charts/spike/SpikeChart';
+import {
+  ExplorerChartsPortal,
+  ExplorerTabCharts,
+  parseExplorerCharts,
+} from '@/lib/charts';
 
 registerCohortTableCustomCellRenderers();
 registerCustomExplorerDetailsPanels();
 
-// SPIKE: route B on the Donors tab
-const SpikeExplorerPage = (props: React.ComponentProps<typeof ExplorerPage>) => (
-  <>
-    <ExplorerPage {...props} />
-    <PortalCharts tabTitle="Donors">
-      <SpikeChart
-        route="B-portal"
-        index="donor"
-        field="menopausal_status"
-        title="Menopausal Status"
-      />
-    </PortalCharts>
-  </>
-);
+type ExplorerProps = React.ComponentProps<typeof ExplorerPage>;
 
-export default SpikeExplorerPage;
+/** The framework Explorer page, with our charts portalled into each tab. */
+const Explorer = (props: ExplorerProps) => {
+  const tabs = useMemo(() => parseExplorerCharts(props.explorerConfig), [props.explorerConfig]);
+  return (
+    <>
+      <ExplorerPage {...props} />
+      {tabs.map((tab) => (
+        <ExplorerChartsPortal key={tab.tabTitle} tabTitle={tab.tabTitle}>
+          <ExplorerTabCharts {...tab} />
+        </ExplorerChartsPortal>
+      ))}
+    </>
+  );
+};
+
+export default Explorer;
 
 export { getServerSideProps };
