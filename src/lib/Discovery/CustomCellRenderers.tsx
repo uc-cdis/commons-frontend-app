@@ -1,18 +1,15 @@
-import type {
-  CellRenderFunctionProps} from '@gen3/frontend';
-import {
-  DiscoveryCellRendererFactory
-} from '@gen3/frontend';
+import { DiscoveryCellRendererFactory } from '@gen3/frontend';
+import type { CellRenderFunctionProps } from '@gen3/frontend';
 import { Badge, Text } from '@mantine/core';
 import React from 'react';
 import {
   MdOutlineCheckCircle as CheckCircleOutlined,
   MdOutlineRemoveCircleOutline as MinusCircleOutlined,
 } from 'react-icons/md';
-import { isArray } from 'lodash';
-import type { JSONObject } from '@gen3/core';
-import { toString } from 'lodash';
-import { FilemapPopup, FilemapInline } from '@/lib/Discovery/Filemap';
+import { isArray, toString } from 'lodash';
+import { JSONObject } from '@gen3/core';
+import { FilemapInline, FilemapPopup } from '@/lib/Discovery/Filemap';
+import { isTextTransform } from '@gen3/frontend';
 
 /**
  * Custom cell renderer for the linked study column for HEAL
@@ -42,29 +39,29 @@ const WrappedStringCell = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   params?: JSONObject,
 ) => {
-
+  const ttValue = isTextTransform(params?.transform)
+    ? params?.transform
+    : undefined;
+  const size = (params?.size as string) || 'sm';
   if (value === undefined || value === null || toString(value) === '') {
     return (
-      <Text>
+      <Text tt={ttValue} size={size}>
         {`${
           params && params?.valueIfNotAvailable
             ? params?.valueIfNotAvailable
             : ''
-        }`}{' '}
+        }`}
       </Text>
     );
   }
 
   const content = value as string | string[];
   return (
-    <div className="w-40">
-      <span className="break-words whitespace-break-spaces text-md">
-        {isArray(content) ? content.join(', ') : content}
-      </span>
-    </div>
+    <Text tt={ttValue} size={size} textWrap="pretty">
+      {isArray(content) ? content.join(', ') : content}
+    </Text>
   );
 };
-
 
 /**
  * Register custom cell renderers for DiscoveryTable
@@ -80,6 +77,6 @@ export const registerDiscoveryCustomCellRenderers = () => {
     manifest: {
       default: FilemapPopup,
       inline: FilemapInline,
-    }
+    },
   });
 };
