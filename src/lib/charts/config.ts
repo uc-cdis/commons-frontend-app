@@ -23,7 +23,12 @@ export interface FieldChartDefinition extends ChartBase {
 
 export interface ModalityCombinationsDefinition extends ChartBase {
   type: 'modalityCombinations';
-  idField: string;
+  /** what is counted, e.g. donor_id */
+  groupField: string;
+  /** which field holds the modality, e.g. modality */
+  categoryField: string;
+  /** plural noun for the groups, e.g. "donors" */
+  unit: string;
   modalities: ReadonlyArray<Modality>;
   maxColumns?: number;
   maxRecords?: number;
@@ -58,17 +63,21 @@ const parseChart = (raw: unknown): ExplorerChartDefinition | null => {
   }
   if (
     raw.type === 'modalityCombinations' &&
-    isString(raw.idField) &&
+    isString(raw.groupField) &&
+    isString(raw.categoryField) &&
+    isString(raw.unit) &&
     Array.isArray(raw.modalities) &&
-    raw.modalities.every((m) => isObject(m) && isString(m.field) && isString(m.label))
+    raw.modalities.every((m) => isObject(m) && isString(m.value) && isString(m.label))
   ) {
     return {
       type: 'modalityCombinations',
       title: raw.title,
       width,
-      idField: raw.idField,
+      groupField: raw.groupField,
+      categoryField: raw.categoryField,
+      unit: raw.unit,
       modalities: (raw.modalities as Array<Record<string, string>>).map((m) => ({
-        field: m.field,
+        value: m.value,
         label: m.label,
       })),
       maxColumns: typeof raw.maxColumns === 'number' ? raw.maxColumns : undefined,

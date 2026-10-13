@@ -1,11 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { SegmentedControl } from '@mantine/core';
-import {
-  setCohortFilter,
-  useCoreDispatch,
-  useGetRawDataAndTotalCountsQuery,
-  type FilterSet,
-} from '@gen3/core';
+import { useGetRawDataAndTotalCountsQuery, type FilterSet } from '@gen3/core';
+import { useClearFilters, useUpdateFilters } from '@gen3/frontend';
 import { ChartFrame, DataTable } from './ChartFrame';
 import { CHART_ACCESSIBILITY } from './config';
 import { formatCount, formatPercent } from './data';
@@ -14,6 +10,7 @@ import { useIndexFilters } from './hooks';
 import {
   columnsFor,
   combinationFilter,
+  idsFor,
   selectedCombination,
   summariseCombinations,
   type CombinationMode,
@@ -21,16 +18,20 @@ import {
 } from './modalityCombinations';
 
 export interface ModalityCombinationChartProps {
+  /** the tab's index; one record per assay */
   index: string;
   title: string;
+  /** plural noun for what is counted, e.g. "donors" */
   unit: string;
-  idField: string;
+  /** the record field that identifies who is counted, e.g. donor_id */
+  groupField: string;
+  /** the record field holding the modality */
+  categoryField: string;
   modalities: ReadonlyArray<Modality>;
   /** visible columns; the rest are counted in the note and listed in the table */
   maxColumns?: number;
   /** raw-record page size; if the cohort is larger the chart says it is incomplete */
   maxRecords?: number;
-  /** extra caption notes from config */
   notes?: ReadonlyArray<string>;
   className?: string;
 }
@@ -39,7 +40,7 @@ const MODE_COPY: Record<CombinationMode, { control: string; subtitle: string; va
   exclusive: {
     control: 'Exactly these',
     subtitle:
-      'Exact combinations: each donor is counted once, in the column matching exactly the modalities they have.',
+      'Exact combinations: each donor is counted once, in the column matching exactly the modalities of their assays in this cohort.',
     value: 'donors with exactly these modalities and no others',
   },
   inclusive: {
@@ -62,34 +63,37 @@ const parseRaw = (raw: unknown, index: string) => {
   return { records, total: typeof total === 'number' ? total : records.length };
 };
 
+/**
+ * Donors per combination of assay modalities (UpSet semantics, drawn as a heatmap).
+ * Built from the tab's own assay records, so it follows that tab's cohort filters.
+ */
 export const ModalityCombinationChart = ({
   index,
   title,
   unit,
-  idField,
+  groupField,
+  categoryField,
   modalities,
   maxColumns = 20,
-  maxRecords = 5000,
+  maxRecords = 10000,
   notes: configNotes = [],
   className,
 }: ModalityCombinationChartProps) => {
-  const dispatch = useCoreDispatch();
   const filters = useIndexFilters(index);
+  const updateFilter = useUpdateFilters(index);
+  const clearFilter = useClearFilters(index);
   const [mode, setMode] = useState<CombinationMode>('exclusive');
-  const modalityFields = useMemo(() => modalities.map((m) => m.field), [modalities]);
 
-  // Like a facet, this chart ignores its own fields when counting, so a selected
-  // combination is shown in the context of the alternatives.
+  // Like a facet, ignore this chart's own filter when counting, so a selected
+  // combination is shown among the alternatives.
   const queryFilters = useMemo<FilterSet>(
     () => ({
       mode: filters.mode,
-      root: Object.fromEntries(
-        Object.entries(filters.root).filter(([f]) => !modalityFields.includes(f)),
-      ),
+      root: Object.fromEntries(Object.entries(filters.root).filter(([f]) => f !== groupField)),
     }),
-    [filters, modalityFields],
+    [filters, groupField],
   );
-  const fields = useMemo(() => [idField, ...modalityFields], [idField, modalityFields]);
+  const fields = useMemo(() => [groupField, categoryField], [groupField, categoryField]);
   const query = useGetRawDataAndTotalCountsQuery({
     type: index,
     fields,
@@ -101,100 +105,88 @@ export const ModalityCombinationChart = ({
 
   const { records, total } = useMemo(() => parseRaw(query.data, index), [query.data, index]);
   const summary = useMemo(
-    () => summariseCombinations(records, modalities),
-    [records, modalities],
+    () => summariseCombinations(records, groupField, categoryField, modalities),
+    [records, groupField, categoryField, modalities],
   );
   const allColumns = useMemo(() => columnsFor(summary, mode), [summary, mode]);
   const shown = allColumns.slice(0, maxColumns);
-  const selection = selectedCombination(filters.root, modalities);
+  const selection = selectedCombination(filters.root[groupField], summary);
   const truncated = records.length < total;
-  // "has no X" can only be sent to the server as X <= 0, which misses donors whose
-  // X is missing; only offer exact-combination filters when no donor is in that state
-  const canFilterExact = summary.partiallyMissing === 0;
+  const donorsInColumns = summary.combinations.reduce((acc, c) => acc + c.exclusive, 0);
 
   const apply = useCallback(
     (mask: number) => {
-      const others = Object.fromEntries(
-        Object.entries(filters.root).filter(([f]) => !modalityFields.includes(f)),
-      );
-      const isSame = selection?.mask === mask;
-      dispatch(
-        setCohortFilter({
-          index,
-          filters: {
-            mode: filters.mode,
-            root: isSame ? others : { ...others, ...combinationFilter(mask, modalities, mode) },
-          },
-        }),
-      );
+      if (selection?.mask === mask && selection.mode === mode) {
+        clearFilter(groupField);
+      } else {
+        updateFilter(groupField, combinationFilter(groupField, idsFor(summary, mask, mode)));
+      }
     },
-    [dispatch, filters, index, modalities, modalityFields, mode, selection],
+    [selection, mode, clearFilter, updateFilter, groupField, summary],
   );
-  const clear = useCallback(() => {
-    if (selection) apply(selection.mask);
-  }, [apply, selection]);
-
-  const activatable = (mask: number) =>
-    mask !== 0 && (mode === 'inclusive' || canFilterExact);
+  const clear = useCallback(() => clearFilter(groupField), [clearFilter, groupField]);
 
   const columns = shown.map((c) => ({
     id: String(c.mask),
     label: c.label,
     value: c[mode],
     members: c.members,
-    activatable: activatable(c.mask),
   }));
 
   const coveredDonors = shown.reduce((acc, c) => acc + c.exclusive, 0);
-  const noAssays = summary.combinations.find((c) => c.mask === 0)?.exclusive ?? 0;
   const top = allColumns
     .slice(0, 3)
-    .map((c) => `${c.label} ${formatCount(c[mode])} (${formatPercent(c[mode], summary.donorCount)})`)
+    .map((c) => `${c.label} ${formatCount(c[mode])} (${formatPercent(c[mode], donorsInColumns)})`)
     .join(', ');
-  const nonEmpty = allColumns.length;
   const label =
-    summary.donorCount === 0
+    donorsInColumns === 0
       ? `${title}: no ${unit} match the current filters.`
       : `${title}, ${mode === 'exclusive' ? 'exact combinations' : 'at least these modalities'}: ${formatCount(
-          summary.donorCount,
-        )} ${unit} across ${nonEmpty} combinations. Most common: ${top}.`;
+          donorsInColumns,
+        )} ${unit} across ${allColumns.length} combinations. Most common: ${top}.`;
 
   const notes = [
-    `Showing ${shown.length} of ${nonEmpty} non-empty combinations${
+    ...(truncated
+      ? [
+          `Incomplete: only the first ${formatCount(records.length)} of ${formatCount(
+            total,
+          )} assays were fetched, so these counts undercount. Narrow the cohort to see exact counts.`,
+        ]
+      : []),
+    `Showing ${shown.length} of ${allColumns.length} non-empty combinations${
       mode === 'exclusive'
-        ? `, covering ${formatCount(coveredDonors)} of ${formatCount(summary.donorCount)} ${unit}`
+        ? `, covering ${formatCount(coveredDonors)} of ${formatCount(donorsInColumns)} ${unit}`
         : ''
     }. Combinations with no ${unit} are omitted.`,
     mode === 'exclusive'
-      ? `Exact combinations sum to ${formatCount(summary.donorCount)} ${unit}.`
+      ? `Exact combinations sum to ${formatCount(donorsInColumns)} ${unit}, the distinct ${unit} with assays in this cohort.`
       : 'Columns overlap and do not sum to the total.',
-    ...(noAssays > 0 && mode === 'exclusive'
+    ...(summary.otherCategoryRecords > 0
       ? [
-          `${formatCount(noAssays)} ${unit} have no assay records ("No assays"); this column can't be used as a filter.`,
+          `${formatCount(summary.otherCategoryRecords)} assays have a modality outside the six shown and are not counted.`,
         ]
       : []),
-    ...(!canFilterExact && mode === 'exclusive'
-      ? [
-          `${summary.partiallyMissing} ${unit} have some modality counts missing, so exact combinations can't be filtered precisely; switch to "At least these" to filter.`,
-        ]
+    ...(summary.ungroupedRecords > 0
+      ? [`${formatCount(summary.ungroupedRecords)} assays have no ${groupField} and are not counted.`]
       : []),
     ...configNotes,
   ];
 
   const selectionLabel = selection
     ? `${MODE_COPY[selection.mode].control.toLowerCase()}: ${
-        summary.combinations.find((c) => c.mask === selection.mask)?.label ??
-        modalities.filter((_, i) => selection.mask & (1 << i)).map((m) => m.label).join(' + ')
-      }`
-    : undefined;
+        summary.combinations.find((c) => c.mask === selection.mask)?.label ?? ''
+      } (${formatCount(idsFor(summary, selection.mask, selection.mode).length)} ${unit})`
+    : filters.root[groupField]
+      ? `${groupField} filter set elsewhere`
+      : undefined;
 
   return (
     <ChartFrame
       title={title}
       unit={unit}
-      total={query.isSuccess ? summary.donorCount : undefined}
+      total={query.isSuccess ? donorsInColumns : undefined}
       status={query}
-      isEmpty={summary.donorCount === 0}
+      isEmpty={donorsInColumns === 0}
       onRetry={() => void query.refetch()}
       selectionLabel={selectionLabel}
       onClearSelection={clear}
@@ -213,25 +205,16 @@ export const ModalityCombinationChart = ({
           }))}
         />
       }
-      notes={[
-        ...(truncated
-          ? [
-              `Incomplete: only the first ${formatCount(records.length)} of ${formatCount(
-                total,
-              )} ${unit} were fetched, so these counts undercount. Narrow the cohort to see exact counts.`,
-            ]
-          : []),
-        ...notes,
-      ]}
+      notes={notes}
       table={
         <DataTable
           caption={`${title}: ${MODE_COPY[mode].value}`}
           headers={['Combination', unit.charAt(0).toUpperCase() + unit.slice(1), 'Share']}
           rows={allColumns.map((c) => ({
             key: String(c.mask),
-            cells: [c.label, formatCount(c[mode]), formatPercent(c[mode], summary.donorCount)],
-            selected: selection?.mask === c.mask,
-            onToggle: activatable(c.mask) ? () => apply(c.mask) : undefined,
+            cells: [c.label, formatCount(c[mode]), formatPercent(c[mode], donorsInColumns)],
+            selected: selection?.mask === c.mask && selection.mode === mode,
+            onToggle: () => apply(c.mask),
           }))}
         />
       }
@@ -240,11 +223,11 @@ export const ModalityCombinationChart = ({
         rows={modalities.map((m) => m.label)}
         columns={columns}
         unit={unit}
-        total={summary.donorCount}
+        total={donorsInColumns}
         label={label}
         marksLabel={`${title} columns`}
         valueCaption={MODE_COPY[mode].value}
-        selectedId={selection ? String(selection.mask) : null}
+        selectedId={selection && selection.mode === mode ? String(selection.mask) : null}
         onSelect={(id) => apply(Number(id))}
       />
     </ChartFrame>

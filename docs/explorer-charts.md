@@ -15,8 +15,9 @@ draw its own charts as well.
   { "type": "bar", "field": "modality", "title": "Modality" },          // vertical by default
   { "type": "bar", "field": "tissue_site", "title": "Tissue Site", "orientation": "horizontal" },
   { "type": "pie", "field": "phenotype", "title": "Phenotype" },
-  { "type": "modalityCombinations", "title": "…", "width": "full", "idField": "donor_id",
-    "modalities": [{ "field": "wgs_count", "label": "WGS" }, …], "maxColumns": 20, "maxRecords": 5000 }
+  { "type": "modalityCombinations", "title": "…", "width": "full",           // Assays tab
+    "groupField": "donor_id", "categoryField": "modality", "unit": "donors",
+    "modalities": [{ "value": "wgs", "label": "WGS" }, …], "maxColumns": 20, "maxRecords": 10000 }
 ]
 ```
 
@@ -44,7 +45,10 @@ Conventions:
 - Charts ignore their own field's filter, like facets, so a selection is shown in context.
 - Guppy returns `-1` for suppressed small counts. These are listed but never drawn or summed.
 - Click-to-filter goes through `useUpdateFilters` / `useClearFilters` (the facets' hooks).
-  The modality chart writes all six fields in one `setCohortFilter` dispatch.
+- The modality-combination chart sits on the Assays tab and is built from that tab's
+  assay records: it groups them by `donor_id` into each donor's modality set, so it
+  follows the Assays cohort. Clicking a column filters the assays to those donors
+  (`donor_id in […]`), which is exact for both "exactly" and "at least" modes.
 
 ## Upgrading `@gen3/frontend`: check these
 

@@ -87,9 +87,10 @@ export const ExplorerTabCharts = ({ tabTitle, index, unit, charts }: TabCharts) 
           <ModalityCombinationChart
             key={def.title}
             index={index}
-            unit={unit}
+            unit={def.unit}
             title={def.title}
-            idField={def.idField}
+            groupField={def.groupField}
+            categoryField={def.categoryField}
             modalities={def.modalities}
             maxColumns={def.maxColumns}
             maxRecords={def.maxRecords}

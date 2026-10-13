@@ -16,6 +16,42 @@
         "type": "pie",
         "field": "compartment",
         "title": "Compartment"
+      },
+      {
+        "type": "modalityCombinations",
+        "title": "Donors per combination of assay modalities",
+        "width": "full",
+        "groupField": "donor_id",
+        "categoryField": "modality",
+        "unit": "donors",
+        "modalities": [
+          {
+            "value": "wgs",
+            "label": "WGS"
+          },
+          {
+            "value": "wts",
+            "label": "WTS"
+          },
+          {
+            "value": "snp",
+            "label": "SNP"
+          },
+          {
+            "value": "chromium",
+            "label": "Chromium"
+          },
+          {
+            "value": "visium",
+            "label": "Visium"
+          },
+          {
+            "value": "xenium",
+            "label": "Xenium"
+          }
+        ],
+        "maxColumns": 20,
+        "maxRecords": 10000
       }
     ],
     "filters": {
@@ -308,43 +344,6 @@
         "type": "pie",
         "field": "distant_metastasis_flag",
         "title": "Distant Metastasis"
-      },
-      {
-        "type": "modalityCombinations",
-        "title": "Donors per combination of assay modalities",
-        "width": "full",
-        "idField": "donor_id",
-        "modalities": [
-          {
-            "field": "wgs_count",
-            "label": "WGS"
-          },
-          {
-            "field": "wts_count",
-            "label": "WTS"
-          },
-          {
-            "field": "snp_count",
-            "label": "SNP"
-          },
-          {
-            "field": "chromium_count",
-            "label": "Chromium"
-          },
-          {
-            "field": "visium_count",
-            "label": "Visium"
-          },
-          {
-            "field": "xenium_count",
-            "label": "Xenium"
-          }
-        ],
-        "maxColumns": 20,
-        "maxRecords": 5000,
-        "notes": [
-          "Reports are excluded: they are derived analyses, not an assay modality."
-        ]
       }
     ],
     "filters": {
