@@ -72,19 +72,19 @@
           "supportedValues": {
             "accessible": {
               "enabled": true,
-              "menuText": "Available"
+              "label": "Available"
             },
             "unaccessible": {
               "enabled": false,
-              "menuText": "Not Accessible"
+              "label": "Not Accessible"
             },
             "pending": {
               "enabled": true,
-              "menuText": "Pending"
+              "label": "Pending"
             },
             "notAvailable": {
               "enabled": true,
-              "menuText": "Not Available"
+              "label": "Not Available"
             }
           }
         }
