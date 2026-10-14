@@ -24,6 +24,8 @@ export interface ChartTheme {
     // decals stay off by default; pies turn them on (see PieChart)
     aria: { enabled: boolean; label: { enabled: boolean } };
   };
+  /** bar thickness shared by every bar series: ~70% of the slot, capped */
+  bar: { barCategoryGap: string; barMaxWidth: number };
   axisLabel: { color: string; fontSize: number };
   axisLine: { lineStyle: { color: string } };
   splitLine: { lineStyle: { color: string; width: number; type: 'solid' } };
@@ -54,6 +56,7 @@ export const useChartTheme = (): ChartTheme => {
         // ECharts' own generated aria-label would fight ours; ChartFrame owns a11y
         aria: { enabled: true, label: { enabled: false } },
       },
+      bar: { barCategoryGap: '30%', barMaxWidth: 56 },
       axisLabel: { color: chartTokens.textMuted, fontSize: 11 },
       axisLine: { lineStyle: { color: chartTokens.grid } },
       splitLine: { lineStyle: { color: chartTokens.grid, width: 1, type: 'solid' as const } },

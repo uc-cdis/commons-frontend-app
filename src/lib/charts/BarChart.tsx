@@ -22,7 +22,8 @@ interface BarChartProps extends CategoryChartProps {
   orientation?: BarOrientation;
 }
 
-const ROW = 26;
+// height per category on horizontal bars: room for a thick bar plus a gap
+const ROW = 34;
 
 /**
  * Single-series bar chart. Categories are told apart by position and label, so the
@@ -90,7 +91,7 @@ export const BarChart = ({
       series: [
         {
           type: 'bar',
-          barMaxWidth: 24,
+          ...theme.bar,
           cursor: 'pointer',
           data: visible.map((d) => ({
             value: d.count ?? '-',

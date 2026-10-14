@@ -249,7 +249,7 @@ export const UpSetChart = ({
           type: 'bar',
           xAxisIndex: 0,
           yAxisIndex: 0,
-          barMaxWidth: 22,
+          ...theme.bar,
           cursor: 'pointer',
           data: columns.map((c) => ({
             value: c.value,
@@ -280,7 +280,7 @@ export const UpSetChart = ({
           type: 'bar',
           xAxisIndex: 2,
           yAxisIndex: 2,
-          barMaxWidth: 16,
+          ...theme.bar,
           data: setSizes.map((v) => ({
             value: v,
             itemStyle: { color: tokens.series, borderRadius: [4, 0, 0, 4] },
