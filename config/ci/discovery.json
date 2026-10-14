@@ -67,17 +67,11 @@
           "supportedValues": {
             "accessible": {
               "enabled": true,
-              "menuText": "Accessible"
+              "label": "Accessible"
             },
             "unaccessible": {
               "enabled": true,
-              "menuText": "Not Accessible"
-            },
-            "pending": {
-              "enabled": false
-            },
-            "notAvailable": {
-              "enabled": false
+              "label": "Not Accessible"
             }
           }
         }
@@ -323,33 +317,35 @@
         "dataAvailabilityField": "data_availability",
         "uid": "project_number"
       },
-      "tagCategories": [
-        {
-          "name": "Demographic Info",
-          "color": "rgba(64, 34, 100, 1)",
-          "display": true
-        },
-        {
-          "name": "Study Design",
-          "color": "rgba(153, 40, 107, 1)",
-          "display": true
-        },
-        {
-          "name": "HEAL Specific",
-          "color": "rgba(161, 36, 46, 1)",
-          "display": true
-        },
-        {
-          "name": "Other",
-          "color": "rgba(207, 54, 38, 1)",
-          "display": true
-        },
-        {
-          "name": "Commons",
-          "displayName": "Data Resources",
-          "color": "rgba(21, 6, 76, 1)"
-        }
-      ]
+      "tags": {
+        "tagCategories": [
+          {
+            "name": "Demographic Info",
+            "color": "rgba(64, 34, 100, 1)",
+            "display": true
+          },
+          {
+            "name": "Study Design",
+            "color": "rgba(153, 40, 107, 1)",
+            "display": true
+          },
+          {
+            "name": "HEAL Specific",
+            "color": "rgba(161, 36, 46, 1)",
+            "display": true
+          },
+          {
+            "name": "Other",
+            "color": "rgba(207, 54, 38, 1)",
+            "display": true
+          },
+          {
+            "name": "Commons",
+            "displayName": "Data Resources",
+            "color": "rgba(21, 6, 76, 1)"
+          }
+        ]
+      }
     }
   ]
 }
