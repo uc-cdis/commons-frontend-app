@@ -6,24 +6,21 @@ export interface Modality {
   label: string;
 }
 
-/** exclusive = donors with exactly these modalities; inclusive = at least these */
-export type CombinationMode = 'exclusive' | 'inclusive';
-
+/** An exact combination: groups (donors) with exactly these modalities and no others. */
 export interface Combination {
   /** bit i set ⇔ modalities[i] is a member */
   mask: number;
   members: ReadonlyArray<boolean>;
   label: string;
-  /** groups (donors) whose modality set is exactly this one */
-  exclusive: number;
-  /** groups whose modality set contains this one */
-  inclusive: number;
+  count: number;
 }
 
 export interface CombinationSummary {
   /** every combination that at least one group has exactly */
   combinations: ReadonlyArray<Combination>;
-  /** distinct groups (donors) seen */
+  /** groups with each modality (the UpSet "set size"), in modality order */
+  setSizes: ReadonlyArray<number>;
+  /** groups with at least one configured modality; the exact counts sum to this */
   groupCount: number;
   /** group ids per exact mask, for building and recognising filters */
   idsByMask: ReadonlyMap<number, ReadonlyArray<string>>;
@@ -41,8 +38,8 @@ export const combinationLabel = (mask: number, modalities: ReadonlyArray<Modalit
 
 /**
  * Group per-assay records into each donor's set of modalities, then bucket donors
- * by that set. A donor's modalities are only those of the records in the current
- * cohort; nothing is imputed.
+ * by that exact set. A donor's modalities are only those of the records in the
+ * current cohort; nothing is imputed.
  */
 export const summariseCombinations = (
   records: ReadonlyArray<Record<string, unknown>>,
@@ -67,72 +64,56 @@ export const summariseCombinations = (
 
   const ids = new Map<number, string[]>();
   for (const [group, mask] of maskByGroup) {
-    if (mask === 0) continue; // only unconfigured modalities: not in any column
+    if (mask === 0) continue; // only unconfigured modalities: in no column
     const list = ids.get(mask) ?? [];
     list.push(group);
     ids.set(mask, list);
   }
-  const observed = [...ids.entries()].map(([mask, list]) => [mask, list.length] as const);
-  const combinations = observed.map(([mask, exclusive]) => ({
+  ids.forEach((list) => list.sort());
+  const combinations = [...ids.entries()].map(([mask, list]) => ({
     mask,
     members: modalities.map((_, i) => Boolean(mask & (1 << i))),
     label: combinationLabel(mask, modalities),
-    exclusive,
-    inclusive: observed.reduce((acc, [other, n]) => ((other & mask) === mask ? acc + n : acc), 0),
+    count: list.length,
   }));
-  ids.forEach((list) => list.sort());
+  const setSizes = modalities.map((_, i) =>
+    combinations.reduce((acc, c) => (c.mask & (1 << i) ? acc + c.count : acc), 0),
+  );
   return {
     combinations,
-    groupCount: maskByGroup.size,
+    setSizes,
+    groupCount: combinations.reduce((acc, c) => acc + c.count, 0),
     idsByMask: ids,
     otherCategoryRecords,
     ungroupedRecords,
   };
 };
 
-/** Columns for one mode, largest first. */
-export const columnsFor = (summary: CombinationSummary, mode: CombinationMode): Combination[] =>
-  [...summary.combinations].sort((a, b) => b[mode] - a[mode] || a.label.localeCompare(b.label));
+/** Columns, largest first. */
+export const columnsFor = (summary: CombinationSummary): Combination[] =>
+  [...summary.combinations].sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 
-/** The donors a column stands for in the given mode. */
-export const idsFor = (
-  summary: CombinationSummary,
-  mask: number,
-  mode: CombinationMode,
-): string[] =>
-  mode === 'exclusive'
-    ? [...(summary.idsByMask.get(mask) ?? [])]
-    : [...summary.idsByMask.entries()]
-        .filter(([other]) => (other & mask) === mask)
-        .flatMap(([, list]) => list)
-        .sort();
+/** The donors in one exact combination. */
+export const idsFor = (summary: CombinationSummary, mask: number): string[] => [
+  ...(summary.idsByMask.get(mask) ?? []),
+];
 
-/** The cohort filter selecting a column's donors. */
+/** The cohort filter selecting a combination's donors. */
 export const combinationFilter = (groupField: string, ids: ReadonlyArray<string>): Includes => ({
   operator: 'in',
   field: groupField,
   operands: [...ids],
 });
 
-const sameSet = (a: ReadonlyArray<string | number>, b: ReadonlyArray<string>) => {
-  if (a.length !== b.length) return false;
-  const set = new Set(a.map(String));
-  return b.every((x) => set.has(x));
-};
-
-/**
- * If the cohort's filter on the group field is exactly one column's donors, return
- * that column (exclusive match preferred); otherwise null.
- */
+/** If the cohort's filter on the group field is exactly one combination's donors, its mask. */
 export const selectedCombination = (
   op: Operation | undefined,
   summary: CombinationSummary,
-): { mask: number; mode: CombinationMode } | null => {
+): number | null => {
   if (!op || (op.operator !== 'in' && op.operator !== 'includes')) return null;
-  for (const mode of ['exclusive', 'inclusive'] as const) {
-    for (const c of summary.combinations) {
-      if (sameSet(op.operands, idsFor(summary, c.mask, mode))) return { mask: c.mask, mode };
-    }
+  const selected = new Set(op.operands.map(String));
+  for (const [mask, list] of summary.idsByMask) {
+    if (list.length === selected.size && list.every((id) => selected.has(id))) return mask;
   }
   return null;
 };

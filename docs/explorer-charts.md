@@ -31,11 +31,11 @@ draw its own charts as well.
 
 | File | Role |
 |---|---|
-| `theme.ts` | The only place colours are defined: Okabe–Ito, viridis (dark half), decal patterns, UI tokens from `config/gen3/themeColors.json` |
+| `theme.ts` | The only place colours are defined: Okabe–Ito, decal patterns, UI tokens from `config/gen3/themeColors.json` |
 | `useChartTheme.ts` | Shared tooltip/axis styling, reduced-motion handling |
 | `ChartFrame.tsx` | Card, title, `n = …`, selection banner + Clear, loading / error / empty states, data-table fallback |
 | `ChartCanvas.tsx` | a11y contract: `role="img"` + finding-based label; keyboard listbox (arrows, Enter, Escape); stable ECharts event binding |
-| `BarChart.tsx`, `PieChart.tsx`, `HeatmapChart.tsx` | Presentational charts |
+| `BarChart.tsx`, `PieChart.tsx`, `UpSetChart.tsx` | Presentational charts |
 | `ModalityCombinationChart.tsx`, `modalityCombinations.ts` | Donors per exact / at-least modality combination (pure logic unit-tested) |
 | `ExplorerTabCharts.tsx` | One aggregation query per tab (`filterSelf: false`), grid layout |
 | `ExplorerChartsPortal.tsx` | Mounts each tab's charts inside the framework's tab panel |
@@ -48,7 +48,8 @@ Conventions:
 - The modality-combination chart sits on the Assays tab and is built from that tab's
   assay records: it groups them by `donor_id` into each donor's modality set, so it
   follows the Assays cohort. Clicking a column filters the assays to those donors
-  (`donor_id in […]`), which is exact for both "exactly" and "at least" modes.
+  (`donor_id in […]`). It shows exact combinations only (each donor in one column), as an
+  UpSet plot: combination bars, a dot matrix, and set-size bars per modality on the left.
 
 ## Upgrading `@gen3/frontend`: check these
 

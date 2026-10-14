@@ -1,11 +1,9 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { SegmentedControl } from '@mantine/core';
+import React, { useCallback, useMemo } from 'react';
 import { useGetRawDataAndTotalCountsQuery, type FilterSet } from '@gen3/core';
 import { useClearFilters, useUpdateFilters } from '@gen3/frontend';
 import { ChartFrame, DataTable } from './ChartFrame';
 import { CHART_ACCESSIBILITY } from './config';
 import { formatCount, formatPercent } from './data';
-import { HeatmapChart } from './HeatmapChart';
 import { useIndexFilters } from './hooks';
 import {
   columnsFor,
@@ -13,9 +11,9 @@ import {
   idsFor,
   selectedCombination,
   summariseCombinations,
-  type CombinationMode,
   type Modality,
 } from './modalityCombinations';
+import { UpSetChart } from './UpSetChart';
 
 export interface ModalityCombinationChartProps {
   /** the tab's index; one record per assay */
@@ -36,20 +34,8 @@ export interface ModalityCombinationChartProps {
   className?: string;
 }
 
-const MODE_COPY: Record<CombinationMode, { control: string; subtitle: string; value: string }> = {
-  exclusive: {
-    control: 'Exactly these',
-    subtitle:
-      'Exact combinations: each donor is counted once, in the column matching exactly the modalities of their assays in this cohort.',
-    value: 'donors with exactly these modalities and no others',
-  },
-  inclusive: {
-    control: 'At least these',
-    subtitle:
-      'Overlapping: a donor counts in every column whose modalities they have, so columns do not sum to the total.',
-    value: 'donors with at least these modalities (and possibly others)',
-  },
-};
+const SUBTITLE =
+  'Each donor is counted once, in the column matching exactly the modalities of their assays in this cohort. Bars on the left: donors with each modality.';
 
 const isRecordArray = (v: unknown): v is Array<Record<string, unknown>> =>
   Array.isArray(v) && v.every((r) => typeof r === 'object' && r !== null);
@@ -64,8 +50,8 @@ const parseRaw = (raw: unknown, index: string) => {
 };
 
 /**
- * Donors per combination of assay modalities (UpSet semantics, drawn as a heatmap).
- * Built from the tab's own assay records, so it follows that tab's cohort filters.
+ * Donors per exact combination of assay modalities, as an UpSet plot. Built from
+ * the tab's own assay records, so it follows that tab's cohort filters.
  */
 export const ModalityCombinationChart = ({
   index,
@@ -82,7 +68,6 @@ export const ModalityCombinationChart = ({
   const filters = useIndexFilters(index);
   const updateFilter = useUpdateFilters(index);
   const clearFilter = useClearFilters(index);
-  const [mode, setMode] = useState<CombinationMode>('exclusive');
 
   // Like a facet, ignore this chart's own filter when counting, so a selected
   // combination is shown among the alternatives.
@@ -108,42 +93,30 @@ export const ModalityCombinationChart = ({
     () => summariseCombinations(records, groupField, categoryField, modalities),
     [records, groupField, categoryField, modalities],
   );
-  const allColumns = useMemo(() => columnsFor(summary, mode), [summary, mode]);
+  const allColumns = useMemo(() => columnsFor(summary), [summary]);
   const shown = allColumns.slice(0, maxColumns);
-  const selection = selectedCombination(filters.root[groupField], summary);
+  const selected = selectedCombination(filters.root[groupField], summary);
   const truncated = records.length < total;
-  const donorsInColumns = summary.combinations.reduce((acc, c) => acc + c.exclusive, 0);
+  const donors = summary.groupCount;
 
   const apply = useCallback(
     (mask: number) => {
-      if (selection?.mask === mask && selection.mode === mode) {
-        clearFilter(groupField);
-      } else {
-        updateFilter(groupField, combinationFilter(groupField, idsFor(summary, mask, mode)));
-      }
+      if (selected === mask) clearFilter(groupField);
+      else updateFilter(groupField, combinationFilter(groupField, idsFor(summary, mask)));
     },
-    [selection, mode, clearFilter, updateFilter, groupField, summary],
+    [selected, clearFilter, updateFilter, groupField, summary],
   );
   const clear = useCallback(() => clearFilter(groupField), [clearFilter, groupField]);
 
-  const columns = shown.map((c) => ({
-    id: String(c.mask),
-    label: c.label,
-    value: c[mode],
-    members: c.members,
-  }));
-
-  const coveredDonors = shown.reduce((acc, c) => acc + c.exclusive, 0);
+  const coveredDonors = shown.reduce((acc, c) => acc + c.count, 0);
   const top = allColumns
     .slice(0, 3)
-    .map((c) => `${c.label} ${formatCount(c[mode])} (${formatPercent(c[mode], donorsInColumns)})`)
+    .map((c) => `${c.label} ${formatCount(c.count)} (${formatPercent(c.count, donors)})`)
     .join(', ');
   const label =
-    donorsInColumns === 0
+    donors === 0
       ? `${title}: no ${unit} match the current filters.`
-      : `${title}, ${mode === 'exclusive' ? 'exact combinations' : 'at least these modalities'}: ${formatCount(
-          donorsInColumns,
-        )} ${unit} across ${allColumns.length} combinations. Most common: ${top}.`;
+      : `${title}: ${formatCount(donors)} ${unit} across ${allColumns.length} exact combinations. Most common: ${top}.`;
 
   const notes = [
     ...(truncated
@@ -153,14 +126,11 @@ export const ModalityCombinationChart = ({
           )} assays were fetched, so these counts undercount. Narrow the cohort to see exact counts.`,
         ]
       : []),
-    `Showing ${shown.length} of ${allColumns.length} non-empty combinations${
-      mode === 'exclusive'
-        ? `, covering ${formatCount(coveredDonors)} of ${formatCount(donorsInColumns)} ${unit}`
-        : ''
-    }. Combinations with no ${unit} are omitted.`,
-    mode === 'exclusive'
-      ? `Exact combinations sum to ${formatCount(donorsInColumns)} ${unit}, the distinct ${unit} with assays in this cohort.`
-      : 'Columns overlap and do not sum to the total.',
+    `Showing ${shown.length} of ${allColumns.length} non-empty combinations, covering ${formatCount(
+      coveredDonors,
+    )} of ${formatCount(donors)} ${unit}. Combinations with no ${unit} are omitted; the columns sum to ${formatCount(
+      donors,
+    )} ${unit}.`,
     ...(summary.otherCategoryRecords > 0
       ? [
           `${formatCount(summary.otherCategoryRecords)} assays have a modality outside the six shown and are not counted.`,
@@ -172,62 +142,57 @@ export const ModalityCombinationChart = ({
     ...configNotes,
   ];
 
-  const selectionLabel = selection
-    ? `${MODE_COPY[selection.mode].control.toLowerCase()}: ${
-        summary.combinations.find((c) => c.mask === selection.mask)?.label ?? ''
-      } (${formatCount(idsFor(summary, selection.mask, selection.mode).length)} ${unit})`
-    : filters.root[groupField]
-      ? `${groupField} filter set elsewhere`
-      : undefined;
+  const selectionLabel =
+    selected !== null
+      ? `${summary.combinations.find((c) => c.mask === selected)?.label ?? ''} (${formatCount(
+          idsFor(summary, selected).length,
+        )} ${unit})`
+      : filters.root[groupField]
+        ? `${groupField} filter set elsewhere`
+        : undefined;
 
   return (
     <ChartFrame
       title={title}
       unit={unit}
-      total={query.isSuccess ? donorsInColumns : undefined}
+      total={query.isSuccess ? donors : undefined}
       status={query}
-      isEmpty={donorsInColumns === 0}
+      isEmpty={donors === 0}
       onRetry={() => void query.refetch()}
       selectionLabel={selectionLabel}
       onClearSelection={clear}
-      subtitle={MODE_COPY[mode].subtitle}
+      subtitle={SUBTITLE}
       className={className}
-      controls={
-        <SegmentedControl
-          size="xs"
-          color="primary"
-          value={mode}
-          onChange={(v) => setMode(v === 'inclusive' ? 'inclusive' : 'exclusive')}
-          aria-label="Count donors with"
-          data={(['exclusive', 'inclusive'] as const).map((m) => ({
-            value: m,
-            label: MODE_COPY[m].control,
-          }))}
-        />
-      }
       notes={notes}
       table={
         <DataTable
-          caption={`${title}: ${MODE_COPY[mode].value}`}
+          caption={`${title}: ${unit} with exactly these modalities`}
           headers={['Combination', unit.charAt(0).toUpperCase() + unit.slice(1), 'Share']}
           rows={allColumns.map((c) => ({
             key: String(c.mask),
-            cells: [c.label, formatCount(c[mode]), formatPercent(c[mode], donorsInColumns)],
-            selected: selection?.mask === c.mask && selection.mode === mode,
+            cells: [c.label, formatCount(c.count), formatPercent(c.count, donors)],
+            selected: selected === c.mask,
             onToggle: () => apply(c.mask),
           }))}
         />
       }
     >
-      <HeatmapChart
+      <UpSetChart
         rows={modalities.map((m) => m.label)}
-        columns={columns}
+        setSizes={summary.setSizes}
+        columns={shown.map((c) => ({
+          id: String(c.mask),
+          label: c.label,
+          value: c.count,
+          members: c.members,
+        }))}
         unit={unit}
-        total={donorsInColumns}
+        total={donors}
         label={label}
         marksLabel={`${title} columns`}
-        valueCaption={MODE_COPY[mode].value}
-        selectedId={selection && selection.mode === mode ? String(selection.mask) : null}
+        valueCaption={`${unit} with exactly these modalities and no others`}
+        setCaption={(row) => `${unit} with ${row}, alone or with other modalities`}
+        selectedId={selected === null ? null : String(selected)}
         onSelect={(id) => apply(Number(id))}
       />
     </ChartFrame>

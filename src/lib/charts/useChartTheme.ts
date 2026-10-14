@@ -1,11 +1,10 @@
 import { useMemo } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { chartTokens, OKABE_ITO, VIRIDIS_DARK_HALF, type ChartTokens } from './theme';
+import { chartTokens, OKABE_ITO, type ChartTokens } from './theme';
 
 export interface ChartTheme {
   tokens: ChartTokens;
   categorical: ReadonlyArray<string>;
-  sequential: ReadonlyArray<string>;
   reducedMotion: boolean;
   /** option fragments every chart shares, so tooltips/axes look the same everywhere */
   base: {
@@ -37,7 +36,6 @@ export const useChartTheme = (): ChartTheme => {
     () => ({
       tokens: chartTokens,
       categorical: OKABE_ITO,
-      sequential: VIRIDIS_DARK_HALF,
       reducedMotion,
       base: {
         animation: !reducedMotion,

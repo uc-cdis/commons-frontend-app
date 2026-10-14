@@ -1,6 +1,6 @@
 export { BarChart } from './BarChart';
 export { PieChart } from './PieChart';
-export { HeatmapChart } from './HeatmapChart';
+export { UpSetChart } from './UpSetChart';
 export { ModalityCombinationChart } from './ModalityCombinationChart';
 export { ChartFrame, DataTable } from './ChartFrame';
 export { ChartCanvas } from './ChartCanvas';

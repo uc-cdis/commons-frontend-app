@@ -27,19 +27,6 @@ export const OKABE_ITO = [
 
 export const MAX_CATEGORICAL = OKABE_ITO.length;
 
-/**
- * Viridis, sampled at t = 0 … 0.5 in steps of 0.125. We use only the dark half:
- * past t ≈ 0.5 viridis turns yellow-green and drops below 3:1 against the card,
- * which would make low-count cells disappear. Still perceptually uniform, still
- * CVD-safe, and never red–green. Ordered high → low donor count.
- */
-export const VIRIDIS_DARK_HALF = [
-  '#440154',
-  '#472d7b',
-  '#3b528b',
-  '#2c728e',
-  '#21918c',
-] as const;
 
 /**
  * Texture per categorical slot (same index as OKABE_ITO), so pie slices differ by
@@ -83,7 +70,11 @@ export const chartTokens = {
   seriesMuted: primary.lightest,
   // "Unknown" / "N/A" / "no data": a neutral, so placeholders never borrow a hue
   placeholder: secondary.darker,
-  nonMember: secondary.darker, // heatmap "not in this combination" dot (≥ 3:1)
+  // UpSet matrix: a member is a filled series-colour dot; a non-member is a light
+  // guide dot on an alternating row stripe (membership reads from the dark dots and
+  // their connecting line, not from the guide)
+  nonMember: secondary.lighter,
+  rowStripe: secondary.lightest,
   focus: accent.dark,
   tooltipBorder: base.dark,
   shadow: `${base.min}1f`, // base.min at ~12% alpha
@@ -107,9 +98,5 @@ export const contrast = (a: string, b: string): number => {
 /** Texture ink that stays visible on the given fill: dark on light fills, light on dark. */
 export const decalInkFor = (fill: string): string =>
   luminance(fill) > 0.3 ? `${base.min}66` : `${base.max}8c`;
-
-/** Label ink with ≥ 4.5:1 on the given fill (for labels set inside a mark). */
-export const inkOn = (fill: string): string =>
-  contrast(fill, base.min) >= contrast(fill, base.max) ? base.min : base.max;
 
 export type ChartTokens = typeof chartTokens;

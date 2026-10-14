@@ -35,14 +35,14 @@ describe('summariseCombinations', () => {
   ];
   const summary = summarise(records);
 
-  it('exclusive counts sum to the donors that have a configured modality', () => {
-    const sum = summary.combinations.reduce((a, c) => a + c.exclusive, 0);
+  it('exact counts sum to the donors that have a configured modality', () => {
+    const sum = summary.combinations.reduce((a, c) => a + c.count, 0);
     expect(sum).toBe(5);
-    expect(summary.groupCount).toBe(6); // D6 is a donor, just not in any column
+    expect(summary.groupCount).toBe(5);
   });
 
   it('builds each donor’s modality set from its assays', () => {
-    const byLabel = Object.fromEntries(summary.combinations.map((c) => [c.label, c.exclusive]));
+    const byLabel = Object.fromEntries(summary.combinations.map((c) => [c.label, c.count]));
     expect(byLabel).toEqual({
       'WGS + Visium + Xenium': 1,
       'WGS + Visium': 1,
@@ -51,33 +51,31 @@ describe('summariseCombinations', () => {
     });
   });
 
+  it('computes set sizes: donors with each modality', () => {
+    expect(summary.setSizes).toEqual([4, 2, 2]); // WGS: D1-D4, Visium: D1-D2, Xenium: D1, D5
+  });
+
   it('counts records it cannot place, rather than dropping them silently', () => {
     expect(summary.otherCategoryRecords).toBe(1);
     expect(summary.ungroupedRecords).toBe(1);
   });
 
-  it('computes inclusive ("at least these") counts', () => {
-    const find = (label: string) => summary.combinations.find((c) => c.label === label);
-    expect(find('WGS')?.inclusive).toBe(4);
-    expect(find('WGS + Visium')?.inclusive).toBe(2);
-    expect(find('Xenium')?.inclusive).toBe(2);
-  });
-
-  it('orders columns by the active mode', () => {
-    expect(columnsFor(summary, 'exclusive')[0].label).toBe('WGS');
-    expect(columnsFor(summary, 'inclusive')[0].label).toBe('WGS');
+  it('orders columns largest first', () => {
+    expect(columnsFor(summary).map((c) => c.count)).toEqual([2, 1, 1, 1]);
   });
 
   it('handles every donor having the same single modality', () => {
     const s = summarise([assay('A', 'wgs'), assay('B', 'wgs')]);
     expect(s.combinations).toHaveLength(1);
-    expect(s.combinations[0]).toMatchObject({ label: 'WGS', exclusive: 2, inclusive: 2 });
+    expect(s.combinations[0]).toMatchObject({ label: 'WGS', count: 2 });
+    expect(s.setSizes).toEqual([2, 0, 0]);
   });
 
   it('handles no records', () => {
     const s = summarise([]);
     expect(s.combinations).toHaveLength(0);
     expect(s.groupCount).toBe(0);
+    expect(s.setSizes).toEqual([0, 0, 0]);
   });
 });
 
@@ -91,9 +89,8 @@ describe('filters', () => {
   const WGS = 0b001;
   const WGS_VISIUM = 0b011;
 
-  it('selects a column’s donors by id, exactly or inclusively', () => {
-    expect(idsFor(summary, WGS, 'exclusive')).toEqual(['D2', 'D3']);
-    expect(idsFor(summary, WGS, 'inclusive')).toEqual(['D1', 'D2', 'D3']);
+  it('selects a combination’s donors by id', () => {
+    expect(idsFor(summary, WGS)).toEqual(['D2', 'D3']);
     expect(combinationFilter('donor_id', ['D2', 'D3'])).toEqual({
       operator: 'in',
       field: 'donor_id',
@@ -102,10 +99,8 @@ describe('filters', () => {
   });
 
   it('recognises its own selection and nothing else', () => {
-    const op = combinationFilter('donor_id', idsFor(summary, WGS_VISIUM, 'exclusive'));
-    expect(selectedCombination(op, summary)).toEqual({ mask: WGS_VISIUM, mode: 'exclusive' });
-    const inclusive = combinationFilter('donor_id', idsFor(summary, WGS, 'inclusive'));
-    expect(selectedCombination(inclusive, summary)).toEqual({ mask: WGS, mode: 'inclusive' });
+    const op = combinationFilter('donor_id', idsFor(summary, WGS_VISIUM));
+    expect(selectedCombination(op, summary)).toBe(WGS_VISIUM);
     expect(selectedCombination(combinationFilter('donor_id', ['D2']), summary)).toBeNull();
     expect(selectedCombination(undefined, summary)).toBeNull();
   });
