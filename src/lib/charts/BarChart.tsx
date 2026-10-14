@@ -1,4 +1,6 @@
 import React, { useMemo } from 'react';
+import { useElementSize } from '@mantine/hooks';
+import { fitCategoryLabels, measureText } from './axisLabels';
 import { CategoryLegend } from './CategoryLegend';
 import { ChartCanvas, type ChartMark } from './ChartCanvas';
 import { ChartFrame } from './ChartFrame';
@@ -14,6 +16,7 @@ import {
 import { formatCount, summarise } from './data';
 import type { CategoryChartProps, EChartsOption } from './types';
 import { paramDataIndex, paramNumber } from './params';
+import { CHART_FONT_FAMILY } from './theme';
 import { useChartTheme } from './useChartTheme';
 
 export type BarOrientation = 'horizontal' | 'vertical';
@@ -24,6 +27,9 @@ interface BarChartProps extends CategoryChartProps {
 
 // height per category on horizontal bars: room for a thick bar plus a gap
 const ROW = 34;
+// vertical bars: plot width ≈ chart width minus grid padding and the value axis labels
+const VALUE_AXIS_ROOM = 50;
+const VERTICAL_HEIGHT = 240;
 
 /**
  * Single-series bar chart. Categories are told apart by position and label, so the
@@ -51,33 +57,62 @@ export const BarChart = ({
     [distribution, hidden],
   );
   const anySelected = selected.size > 0;
+  const categoryLabels = useMemo(
+    () =>
+      visible.map((d) =>
+        d.count === null ? `${d.label} (suppressed)` : d.label,
+      ),
+    [visible],
+  );
+  // vertical bars: category labels horizontal by default, vertical only if they'd collide
+  const { ref: sizeRef, width } = useElementSize();
+  const labelFit = useMemo(
+    () =>
+      fitCategoryLabels(
+        categoryLabels,
+        Math.max(1, width - VALUE_AXIS_ROOM),
+        measureText(`${theme.axisLabel.fontSize}px ${CHART_FONT_FAMILY}`),
+      ),
+    [categoryLabels, width, theme.axisLabel.fontSize],
+  );
 
   const option = useMemo((): EChartsOption => {
     const categoryAxis = {
       type: 'category' as const,
-      data: visible.map((d) => (d.count === null ? `${d.label} (suppressed)` : d.label)),
+      data: categoryLabels,
       inverse: horizontal, // largest at the top
       axisTick: { show: false },
       axisLine: theme.axisLine,
       axisLabel: {
         ...theme.axisLabel,
-        // horizontal: one line, truncated (full name in tooltip/table);
-        // vertical: unrotated, wrapped at word boundaries under each bar
-        width: horizontal ? 130 : 100,
-        overflow: horizontal ? ('truncate' as const) : ('break' as const),
-        lineHeight: 13,
+        // horizontal bars: one line, truncated (full name in tooltip/table);
+        // vertical bars: labels read left to right unless they'd collide, then
+        // turn vertical (truncated past a cap)
+        width: horizontal ? 130 : labelFit.width,
+        overflow: 'truncate' as const,
+        rotate: !horizontal && labelFit.vertical ? 90 : 0,
         interval: 0,
       },
     };
     const valueAxis = {
       type: 'value' as const,
       minInterval: 1,
-      axisLabel: { ...theme.axisLabel, formatter: (v: number) => formatCount(v) },
+      axisLabel: {
+        ...theme.axisLabel,
+        formatter: (v: number) => formatCount(v),
+      },
       splitLine: theme.splitLine,
     };
     return {
       ...theme.base,
-      grid: { left: 8, right: horizontal ? 48 : 8, top: 16, bottom: 4, containLabel: true },
+      grid: {
+        left: 8,
+        right: horizontal ? 48 : 8,
+        top: 16,
+        // rotated labels: ECharts under-reserves their length by a glyph or two
+        bottom: !horizontal && labelFit.vertical ? 20 : 4,
+        containLabel: true,
+      },
       xAxis: horizontal ? valueAxis : categoryAxis,
       yAxis: horizontal ? categoryAxis : valueAxis,
       tooltip: {
@@ -115,7 +150,18 @@ export const BarChart = ({
         },
       ],
     };
-  }, [visible, horizontal, theme, tokens, anySelected, selected, unit, distribution.total]);
+  }, [
+    visible,
+    categoryLabels,
+    labelFit,
+    horizontal,
+    theme,
+    tokens,
+    anySelected,
+    selected,
+    unit,
+    distribution.total,
+  ]);
 
   const marks = useMemo<ChartMark[]>(
     () =>
@@ -128,10 +174,18 @@ export const BarChart = ({
     [visible, unit, distribution.total, selected],
   );
 
-  const hoveredIndex = hovered === null ? null : visible.findIndex((d) => d.key === hovered);
-  const height = horizontal ? Math.max(140, visible.length * ROW + 40) : 240;
-  const selectedLabels = distribution.data.filter((d) => selected.has(d.key)).map((d) => d.label);
-  const extraSelected = [...selected].filter((k) => !distribution.data.some((d) => d.key === k));
+  const hoveredIndex =
+    hovered === null ? null : visible.findIndex((d) => d.key === hovered);
+  // vertical labels take height from the plot, so the chart grows by their length
+  const height = horizontal
+    ? Math.max(140, visible.length * ROW + 40)
+    : VERTICAL_HEIGHT + (labelFit.vertical ? labelFit.width : 0);
+  const selectedLabels = distribution.data
+    .filter((d) => selected.has(d.key))
+    .map((d) => d.label);
+  const extraSelected = [...selected].filter(
+    (k) => !distribution.data.some((d) => d.key === k),
+  );
 
   return (
     <ChartFrame
@@ -140,7 +194,11 @@ export const BarChart = ({
       total={distribution.total}
       status={status}
       isEmpty={distribution.data.length === 0}
-      selectionLabel={anySelected ? [...selectedLabels, ...extraSelected].join(', ') : undefined}
+      selectionLabel={
+        anySelected
+          ? [...selectedLabels, ...extraSelected].join(', ')
+          : undefined
+      }
       onClearSelection={onClearSelection}
       onRetry={onRetry}
       className={className}
@@ -170,15 +228,19 @@ export const BarChart = ({
         />
       }
     >
-      <ChartCanvas
-        option={option}
-        height={height}
-        label={summarise(title, unit, distribution, selected)}
-        marksLabel={`${title} values`}
-        marks={marks}
-        highlight={hoveredIndex !== null && hoveredIndex >= 0 ? hoveredIndex : null}
-        onActivate={(i) => onSelect(keysOf(visible[i]))}
-      />
+      <div ref={sizeRef} className="w-full">
+        <ChartCanvas
+          option={option}
+          height={height}
+          label={summarise(title, unit, distribution, selected)}
+          marksLabel={`${title} values`}
+          marks={marks}
+          highlight={
+            hoveredIndex !== null && hoveredIndex >= 0 ? hoveredIndex : null
+          }
+          onActivate={(i) => onSelect(keysOf(visible[i]))}
+        />
+      </div>
     </ChartFrame>
   );
 };

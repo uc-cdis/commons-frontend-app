@@ -1,9 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
+import { useElementSize } from '@mantine/hooks';
 import { ChartCanvas, type ChartMark, type ClickParams } from './ChartCanvas';
 import { escapeHtml } from './categoryChart';
 import { formatCount, formatPercent } from './data';
 import { paramDataIndex, paramNumber, paramSeriesIndex } from './params';
 import type { EChartsOption } from './types';
+import { upsetLayout } from './upsetLayout';
 import { useChartTheme } from './useChartTheme';
 
 export interface UpSetColumn {
@@ -40,14 +42,9 @@ const BAR_HEIGHT = 140;
 const ROW_HEIGHT = 30;
 const GAP = 8;
 const TOP = 24;
-const SET_WIDTH = 160;
-// room left of the set bars for their count labels
-const SET_LABEL_ROOM = 40;
-const LABEL_WIDTH = 84;
-const LEFT = 8 + SET_WIDTH + LABEL_WIDTH;
-const MIN_COLUMN_WIDTH = 30;
-const DOT_RADIUS = 7.5;
-const LINK_WIDTH = 3;
+// horizontal geometry (panel widths, column slots, dot size) scales with the
+// measured width, so every column always fits: see upsetLayout.ts
+const FALLBACK_WIDTH = 1000;
 
 // series order; click/tooltip mapping depends on it
 const S_INTERSECTIONS = 0;
@@ -83,6 +80,11 @@ export const UpSetChart = ({
   onSelect,
 }: UpSetChartProps) => {
   const theme = useChartTheme();
+  const { ref: sizeRef, width: measured } = useElementSize();
+  const layout = useMemo(
+    () => upsetLayout(measured > 0 ? measured : FALLBACK_WIDTH, columns.length),
+    [measured, columns.length],
+  );
   const { tokens } = theme;
   const ids = useMemo(() => columns.map((c) => c.id), [columns]);
   const anySelected = selectedId !== null;
@@ -129,10 +131,12 @@ export const UpSetChart = ({
       const column = columns[x];
       const fill = colorOf(column);
       const centres = rows.map((_, y) => api.coord([x, y]));
-      const memberRows = rows.flatMap((_, y) => (column?.members[y] ? [y] : []));
+      const memberRows = rows.flatMap((_, y) =>
+        column?.members[y] ? [y] : [],
+      );
       const dot = (y: number, color: string) => ({
         type: 'circle' as const,
-        shape: { cx: centres[y][0], cy: centres[y][1], r: DOT_RADIUS },
+        shape: { cx: centres[y][0], cy: centres[y][1], r: layout.dotRadius },
         style: { fill: color, opacity: 1 },
         // hover must not restyle: emphasis is identical to normal
         emphasis: { style: { fill: color, opacity: 1 } },
@@ -142,7 +146,9 @@ export const UpSetChart = ({
       return {
         type: 'group' as const,
         children: [
-          ...rows.flatMap((_, y) => (column?.members[y] ? [] : [dot(y, tokens.nonMember)])),
+          ...rows.flatMap((_, y) =>
+            column?.members[y] ? [] : [dot(y, tokens.nonMember)],
+          ),
           ...(memberRows.length > 1
             ? [
                 {
@@ -153,8 +159,18 @@ export const UpSetChart = ({
                     x2: centres[last][0],
                     y2: centres[last][1],
                   },
-                  style: { stroke: fill, lineWidth: LINK_WIDTH, opacity: 1 },
-                  emphasis: { style: { stroke: fill, lineWidth: LINK_WIDTH, opacity: 1 } },
+                  style: {
+                    stroke: fill,
+                    lineWidth: layout.linkWidth,
+                    opacity: 1,
+                  },
+                  emphasis: {
+                    style: {
+                      stroke: fill,
+                      lineWidth: layout.linkWidth,
+                      opacity: 1,
+                    },
+                  },
                 },
               ]
             : []),
@@ -162,7 +178,7 @@ export const UpSetChart = ({
         ],
       };
     },
-    [columns, rows, colorOf, tokens.nonMember],
+    [columns, rows, colorOf, tokens.nonMember, layout],
   );
 
   const matrixHeight = rows.length * ROW_HEIGHT;
@@ -195,11 +211,21 @@ export const UpSetChart = ({
             : columnTooltip(paramDataIndex(p)),
       },
       grid: [
-        { left: LEFT, right: 16, top: TOP, height: BAR_HEIGHT },
-        { left: LEFT, right: 16, top: matrixTop, height: matrixHeight },
         {
-          left: 8 + SET_LABEL_ROOM,
-          width: SET_WIDTH - SET_LABEL_ROOM - 12,
+          left: layout.left,
+          right: layout.right,
+          top: TOP,
+          height: BAR_HEIGHT,
+        },
+        {
+          left: layout.left,
+          right: layout.right,
+          top: matrixTop,
+          height: matrixHeight,
+        },
+        {
+          left: 8 + layout.setLabelRoom,
+          width: layout.setWidth - layout.setLabelRoom - 12,
           top: matrixTop,
           height: matrixHeight,
         },
@@ -217,7 +243,12 @@ export const UpSetChart = ({
           nameLocation: 'middle',
           nameGap: 22,
           nameTextStyle: { color: tokens.textMuted, fontSize: 11 },
-          axisLabel: { ...theme.axisLabel, fontSize: 10, formatter: (v: number) => formatCount(v) },
+          axisLabel: {
+            ...theme.axisLabel,
+            show: layout.showSetAxisLabels,
+            fontSize: 10,
+            formatter: (v: number) => formatCount(v),
+          },
           axisLine: theme.axisLine,
           splitLine: { show: false },
         },
@@ -232,15 +263,28 @@ export const UpSetChart = ({
           nameLocation: 'middle',
           nameGap: 44,
           nameTextStyle: { color: tokens.textMuted, fontSize: 11 },
-          axisLabel: { ...theme.axisLabel, formatter: (v: number) => formatCount(v) },
+          axisLabel: {
+            ...theme.axisLabel,
+            formatter: (v: number) => formatCount(v),
+          },
           axisLine: theme.axisLine,
           splitLine: theme.splitLine,
         },
         {
           ...rowAxis,
           gridIndex: 1,
-          axisLabel: { ...theme.axisLabel, color: tokens.text, fontSize: 12, margin: 12 },
-          splitArea: { show: true, areaStyle: { color: [tokens.rowStripe, tokens.surface] } },
+          axisLabel: {
+            ...theme.axisLabel,
+            color: tokens.text,
+            fontSize: layout.fontSize + 1,
+            margin: 8,
+            width: layout.labelWidth - 12,
+            overflow: 'truncate',
+          },
+          splitArea: {
+            show: true,
+            areaStyle: { color: [tokens.rowStripe, tokens.surface] },
+          },
         },
         { ...rowAxis, gridIndex: 2, axisLabel: { show: false } },
       ],
@@ -253,15 +297,24 @@ export const UpSetChart = ({
           cursor: 'pointer',
           data: columns.map((c) => ({
             value: c.value,
-            itemStyle: { color: colorOf(c), opacity: 1, borderRadius: [4, 4, 0, 0] },
+            itemStyle: {
+              color: colorOf(c),
+              opacity: 1,
+              borderRadius: [4, 4, 0, 0],
+            },
           })),
           label: {
             show: true,
             position: 'top',
             color: tokens.textMuted,
-            fontSize: 11,
+            fontSize: layout.countFontSize,
+            // side padding makes touching counts register as overlapping
+            padding: [0, 2],
+            // counts read left to right; if two would still collide on a very
+            // narrow screen, hide the colliding one (it stays in tooltip + table)
             formatter: (p: unknown) => formatCount(paramNumber(p)),
           },
+          labelLayout: { hideOverlap: true },
           // a column's bar, dots and line always share one colour: no hover/focus
           // recolouring or lightening (focus shows via tooltip and focus ring)
           emphasis: { disabled: true },
@@ -304,6 +357,7 @@ export const UpSetChart = ({
     unit,
     matrixTop,
     matrixHeight,
+    layout,
     columns,
     colorOf,
     renderColumn,
@@ -331,21 +385,17 @@ export const UpSetChart = ({
     return -1;
   }, []);
 
-  // on narrow screens scroll sideways rather than squeeze columns below legibility
-  const minWidth = LEFT + 16 + columns.length * MIN_COLUMN_WIDTH;
   return (
-    <div className="overflow-x-auto">
-      <div style={{ minWidth }}>
-        <ChartCanvas
-          option={option}
-          height={height}
-          label={label}
-          marksLabel={marksLabel}
-          marks={marks}
-          markFor={markFor}
-          onActivate={(i) => onSelect(columns[i].id)}
-        />
-      </div>
+    <div ref={sizeRef} className="w-full">
+      <ChartCanvas
+        option={option}
+        height={height}
+        label={label}
+        marksLabel={marksLabel}
+        marks={marks}
+        markFor={markFor}
+        onActivate={(i) => onSelect(columns[i].id)}
+      />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
-import { chartTokens, OKABE_ITO, type ChartTokens } from './theme';
+import { CHART_FONT_FAMILY, chartTokens, OKABE_ITO, type ChartTokens } from './theme';
 
 export interface ChartTheme {
   tokens: ChartTokens;
@@ -11,7 +11,7 @@ export interface ChartTheme {
     animation: boolean;
     animationDuration: number;
     animationDurationUpdate: number;
-    textStyle: { color: string; fontSize: number };
+    textStyle: { color: string; fontSize: number; fontFamily: string };
     tooltip: {
       backgroundColor: string;
       borderColor: string;
@@ -43,7 +43,7 @@ export const useChartTheme = (): ChartTheme => {
         animation: !reducedMotion,
         animationDuration: 250,
         animationDurationUpdate: 200,
-        textStyle: { color: chartTokens.text, fontSize: 12 },
+        textStyle: { color: chartTokens.text, fontSize: 12, fontFamily: CHART_FONT_FAMILY },
         tooltip: {
           backgroundColor: chartTokens.surface,
           borderColor: chartTokens.tooltipBorder,

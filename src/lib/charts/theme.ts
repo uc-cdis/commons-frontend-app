@@ -27,6 +27,10 @@ export const OKABE_ITO = [
 
 export const MAX_CATEGORICAL = OKABE_ITO.length;
 
+/** chart text font: the ECharts 'gen3' theme's family, set explicitly so label
+ * measurement (axisLabels.ts) matches what is drawn */
+export const CHART_FONT_FAMILY = 'Inter, system-ui, sans-serif';
+
 
 /**
  * Texture per categorical slot (same index as OKABE_ITO), so pie slices differ by
