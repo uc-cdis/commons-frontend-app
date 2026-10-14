@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { ChartCanvas, type ChartMark, type ClickParams } from './ChartCanvas';
 import { escapeHtml } from './categoryChart';
 import { formatCount, formatPercent } from './data';
-import { paramDataIndex, paramFirstCoordinate, paramNumber, paramSeriesIndex } from './params';
+import { paramDataIndex, paramNumber, paramSeriesIndex } from './params';
 import type { EChartsOption } from './types';
 import { useChartTheme } from './useChartTheme';
 
@@ -46,7 +46,13 @@ const SET_LABEL_ROOM = 40;
 const LABEL_WIDTH = 84;
 const LEFT = 8 + SET_WIDTH + LABEL_WIDTH;
 const MIN_COLUMN_WIDTH = 30;
-const DOT = 15;
+const DOT_RADIUS = 7.5;
+const LINK_WIDTH = 3;
+
+// series order; click/tooltip mapping depends on it
+const S_INTERSECTIONS = 0;
+const S_MATRIX = 1;
+const S_SET_SIZES = 2;
 
 /** the part of ECharts' custom-series API we use */
 interface CoordApi {
@@ -54,17 +60,14 @@ interface CoordApi {
   value: (dimension: number) => unknown;
 }
 
-// series order (0 bars, 1 links, 2 non-members, 3 members, 4 set sizes);
-// click/tooltip mapping depends on it
-const S_INTERSECTIONS = 0;
-const S_NON_MEMBERS = 2;
-const S_MEMBERS = 3;
-const S_SET_SIZES = 4;
-
 /**
  * UpSet plot: intersection sizes as columns, a dot matrix below (filled dot =
  * member, joined by a line; light dot = not a member) and set sizes as bars to the
  * left. Membership reads from dot presence and the connecting line, not colour.
+ *
+ * The whole matrix is one custom series that draws each column as a group, in a
+ * fixed order (guide dots, then the line, then member dots) and with fully opaque
+ * fills: a column's line and dots are always exactly one colour.
  */
 export const UpSetChart = ({
   rows,
@@ -83,28 +86,12 @@ export const UpSetChart = ({
   const { tokens } = theme;
   const ids = useMemo(() => columns.map((c) => c.id), [columns]);
   const anySelected = selectedId !== null;
-  const opacityOf = useCallback(
-    (c: UpSetColumn) => (anySelected && c.id !== selectedId ? 0.3 : 1),
-    [anySelected, selectedId],
+  // Dim unselected columns with a solid, lighter colour, never transparency.
+  const colorOf = useCallback(
+    (c: UpSetColumn | undefined) =>
+      anySelected && c?.id !== selectedId ? tokens.seriesMuted : tokens.series,
+    [anySelected, selectedId, tokens],
   );
-
-  const matrix = useMemo(() => {
-    const members: Array<{ value: [number, number]; itemStyle: { opacity: number } }> = [];
-    const nonMembers: Array<{ value: [number, number] }> = [];
-    // [column, first member row, last member row, opacity]
-    const links: Array<[number, number, number, number]> = [];
-    columns.forEach((c, x) => {
-      const memberRows = c.members.flatMap((isMember, y) => (isMember ? [y] : []));
-      c.members.forEach((isMember, y) => {
-        if (isMember) members.push({ value: [x, y], itemStyle: { opacity: opacityOf(c) } });
-        else nonMembers.push({ value: [x, y] });
-      });
-      if (memberRows.length > 1) {
-        links.push([x, Math.min(...memberRows), Math.max(...memberRows), opacityOf(c)]);
-      }
-    });
-    return { members, nonMembers, links };
-  }, [columns, opacityOf]);
 
   const columnTooltip = useCallback(
     (x: number) => {
@@ -136,6 +123,48 @@ export const UpSetChart = ({
     [rows, setSizes, unit, total, tokens.textMuted, setCaption],
   );
 
+  const renderColumn = useCallback(
+    (_params: unknown, api: CoordApi) => {
+      const x = Number(api.value(0));
+      const column = columns[x];
+      const fill = colorOf(column);
+      const centres = rows.map((_, y) => api.coord([x, y]));
+      const memberRows = rows.flatMap((_, y) => (column?.members[y] ? [y] : []));
+      const dot = (y: number, color: string) => ({
+        type: 'circle' as const,
+        shape: { cx: centres[y][0], cy: centres[y][1], r: DOT_RADIUS },
+        style: { fill: color, opacity: 1 },
+        // hover must not restyle: emphasis is identical to normal
+        emphasis: { style: { fill: color, opacity: 1 } },
+      });
+      const first = memberRows[0];
+      const last = memberRows[memberRows.length - 1];
+      return {
+        type: 'group' as const,
+        children: [
+          ...rows.flatMap((_, y) => (column?.members[y] ? [] : [dot(y, tokens.nonMember)])),
+          ...(memberRows.length > 1
+            ? [
+                {
+                  type: 'line' as const,
+                  shape: {
+                    x1: centres[first][0],
+                    y1: centres[first][1],
+                    x2: centres[last][0],
+                    y2: centres[last][1],
+                  },
+                  style: { stroke: fill, lineWidth: LINK_WIDTH, opacity: 1 },
+                  emphasis: { style: { stroke: fill, lineWidth: LINK_WIDTH, opacity: 1 } },
+                },
+              ]
+            : []),
+          ...memberRows.map((y) => dot(y, fill)),
+        ],
+      };
+    },
+    [columns, rows, colorOf, tokens.nonMember],
+  );
+
   const matrixHeight = rows.length * ROW_HEIGHT;
   const matrixTop = TOP + BAR_HEIGHT + GAP;
   const height = matrixTop + matrixHeight + 44;
@@ -160,12 +189,10 @@ export const UpSetChart = ({
       tooltip: {
         ...theme.base.tooltip,
         trigger: 'item',
-        formatter: (p: unknown) => {
-          const s = paramSeriesIndex(p);
-          if (s === S_SET_SIZES) return setTooltip(paramDataIndex(p));
-          if (s === S_INTERSECTIONS) return columnTooltip(paramDataIndex(p));
-          return columnTooltip(paramFirstCoordinate(p));
-        },
+        formatter: (p: unknown) =>
+          paramSeriesIndex(p) === S_SET_SIZES
+            ? setTooltip(paramDataIndex(p))
+            : columnTooltip(paramDataIndex(p)),
       },
       grid: [
         { left: LEFT, right: 16, top: TOP, height: BAR_HEIGHT },
@@ -226,7 +253,7 @@ export const UpSetChart = ({
           cursor: 'pointer',
           data: columns.map((c) => ({
             value: c.value,
-            itemStyle: { color: tokens.series, opacity: opacityOf(c), borderRadius: [4, 4, 0, 0] },
+            itemStyle: { color: colorOf(c), opacity: 1, borderRadius: [4, 4, 0, 0] },
           })),
           label: {
             show: true,
@@ -235,50 +262,19 @@ export const UpSetChart = ({
             fontSize: 11,
             formatter: (p: unknown) => formatCount(paramNumber(p)),
           },
-          emphasis: { itemStyle: { color: tokens.focus } },
+          // a column's bar, dots and line always share one colour: no hover/focus
+          // recolouring or lightening (focus shows via tooltip and focus ring)
+          emphasis: { disabled: true },
         },
         {
-          // drawn with api.coord, the same mapping the dots use, so the line runs
-          // through dot centres exactly (the 'lines' series maps category values
-          // slightly differently)
           type: 'custom',
           xAxisIndex: 1,
           yAxisIndex: 1,
-          silent: true,
-          z: 2,
-          data: matrix.links,
-          renderItem: (_params: unknown, api: CoordApi) => {
-            const v = (d: number) => Number(api.value(d));
-            const [x1, y1] = api.coord([v(0), v(1)]);
-            const [x2, y2] = api.coord([v(0), v(2)]);
-            return {
-              type: 'line' as const,
-              shape: { x1, y1, x2, y2 },
-              style: { stroke: tokens.series, lineWidth: 3, opacity: v(3) },
-            };
-          },
-        },
-        {
-          type: 'scatter',
-          xAxisIndex: 1,
-          yAxisIndex: 1,
           cursor: 'pointer',
-          symbolSize: DOT,
-          z: 1,
-          itemStyle: { color: tokens.nonMember },
-          emphasis: { disabled: true },
-          data: matrix.nonMembers,
-        },
-        {
-          type: 'scatter',
-          xAxisIndex: 1,
-          yAxisIndex: 1,
-          cursor: 'pointer',
-          symbolSize: DOT,
-          z: 3,
-          itemStyle: { color: tokens.series },
-          emphasis: { itemStyle: { color: tokens.focus } },
-          data: matrix.members,
+          // one item per column: [column index, row 0 (positions the item)]
+          encode: { x: 0, y: 1 },
+          data: columns.map((_, x) => [x, 0]),
+          renderItem: renderColumn,
         },
         {
           type: 'bar',
@@ -296,6 +292,7 @@ export const UpSetChart = ({
             fontSize: 10,
             formatter: (p: unknown) => formatCount(paramNumber(p)),
           },
+          emphasis: { disabled: true },
         },
       ],
     };
@@ -308,8 +305,8 @@ export const UpSetChart = ({
     matrixTop,
     matrixHeight,
     columns,
-    opacityOf,
-    matrix,
+    colorOf,
+    renderColumn,
     setSizes,
     setTooltip,
     columnTooltip,
@@ -326,11 +323,10 @@ export const UpSetChart = ({
     [columns, unit, total, selectedId],
   );
 
-  // any element in a column (bar or dot) addresses that column; set bars and links don't
+  // a column's bar or anywhere in its matrix group addresses that column
   const markFor = useCallback((p: ClickParams) => {
-    if (p.seriesIndex === S_INTERSECTIONS) return p.dataIndex ?? -1;
-    if (p.seriesIndex === S_MEMBERS || p.seriesIndex === S_NON_MEMBERS) {
-      return paramFirstCoordinate(p);
+    if (p.seriesIndex === S_INTERSECTIONS || p.seriesIndex === S_MATRIX) {
+      return p.dataIndex ?? -1;
     }
     return -1;
   }, []);
@@ -353,4 +349,3 @@ export const UpSetChart = ({
     </div>
   );
 };
-
