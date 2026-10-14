@@ -3,21 +3,6 @@
     "tabTitle": "Assays",
     "customCharts": [
       {
-        "type": "bar",
-        "field": "modality",
-        "title": "Modality"
-      },
-      {
-        "type": "pie",
-        "field": "phenotype",
-        "title": "Phenotype"
-      },
-      {
-        "type": "pie",
-        "field": "compartment",
-        "title": "Compartment"
-      },
-      {
         "type": "modalityCombinations",
         "title": "Donors per combination of assay modalities",
         "width": "full",
@@ -52,6 +37,21 @@
         ],
         "maxColumns": 20,
         "maxRecords": 10000
+      },
+      {
+        "type": "bar",
+        "field": "modality",
+        "title": "Modality"
+      },
+      {
+        "type": "pie",
+        "field": "phenotype",
+        "title": "Phenotype"
+      },
+      {
+        "type": "pie",
+        "field": "compartment",
+        "title": "Compartment"
       }
     ],
     "filters": {
