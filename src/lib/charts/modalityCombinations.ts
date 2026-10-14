@@ -89,6 +89,10 @@ export const summariseCombinations = (
   };
 };
 
+/** Row order for the modalities: most groups (donors) first; ties keep config order. */
+export const orderBySetSize = (setSizes: ReadonlyArray<number>): number[] =>
+  setSizes.map((_, i) => i).sort((a, b) => setSizes[b] - setSizes[a] || a - b);
+
 /** Columns, largest first. */
 export const columnsFor = (summary: CombinationSummary): Combination[] =>
   [...summary.combinations].sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));

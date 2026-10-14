@@ -3,6 +3,7 @@ import {
   columnsFor,
   combinationFilter,
   idsFor,
+  orderBySetSize,
   selectedCombination,
   summariseCombinations,
   type Modality,
@@ -58,6 +59,12 @@ describe('summariseCombinations', () => {
   it('counts records it cannot place, rather than dropping them silently', () => {
     expect(summary.otherCategoryRecords).toBe(1);
     expect(summary.ungroupedRecords).toBe(1);
+  });
+
+  it('orders modality rows by donor count, ties in config order', () => {
+    expect(orderBySetSize([4, 2, 2])).toEqual([0, 1, 2]);
+    expect(orderBySetSize([1, 5, 3])).toEqual([1, 2, 0]);
+    expect(orderBySetSize([0, 0, 0])).toEqual([0, 1, 2]);
   });
 
   it('orders columns largest first', () => {

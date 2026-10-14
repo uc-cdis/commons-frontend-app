@@ -9,6 +9,7 @@ import {
   columnsFor,
   combinationFilter,
   idsFor,
+  orderBySetSize,
   selectedCombination,
   summariseCombinations,
   type Modality,
@@ -95,6 +96,8 @@ export const ModalityCombinationChart = ({
   );
   const allColumns = useMemo(() => columnsFor(summary), [summary]);
   const shown = allColumns.slice(0, maxColumns);
+  // rows (modalities) ordered by donor count, largest first
+  const rowOrder = useMemo(() => orderBySetSize(summary.setSizes), [summary.setSizes]);
   const selected = selectedCombination(filters.root[groupField], summary);
   const truncated = records.length < total;
   const donors = summary.groupCount;
@@ -178,13 +181,13 @@ export const ModalityCombinationChart = ({
       }
     >
       <UpSetChart
-        rows={modalities.map((m) => m.label)}
-        setSizes={summary.setSizes}
+        rows={rowOrder.map((i) => modalities[i].label)}
+        setSizes={rowOrder.map((i) => summary.setSizes[i])}
         columns={shown.map((c) => ({
           id: String(c.mask),
           label: c.label,
           value: c.count,
-          members: c.members,
+          members: rowOrder.map((i) => c.members[i]),
         }))}
         unit={unit}
         total={donors}
