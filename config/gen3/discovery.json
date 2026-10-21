@@ -2,10 +2,16 @@
   "metadataConfig": [
     {
       "tableConfig": {
-        "selectableRows": true,
+        "selectableRowConfiguration": {
+          "field": "__manifest",
+          "comparer": "arrayNotEmpty"
+        },
         "expandableRows": true
       },
       "features": {
+        "dataLoader": {
+          "dataFetchFunction": "MDSAllLocal"
+        },
         "advSearchFilters": {
           "enabled": false,
           "field": "advSearchFilters",
@@ -47,10 +53,6 @@
           },
           "verifyExternalLogins": true
         },
-        "pageTitle": {
-          "enabled": true,
-          "title": "Discover Datasets"
-        },
         "search": {
           "searchBar": {
             "enabled": true,
@@ -63,7 +65,8 @@
           },
           "tagSearchDropdown": {
             "enabled": true,
-            "collapsibleButtonText": "Data Repository"
+            "collapsibleButtonText": "Study Filters",
+            "categoryTypes": ["Data Type"]
           }
         },
         "authorization": {
@@ -72,19 +75,15 @@
           "supportedValues": {
             "accessible": {
               "enabled": true,
-              "label": "Available"
+              "menuText": "Available"
             },
             "unaccessible": {
-              "enabled": false,
-              "label": "Not Accessible"
-            },
-            "pending": {
               "enabled": true,
-              "label": "Pending"
+              "menuText": "Not Accessible"
             },
             "notAvailable": {
               "enabled": true,
-              "label": "Not Available"
+              "menuText": "Not Available"
             }
           }
         }
@@ -142,6 +141,14 @@
           "contentType": "string",
           "errorIfNotAvailable": false,
           "valueIfNotAvailable": "n/a"
+        },
+        {
+          "name": "Data Availability",
+          "field": "__accessible",
+          "errorIfNotAvailable": false,
+          "valueIfNotAvailable": "n/a",
+          "contentType": "dataAccess",
+          "sortable": true
         }
       ],
       "studyPreviewField": {
@@ -161,7 +168,7 @@
         },
         "fieldsToShow": [
           {
-            "groupWidth": "half",
+            "groupWidth": "full",
             "fields": [
               {
                 "name": "Study Name",
@@ -227,28 +234,28 @@
           }
         ]
       },
-      "tagsDisplayName": "Study Filters",
       "tagColumnWidth": "500px",
       "minimalFieldMapping": {
         "authzField": "authz",
-        "tagsListFieldName": "tags",
+        "tagsListField": "tags",
         "dataAvailabilityField": "data_availability",
-        "uid": "_hdp_uid"
+        "uid": "_unique_id"
       },
       "tags": {
         "tagCategories": [
           {
-            "name": "Condition",
-            "color": "#532565",
-            "display": false
+            "name": "Data Type",
+            "category": "Data Type",
+            "color": "#982568",
+            "display": true
           },
           {
-            "name": "Data Type",
-            "color": "#982568",
+            "name": "Commons",
+            "color": "#345599",
             "display": false
           }
         ],
-        "showUnknownTags": false
+        "showUnknownTags": true
       }
     }
   ]
