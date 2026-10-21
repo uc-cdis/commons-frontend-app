@@ -1,4 +1,5 @@
 {
+  "allowedHosts": ["localhost", "gen3.datacommons.io","gen3dev.local.io"],
   "pageTitle": "Gen3 Test Workspaces",
   "faviconUrl": "/icons/favicon.ico",
   "gatewayBaseUrl": "/lw-workspace/proxy/",
