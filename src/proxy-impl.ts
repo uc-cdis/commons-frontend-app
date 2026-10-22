@@ -35,6 +35,17 @@ export async function proxy(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   const { routes: routeConfig } = await getRouteConfig();
   let rule = getRouteRuleForPath(pathname, routeConfig);
+  const loginStatus = await getLoginStatus(req.headers.get('Cookie') || '');
+  const loggedIn = isLoggedIn(loginStatus);
+
+  // Logged in users have no reason to see the Login page: send them to Profile.
+  if (pathname === '/Login') {
+    if (loggedIn) {
+      return NextResponse.redirect(new URL('/Profile', req.url));
+    } else {
+      return NextResponse.next();
+    }
+  }
 
   // check if there is a wildcard route
   if (!rule) {
@@ -52,9 +63,6 @@ export async function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // Gen3 login check
-  const loginStatus = await getLoginStatus(req.headers.get('Cookie') || '');
-  const loggedIn = isLoggedIn(loginStatus);
 
   // Enforce login if required
   if (!loggedIn) {

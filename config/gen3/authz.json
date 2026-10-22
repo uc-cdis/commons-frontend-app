@@ -4,10 +4,12 @@
       "loginRequired": true
     },
     "/Workspace": {
-      "loginRequired": true
+      "loginRequired": true,
+      "authz": ["/workspace"]
     },
     "/Workspaces": {
-      "loginRequired": true
+      "loginRequired": true,
+      "authz": ["/workspace"]
     },
     "/WorkspaceRequestAccess": {
       "loginRequired": true
