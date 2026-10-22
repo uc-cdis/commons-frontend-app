@@ -8,6 +8,7 @@ export const config = {
   "/Workspace",
   "/Workspaces",
   "/WorkspaceRequestAccess",
-  "/Profile"
+  "/Profile",
+  "/Login"
 ],
 };
