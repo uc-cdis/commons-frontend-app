@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, StoryObj } from '@storybook/nextjs';
+import { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { http, HttpResponse, delay } from 'msw';
 import { GEN3_API, coreStore } from '@gen3/core';
 import WorkflowLimitsDashboard from './WorkflowLimitsDashboard';

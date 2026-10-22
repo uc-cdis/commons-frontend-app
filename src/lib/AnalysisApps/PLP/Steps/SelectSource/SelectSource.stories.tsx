@@ -2,7 +2,7 @@ import React, { useReducer, Reducer } from 'react';
 import reducer, {State, Action} from '../../Utils/StateManagement/reducer';
 import InitializeCurrentState from '../../Utils/StateManagement/InitializeCurrentState';
 import SelectSource from './SelectSource';
-import type { Meta, StoryObj } from '@storybook/nextjs';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { SourcesEndpoint } from '@/lib/AnalysisApps/SharedUtils/Endpoints';
 import { http, HttpResponse } from 'msw';
 

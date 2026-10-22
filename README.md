@@ -13,18 +13,18 @@ This documentation is currently less complete than we would like, but we will be
 
 ## Installation
 
-The minimum node version is set to v24.18.1.
+The minimum node version is set to v24.22.1.
 Node can be downloaded from the official Node.js site. You may also consider using a [Node version manager](https://docs.npmjs.com/cli/v7/configuring-npm/install#using-a-node-version-manager-to-install-nodejs-and-npm).
 Your version of Node may not ship with npm v24. To install it, run:
 
 If using NVM run
 ```bash
-npm install npm@11.16.0 -g
+npm install npm@11.19.1 -g
 ```
 
 Alternatively, you can use `nvm` to install the correct version of npm:
 ```bash
-nvm install 24.18.1
+nvm install 24.22.1
 ```
 
 ### Install Dependencies

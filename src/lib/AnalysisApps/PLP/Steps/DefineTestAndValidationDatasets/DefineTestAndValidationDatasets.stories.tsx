@@ -2,7 +2,7 @@ import React, { useReducer, Reducer } from 'react';
 import reducer, {State, Action} from '../../Utils/StateManagement/reducer';
 import InitializeCurrentState from '../../Utils/StateManagement/InitializeCurrentState';
 import DefineTestAndValidationDatasets from './DefineTestAndValidationDatasets';
-import type { Meta, StoryObj } from '@storybook/nextjs';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 const meta: Meta<typeof DefineTestAndValidationDatasets> = {
   title: 'PLP/DefineTestAndValidationDatasets',

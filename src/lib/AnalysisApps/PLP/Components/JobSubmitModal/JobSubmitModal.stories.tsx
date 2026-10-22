@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import JobSubmitModal from './JobSubmitModal';
-import type { Meta, StoryObj } from '@storybook/nextjs';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import reducer from '../../Utils/StateManagement/reducer';
 import InitializeCurrentState from '../../Utils/StateManagement/InitializeCurrentState';
 

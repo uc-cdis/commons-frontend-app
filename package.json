@@ -1,10 +1,10 @@
 {
   "name": "@gen3/commons-portal-app-base",
-  "version": "0.12.80",
+  "version": "0.13.1",
   "private": "true",
   "engines": {
-    "npm": ">=11.16.0",
-    "node": ">=24.18.1"
+    "npm": ">=11.19.1",
+    "node": ">=24.22.1"
   },
   "scripts": {
     "lint": "oxlint .",
@@ -17,10 +17,11 @@
     "build:volume": "npm run build:middlewarePathsMatchAll && next build --webpack",
     "start": "next start",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname && npm run buildIcons && npm run build:middlewarePaths",
+    "storybook:build": "storybook build",
+    "storybook:test": "vitest --config vitest.config.mts",
+    "setupCommons": "npm run build:colors && npm run build:icons && npm run build:middlewarePaths",
     "build:docker": "docker build -t gen3:fef_app -f Dockerfile.production .",
-    "build:colors": "node ./node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/$npm_config_commons/colors.json --out=config/$npm_config_commons",
+    "build:colors": "node ./node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/${GEN3_COMMONS_NAME:-gen3}/colors.json --out=config/${GEN3_COMMONS_NAME:-gen3}",
     "build:icons": "node ./node_modules/@gen3/toolsff/dist/bundleIcons.esm.js --inpath=config/icons --outpath=config/icons",
     "build:middlewarePaths": "if [ ! -f ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js ]; then printf \"\\033[31mError: @gen3/toolsff not built (missing dist file). Run: npm run build:tools\\033[0m\\n\"; exit 1; else node ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js || (printf \"\\033[31mError: @gen3/toolsff scanSitePaths failed. See above message\\033[0m\\n\" && exit 1); fi",
     "build:middlewarePathsMatchAll": "if [ ! -f ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js ]; then printf \"\\033[31mError: @gen3/toolsff not built (missing dist file). Run: npm run build:tools\\033[0m\\n\"; exit 1; else node ./node_modules/@gen3/toolsff/dist/scanSitePaths.esm.js --forceMatchAll || (printf \"\\033[31mError: @gen3/toolsff scanSitePaths failed. See above message\\033[0m\\n\" && exit 1); fi",
@@ -38,15 +39,15 @@
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "@fontsource/source-sans-pro": "^5.2.5",
-    "@gen3/core": "^0.12.80",
-    "@gen3/frontend": "^0.12.80",
-    "@gen3/workspaces": "^0.12.80",
-    "@mantine/core": "^9.4.0",
-    "@mantine/dates": "^9.4.0",
-    "@mantine/form": "^9.4.0",
-    "@mantine/hooks": "^9.4.0",
-    "@mantine/modals": "^9.4.0",
-    "@mantine/notifications": "^9.4.0",
+    "@gen3/core": "^0.13.1",
+    "@gen3/frontend": "^0.13.1",
+    "@gen3/workspaces": "^0.13.1",
+    "@mantine/core": "^9.6.2",
+    "@mantine/dates": "^9.6.2",
+    "@mantine/form": "^9.6.2",
+    "@mantine/hooks": "^9.6.2",
+    "@mantine/modals": "^9.6.2",
+    "@mantine/notifications": "^9.6.2",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.3.0",
@@ -68,13 +69,13 @@
   "devDependencies": {
     "@axe-core/react": "^4.10.2",
     "@chromatic-com/storybook": "^5.3.1",
-    "@gen3/toolsff": "^0.12.80",
+    "@gen3/toolsff": "^0.13.1",
     "@graphiql/react": "^0.37.7",
     "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-docs": "^10.6.0",
     "@storybook/addon-onboarding": "^10.6.0",
-    "@storybook/nextjs": "^10.6.0",
-    "@storybook/test-runner": "^0.24.5",
+    "@storybook/addon-vitest": "^10.6.0",
+    "@storybook/nextjs-vite": "^10.6.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/line-clamp": "^0.4.4",
@@ -84,6 +85,8 @@
     "@types/mdx": "^2.0.13",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@vitest/browser": "^4.1.11",
+    "@vitest/browser-playwright": "^4.1.11",
     "autoprefixer": "^10.4.21",
     "axe-playwright": "^2.2.2",
     "eslint-plugin-storybook": "10.6.0",
@@ -110,16 +113,24 @@
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.46.1"
+    "typescript-eslint": "^8.46.1",
+    "vite": "^8.3.0",
+    "vite-plugin-svgr": "^5.2.0",
+    "vitest": "^4.1.11"
   },
   "allowScripts": {
-    "esbuild": true,
     "core-js-pure": true,
     "unrs-resolver": true,
     "fsevents": true,
     "msw": true,
     "sharp": true,
     "@swc/core": true,
-    "@parcel/watcher": true
+    "@parcel/watcher": true,
+    "esbuild@0.28.2": true
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

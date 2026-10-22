@@ -11,6 +11,7 @@ export const config = {
   "/Profile",
   "/Query",
   "/resource-browser",
-  "/Workspaces"
+  "/Workspaces",
+  "/Login"
 ],
 };

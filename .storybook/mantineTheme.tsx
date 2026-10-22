@@ -3,10 +3,15 @@ import { GEN3_COMMONS_NAME } from '@gen3/core';
 import type { TenStringArray } from '@gen3/frontend';
 import { createMantineTheme } from '@gen3/frontend';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const themeColors: Record<string, TenStringArray> = require(
-  `../config/${GEN3_COMMONS_NAME}/themeColors.json`,
+const allThemeColors = import.meta.glob(
+  '../config/*/themeColors.json',
+  { eager: true, import: 'default' },
 );
+const themeColors: Record<string, TenStringArray> =
+  (allThemeColors[
+    `../config/${GEN3_COMMONS_NAME}/themeColors.json`
+  ] as Record<string, TenStringArray>) ?? {};
+
 
 const gen3Theme = createMantineTheme(
   {

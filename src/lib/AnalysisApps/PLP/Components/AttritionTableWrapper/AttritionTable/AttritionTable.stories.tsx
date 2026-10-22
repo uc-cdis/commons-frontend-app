@@ -1,7 +1,7 @@
 import React from 'react';
 import { AttritionTable } from './AttritionTable';
 import { CohortsEndpoint, SourcesEndpoint, CohortsOverlapEndpoint } from '@/lib/AnalysisApps/SharedUtils/Endpoints';
-import type { Meta, StoryObj } from '@storybook/nextjs';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { http, HttpResponse } from 'msw';
 import InitializeCurrentState from '../../../Utils/StateManagement/InitializeCurrentState';
 

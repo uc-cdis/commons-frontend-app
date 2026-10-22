@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Provider } from 'react-redux';
 import { coreStore } from '@gen3/core';
-import { Meta, StoryObj } from '@storybook/nextjs';
+import { Meta, StoryObj } from '@storybook/nextjs-vite';
 import SharedContext from '../../Utils/SharedContext';
 import Execution from './Execution';
 import { http, HttpResponse, delay } from 'msw';
