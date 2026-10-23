@@ -1,24 +1,6 @@
 {
   "routes": {
-    "/Analysis": {
-      "loginRequired": true
-    },
-    "/Explorer": {
-      "loginRequired": true
-    },
-    "/DataConnections": {
-      "loginRequired": true
-    },
-    "/DataLibrary": {
-      "loginRequired": true
-    },
     "/Profile": {
-      "loginRequired": true
-    },
-    "/Query": {
-      "loginRequired": true
-    },
-    "/resource-browser": {
       "loginRequired": true
     },
     "/Workspaces": {

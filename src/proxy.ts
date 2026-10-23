@@ -4,14 +4,7 @@ export { proxy } from './proxy-impl';
 
 export const config = {
   matcher: [
-  "/Analysis",
-  "/Explorer",
-  "/DataConnections",
-  "/DataLibrary",
-  "/Profile",
-  "/Query",
-  "/resource-browser",
-  "/Workspaces",
+  "/((?!_next/static|_next/image|_next/data|api|403|404|no-workspace-access|favicon.ico|.*\\.ico$|.*\\.png$|.*\\.jpg$|.*\\.svg$|.*\\.json$|_status(?:/|$)|user(?:/|$)|guppy(?:/|$)|job(?:/|$)|mds(?:/|$)|ai-search(?:/|$)|authz(?:/|$)|lw-workspace(?:/|$)|wts(?:/|$)|library(?:/|$)|manifests(?:/|$)|dashboard(?:/|$)|requestor(?:/|$)|index(?:/|$)|workspace-api(?:/|$)).*)",
   "/Login"
 ],
 };
