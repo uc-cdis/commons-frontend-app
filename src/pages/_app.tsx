@@ -20,11 +20,11 @@ import {
   registerCohortDiscoveryApp,
   registerExplorerDefaultCellRenderers,
   registerMetadataSchemaApp,
-  registerIGVApp,
 } from '@gen3/frontend';
 import { registerDefaultRemoteSupport, setDRSHostnames } from '@gen3/core';
 import { registerCohortTableCustomCellRenderers } from '@/lib/CohortBuilder/CustomCellRenderers';
 import { registerCustomExplorerDetailsPanels } from '@/lib/CohortBuilder/FileDetailsPanel';
+import { registerIGVApp } from '@/features/igv/registerApp';
 
 import '../styles/globals.css';
 import '@fontsource/montserrat';
