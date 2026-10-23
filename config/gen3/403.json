@@ -1,8 +1,14 @@
 {
+  "topIcon": {
+    "src": "/icons/iconoir_window-no-access.svg",
+    "alt": "No access"
+  },
   "content": [
     {
       "type": "markdown",
-      "text": "# 403: Not Authorized \n You are not authorized to access this page. If you believe this is an error, contact your administrator or support.",
+      "text": [
+        "# You are not authorized to use this site.", 
+        "If you have any questions about access or the registration process, please contact [support@gen3.org](mailto:support@gen3.org)"],
       "className": "text-center"
     }
   ]

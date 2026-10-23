@@ -26,7 +26,8 @@
       "authz": ["/workspace"]
     },
     "*": {
-      "loginRequired": false
+      "loginRequired": true,
+      "authz": ["/user-in-yaml"]
     }
   }
 }
