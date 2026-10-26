@@ -1,7 +1,7 @@
 import type { IgvBrowserConfiguration } from '@/features/igv/types';
 import { useRouter } from 'next/dist/client/router';
 import { Button, Group, Stack } from '@mantine/core';
-import IGVAppWrapper from '@/features/igv/IGVAppWrapper';
+import IGVBrowserWrapper from '@/features/igv/IGVBrowserWrapper';
 import React from 'react';
 
 export interface IGVExplorerViewerProps {
@@ -34,7 +34,7 @@ const IGVExplorerViewer = ({
           </Button>
         </Group>
 
-        <IGVAppWrapper bamId={bamId} configuration={configuration} />
+        <IGVBrowserWrapper bamId={bamId} configuration={configuration} />
       </Stack>
     </div>
   );

@@ -19,7 +19,7 @@ interface IGVAppPageProps {
   configuration: IgvBrowserConfiguration;
 }
 
-const IGVAppWrapper = ({ bamId, configuration }: IGVAppPageProps) => {
+const IGVBrowserWrapper = ({ bamId, configuration }: IGVAppPageProps) => {
   const { bamUrl, baiUrl, isFetching, isSuccess, isError } =
     useGetBAMAndBAIFileFromGUID(bamId);
 
@@ -45,4 +45,4 @@ const IGVAppWrapper = ({ bamId, configuration }: IGVAppPageProps) => {
   return null;
 };
 
-export default IGVAppWrapper;
+export default IGVBrowserWrapper;

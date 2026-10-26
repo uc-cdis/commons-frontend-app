@@ -11,7 +11,7 @@ import {
   useCombobox,
 } from '@mantine/core';
 import { useGetRawDataAndTotalCountsQuery } from '@gen3/core';
-import IGVAppWrapper from '@/features/igv/IGVAppWrapper';
+import IGVBrowserWrapper from '@/features/igv/IGVBrowserWrapper';
 
 export interface IGVBamPickerProps {
   configuration: IgvBrowserConfiguration;
@@ -104,7 +104,7 @@ const IGVBamPicker = ({ configuration }: IGVBamPickerProps) => {
         </Group>
 
         {value ? (
-          <IGVAppWrapper bamId={value} configuration={configuration} />
+          <IGVBrowserWrapper bamId={value} configuration={configuration} />
         ) : null}
       </Stack>
     </div>
