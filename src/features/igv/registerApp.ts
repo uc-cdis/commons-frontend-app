@@ -4,6 +4,8 @@ import IGVApp from './IGVApp';
 const _APP_NAME = 'IGVBamViewer';
 const _APP_VERSION = '1.0.0';
 
+// register the app with Gen3
+
 export const registerIGVApp = () =>
   createGen3App({
     App: IGVApp,

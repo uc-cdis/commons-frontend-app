@@ -22,8 +22,9 @@ const getBamFileURL = (router: NextRouter): Partial<IGVAppProps> => {
 
 const IGVApp = (configuration: IgvBrowserConfiguration) => {
   const router = useRouter();
-  const { bamId, mode, returnData } = getBamFileURL(router);
+  const { bamId, mode, returnData } = getBamFileURL(router); // get parameters passed to IGVApp
 
+  // if running from explorer
   if (mode == 'explorer') {
     return (
       <IGVExplorerViewer

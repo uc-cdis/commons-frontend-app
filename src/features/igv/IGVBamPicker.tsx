@@ -38,7 +38,7 @@ const IGVBamPicker = ({ configuration }: IGVBamPickerProps) => {
       size: 200,
     });
 
-  const files = data?.data?.file ?? [];
+  const files = useMemo(() => data?.data?.file ?? [], [data]);
 
   const selectedFile = files.find(
     (x: { file_name: string; object_id: string }) => x.object_id === value,

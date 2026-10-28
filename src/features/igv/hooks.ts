@@ -1,113 +1,51 @@
-import { useEffect } from 'react';
 import {
-  useLazyGetDownloadQuery,
-  useLazyGetIndexdMetdataQuery,
-  useLazyGetIndexObjectQuery,
+  useGetDownloadQuery,
+  useGetIndexdMetdataQuery,
+  useGetIndexObjectQuery,
 } from '@gen3/core';
 
 export const useGetBAMAndBAIFileFromGUID = (bamId: string) => {
-  const [
-    fetchBAMData,
-    {
-      data: bamMetadata,
-      error: bamMetadataError,
-      isFetching: isFetchingBamMetadata,
-      isSuccess: isSuccessBamMetadata,
-      isError: isErrorBamMetadata,
-    },
-  ] = useLazyGetIndexObjectQuery();
+  const skip = !bamId;
 
-  const [
-    fetchBAIMetadata,
-    {
-      data: baiMetadata,
-      error: baiMetadataError,
-      isFetching: isFetchingBaiMetadata,
-      isSuccess: isSuccessBaiMetadata,
-      isError: isErrorBaiMetadata,
-    },
-  ] = useLazyGetIndexdMetdataQuery();
+  // currentData (not data) is undefined while args change, so results from a
+  // previous bamId are never used.
+  const bam = useGetIndexObjectQuery(bamId, { skip });
+  const bamUrl = useGetDownloadQuery(bamId, { skip });
 
-  const [
-    fetchBAMDownloadURL,
-    {
-      data: bamUrl,
-      error: downloadBAMURLError,
-      isFetching: isFetchingBAMUrl,
-      isSuccess: isSuccessBAMUrl,
-      isError: isErrorBAMUrl,
-    },
-  ] = useLazyGetDownloadQuery();
+  const baiFilename = bam.currentData?.file_name?.replace(/\.bam$/, '.bai');
+  const bai = useGetIndexdMetdataQuery(
+    { filters: [{ key: 'file_name', value: baiFilename ?? '' }] },
+    { skip: !baiFilename },
+  );
 
-  const [
-    fetchBAIDownloadURL,
-    {
-      data: baiUrl,
-      error: downloadBAIURLError,
-      isFetching: isFetchingBAIUrl,
-      isSuccess: isSuccessBAIUrl,
-      isError: isErrorBAIUrl,
-    },
-  ] = useLazyGetDownloadQuery();
+  const baiRecord = bai.currentData?.records?.[0];
+  const baiId = baiRecord?.baseid;
+  const baiUrl = useGetDownloadQuery(baiId ?? '', { skip: !baiId });
 
-  useEffect(() => {
-    if (!bamId) return;
+  const indexNotFound = bai.isSuccess && !baiId;
+  const queries = [bam, bamUrl, bai, baiUrl];
 
-    void fetchBAMData(bamId);
-  }, [bamId, fetchBAMData]);
-
-  useEffect(() => {
-    if (!isSuccessBamMetadata || !bamMetadata?.file_name) return;
-
-    const baiFilename = bamMetadata.file_name.replace('.bam', '.bai');
-
-    void fetchBAIMetadata({
-      filters: [{ key: 'file_name', value: baiFilename }],
-    });
-
-    void fetchBAMDownloadURL(bamId);
-  }, [
-    bamId,
-    isSuccessBamMetadata,
-    bamMetadata,
-    fetchBAIMetadata,
-    fetchBAMDownloadURL,
-  ]);
-
-  useEffect(() => {
-    const baiId = baiMetadata?.records?.[0]?.baseid;
-    if (!isSuccessBaiMetadata || !baiId) return;
-
-    void fetchBAIDownloadURL(baiId);
-  }, [isSuccessBaiMetadata, baiMetadata, fetchBAIDownloadURL]);
-
-  const isFetching =
-    isFetchingBamMetadata ||
-    isFetchingBaiMetadata ||
-    isFetchingBAMUrl ||
-    isFetchingBAIUrl;
-
-  const isError =
-    isErrorBamMetadata || isErrorBaiMetadata || isErrorBAMUrl || isErrorBAIUrl;
-
+  const isFetching = queries.some((q) => q.isFetching);
+  const isError = queries.some((q) => q.isError) || indexNotFound;
   const isSuccess =
-    isSuccessBamMetadata &&
-    isSuccessBaiMetadata &&
-    isSuccessBAMUrl &&
-    isSuccessBAIUrl;
+    bam.isSuccess && bamUrl.isSuccess && bai.isSuccess && baiUrl.isSuccess;
 
   return {
-    bamMetadata: isSuccess ? bamMetadata : undefined,
-    baiMetadata: isSuccess ? baiMetadata?.records?.[0] : undefined,
-    bamUrl: isSuccess ? bamUrl : undefined,
-    baiUrl: isSuccess ? baiUrl : undefined,
+    bamMetadata: isSuccess ? bam.currentData : undefined,
+    baiMetadata: isSuccess ? baiRecord : undefined,
+    bamUrl: isSuccess ? bamUrl.currentData : undefined,
+    baiUrl: isSuccess ? baiUrl.currentData : undefined,
     isFetching,
     isError,
     isSuccess,
-    error:
-      bamMetadataError ??
-      baiMetadataError ??
-      downloadBAMURLError ??
-      downloadBAIURLError,
+    errors: {
+      bam: bam.error,
+      bamUrl: bamUrl.error,
+      bai: bai.error,
+      baiUrl: baiUrl.error,
+      indexNotFound: indexNotFound
+        ? `Index file ${baiFilename} not found`
+        : undefined,
+    },
   };
 };

@@ -20,6 +20,8 @@ interface IGVAppPageProps {
 }
 
 const IGVBrowserWrapper = ({ bamId, configuration }: IGVAppPageProps) => {
+
+  // request the BAM and BAI files
   const { bamUrl, baiUrl, isFetching, isSuccess, isError } =
     useGetBAMAndBAIFileFromGUID(bamId);
 

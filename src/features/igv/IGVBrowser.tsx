@@ -20,6 +20,7 @@ const IGVBrowser = ({
 
   const [ivg, setIvg] = useState<any>(null);
 
+  /** lazy load of igv.js on component load as recommended in the documentation */
   useEffect(() => {
     void (async () => {
       if (!containerRef.current) return;
@@ -104,7 +105,7 @@ const IGVBrowser = ({
         ],
       };
 
-      try {
+      try { // create the IGV Browser
         browserRef.current = await ivg.createBrowser(
           containerRef.current,
           options,
@@ -116,7 +117,7 @@ const IGVBrowser = ({
 
     void init();
 
-    return () => {
+    return () => { // remove browser when component unmounts
       disposed = true;
       if (browserRef.current && (window as any).igv) {
         (window as any).igv.removeBrowser(browserRef.current);
