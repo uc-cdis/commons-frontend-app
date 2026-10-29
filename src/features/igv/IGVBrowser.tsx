@@ -20,7 +20,7 @@ const IGVBrowser = ({
 
   const [ivg, setIvg] = useState<any>(null);
 
-  /** lazy load of igv.js on component load as recommended in the documentation */
+  /** lazy load of igv.js on a component load as recommended in the documentation */
   useEffect(() => {
     void (async () => {
       if (!containerRef.current) return;

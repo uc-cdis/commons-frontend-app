@@ -4,6 +4,7 @@ import type { IgvBrowserConfiguration } from './types';
 import type { NextRouter } from 'next/router';
 import IGVExplorerViewer from './IGVExplorerViewer';
 import IGVBamPicker from './IGVBamPicker';
+import { ErrorCard } from '@gen3/frontend';
 
 interface IGVAppProps {
   bamId: string;
@@ -37,6 +38,8 @@ const IGVApp = (configuration: IgvBrowserConfiguration) => {
   if (mode === 'app') {
     return <IGVBamPicker configuration={configuration} />;
   }
+
+  return (<ErrorCard message="Invalid mode" />);
 };
 
 export default IGVApp;
