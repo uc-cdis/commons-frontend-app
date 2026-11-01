@@ -1,9 +1,9 @@
-import type { ReactElement, ReactNode } from 'react';
-import { Fragment } from 'react';
-import { Badge, Button, Divider, Tooltip } from '@mantine/core';
-import { Icon } from '@iconify-icon/react';
-import type { ModelInformation } from './types';
-import { formatDate } from '../../utils/date';
+import type { ReactElement, ReactNode } from "react";
+import { Fragment } from "react";
+import { Badge, Button, Divider, Tooltip } from "@mantine/core";
+import { Icon } from "@iconify-icon/react";
+import type { ModelInformation } from "./types";
+import { formatDate } from "../../utils/date";
 
 export interface ModelCardStat {
   label: string;
@@ -19,7 +19,7 @@ export interface ModelCardProps extends ModelInformation {
 
 const Separator = (): ReactElement => (
   <span className="text-[#cc4b05]" aria-hidden="true">
-    {' • '}
+    {" • "}
   </span>
 );
 
@@ -37,7 +37,7 @@ const ModelCard = ({
   createdAt,
   stats = [],
   tags = [],
-  detailsLabel = 'View Model Details',
+  detailsLabel = "View Model Details",
   onViewDetails,
   detailsHref,
 }: ModelCardProps): ReactElement => {
@@ -88,18 +88,22 @@ const ModelCard = ({
             ))}
           </div>
         ) : null}
-        <Divider className="w-full" color="#e1e1e1" />
-        <Button
-          variant="outline"
-          color="#0b7284"
-          size="compact-md"
-          radius={4}
-          className="bg-base-max font-semibold tracking-[0.2px]"
-          onClick={onViewDetails}
-          {...(detailsHref ? { component: 'a', href: detailsHref } : {})}
-        >
-          {detailsLabel}
-        </Button>
+        {detailsHref && (
+          <>
+            <Divider className="w-full" color="#e1e1e1" />
+            <Button
+              variant="outline"
+              color="#0b7284"
+              size="compact-md"
+              radius={4}
+              className="bg-base-max font-semibold tracking-[0.2px]"
+              onClick={onViewDetails}
+              {...(detailsHref ? { component: "a", href: detailsHref } : {})}
+            >
+              {detailsLabel}
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

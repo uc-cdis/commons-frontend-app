@@ -9,7 +9,7 @@ import { notifications } from "@mantine/notifications";
 import { FileArchive, Upload, X } from "lucide-react";
 import "@mantine/dropzone/styles.css";
 import {useMetadata} from "./core/MetadataContext";
-import {MAX_ZIP_BYTES} from "./core/constants";
+import {MAX_ZIP_BYTES} from "../../core/constants";
 import {loadCsv, loadTsv} from "./loadCsv";
 
 // extensions are listed too because browsers often report no MIME type for .tsv or .csv
@@ -47,15 +47,16 @@ const DropZone = () => {
     const zipFile = files.find((file) => file.name.toLowerCase().endsWith(".zip"));
     if (!tableFile || !zipFile) return;
     try {
-      const load = tableFile.name.toLowerCase().endsWith(".tsv") ? loadTsv : loadCsv;
-      setDataset({ metadata: await load(tableFile), zipFile });
+        const ts = new Date().toISOString();
+        const load = tableFile.name.toLowerCase().endsWith(".tsv") ? loadTsv : loadCsv;
+      setDataset({ metadata: await load(tableFile), zipFile, zipFileInfo: { name: zipFile.name, type: zipFile.type, uploadedAt: ts}, metadataFileInfo: { name: tableFile.name, type: tableFile.type, uploadedAt: ts } });
     } catch (error) {
       setRejection(error instanceof Error ? error.message : "Could not read the metadata file.");
     }
   };
 
   return (
-    <>
+    <div className="m-2 p-2">
       <Dropzone
         onDrop={(files) => {
           const oversizedZip = files.find(
@@ -115,7 +116,7 @@ const DropZone = () => {
           {rejection}
         </Alert>
       )}
-    </>
+    </div>
   );
 };
 

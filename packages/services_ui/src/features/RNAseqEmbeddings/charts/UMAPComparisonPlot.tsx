@@ -1,14 +1,65 @@
 import type * as echarts from 'echarts';
 import type { PlotPoint } from "../types";
 import type { UmapComparison } from "../processing/umapEmbeddings";
-import {useMemo} from "react";
+import {useEffect, useMemo, useRef} from "react";
+import { EMPTY_FILTER, matchesFilter } from "../processing/filterPlotData";
+import type { MetadataFilter } from "../processing/filterPlotData";
 import ReactECharts from 'echarts-for-react';
-const processCluster = (data: PlotPoint[]) => {
-    return data.map((point) => [point.umap_x, point.umap_y]);
+import { toDisplayName } from '@gen3/frontend';
+const escapeHtml = (text: string) =>
+    text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const formatValue = (value: unknown) =>
+    typeof value === 'object' && value !== null ? JSON.stringify(value) : String(value);
+
+// fraction of the input's range added on each side of the default zoom window
+const ZOOM_PADDING = 0.1;
+
+interface Bounds {
+    xMin: number;
+    xMax: number;
+    yMin: number;
+    yMax: number;
 }
 
+/** Bounding box of the points, padded so edge points are not on the border; null when there are none. */
+const getBounds = (points: PlotPoint[]): Bounds | null => {
+    if (points.length === 0) return null;
+    let xMin = Infinity, xMax = -Infinity, yMin = Infinity, yMax = -Infinity;
+    for (const { umap_x, umap_y } of points) {
+        if (umap_x < xMin) xMin = umap_x;
+        if (umap_x > xMax) xMax = umap_x;
+        if (umap_y < yMin) yMin = umap_y;
+        if (umap_y > yMax) yMax = umap_y;
+    }
+    // a single point (or a line) has no range, so fall back to a unit window
+    const xPad = (xMax - xMin || 1) * ZOOM_PADDING;
+    const yPad = (yMax - yMin || 1) * ZOOM_PADDING;
+    return { xMin: xMin - xPad, xMax: xMax + xPad, yMin: yMin - yPad, yMax: yMax + yPad };
+};
 
-const UMAPComparisonPlot = ({ data} : { data: UmapComparison }) => {
+// filtered-out points stay in the data, invisible, so they never move; only their opacity animates
+const toSeriesData = (points: PlotPoint[], filter: MetadataFilter) =>
+    points.map((point) => ({
+        value: [point.umap_x, point.umap_y],
+        itemStyle: { opacity: matchesFilter(point, filter) ? 1 : 0 },
+    }));
+
+interface UMAPComparisonPlotProps {
+    /** all points; the default zoom frames the input */
+    data: UmapComparison;
+    /** points not matching the filter fade out in place */
+    metadataFilter?: MetadataFilter;
+}
+
+const UMAPComparisonPlot = ({ data, metadataFilter = EMPTY_FILTER } : UMAPComparisonPlotProps) => {
+
+    const chartRef = useRef<ReactECharts>(null);
+    // read by the tooltip, which lives in the memoized option and would otherwise see a stale filter
+    const filterRef = useRef(metadataFilter);
+
+    // the default zoom frames the input samples; TCGA points outside the window are still reachable by zooming out
+    const inputBounds = useMemo(() => getBounds(data.input), [data.input]);
 
 // 4. Build out your typed ECharts series array
     const seriesData: echarts.ScatterSeriesOption[] = useMemo(() =>
@@ -16,9 +67,7 @@ const UMAPComparisonPlot = ({ data} : { data: UmapComparison }) => {
             name: `Cluster TCGA`,
             type: 'scatter',
             symbolSize: 10, // 10k points look cleaner with slightly smaller symbols
-            large: true,
-            largeThreshold: 2000,
-            data: processCluster(data.tcga),
+            data: toSeriesData(data.tcga, EMPTY_FILTER),
             dimensions: ['X', 'Y'],
             emphasis: {
                 focus: 'series',
@@ -32,9 +81,7 @@ const UMAPComparisonPlot = ({ data} : { data: UmapComparison }) => {
                 name: `Cluster Input`,
                 type: 'scatter',
                 symbolSize: 10, // 10k points look cleaner with slightly smaller symbols
-                large: true,
-                largeThreshold: 2000,
-                data: processCluster(data.input),
+                data: toSeriesData(data.input, EMPTY_FILTER),
                 dimensions: ['X', 'Y'],
                 emphasis: {
                     focus: 'series',
@@ -47,8 +94,10 @@ const UMAPComparisonPlot = ({ data} : { data: UmapComparison }) => {
         ], [data]);
 
 
-// 5. Build your configuration block using the explicit EChartsOption type
-    const option: echarts.EChartsOption = {
+    // the option must not depend on the filter: filter changes are applied to the live chart below,
+    // which keeps the zoom window and animates opacity instead of rebuilding the chart
+    const option: echarts.EChartsOption = useMemo(() => ({
+        animationDurationUpdate: 400,
         backgroundColor: '#ffffff',
         title: {
             text: 'UMAP Projection',
@@ -58,12 +107,20 @@ const UMAPComparisonPlot = ({ data} : { data: UmapComparison }) => {
         tooltip: {
             trigger: 'item',
             formatter: (params: any) => {
-                // params.value maps to our structured [x, y] coordinates
-                const [x, y] = params.value as [number, number];
+                // series 0 is TCGA, series 1 is the input; dataIndex maps back to the plot point
+                const point = (params.seriesIndex === 0 ? data.tcga : data.input)[params.dataIndex];
+                if (!point || !matchesFilter(point, filterRef.current)) return ''; // faded-out points have no tooltip
+                const rows = Object.entries(point?.metadata ?? {})
+
+                    .map(([key, value]) => {
+                        let keyName = key;
+                        if (key === 'gender') keyName = 'sex_at_birth';
+                        return `<li><b>${toDisplayName(keyName)}</b>: ${escapeHtml(formatValue(value))}</li>`
+
+                    }).join('');
                 return `
-        <strong style="color:${params.color}">${params.seriesName}</strong><br/>
-        X: ${x.toFixed(3)}<br/>
-        Y: ${y.toFixed(3)}
+        <strong style="color:${params.color}">${escapeHtml(params.seriesName)}</strong>
+        <ul style="margin:0;padding-left:1.2em">${rows}</ul>
       `;
             }
         },
@@ -97,15 +154,31 @@ const UMAPComparisonPlot = ({ data} : { data: UmapComparison }) => {
             iconStyle: {borderColor: '#000000'}
         },
         dataZoom: [
-            {type: 'inside'}, // Fast wheel-scroll & pinch zooming
-            {type: 'slider', show: true, bottom: 10, textStyle: {color: '#000000'}}
+            // Fast wheel-scroll & pinch zooming, plus a slider, on x; inside zooming on y
+            {type: 'inside', xAxisIndex: 0, ...(inputBounds && {startValue: inputBounds.xMin, endValue: inputBounds.xMax})},
+            {type: 'slider', show: false, bottom: 10, xAxisIndex: 0, textStyle: {color: '#000000'},
+                ...(inputBounds && {startValue: inputBounds.xMin, endValue: inputBounds.xMax})},
+            {type: 'inside', yAxisIndex: 0, ...(inputBounds && {startValue: inputBounds.yMin, endValue: inputBounds.yMax})},
         ],
         series: seriesData
-    };
+    }), [data, inputBounds, seriesData]);
+
+    useEffect(() => {
+        filterRef.current = metadataFilter;
+        const chart = chartRef.current?.getEchartsInstance();
+        if (!chart) return;
+        chart.setOption({
+            series: [
+                { data: toSeriesData(data.tcga, metadataFilter) },
+                { data: toSeriesData(data.input, metadataFilter) },
+            ],
+        });
+    }, [data, metadataFilter]);
 
     return (
         <div className="absolute inset-0">
         <ReactECharts
+        ref={chartRef}
         option={option}
         notMerge={true}
         lazyUpdate={false}

@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import type { HttpMethod } from '@gen3/core';
 import {fetchJSONDataFromURL } from '@gen3/core';
-import { EMBEDDING_MAX_WORKERS } from '../core/constants';
+import { EMBEDDING_MAX_WORKERS } from '../../../core/constants';
 import { isOsMetadata } from '../isOsMetadata';
 
 const EMBEDDING_MODEL_ENDPOINT = '/api/inference'

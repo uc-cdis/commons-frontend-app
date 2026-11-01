@@ -12,11 +12,16 @@ export const embeddingsApi = gen3Api.injectEndpoints({
   endpoints: (builder) => ({
     getAvailableEmbeddings: builder.query<any, string>({
       query: (collection) => ({
-        url: `${GEN3_EMBEDDINGS_SERVICE}/${collection}&counts=true`,
+        url: `${GEN3_EMBEDDINGS_SERVICE}/${collection}`,
+      }),
+    }),
+    getEmbeddings: builder.query<any, void>({
+      query: () => ({
+        url: `${GEN3_EMBEDDINGS_SERVICE}`,
       }),
     }),
   }),
 });
 
 
-export const { useGetAvailableEmbeddingsQuery } = embeddingsApi;
+export const { useGetAvailableEmbeddingsQuery, useGetEmbeddingsQuery } = embeddingsApi;
