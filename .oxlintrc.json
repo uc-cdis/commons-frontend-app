@@ -60,6 +60,7 @@
     "**/node_modules/**",
     "**/jupyter-workspaces/**",
     "**/builds/**",
+    "**/dist/**",
     "**/public/**",
     "**/cockle_wasm_env/**",
     "**/.yalc/**"
