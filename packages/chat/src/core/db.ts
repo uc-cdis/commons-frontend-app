@@ -1,6 +1,5 @@
 import { openDB, type DBSchema, type IDBPDatabase } from "idb";
 import type { Message } from "@copilotkit/react-core/v2";
-import type { ResolvedInterrupt } from "./types";
 
 // Sidebar row: metadata only, no messages.
 export interface ChatRecord {
@@ -20,11 +19,13 @@ interface ChatDB extends DBSchema {
   };
   messages: {
     key: string;
-    value: { chatId: string; messages: Message[]; interrupts?: ResolvedInterrupt[] };
+    value: { chatId: string; messages: Message[] };
   };
 }
 
-const DEFAULT_DB_NAME = "QAG-chat";
+// A new name, not a version bump: old chats hold QAG tool calls that may not replay on
+// the gdc agent, so they stay in "QAG-chat", untouched and no longer read. Might delete that later
+const DEFAULT_DB_NAME = "gdc-chat";
 const DB_VERSION = 1;
 
 const dbName = DEFAULT_DB_NAME;
@@ -55,10 +56,10 @@ export async function listChats(): Promise<ChatRecord[]> {
   return rows.reverse();
 }
 
-/** Metadata, messages, and any approvals that were decided. */
+/** Metadata and messages. */
 export async function loadChat(
   chatId: string,
-): Promise<{ chat: ChatRecord; messages: Message[]; interrupts: ResolvedInterrupt[] } | null> {
+): Promise<{ chat: ChatRecord; messages: Message[] } | null> {
   const db = await getDb();
   const tx = db.transaction(["chats", "messages"], "readonly");
 
@@ -67,7 +68,7 @@ export async function loadChat(
   const [chat, row] = await Promise.all([chatReq, messagesReq]);
   await tx.done;
 
-  return chat ? { chat, messages: row?.messages ?? [], interrupts: row?.interrupts ?? [] } : null;
+  return chat ? { chat, messages: row?.messages ?? [] } : null;
 }
 
 /**
@@ -78,7 +79,6 @@ export async function saveChat(input: {
   id: string;
   title: string;
   messages: Message[];
-  interrupts: ResolvedInterrupt[];
 }): Promise<void> {
   const db = await getDb();
   const tx = db.transaction(["chats", "messages"], "readwrite");
@@ -99,11 +99,7 @@ export async function saveChat(input: {
 
   await Promise.all([
     chats.put(record),
-    tx.objectStore("messages").put({
-      chatId: input.id,
-      messages: input.messages,
-      interrupts: input.interrupts,
-    }),
+    tx.objectStore("messages").put({ chatId: input.id, messages: input.messages }),
     tx.done,
   ]);
 }

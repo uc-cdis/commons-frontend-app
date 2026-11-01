@@ -1,17 +1,16 @@
 "use client";
 
-import type { ChatMessage, Timings } from "../../core";
+import { memo } from "react";
+import type { ChatMessage, Timings, ToolResultMessage } from "../../core";
 import { ReasoningBlock } from "./ReasoningBlock";
 import { AssistantMessage } from "./AssistantMessage";
 import { UserMessage } from "./UserMessage";
-import type { InterruptActions, InterruptView } from "../interrupts";
+import { sameMessageItem } from "./sameMessageItem";
 
 export interface MessageItemProps {
   message: ChatMessage;
   timings: Timings;
-  toolResults: ReadonlyMap<string, string>;
-  interrupts: ReadonlyMap<string, InterruptView>;
-  interruptActions: InterruptActions;
+  toolResults: ReadonlyMap<string, ToolResultMessage>;
   editableMessageId: string | null;
   isRunning: boolean;
   /** Last in the list. Only the tail can be mid-stream. */
@@ -20,18 +19,18 @@ export interface MessageItemProps {
   onRetry: () => void;
 }
 
-export function MessageItem({
+function MessageItemImpl({
   message,
   timings,
   toolResults,
-  interrupts,
-  interruptActions,
   editableMessageId,
   isRunning,
   isLast,
   onEdit,
   onRetry,
 }: MessageItemProps) {
+  const isStreaming = isRunning && isLast;
+
   if (message.role === "user") {
     return (
       <UserMessage
@@ -49,7 +48,7 @@ export function MessageItem({
       <ReasoningBlock
         content={message.content}
         durationMs={timings.reasoning?.[message.id]}
-        isStreaming={isRunning && isLast}
+        isStreaming={isStreaming}
       />
     );
   }
@@ -62,9 +61,10 @@ export function MessageItem({
       message={message}
       timings={timings}
       toolResults={toolResults}
-      interrupts={interrupts}
-      interruptActions={interruptActions}
       isRunning={isRunning}
+      isStreaming={isStreaming}
     />
   );
 }
+
+export const MessageItem = memo(MessageItemImpl, sameMessageItem);

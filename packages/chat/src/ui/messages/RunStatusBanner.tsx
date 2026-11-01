@@ -19,8 +19,8 @@ export function RunStatusBanner({
 
   return (
     <Group gap="xs">
-      {isRunning && <Loader size="xs" type="dots" />}
-      <Text size="xs" c="dimmed">
+      {isRunning && <Loader size="xs" type="dots" color="var(--chat-primary)" />}
+      <Text size="xs" c="var(--chat-muted)">
         {label}
       </Text>
     </Group>

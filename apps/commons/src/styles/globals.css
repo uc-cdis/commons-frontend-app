@@ -18,4 +18,13 @@
 
 /* The [data-chat-shell] height rule moved to @gen3/chat/styles.css, imported in _app.tsx. */
 
+/* The chat needs the height, so its page gets a slim footer (102px -> 52px). */
+div:has(> main > [data-chat-shell]) > footer > div > div {
+  padding-block: 0.25rem;
+}
+div:has(> main > [data-chat-shell]) > footer img {
+  height: 34px;
+  width: auto;
+}
+
 @tailwind variants;

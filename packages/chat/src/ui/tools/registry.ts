@@ -1,13 +1,20 @@
-import type { ToolRendererEntry } from "./types";
+import type { ToolRenderer } from "./types";
+import { CARD_DOWNLOADS } from "./downloads";
+import { FilterToolResult } from "./filter/FilterToolResult";
+import { ManifestToolResult } from "./manifest/ManifestToolResult";
 import { SurvivalToolResult } from "./survival/SurvivalToolResult";
-import { ReportToolResult } from "./report/ReportToolResult";
 
-export const toolRenderers: Record<string, ToolRendererEntry | undefined> = {
-  get_survival_data: { Component: SurvivalToolResult },
-  run_query: { Component: ReportToolResult, trailing: true },
-  start_rewoo: { Component: ReportToolResult, trailing: true },
-};
-
-export function isTrailingTool(name: string): boolean {
-  return toolRenderers[name]?.trailing === true;
+export function cardRenderers(cardDownloads: boolean): Record<string, ToolRenderer | undefined> {
+  return {
+    get_survival_data: SurvivalToolResult,
+    ...(cardDownloads && {
+      create_filter: FilterToolResult,
+      get_file_manifest: ManifestToolResult,
+    }),
+  };
 }
+
+/** Tools whose result gets its own card under the tool call, keyed by tool name. */
+export const toolRenderers = cardRenderers(CARD_DOWNLOADS);
+
+export const hasToolCard = (name: string): boolean => toolRenderers[name] !== undefined;

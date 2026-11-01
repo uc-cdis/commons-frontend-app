@@ -1,0 +1,13 @@
+{
+  "file_set_id": "fs_DamwvOAG15xa",
+  "file_count": 396,
+  "manifest": {
+    "name": "manifest-fs_DamwvOAG15xa.tsv",
+    "title": "GDC manifest for fs_DamwvOAG15xa",
+    "uri": "gdc://manifest/fs_DamwvOAG15xa",
+    "mimeType": "text/tab-separated-values",
+    "type": "resource_link",
+    "download_url": "/download/manifest/fs_DamwvOAG15xa",
+    "download_link": "[Download GDC manifest (TSV)](/download/manifest/fs_DamwvOAG15xa)"
+  }
+}

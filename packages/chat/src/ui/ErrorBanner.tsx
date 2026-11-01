@@ -14,8 +14,13 @@ export function ErrorBanner({ error, onDismiss }: ErrorBannerProps) {
 
   return (
     <Alert
-      color="red"
       variant="light"
+      vars={() => ({
+        root: {
+          "--alert-bg": "var(--chat-error-tint)",
+          "--alert-color": "var(--chat-error-strong)",
+        },
+      })}
       radius="md"
       p="xs"
       icon={<IconAlertTriangle size={16} />}

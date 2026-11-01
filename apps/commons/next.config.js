@@ -121,6 +121,12 @@ const nextConfig = {
         source: "/chat-runtime",
         destination: "/api/chat-runtime",
       },
+      // the agent writes its download links as /download/<kind>/<handle>; serve them here.
+      // known limits (see packages/chat/README.md): BASE_PATH or an agent --root-path breaks this
+      {
+        source: "/download/:kind/:handle",
+        destination: "/api/chat-download/:kind/:handle",
+      },
     ];
 
     if (isDev) {
@@ -140,10 +146,6 @@ const nextConfig = {
           source: "/ai-search/:path*",
           destination: `${GEN3_TARGET}/ai-search/:path*`,
         },
-        // Chat's payload cache. In production the portal shares a host with /qag, so this
-        // path is same-origin and the session cookie clears the revproxy on its own; here
-        // it isn't, which is why dev sends a bearer built from credentials_token instead.
-        { source: "/qag/:path*", destination: `${GEN3_TARGET}/qag/:path*` },
         {
           source: "/authz/:path*",
           destination: `${GEN3_TARGET}/authz/:path*`,

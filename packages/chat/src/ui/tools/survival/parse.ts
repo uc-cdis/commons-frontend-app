@@ -1,3 +1,5 @@
+import { isRecord, parseJson } from "../json";
+
 const DAYS_IN_YEAR = 365.25;
 
 export interface SurvivalPoint {
@@ -22,9 +24,6 @@ export interface SurvivalData {
 }
 
 export type ParseResult = { ok: true; data: SurvivalData } | { ok: false; reason: string };
-
-const isRecord = (v: unknown): v is Record<string, unknown> =>
-  typeof v === "object" && v !== null && !Array.isArray(v);
 
 const isFiniteNumber = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -65,14 +64,19 @@ function toCurve(raw: unknown, index: number): SurvivalCurve | null {
   };
 }
 
+/** The card's title: which project the donors come from. */
+export function projectLabel(curves: SurvivalCurve[]): string | null {
+  const projects = new Set(
+    curves.flatMap((c) => c.points.map((p) => p.projectId)).filter((id) => id !== undefined),
+  );
+  if (projects.size > 1) return `${projects.size} projects`;
+  return [...projects][0] ?? null;
+}
+
 // The result arrives as an untrusted string from a tool call, so assume nothing.
 export function parseSurvivalResult(content: string): ParseResult {
-  let raw: unknown;
-  try {
-    raw = JSON.parse(content);
-  } catch {
-    return { ok: false, reason: "result was not valid JSON" };
-  }
+  const raw = parseJson(content);
+  if (raw === undefined) return { ok: false, reason: "result was not valid JSON" };
 
   if (!isRecord(raw)) return { ok: false, reason: "unexpected result shape" };
   if (!Array.isArray(raw.results)) return { ok: false, reason: "missing results array" };

@@ -1,5 +1,5 @@
-import type { Interrupt, Message } from "@copilotkit/react-core/v2";
-import type { ChatInterrupt, ChatMessage, ToolCall } from "./types";
+import type { Message } from "@copilotkit/react-core/v2";
+import type { ChatMessage, ToolCall } from "./types";
 
 // Message -> ChatMessage. Lossy for now; more of the agent's message fields will
 // need to come across as the UI grows.
@@ -12,11 +12,13 @@ export function toChatMessage(message: Message): ChatMessage[] {
 
   if (message.role === "assistant") {
     const text = extractText(message.content);
-    const toolCalls: ToolCall[] = (message.toolCalls ?? []).map((tc) => ({
-      id: tc.id,
-      name: tc.function.name,
-      args: parseArgs(tc.function.arguments),
-    }));
+    const toolCalls: ToolCall[] = (message.toolCalls ?? [])
+      .filter((tc) => tc.function.name !== ANSWER_TOOL)
+      .map((tc) => ({
+        id: tc.id,
+        name: tc.function.name,
+        args: parseArgs(tc.function.arguments),
+      }));
 
     if (!text && toolCalls.length === 0) return [];
 
@@ -31,12 +33,18 @@ export function toChatMessage(message: Message): ChatMessage[] {
   }
 
   if (message.role === "tool") {
+    // tool content can be parts too; only the text is rendered
+    const content = extractText(message.content);
     return [
       {
         id: message.id,
         role: "tool",
         toolCallId: message.toolCallId,
-        content: unwrapToolResult(message.content as string),
+        content,
+        failed:
+          message.error !== undefined ||
+          pydanticOutcome(message.encryptedValue) === "failed" ||
+          content.endsWith(RETRY_PROMPT_END),
       },
     ];
   }
@@ -44,14 +52,36 @@ export function toChatMessage(message: Message): ChatMessage[] {
   return [];
 }
 
+// pydantic-ai's output tool: its arguments are a draft the agent may still reject; the
+// checked answer arrives after it as a text message
+const ANSWER_TOOL = "final_result";
+
+// TOOL_CALL_RESULT has no outcome, so pydantic-ai sends a failed call's outcome in a
+// REASONING_ENCRYPTED_VALUE event under its own key, which @ag-ui/client copies onto the message
+function pydanticOutcome(encryptedValue: string | undefined): unknown {
+  if (!encryptedValue) return undefined;
+  try {
+    const parsed: unknown = JSON.parse(encryptedValue);
+    const claims = isRecord(parsed) ? parsed.pydantic_ai : undefined;
+    return isRecord(claims) ? claims.outcome : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+// bad arguments are retried rather than failed, and carry no outcome: only this ending
+const RETRY_PROMPT_END = "\n\nFix the errors and try again.";
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 /** Arguments arrive as a growing string, so they only parse once complete. */
 function parseArgs(raw: string): Record<string, unknown> | null {
   if (!raw) return null;
   try {
     const parsed: unknown = JSON.parse(raw);
-    return typeof parsed === "object" &&
-      parsed !== null &&
-      !Array.isArray(parsed)
+    return typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)
       ? (parsed as Record<string, unknown>)
       : null;
   } catch {
@@ -59,39 +89,8 @@ function parseArgs(raw: string): Record<string, unknown> | null {
   }
 }
 
-/**
- * get_survival_data JSON-encodes an MCP content-block array into its result string. Peel it
- * once - anything else passes through untouched.
- */
-function unwrapToolResult(content: string): string {
-  if (!content.startsWith("[")) return content; // free reject: results are objects or prose
-
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(content);
-  } catch {
-    return content;
-  }
-  if (!Array.isArray(parsed) || parsed.length === 0) return content;
-
-  const texts: string[] = [];
-  for (const part of parsed) {
-    if (
-      typeof part !== "object" ||
-      part === null ||
-      (part as { type?: unknown }).type !== "text" ||
-      typeof (part as { text?: unknown }).text !== "string"
-    ) {
-      return content;
-    }
-    texts.push((part as { text: string }).text);
-  }
-
-  return texts.join("");
-}
-
 /** AG-UI content can be a plain string or an array of multimodal parts. */
-function extractText(content: unknown): string {
+export function extractText(content: unknown): string {
   if (typeof content === "string") return content;
 
   if (Array.isArray(content)) {
@@ -118,41 +117,13 @@ export function lastUserIndex(messages: Message[]): number {
   return -1;
 }
 
-/**
- * Interrupt -> ChatInterrupt. Total, unlike toChatMessage's drop-the-empties
- * flatMap: one we refuse to translate is one the user can never answer, which
- * blocks every run after it. Never report from here - it runs in a render memo.
- */
-export function toChatInterrupt(interrupt: Interrupt): ChatInterrupt {
-  return {
-    id: interrupt.id,
-    reason: interrupt.reason,
-    message: interrupt.message ?? null,
-    toolCallId: interrupt.toolCallId ?? null,
-    metadata:
-      (interrupt.metadata as Record<string, unknown> | undefined) ?? null,
-    canEditArgs: advertisesEditedArgs(interrupt.responseSchema),
-    expiresAt: toEpochMs(interrupt.expiresAt),
-  };
-}
+const TITLE_MAX = 80;
 
-/**
- * responseSchema is JSON Schema for the resume payload. We don't render forms from
- * it - the only thing we read is whether the agent will take edited args.
- */
-function advertisesEditedArgs(schema: unknown): boolean {
-  if (typeof schema !== "object" || schema === null) return false;
-  const properties = (schema as { properties?: unknown }).properties;
-  return (
-    typeof properties === "object" &&
-    properties !== null &&
-    "editedArgs" in properties
-  );
-}
-
-/** expiresAt is ISO-8601 on the wire. Junk dates count as no expiry. */
-function toEpochMs(iso: string | undefined): number | null {
-  if (!iso) return null;
-  const ms = Date.parse(iso);
-  return Number.isNaN(ms) ? null : ms;
+export function shortenTitle(text: string): string {
+  const title = text.trim();
+  if (title.length <= TITLE_MAX) return title;
+  // a space at index 79 still leaves room for the "…"
+  const lastSpace = title.lastIndexOf(" ", TITLE_MAX - 1);
+  const kept = lastSpace > 0 ? title.slice(0, lastSpace) : title.slice(0, TITLE_MAX - 1);
+  return `${kept.trimEnd()}…`;
 }

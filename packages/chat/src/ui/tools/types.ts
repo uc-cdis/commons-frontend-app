@@ -9,12 +9,6 @@ export interface ToolRendererProps {
 
 export type ToolRenderer = ComponentType<ToolRendererProps>;
 
-export interface ToolRendererEntry {
-  Component: ToolRenderer;
-  /**
-   * Render after every tool panel in the message and immediately above the answer,
-   * instead of under the call it hangs off. For a result that reports on the whole turn
-   * rather than on that one call.
-   */
-  trailing?: boolean;
-}
+/** memo's check for a result card: redraw only when its result or call changes. */
+export const sameToolResult = (a: ToolRendererProps, b: ToolRendererProps) =>
+  a.result === b.result && a.toolCall.id === b.toolCall.id;

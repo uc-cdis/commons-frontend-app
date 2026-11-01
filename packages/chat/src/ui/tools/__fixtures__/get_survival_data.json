@@ -1,0 +1,24 @@
+{
+  "case_set_id": "cs_QC9thrad-x0F",
+  "overall_survival": [
+    {
+      "donors": 48,
+      "1_year_survival": 0.826,
+      "2_year_survival": 0.629,
+      "3_year_survival": 0.536,
+      "4_year_survival": 0.449,
+      "5_year_survival": 0.449
+    }
+  ],
+  "full_curve": {
+    "name": "survival-cs_QC9thrad-x0F",
+    "title": "Survival curve for cs_QC9thrad-x0F",
+    "uri": "gdc://survival/cs_QC9thrad-x0F",
+    "mimeType": "application/json",
+    "type": "resource_link",
+    "download_url": "/download/survival/cs_QC9thrad-x0F",
+    "download_link": "[Download survival curve (JSON)](/download/survival/cs_QC9thrad-x0F)",
+    "download_url_csv": "/download/survival/cs_QC9thrad-x0F?format=csv",
+    "download_link_csv": "[Download survival curve (CSV)](/download/survival/cs_QC9thrad-x0F?format=csv)"
+  }
+}

@@ -25,8 +25,10 @@ import "../styles/globals.css";
 // transcript is not a scroll container and math renders unstyled.
 import "@gen3/chat/styles.css";
 import "@fontsource/montserrat";
-import "@fontsource/source-sans-pro";
+import "@fontsource/source-sans-pro/index.css";
 import "@fontsource/poppins";
+import "@fontsource/poppins/600.css";
+import "@fontsource/poppins/700.css";
 
 import drsHostnames from "../../config/drsHostnames.json";
 import { loadContent } from "@/lib/content/loadContent";

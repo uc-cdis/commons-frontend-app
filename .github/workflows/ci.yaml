@@ -15,3 +15,10 @@ jobs:
         run: npm ci
       - name: Run ESLint
         run: npm run lint
+      - name: Run tests
+        run: npm test
+      # the app type-checks against @gen3/chat's built dist/, which is never committed
+      - name: Build chat package
+        run: npm run build -w @gen3/chat
+      - name: Typecheck
+        run: npm run typecheck

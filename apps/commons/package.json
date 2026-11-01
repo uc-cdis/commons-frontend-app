@@ -11,6 +11,7 @@
     "build": "next build --webpack",
     "build:volume": "npm run build:middlewarePathsMatchAll && next build --webpack",
     "start": "next start",
+    "test": "vitest run",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname && npm run buildIcons && npm run build:middlewarePaths",
@@ -31,9 +32,9 @@
     "dev:webpack": "next dev --webpack"
   },
   "dependencies": {
-    "@ag-ui/client": "^0.0.59",
-    "@copilotkit/react-core": "^1.72.0",
-    "@copilotkit/runtime": "^1.72.0",
+    "@ag-ui/client": "1.0.2",
+    "@copilotkit/react-core": "^1.80.0",
+    "@copilotkit/runtime": "^1.80.0",
     "@datadog/browser-rum": "^6.22.0",
     "@fontsource/montserrat": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
@@ -114,7 +115,8 @@
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.1"
+    "typescript-eslint": "^8.46.1",
+    "vitest": "^5.0.5"
   },
   "engines": {
     "node": ">=24.18.1",

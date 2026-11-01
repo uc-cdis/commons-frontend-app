@@ -37,7 +37,7 @@ export function useChatTimings(agent: AbstractAgent): UseChatTimings {
         pendingTurnIdRef.current = null;
       },
 
-      onRunFinishedEvent({ event }) {
+      onRunFinishedEvent({ event, outcome }) {
         const ts = tsOf(event);
         const active = activeTurnRef.current;
         const turnMatches =
@@ -51,10 +51,12 @@ export function useChatTimings(agent: AbstractAgent): UseChatTimings {
         reasoningRef.current.clear();
 
         if (turnMatches) activeTurnRef.current = null;
+        // a stop can end as "cancelled": that turn didn't complete
+        const completed = turnMatches && outcome === "success";
 
-        if (turnMatches || Object.keys(reasoningPatch).length) {
+        if (completed || Object.keys(reasoningPatch).length) {
           setTimings((t) => ({
-            turns: turnMatches
+            turns: completed
               ? { ...t.turns, [active!.id]: ts - active!.startTs } // finish - start
               : t.turns,
             tools: t.tools,

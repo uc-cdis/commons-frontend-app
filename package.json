@@ -11,6 +11,7 @@
     "build": "npm run build -w @gen3/chat && npm run build -w @gen3/commons-portal-app-base",
     "lint": "oxlint .",
     "typecheck": "npm run typecheck -w @gen3/chat && tsc --noEmit -p apps/commons",
+    "test": "npm run test -w @gen3/chat && npm run test -w @gen3/commons-portal-app-base",
     "lint-fix": "oxlint --fix .",
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",

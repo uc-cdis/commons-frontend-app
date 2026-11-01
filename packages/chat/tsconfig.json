@@ -1,3 +1,5 @@
 {
-  "extends": "./tsconfig.build.json"
+  "extends": "./tsconfig.build.json",
+  // typecheck uses this file so tests are checked; the build config leaves them out of dist
+  "exclude": []
 }

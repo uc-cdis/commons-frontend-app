@@ -1,0 +1,21 @@
+{
+  "filter_id": "flt_5RjmYszWqJkw",
+  "scope": "cases",
+  "clause_count": 1,
+  "clauses": [
+    {
+      "field": "cases.project.project_id",
+      "value": ["TCGA-CHOL"],
+      "op": "in"
+    }
+  ],
+  "filter": {
+    "name": "filter-flt_5RjmYszWqJkw.json",
+    "title": "GDC cases filter flt_5RjmYszWqJkw",
+    "uri": "gdc://filter/flt_5RjmYszWqJkw",
+    "mimeType": "application/json",
+    "type": "resource_link",
+    "download_url": "/download/filter/flt_5RjmYszWqJkw",
+    "download_link": "[Download GDC filter (JSON)](/download/filter/flt_5RjmYszWqJkw)"
+  }
+}

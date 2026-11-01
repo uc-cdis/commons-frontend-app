@@ -1,9 +1,262 @@
 /* rehype-katex emits KaTeX markup but no stylesheet; without this, math renders unstyled. */
 @import "katex/dist/katex.min.css";
 
+/* Chat colours: change them here. */
+:root {
+  /* the designer's palette (Figma) */
+  --chat-blue: #2a72a5;
+  --chat-orange: #c7501a;
+  --chat-green: #15803d;
+  --chat-red: #dc2626;
+  --chat-red-dark: #991b1b; /* usually red text on a pale red background: ask the designer */
+  /* not in the designer's list yet: the portal theme's accentCool, and the mockup's other colours */
+  --chat-navy: #0f4163;
+  --chat-surface: #edf4fa;
+  --chat-surface-light: #f6fafd;
+  --chat-orange-dark: #b0461a; /* the orange is 4.12:1 on the tint; this is 5.06:1 */
+  --chat-green-tint: #dcfce7;
+  --chat-red-tint: #fee2e2;
+  --chat-red-deep: #b91c1c; /* the mockup's Error pill */
+  --chat-gray: #6b7280;
+
+  /* what components use */
+  --chat-title: var(--chat-navy);
+  --chat-value: var(--chat-blue);
+  --chat-error: var(--chat-red);
+  /* --chat-error is 3.95:1 on the error tint; this is 5.30:1 */
+  --chat-error-strong: var(--chat-red-deep);
+  --chat-error-tint: var(--chat-red-tint);
+  /* Mantine's "dimmed" grey is below the 4.5:1 text needs (3.3:1 on white); this is ~8:1 */
+  --chat-muted: var(--mantine-color-gray-7);
+  --chat-muted-tint: var(--mantine-color-gray-1);
+  --chat-action: var(--chat-muted);
+  --chat-rule: var(--mantine-color-default-border);
+  --chat-panel: var(--mantine-color-gray-0);
+  --chat-tint: var(--chat-surface);
+  --chat-tint-light: var(--chat-surface-light);
+  --chat-answer-line: var(--chat-navy);
+  /* 4.57:1 on its tint, only just over 4.5:1 */
+  --chat-success: var(--chat-green);
+  --chat-success-tint: var(--chat-green-tint);
+  /* outlined, so files stand out from the grey copy/edit actions; 5.2:1 on white */
+  --chat-download: var(--chat-blue);
+  /* the portal's anchor colour is near-black, which left only the underline; 5.2:1 on white */
+  --chat-link: var(--chat-blue);
+  --chat-primary: var(--chat-blue);
+  --chat-tool-name: var(--chat-navy);
+  /* icons need 3:1; this is 4.83:1 on white */
+  --chat-icon: var(--chat-gray);
+  /* 2.07:1 on white: under 3:1, as the indent and numbers carry the hierarchy too. gray-6 is 3.32:1 */
+  --chat-guide: var(--mantine-color-gray-5);
+  /* 4.59:1 on the question box, 4.83:1 on white */
+  --chat-placeholder: var(--chat-gray);
+  /* 4.57:1 on white, only just over 4.5:1: re-check if the orange changes */
+  --chat-accent: var(--chat-orange);
+  --chat-json-key: var(--chat-navy);
+  --chat-json-string: var(--chat-orange-dark);
+  /* 4.67:1 on the tint, as is the Running pill's text: only just over 4.5:1 */
+  --chat-json-number: var(--chat-blue);
+  --chat-json-punctuation: var(--chat-muted);
+}
+
 /* NavPageLayout's root is `h-full min-h-dvh` - an indefinite height - so main's
    `flex-basis:0%` falls back to content size and the page scrolls, not the transcript.
    Without this rule the viewport is not a scroll container and autoscroll is dead. */
 div:has(> main > [data-chat-shell]) {
   height: 100dvh;
+}
+
+/* Mantine's placeholder grey is 1.97:1 on the question box. The mobile drawer renders outside
+   the shell, so it needs the rule too. */
+[data-chat-shell],
+.chat-drawer {
+  --mantine-color-placeholder: var(--chat-placeholder);
+}
+
+/* The portal's Tailwind reset sets list-style: none on every list. Mantine's Typography puts the
+   indent back but not the marker, so answers' lists lost their bullets and numbers. */
+.chat-markdown ul {
+  list-style: disc;
+}
+.chat-markdown ul ul {
+  list-style: circle;
+}
+.chat-markdown ol {
+  list-style: decimal;
+}
+.chat-markdown li + li {
+  margin-top: 0.35em;
+}
+/* GFM task lists ("- [ ] …") already show a checkbox */
+.chat-markdown ul.contains-task-list {
+  list-style: none;
+}
+/* Mantine's Typography underlines links only on hover; always, so they read as links */
+.chat-markdown a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.chat-markdown .chat-download-row a {
+  text-decoration: none;
+}
+/* the download button is a link too, with its own colour */
+.chat-markdown :not(.chat-download-row) > a {
+  color: var(--chat-link);
+}
+/* Poppins 700 is nearly twice as thick as its 400, and the answer's first line is a whole bold
+   sentence; 600, which the portal loads, still reads as bold */
+.chat-markdown :is(strong, b, th) {
+  font-weight: 600;
+}
+.chat-answer .chat-headline {
+  color: var(--chat-title);
+}
+/* a long URL or inline JSON has no break points and would run past the answer card */
+.chat-markdown :is(p, li) {
+  overflow-wrap: break-word;
+}
+/* Typography sizes headings for a page (h1 34px) inside 14px text; a chat needs them close */
+.chat-markdown :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0.75em 0 0.25em;
+  line-height: 1.3;
+}
+.chat-markdown h1 {
+  font-size: 1.25em;
+}
+.chat-markdown h2 {
+  font-size: 1.15em;
+}
+.chat-markdown :is(h3, h4, h5, h6) {
+  font-size: 1.05em;
+}
+.chat-markdown table {
+  width: auto;
+}
+/* a table's scroll box gets a paragraph's gap; Typography gives the table none (it is the box's last child) */
+.chat-markdown .chat-table {
+  margin-bottom: var(--mantine-spacing-lg);
+}
+.chat-markdown :is(th, td) {
+  border: 1px solid var(--chat-rule);
+  padding: 4px 8px;
+  font-size: inherit;
+  font-variant-numeric: tabular-nums;
+}
+.chat-markdown thead th {
+  background: var(--chat-tint);
+}
+/* inline code is mostly ids and field names here: keep it, but quietly */
+.chat-markdown :not(pre) > code {
+  background: none;
+  padding: 0;
+  color: var(--chat-muted);
+  font-size: 0.95em;
+}
+
+.chat-answer {
+  padding: var(--mantine-spacing-lg);
+  border: 1px solid var(--chat-rule);
+  border-left: 3px solid var(--chat-answer-line);
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-body);
+}
+.chat-answer[data-streaming] {
+  border-color: transparent;
+  background: none;
+}
+
+/* Steps are read, not skimmed, so they keep full contrast while still reading as grey. */
+.chat-step {
+  color: var(--chat-muted);
+}
+
+.chat-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--chat-status-tint);
+  color: var(--chat-status-text);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.chat-status[data-status="completed"] {
+  --chat-status-tint: var(--chat-success-tint);
+  --chat-status-text: var(--chat-success);
+}
+.chat-status[data-status="error"] {
+  --chat-status-tint: var(--chat-error-tint);
+  --chat-status-text: var(--chat-error-strong);
+}
+.chat-status[data-status="running"] {
+  --chat-status-tint: var(--chat-tint);
+  --chat-status-text: var(--chat-primary);
+}
+.chat-status[data-status="missing"] {
+  --chat-status-tint: var(--chat-muted-tint);
+  --chat-status-text: var(--chat-muted);
+}
+
+.chat-tool-body {
+  border-top: 1px solid var(--chat-rule);
+  background: var(--chat-tint-light);
+}
+.chat-tool-panel {
+  overflow: hidden;
+  border: 1px solid var(--chat-rule);
+}
+.chat-tool-card {
+  border: 1px solid var(--chat-rule);
+}
+/* a tool call and its card read as one box: one shared border line, and square corners where
+   they meet. :not(:last-child), as most calls have no card */
+.chat-tool-group > .chat-tool-panel:not(:last-child) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+/* 17px = 10px padding + half the 16px tool icon - half the 2px line, so it drops from the icon */
+.chat-tool-list {
+  margin: 0 var(--mantine-spacing-xs) var(--mantine-spacing-xs) 17px;
+  border-left: 2px solid var(--chat-guide);
+}
+/* overflow: hidden on the panel would clip the focus ring, so draw it inside the row */
+.chat-tool-panel button[aria-expanded]:focus-visible {
+  outline-offset: -2px;
+}
+@media (hover: hover) {
+  .chat-tool-panel button[aria-expanded]:hover {
+    background: var(--chat-tint-light);
+  }
+}
+.chat-tool-list > .chat-tool-panel {
+  border: 0;
+  border-radius: 0;
+}
+.chat-tool-list > .chat-tool-panel + .chat-tool-panel {
+  border-top: 1px solid var(--chat-rule);
+}
+.chat-tool-group > .chat-tool-card {
+  border-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+/* Mantine's Code reads --code-bg; a background here would tie with its own rule */
+.chat-code {
+  --code-bg: var(--chat-tint);
+}
+.chat-json-key {
+  color: var(--chat-json-key);
+}
+.chat-json-string {
+  color: var(--chat-json-string);
+}
+.chat-json-number,
+.chat-json-literal {
+  color: var(--chat-json-number);
+}
+.chat-json-punctuation {
+  color: var(--chat-json-punctuation);
 }

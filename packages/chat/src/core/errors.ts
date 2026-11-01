@@ -6,8 +6,7 @@ export type ChatErrorSource =
   | "run" // a run: RUN_ERROR event, runAgent / stopAgent rejection
   | "persist" // saving a chat
   | "db" // reading or mutating chat records
-  | "parse" // malformed payload from the agent
-  | "interrupt"; // answering an approval failed. Retrying won't help - it's a dead end
+  | "parse"; // malformed payload from the agent
 
 export interface ChatError {
   source: ChatErrorSource;

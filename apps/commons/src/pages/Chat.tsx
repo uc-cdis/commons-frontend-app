@@ -24,8 +24,8 @@ const ChatPage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
       {...{ headerProps, footerProps }}
       mainProps={{ fixed: true }}
       headerMetadata={{
-        title: "Genomic AI Commons Chat",
-        content: "AI Chat",
+        title: "Genomics Explorer",
+        content: "Ask questions about GDC data",
         key: "gac-chat-page",
       }}
     >

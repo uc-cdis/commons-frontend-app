@@ -1,89 +1,77 @@
 "use client";
 
-import { useState } from "react";
-import { Button, Group, Select, Stack, Text, Textarea, Tooltip } from "@mantine/core";
+import { memo, useState } from "react";
+import { ActionIcon, Textarea, Tooltip } from "@mantine/core";
+import { IconPlayerStopFilled, IconSend } from "@tabler/icons-react";
+import { isSubmitEnter } from "./util";
 
 export interface ChatInputProps {
   isRunning: boolean;
-  blockedReason?: string;
   onSend: (text: string) => void;
   onStop: () => void;
-  label?: string;
   placeholder?: string;
-  models: readonly string[];
-  model: string;
-  onModelChange: (model: string) => void;
 }
 
-export function ChatInput({
+// memo: the chat re-renders as answers stream, and each render makes the textarea re-measure
+export const ChatInput = memo(function ChatInput({
   isRunning,
-  blockedReason,
   onSend,
   onStop,
-  label,
   placeholder,
-  models,
-  model,
-  onModelChange,
 }: ChatInputProps) {
   const [value, setValue] = useState("");
 
   const send = () => {
     const trimmed = value.trim();
-    if (!trimmed || isRunning || blockedReason) return;
+    if (!trimmed || isRunning) return;
     onSend(trimmed);
     setValue("");
   };
 
-  // Width and gutter belong to the column this sits in, not to the composer.
   return (
-    <Stack gap="xs" w="100%">
-      {label && (
-        <Text fw={700} size="sm">
-          {label}
-        </Text>
-      )}
-      <Textarea
-        autosize
-        minRows={1}
-        maxRows={6}
-        placeholder={placeholder ?? "Type a message"}
-        aria-label="Message"
-        value={value}
-        onChange={(event) => setValue(event.currentTarget.value)}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" && !event.shiftKey) {
-            event.preventDefault();
-            send();
-          }
-        }}
-      />
-      <Group justify="space-between" wrap="nowrap">
-        <Select
-          data={models}
-          value={model}
-          onChange={(next) => next && onModelChange(next)}
-          allowDeselect={false}
-          aria-label="Model"
-          w={240}
-          comboboxProps={{ withinPortal: true }}
-        />
-        {isRunning ? (
-          <Button variant="light" color="red" onClick={onStop}>
-            Stop
-          </Button>
-        ) : (
-          <Tooltip label={blockedReason} disabled={!blockedReason} withArrow position="top">
-            <Button
-              onClick={send}
-              data-disabled={blockedReason ? true : undefined}
-              disabled={!blockedReason && !value.trim()}
+    <Textarea
+      size="md"
+      autosize
+      minRows={1}
+      maxRows={6}
+      placeholder={placeholder ?? "Type a message"}
+      aria-label="Message"
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+      onKeyDown={(event) => {
+        if (isSubmitEnter(event)) {
+          event.preventDefault();
+          send();
+        }
+      }}
+      styles={{ input: { paddingBlock: 10, backgroundColor: "var(--chat-panel)" } }}
+      rightSectionWidth={60}
+      rightSectionPointerEvents="all"
+      rightSection={
+        isRunning ? (
+          <Tooltip label="Stop" withArrow>
+            <ActionIcon
+              variant="light"
+              color="var(--chat-error)"
+              size="lg"
+              aria-label="Stop"
+              onClick={onStop}
             >
-              Send
-            </Button>
+              <IconPlayerStopFilled size={16} />
+            </ActionIcon>
           </Tooltip>
-        )}
-      </Group>
-    </Stack>
+        ) : (
+          <ActionIcon
+            variant="filled"
+            color="var(--chat-primary)"
+            size="lg"
+            aria-label="Send"
+            onClick={send}
+          >
+            <IconSend size={18} />
+          </ActionIcon>
+        )
+      }
+    />
   );
-}
+});

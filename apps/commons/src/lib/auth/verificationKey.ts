@@ -13,10 +13,14 @@ import { fetchJWTKey } from "@gen3/frontend/server";
  * than reject everyone until the TTL runs out.
  */
 const JWK_TTL_MS = 15 * 60 * 1000;
+// a burst of bad tokens can each ask for a refresh; honour one a minute, so they can't
+// turn into a burst of Fence calls
+const MIN_REFRESH_MS = 60 * 1000;
 
 let cached: { key: KeyObject | CryptoKey; fetchedAt: number } | null = null;
 
 export const invalidateVerificationKey = () => {
+  if (cached && Date.now() - cached.fetchedAt < MIN_REFRESH_MS) return;
   cached = null;
 };
 
