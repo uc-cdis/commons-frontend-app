@@ -8,6 +8,8 @@ export const config = {
   "/Workspace",
   "/Profile",
   "/Chat",
+  "/Models",
+  "/RNASequenceEmbeddings",
   "/Login"
 ],
 };

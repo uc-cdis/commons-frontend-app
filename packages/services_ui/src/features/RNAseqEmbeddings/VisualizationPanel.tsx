@@ -22,7 +22,7 @@ const VisPanel = () => {
   const shown = filteredData ? filteredData.tcga.length + filteredData.input.length : 0;
 
   if (!plotData && !isProcessing) return (<div className="flex flex-col space-y-2 m-10 p-1 h-full w-full">
-    <Text fs="xl">No data to visualize</Text>
+    <Text fs="xl">No data to visualize.</Text>
   </div>);
 
   return (

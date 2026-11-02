@@ -15,10 +15,10 @@
     },
     "items": [
       {
-        "icon": "gen3:dictionary",
-        "href": "/DataDictionary",
-        "name": "Dictionary",
-        "tooltip": "The Data Dictionary serves to inform the data model and is updated as new data is ingested."
+        "icon": "gen3:ai-models",
+        "href": "/Models",
+        "name": "Models",
+        "tooltip": "Explore the models repository."
       },
       {
         "icon": "gen3:aisearch",
@@ -31,12 +31,6 @@
         "href": "/RNASequenceEmbeddings",
         "name": "RNA Embeddings",
         "tooltip": "Map embeddings of raw gene expression files using the Gen3 Embedding Service's similarity search to find each sample's nearest neighbors across all TCGA cancer types."
-      },
-      {
-        "icon": "gen3:ai-models",
-        "href": "/Models",
-        "name": "Models",
-        "tooltip": "Explore the models repository."
       },
       {
         "icon": "gen3:workspace",

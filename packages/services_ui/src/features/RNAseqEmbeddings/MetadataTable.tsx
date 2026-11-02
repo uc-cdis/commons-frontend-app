@@ -1,10 +1,11 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import {
   MantineReactTable,
   useMantineReactTable,
   type MRT_ColumnDef,
 } from "mantine-react-table-open";
 import "mantine-react-table-open/styles.css";
+import { Text } from "@mantine/core";
 
 export type MetadataRow = Record<string, string>;
 
@@ -30,7 +31,12 @@ const MetadataTable = ({ columns, rows }: MetadataTableProps) => {
     enableStickyHeader: true,
   });
 
-  return <div className="m-2"> <MantineReactTable table={table} /></div>;
+  if (!rows.length)
+    return ((<div className="flex flex-col space-y-2 m-10 p-1 h-full w-full">
+      <Text fs="xl">No data to display.</Text>
+    </div>));
+
+    return <div className="m-2"> <MantineReactTable table={table} /></div>;
 };
 
 export default MetadataTable;

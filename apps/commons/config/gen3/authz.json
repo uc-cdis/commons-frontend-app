@@ -12,6 +12,12 @@
     "/Chat": {
       "loginRequired": true
     },
+    "/Models": {
+      "loginRequired": true
+    },
+    "/RNASequenceEmbeddings": {
+      "loginRequired": true
+    },
     "*": {
       "loginRequired": false
     }

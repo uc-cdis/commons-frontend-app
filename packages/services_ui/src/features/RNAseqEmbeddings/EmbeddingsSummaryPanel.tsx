@@ -16,7 +16,7 @@ const EmbeddingSummaryPanel = () => {
   );
    if (!results || !summary) {
      return (<div className="flex flex-col space-y-2 m-10 p-1 h-full w-full">
-       <Text fs="xl">No data to summerize</Text>
+       <Text fs="xl">No data to summerize.</Text>
      </div>);
    }
 
