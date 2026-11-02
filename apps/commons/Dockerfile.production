@@ -79,6 +79,10 @@ RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build -w @gen3/commons-port
 FROM node:24.18.1-alpine3.23 AS runner
 
 WORKDIR /gen3
+
+# TEMPORARY: curl for testing outbound access from the container, remove when done
+RUN apk add --no-cache curl
+
 # server.js lives here inside the standalone output
 ARG APP=.next/standalone/apps/commons
 
