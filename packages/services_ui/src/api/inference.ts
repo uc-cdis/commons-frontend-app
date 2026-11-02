@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { readFile } from 'fs/promises';
 import { GEN3_API } from "@gen3/core";
+import { debugError, debugLog } from "../utils/debugLog";
 // import { Agent } from "undici";
 //
 // const agent = new Agent({ keepAliveTimeout: 1, pipelining: 0 });
@@ -35,7 +36,15 @@ export default async function handler(
     res: NextApiResponse,
 ) {
 
-    console.log("inference api called");
+    const started = Date.now();
+    debugLog('api/inference', 'request received', {
+        method: req.method,
+        contentType: req.headers['content-type'],
+        bodyType: typeof req.body,
+        useMock: Boolean(USE_MOCK),
+        inferenceService: GEN3_INFERENCE_SERVICE,
+        nodeEnv: process.env.NODE_ENV,
+    });
 
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method not allowed' });
@@ -43,8 +52,13 @@ export default async function handler(
 
     const { tsv, sample_id } = req.body;
     if (!tsv || !sample_id) {
+        debugLog('api/inference', 'rejected: missing tsv or sample_id', {
+            hasTsv: Boolean(tsv),
+            hasSampleId: Boolean(sample_id),
+        });
         return res.status(400).json({ message: 'Missing required fields' });
     }
+    debugLog('api/inference', 'payload ok', { sample_id, tsvChars: String(tsv).length });
 
 
     // mock the API server when in development mode:
@@ -52,10 +66,11 @@ export default async function handler(
         try {
             // given the sample_id load the corresponding tsv file
             const jsonFilePath = `${MOCKED_DATA_DIR}/${sample_id}`.replace(".tsv", ".json");
+            debugLog('api/inference', 'mock: reading file', { jsonFilePath, cwd: process.cwd() });
             const jsonContent = await readFile(jsonFilePath, 'utf8');
             return res.status(200).json(JSON.parse(jsonContent));
         } catch (e: unknown) {
-            console.error(`inference mock failed for sample_id "${sample_id}":`, e);
+            debugError('api/inference', 'mock failed', e, { sample_id });
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
@@ -63,11 +78,11 @@ export default async function handler(
         // fetch from the inference service
         const inferenceApi = GEN3_INFERENCE_SERVICE;
         if (!inferenceApi) {
-            console.error('INFERENCE_API is not set');
+            debugLog('api/inference', 'no inference service URL configured');
             return res.status(500).json({ message: 'Inference service is not configured' });
         }
         try {
-            console.log(`fetching from inference service: ${inferenceApi}`);
+            debugLog('api/inference', 'calling inference service', { url: inferenceApi, sample_id });
             const response = await fetch(inferenceApi, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Connection: "close" },
@@ -76,16 +91,33 @@ export default async function handler(
 
          //   const response = await postWithRetry(inferenceApi, JSON.stringify({ tsv, sample_id }));
             if (!response) throw new Error('No response from inference service');
+            debugLog('api/inference', 'inference service responded', {
+                sample_id,
+                status: response.status,
+                statusText: response.statusText,
+                contentType: response.headers.get('content-type'),
+                ms: Date.now() - started,
+            });
             if (!response.ok) {
-                console.error(
-                  `inference service failed for sample_id "${sample_id}": ${response.status} ${response.statusText}`,
-                  await response.text(),
-                );
+                debugLog('api/inference', 'inference service error body', {
+                    sample_id,
+                    body: (await response.text()).slice(0, 1000),
+                });
                 return res.status(502).json({ message: `Inference service returned ${response.status}` });
             }
-            return res.status(200).json(await response.json());
+            const body = await response.json();
+            debugLog('api/inference', 'returning result', {
+                sample_id,
+                keys: Object.keys(body ?? {}),
+                ms: Date.now() - started,
+            });
+            return res.status(200).json(body);
         } catch (e: unknown) {
-            console.error(`inference request failed for sample_id "${sample_id}":`, e);
+            debugError('api/inference', 'inference request failed', e, {
+                sample_id,
+                url: inferenceApi,
+                ms: Date.now() - started,
+            });
             return res.status(502).json({ message: 'Inference service unreachable' });
         }
     }

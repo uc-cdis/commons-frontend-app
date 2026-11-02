@@ -18,6 +18,19 @@ export interface NeighborRow {
     nTargetProject: number;
 }
 
+/** Builds the summary row for one input sample from its hits, sorted most to least similar. */
+export const toNeighborRow = (
+    input: Record<string, any>,
+    hits: ({ similarity: number } & Record<string, any>)[],
+): NeighborRow => {
+    const neighbors: Neighbor[] = hits.map(({ similarity, ...metadata }) => ({ metadata, similarity }));
+    return {
+        input,
+        nearest: neighbors[0],
+        nTargetProject: neighbors.filter((n) => n.metadata.project_id === TARGET_PROJECT).length,
+    };
+};
+
 const normalize = (vector: number[]): Float32Array => {
     const out = Float32Array.from(vector);
     let norm = 0;
@@ -55,14 +68,9 @@ export const findNearestNeighbors = (
             if (top.length > k) top.pop();
         }
 
-        const neighbors: Neighbor[] = top.map(({ index, similarity }) => ({
-            metadata: tcga.embeddings[index].info.metadata,
-            similarity,
-        }));
-        return {
-            input: sample.info.metadata,
-            nearest: neighbors[0],
-            nTargetProject: neighbors.filter((n) => n.metadata.project_id === TARGET_PROJECT).length,
-        };
+        return toNeighborRow(
+            sample.info.metadata,
+            top.map(({ index, similarity }) => ({ similarity, ...tcga.embeddings[index].info.metadata })),
+        );
     });
 };

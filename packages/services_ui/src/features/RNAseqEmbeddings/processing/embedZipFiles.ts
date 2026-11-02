@@ -3,6 +3,7 @@ import type { HttpMethod } from '@gen3/core';
 import {fetchJSONDataFromURL } from '@gen3/core';
 import { EMBEDDING_MAX_WORKERS } from '../../../core/constants';
 import { isOsMetadata } from '../isOsMetadata';
+import { debugError, debugLog } from '../../../utils/debugLog';
 
 const EMBEDDING_MODEL_ENDPOINT = '/api/inference'
 
@@ -41,10 +42,12 @@ export const embedZipFiles = async (
 
     try {
         onProgress(2, 'Reading archive');
+        debugLog('embedZipFiles', 'reading archive', { name: zipFile.name, bytes: zipFile.size, endpoint: EMBEDDING_MODEL_ENDPOINT });
         const zip = await JSZip.loadAsync(zipFile);
         signal.throwIfAborted();
 
         const entries = Object.values(zip.files).filter((f) => !f.dir && !isOsMetadata(f.name));
+        debugLog('embedZipFiles', 'archive read', { entries: entries.length, maxWorkers: EMBEDDING_MAX_WORKERS });
         if (entries.length === 0) throw new Error('The archive contains no files.');
 
         const results: EmbeddingResult[] = [];
@@ -57,7 +60,17 @@ export const embedZipFiles = async (
                 const index = next++;
                 const entry = entries[index];
                 const fileName = entry.name;
-                const result = await embed(await entry.async('string'), fileName, signal);
+                const tsv = await entry.async('string');
+                const fileStarted = Date.now();
+                debugLog('embedZipFiles', 'embedding file', { index, fileName, tsvChars: tsv.length });
+                let result: Record<string, any>;
+                try {
+                    result = await embed(tsv, fileName, signal);
+                } catch (error) {
+                    debugError('embedZipFiles', 'embedding failed', error, { index, fileName, ms: Date.now() - fileStarted });
+                    throw error;
+                }
+                debugLog('embedZipFiles', 'file embedded', { index, fileName, keys: Object.keys(result ?? {}), ms: Date.now() - fileStarted });
                 results[index] = { fileName, result };
                 completed += 1;
                 onProgress(5 + Math.floor((completed / entries.length) * 90), `Embedding (${completed} of ${entries.length})`);

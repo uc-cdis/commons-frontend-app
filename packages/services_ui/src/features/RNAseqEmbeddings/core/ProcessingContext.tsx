@@ -3,6 +3,7 @@ import { useMetadata } from "./MetadataContext";
 import { useVisualization } from "./VisualizationContext";
 import type { EmbeddingResult } from "../processing/embedZipFiles";
 import { ProcessingStep } from "./types";
+import { debugError, debugLog } from "../../../utils/debugLog";
 import { runEmbeddingsStep, runNeighborsStep, runUmapStep } from "../processing/processSteps";
 
 interface ProcessingValue {
@@ -53,15 +54,25 @@ export const ProcessingProvider = ({
     const embeddingsStep = useCallback(async () => {
         setProcessingState(ProcessingStep.INFERENCE);
         setProgress(0);
-        setResults(await runEmbeddingsStep(zipFile, setProgress));
+        const started = Date.now();
+        debugLog('processing', 'inference step started', { zip: zipFile.name, bytes: zipFile.size });
+        const embeddings = await runEmbeddingsStep(zipFile, setProgress);
+        debugLog('processing', 'inference step finished', { results: embeddings.length, ms: Date.now() - started });
+        setResults(embeddings);
         setProgress(100);
     }, [zipFile]);
 
     const umapStep = useCallback(async () => {
         setProcessingState(ProcessingStep.MAPPING);
         setProgress(0);
-        setPlotData(await runUmapStep(setProgress));
-        setNeighbors(runNeighborsStep());
+        const started = Date.now();
+        debugLog('processing', 'mapping step started');
+        const plotData = await runUmapStep(setProgress);
+        debugLog('processing', 'umap finished', { tcga: plotData.tcga.length, input: plotData.input.length, ms: Date.now() - started });
+        setPlotData(plotData);
+        const neighbors = runNeighborsStep();
+        debugLog('processing', 'neighbors finished', { rows: neighbors.length, ms: Date.now() - started });
+        setNeighbors(neighbors);
         setProgress(100);
     }, [setPlotData, setNeighbors]);
 
@@ -72,6 +83,7 @@ export const ProcessingProvider = ({
             for (const step of steps) await step();
             setProcessingState(ProcessingStep.READY);
         } catch (error) {
+            debugError('processing', 'run failed', error);
             console.error(error);
             setIsProcessingError(true);
             setProcessingState(ProcessingStep.IDLE);
@@ -93,6 +105,7 @@ export const ProcessingProvider = ({
     useEffect(() => {
         if (!autoRun || isEmpty || autoRunFile.current === zipFile) return;
         autoRunFile.current = zipFile;
+        debugLog('processing', 'auto run starting', { zip: zipFile.name });
         void processAll();
     }, [autoRun, isEmpty, zipFile, processAll]);
 
