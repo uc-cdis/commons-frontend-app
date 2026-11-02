@@ -17,6 +17,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@gen3/services_ui": ["../../packages/services_ui/src/index.ts"],
+      "@gen3/services_ui/server": ["../../packages/services_ui/src/server.ts"],
       "@gen3/chat": ["../../packages/chat/src/index.ts"],
       "@gen3/chat/ui": ["../../packages/chat/src/ui/index.ts"],
       "@gen3/chat/server": ["../../packages/chat/src/server/index.ts"],
