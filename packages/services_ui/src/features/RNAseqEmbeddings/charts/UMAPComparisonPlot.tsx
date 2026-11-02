@@ -5,7 +5,7 @@ import {useEffect, useMemo, useRef} from "react";
 import { EMPTY_FILTER, matchesFilter } from "../processing/filterPlotData";
 import type { MetadataFilter } from "../processing/filterPlotData";
 import ReactECharts from 'echarts-for-react';
-import { toDisplayName } from '@gen3/frontend';
+import { metadataFieldLabel } from '../utils';
 const escapeHtml = (text: string) =>
     text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
@@ -112,12 +112,8 @@ const UMAPComparisonPlot = ({ data, metadataFilter = EMPTY_FILTER } : UMAPCompar
                 if (!point || !matchesFilter(point, filterRef.current)) return ''; // faded-out points have no tooltip
                 const rows = Object.entries(point?.metadata ?? {})
 
-                    .map(([key, value]) => {
-                        let keyName = key;
-                        if (key === 'gender') keyName = 'sex_at_birth';
-                        return `<li><b>${toDisplayName(keyName)}</b>: ${escapeHtml(formatValue(value))}</li>`
-
-                    }).join('');
+                    .map(([key, value]) => `<li><b>${escapeHtml(metadataFieldLabel(key))}</b>: ${escapeHtml(formatValue(value))}</li>`)
+                    .join('');
                 return `
         <strong style="color:${params.color}">${escapeHtml(params.seriesName)}</strong>
         <ul style="margin:0;padding-left:1.2em">${rows}</ul>

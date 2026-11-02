@@ -4,6 +4,7 @@
     "inactiveTimeLimit": 20,
     "logoutInactiveUsers": false,
     "monitorWorkspace": true,
-    "expireWarningMinutes": 0
+    "expireWarningMinutes": 0,
+    "renewAccessTokenEarlyMilliseconds": 20000
   }
 }

@@ -37,7 +37,7 @@ const LoadedFiles = () => {
   return (
     <Stack gap="xs" classNames={{root: "m-2 p-2"}}>
         <div className="flex justify-between items-center w-full">
-             <Text fw={600} fs="lg" className="ml-2 uppercase">Loaded Files</Text>
+             <Text fw={600} fs="lg" className="ml-2 uppercase tracking-wide">Loaded Files</Text>
             <Tooltip label="Clear files" position="bottom">
             <ActionIcon variant="outline" aria-label="Clear Files" onClick={handleClear} disabled={isProcessing} >
                 <Icon icon="gen3:delete" size={16} />

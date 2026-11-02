@@ -50,10 +50,6 @@ const ProcessAllPanel = () => {
   const { isProcessing, isProcessingError, progress, results, processingState, processAll } = useProcessing();
   const step = PROCESSING_STATE_DESCRIPTIONS[processingState];
 
-  const summary = useMemo(
-    () => (results.length > 0 ? summarizeEmbeddings(results) : null),
-    [results],
-  );
 
   return (<div className="flex flex-col space-y-2 m-2 p-1">
     <div className="h-5 w-full m-1 p1">

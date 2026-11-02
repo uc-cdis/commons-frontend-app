@@ -17,7 +17,7 @@
     "setupCommons": "npm run buildColors && npm run getSchema && npm run getDRSToHostname && npm run buildIcons && npm run build:middlewarePaths",
     "build:docker": "docker build -t gen3:fef_app -f Dockerfile.production ../..",
     "build:colors": "node ../../node_modules/@gen3/toolsff/dist/buildColors.esm.js --themeFile=config/${GEN3_COMMONS_NAME:-gen3}/colors.json --out=config/${GEN3_COMMONS_NAME:-gen3}",
-    "build:icons": "bundleIcons --inpath=config/icons --outpath=config/icons",
+    "build:icons": "node ../../node_modules/@gen3/toolsff/dist/bundleIcons.esm.js --inpath=config/icons --outpath=config/icons",
     "build:middlewarePaths": "scanSitePaths",
     "build:middlewarePathsMatchAll": "scanSitePaths --forceMatchAll",
     "getSchema": "getSchema --out=config/",

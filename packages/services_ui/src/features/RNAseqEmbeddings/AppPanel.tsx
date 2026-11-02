@@ -1,13 +1,14 @@
 import React from "react";
-import { Group, Stack, Tabs } from "@mantine/core";
+import { Tabs } from "@mantine/core";
 import LoadedFiles from "./LoadedFiles";
 import DropZone from "./DropZone";
 import { PiGraphLight } from "react-icons/pi";
-import { VscServerProcess } from "react-icons/vsc";
 import { ImTable } from "react-icons/im";
 import MetadataPanel from "./MetadataPanel";
 import ProcessAllPanel from "./ProcessAllPanel";
 import VisPanel from "./VisualizationPanel";
+import EmbeddingsSummaryPanel from "./EmbeddingsSummaryPanel";
+import { Icon } from "@iconify-icon/react";
 
 const App = () => {
   return (
@@ -18,13 +19,16 @@ const App = () => {
       </div>
       <div className="flex flex-col w-3/4 h-full">
         <ProcessAllPanel />
-        <Tabs>
+        <Tabs defaultValue="results">
           <Tabs.List>
             <Tabs.Tab value="metadata" leftSection={<ImTable size={12} />}>
-              Metadata
+              Input Metadata
             </Tabs.Tab>
             <Tabs.Tab value="results" leftSection={<PiGraphLight size={12} />}>
-              Results
+              Visualize Results
+            </Tabs.Tab>
+            <Tabs.Tab value="embeddingsSummary" leftSection={<Icon icon="gen3:metric-outline" size={12} />}>
+              Embedding Summary
             </Tabs.Tab>
           </Tabs.List>
           <Tabs.Panel value="metadata">
@@ -32,6 +36,9 @@ const App = () => {
           </Tabs.Panel>
           <Tabs.Panel value="results" className="min-h-0">
             <VisPanel />
+          </Tabs.Panel>
+          <Tabs.Panel value="embeddingsSummary" className="min-h-0">
+            <EmbeddingsSummaryPanel />
           </Tabs.Panel>
         </Tabs>
       </div>

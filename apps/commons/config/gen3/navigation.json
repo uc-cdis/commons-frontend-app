@@ -27,6 +27,18 @@
         "tooltip": "Ask questions about harmonized GDC data: cohorts, mutations, gene expression, survival and files."
       },
       {
+        "icon": "gen3:dna",
+        "href": "/RNASequenceEmbeddings",
+        "name": "RNS Embeddings",
+        "tooltip": "Map embeddings of raw gene expression files using the Gen3 Embedding Service's similarity search to find each sample's nearest neighbors across all TCGA cancer types."
+      },
+      {
+        "icon": "gen3:patterns-outlined",
+        "href": "/Models",
+        "name": "Models",
+        "tooltip": "Explore the models repository."
+      },
+      {
         "icon": "gen3:workspace",
         "href": "/Workspace",
         "name": "Workspace",

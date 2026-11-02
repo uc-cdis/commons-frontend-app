@@ -4,6 +4,7 @@ import UMAPComparisonPlot from "./charts/UMAPComparisonPlot";
 import {useVisualization} from "./core/VisualizationContext";
 import {useProcessing} from "./core/ProcessingContext";
 
+import { metadataFieldLabel } from "./utils";
 import { filterPlotData, getFilterableFields } from "./processing/filterPlotData";
 
 const VisPanel = () => {
@@ -24,8 +25,8 @@ const VisPanel = () => {
   </div>);
 
   return (
-    <div className="flex flex-col space-y-2 m-2 p-1 h-full">
-      <LoadingOverlay visible={isProcessing}  />
+    <div className="flex flex-col space-y-2 m-2 p-1 h-full ">
+
       {isProcessingError && (
         <Text c="red">Processing failed. See the console for details.</Text>
       )}
@@ -34,7 +35,7 @@ const VisPanel = () => {
           <Select
             label="Filter by"
             placeholder="Metadata field"
-            data={Object.keys(fields)}
+            data={Object.keys(fields).map((field) => ({ value: field, label: metadataFieldLabel(field) }))}
             value={metadataFilter.field}
             onChange={(field) => setMetadataFilter({ field, values: [] })}
             clearable
@@ -56,6 +57,7 @@ const VisPanel = () => {
       )}
       {plotData && (
         <div className="relative flex-1 min-h-[1024px] w-full">
+          <LoadingOverlay visible={isProcessing}  />
           <UMAPComparisonPlot data={plotData} metadataFilter={metadataFilter} />
         </div>
       )}

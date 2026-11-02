@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useMetadata } from "./MetadataContext";
 import { useVisualization } from "./VisualizationContext";
 import type { EmbeddingResult } from "../processing/embedZipFiles";
@@ -13,6 +13,8 @@ interface ProcessingValue {
     results: EmbeddingResult[];
     /** the step currently running, READY once every requested step has completed */
     processingState: ProcessingStep;
+    /** true when processAll starts by itself as soon as a dataset is loaded */
+    autoRun: boolean;
 }
 
 interface ProcessingContextValue extends ProcessingValue {
@@ -28,16 +30,23 @@ const ProcessingContext = createContext<ProcessingContextValue | undefined>(unde
 
 /**
  * Owns the embedding and UMAP processing so any panel can start a run or show its progress.
+ * With `autoRun`, processAll starts whenever a new dataset is loaded.
  * Must be rendered inside MetadataProvider and VisualizationProvider.
  */
-export const ProcessingProvider = ({ children }: { children: React.ReactNode }) => {
+export const ProcessingProvider = ({
+    children,
+    autoRun = false,
+}: {
+    children: React.ReactNode;
+    autoRun?: boolean;
+}) => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [isProcessingError, setIsProcessingError] = useState(false);
     const [progress, setProgress] = useState(0);
     const [results, setResults] = useState<EmbeddingResult[]>([]);
     const [processingState, setProcessingState] = useState<ProcessingStep>(ProcessingStep.IDLE);
 
-    const { zipFile } = useMetadata();
+    const { zipFile, isEmpty } = useMetadata();
     const { setPlotData } = useVisualization();
 
     // the steps throw on failure; the public actions below own the processing state
@@ -78,6 +87,14 @@ export const ProcessingProvider = ({ children }: { children: React.ReactNode }) 
         [runSteps, embeddingsStep, umapStep],
     );
 
+    // the dataset already auto-processed, so StrictMode's repeated effects and re-renders don't start a second run
+    const autoRunFile = useRef<File | null>(null);
+    useEffect(() => {
+        if (!autoRun || isEmpty || autoRunFile.current === zipFile) return;
+        autoRunFile.current = zipFile;
+        void processAll();
+    }, [autoRun, isEmpty, zipFile, processAll]);
+
     const resetProcessing = useCallback(() => {
         setResults([]);
         setProgress(0);
@@ -93,12 +110,13 @@ export const ProcessingProvider = ({ children }: { children: React.ReactNode }) 
             progress,
             results,
             processingState,
+            autoRun,
             generateEmbeddings,
             generateUmap,
             processAll,
             resetProcessing,
         }),
-        [isProcessing, isProcessingError, progress, results, processingState, generateEmbeddings, generateUmap, processAll, resetProcessing],
+        [isProcessing, isProcessingError, progress, results, processingState, autoRun, generateEmbeddings, generateUmap, processAll, resetProcessing],
     );
 
     return <ProcessingContext.Provider value={value}>{children}</ProcessingContext.Provider>;

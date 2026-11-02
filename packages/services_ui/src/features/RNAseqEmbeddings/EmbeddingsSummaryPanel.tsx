@@ -1,17 +1,29 @@
-import React from "react";
-import {Stack, Table, Text} from "@mantine/core";
-import type { EmbeddingSummary} from "./summarizeEmbeddings";
+import React, { useMemo } from "react";
+import { LoadingOverlay, Stack, Table, Text } from "@mantine/core";
+import { EmbeddingSummary, summarizeEmbeddings } from "./summarizeEmbeddings";
 import {DESCRIBE_STATS, QC_COLUMNS} from "./summarizeEmbeddings";
 import {formatNumber} from "./utils";
+import { useProcessing } from "./core/ProcessingContext";
 
 
-interface EmbeddingSummaryPanelProps {
-    summary: EmbeddingSummary
-}
 
-const EmbeddingSummaryPanel = ({ summary } : EmbeddingSummaryPanelProps) => {
+const EmbeddingSummaryPanel = () => {
+
+  const { isProcessing, isProcessingError, results } = useProcessing();
+  const summary = useMemo(
+    () => (results.length > 0 ? summarizeEmbeddings(results) : null),
+    [results],
+  );
+   if (!results || !summary) {
+     return (<div className="flex flex-col space-y-2 m-10 p-1 h-full w-full">
+       <Text fs="xl">No data to summerize</Text>
+     </div>);
+   }
+
+
     return (
-        <Stack gap="xs" className="border-1 border-base-light p-2">
+        <Stack gap="xs" className="border-1 border-base-light p-2 relative">
+            <LoadingOverlay visible={isProcessing} />
             <Text>
                 embeddings: ({summary.shape.join(', ')}), encoder: {summary.encoders.join(', ')}
             </Text>
