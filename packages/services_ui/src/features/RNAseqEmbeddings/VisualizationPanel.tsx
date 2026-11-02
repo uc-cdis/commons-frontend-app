@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { Group, LoadingOverlay, MultiSelect, Select, Text} from "@mantine/core";
+import NeighborsTable from "./NeighborsTable";
 import UMAPComparisonPlot from "./charts/UMAPComparisonPlot";
 import {useVisualization} from "./core/VisualizationContext";
 import {useProcessing} from "./core/ProcessingContext";
@@ -9,7 +10,7 @@ import { filterPlotData, getFilterableFields } from "./processing/filterPlotData
 
 const VisPanel = () => {
 
-  const { plotData, metadataFilter, setMetadataFilter } = useVisualization();
+  const { plotData, metadataFilter, setMetadataFilter, neighbors } = useVisualization();
   const { isProcessing, isProcessingError } = useProcessing();
 
   const fields = useMemo(() => (plotData ? getFilterableFields(plotData) : {}), [plotData]);
@@ -61,6 +62,7 @@ const VisPanel = () => {
           <UMAPComparisonPlot data={plotData} metadataFilter={metadataFilter} />
         </div>
       )}
+      {neighbors && <NeighborsTable rows={neighbors} />}
     </div>
   );
 };

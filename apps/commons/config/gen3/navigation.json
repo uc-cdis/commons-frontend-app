@@ -29,11 +29,11 @@
       {
         "icon": "gen3:dna",
         "href": "/RNASequenceEmbeddings",
-        "name": "RNS Embeddings",
+        "name": "RNA Embeddings",
         "tooltip": "Map embeddings of raw gene expression files using the Gen3 Embedding Service's similarity search to find each sample's nearest neighbors across all TCGA cancer types."
       },
       {
-        "icon": "gen3:patterns-outlined",
+        "icon": "gen3:ai-models",
         "href": "/Models",
         "name": "Models",
         "tooltip": "Explore the models repository."

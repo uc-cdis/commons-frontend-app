@@ -3,7 +3,7 @@ import { useMetadata } from "./MetadataContext";
 import { useVisualization } from "./VisualizationContext";
 import type { EmbeddingResult } from "../processing/embedZipFiles";
 import { ProcessingStep } from "./types";
-import { runEmbeddingsStep, runUmapStep } from "../processing/processSteps";
+import { runEmbeddingsStep, runNeighborsStep, runUmapStep } from "../processing/processSteps";
 
 interface ProcessingValue {
     isProcessing: boolean;
@@ -47,7 +47,7 @@ export const ProcessingProvider = ({
     const [processingState, setProcessingState] = useState<ProcessingStep>(ProcessingStep.IDLE);
 
     const { zipFile, isEmpty } = useMetadata();
-    const { setPlotData } = useVisualization();
+    const { setPlotData, setNeighbors } = useVisualization();
 
     // the steps throw on failure; the public actions below own the processing state
     const embeddingsStep = useCallback(async () => {
@@ -61,8 +61,9 @@ export const ProcessingProvider = ({
         setProcessingState(ProcessingStep.MAPPING);
         setProgress(0);
         setPlotData(await runUmapStep(setProgress));
+        setNeighbors(runNeighborsStep());
         setProgress(100);
-    }, [setPlotData]);
+    }, [setPlotData, setNeighbors]);
 
     const runSteps = useCallback(async (steps: (() => Promise<void>)[]) => {
         setIsProcessing(true);
@@ -101,7 +102,8 @@ export const ProcessingProvider = ({
         setIsProcessingError(false);
         setProcessingState(ProcessingStep.IDLE);
         setPlotData(null);
-    }, [setPlotData]);
+        setNeighbors(null);
+    }, [setPlotData, setNeighbors]);
 
     const value = useMemo<ProcessingContextValue>(
         () => ({

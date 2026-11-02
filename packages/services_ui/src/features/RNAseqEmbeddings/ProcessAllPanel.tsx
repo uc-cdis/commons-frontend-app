@@ -60,7 +60,7 @@ const ProcessAllPanel = () => {
       <Text size="sm" c="dimmed">{step.description}</Text>
     </div>
     <div className="border-1 border-base-light p-2">
-    <Button onClick={processAll} loading={isProcessing} disabled={isEmpty} color="accentWarm.4">Process All</Button>
+    <Button onClick={processAll} loading={isProcessing} disabled={isEmpty} color="accentWarm.4">Map Input Data</Button>
     </div>
     {isProcessingError && <Text c="red">Processing failed. See the console for details.</Text>}
     </div>);
