@@ -1,9 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { readFile } from 'fs/promises';
 import { debugError, debugLog, previewJson } from "../utils/debugLog";
-import { GEN3_INFERENCE_SERVICE } from "../core/constants";
 
 const MOCKED_DATA_DIR = './data/inference_response';
+
+// server-only (no NEXT_PUBLIC_ prefix): the in-cluster service name is not reachable from a browser
+const GEN3_INFERENCE_SERVICE =
+    process.env.GEN3_INFERENCE_SERVICE || 'http://conduit-server.default.svc.cluster.local:8080';
 
 const USE_MOCK = process.env.GEN3_MOCK_INFERENCE_SERVICE || false;
 

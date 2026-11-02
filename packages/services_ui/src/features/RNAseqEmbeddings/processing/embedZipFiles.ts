@@ -4,7 +4,7 @@ import type { HttpMethod } from '@gen3/core';
 import { EMBEDDING_MAX_WORKERS } from '../../../core/constants';
 import { isOsMetadata } from '../isOsMetadata';
 import { debugError, debugLog, previewJson } from '../../../utils/debugLog';
-import { EMBEDDING_MODEL_ENDPOINT } from '../../../core/constants';
+import { EMBEDDING_MODEL_PROXY_ENDPOINT } from '../../../core/constants';
 import { fetchJSONDataFromURL} from "../../../utils/fetch";
 
 export interface EmbeddingResult {
@@ -18,7 +18,7 @@ interface EmbedContext {
 }
 
 const embed = async (tsv: string, fileName: string, signal: AbortSignal): Promise<Record<string, any>> => {
-   const url = EMBEDDING_MODEL_ENDPOINT;
+   const url = EMBEDDING_MODEL_PROXY_ENDPOINT;
    const resp = await fetchJSONDataFromURL<Record<string, any>>(url, true, 'POST' as HttpMethod, JSON.stringify({ tsv: tsv, sample_id: fileName }), signal);
     if (!resp)
         throw new Error(`null response`);
@@ -42,7 +42,7 @@ export const embedZipFiles = async (
 
     try {
         onProgress(2, 'Reading archive');
-        debugLog('embedZipFiles', 'reading archive', { name: zipFile.name, bytes: zipFile.size, endpoint: EMBEDDING_MODEL_ENDPOINT });
+        debugLog('embedZipFiles', 'reading archive', { name: zipFile.name, bytes: zipFile.size, endpoint: EMBEDDING_MODEL_PROXY_ENDPOINT });
         const zip = await JSZip.loadAsync(zipFile);
         signal.throwIfAborted();
 

@@ -61,6 +61,7 @@ const nextConfig = {
   env: {
     version: process.env.npm_package_version,
     NEXT_PUBLIC_GEN3_VERSION: packageJson.version,
+    NEXT_PUBLIC_BASE_PATH: basePath,
   },
   reactStrictMode: true,
   pageExtensions: ["mdx", "md", "jsx", "js", "tsx", "ts"],
