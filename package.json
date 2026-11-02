@@ -1,6 +1,10 @@
 {
   "name": "genomic-ai-commons",
   "private": true,
+  "engines": {
+    "npm": ">=11.19.1",
+    "node": ">=24.22.1"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
