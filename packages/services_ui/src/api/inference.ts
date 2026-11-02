@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { readFile } from 'fs/promises';
-import { GEN3_API } from "@gen3/core";
 import { debugError, debugLog } from "../utils/debugLog";
+import { GEN3_INFERENCE_SERVICE } from "../core/constants";
 // import { Agent } from "undici";
 //
 // const agent = new Agent({ keepAliveTimeout: 1, pipelining: 0 });
@@ -22,10 +22,6 @@ import { debugError, debugLog } from "../utils/debugLog";
 //         }
 //     }
 // }
-
-
-export const GEN3_INFERENCE_SERVICE =
-  process.env.GEN3_INFERENCE_SERVICE || `${GEN3_API}/inference`;
 
 const MOCKED_DATA_DIR = './data/inference_response';
 
@@ -76,7 +72,7 @@ export default async function handler(
     }
     else {
         // fetch from the inference service
-        const inferenceApi = GEN3_INFERENCE_SERVICE;
+        const inferenceApi =  `${GEN3_INFERENCE_SERVICE}/rna-seq-transformer/v1/models/bulkrnabert:predict`;
         if (!inferenceApi) {
             debugLog('api/inference', 'no inference service URL configured');
             return res.status(500).json({ message: 'Inference service is not configured' });

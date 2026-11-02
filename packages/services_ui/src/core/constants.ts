@@ -2,7 +2,7 @@ import { GEN3_API } from '@gen3/core';
 
 // Base URL of the inference service, reached through the Gen3 gateway (the in-cluster service name is not reachable from a browser).
 export const GEN3_INFERENCE_SERVICE =
-  process.env.NEXT_PUBLIC_GEN3_INFERENCE_SERVICE || `${GEN3_API}/inference`;
+  process.env.NEXT_PUBLIC_GEN3_INFERENCE_SERVICE || 'http://conduit-server.default.svc.cluster.local:8080';
 
 export const EMBEDDING_MODEL_ENDPOINT = `${GEN3_INFERENCE_SERVICE}/rna-seq-transformer/v1/models/bulkrnabert:predict`;
 export const EMBEDDING_MAX_WORKERS = 8;
