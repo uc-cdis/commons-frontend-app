@@ -2,26 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { readFile } from 'fs/promises';
 import { debugError, debugLog, previewJson } from "../utils/debugLog";
 import { GEN3_INFERENCE_SERVICE } from "../core/constants";
-// import { Agent } from "undici";
-//
-// const agent = new Agent({ keepAliveTimeout: 1, pipelining: 0 });
-//
-// async function postWithRetry(url: string, body: string, tries = 2) {
-//     for (let i = 0; i < tries; i++) {
-//         try {
-//             return await fetch(url, {
-//                 method: "POST",
-//                 headers: { "Content-Type": "application/json", Connection: "close" },
-//                 body,
-//                 // @ts-expect-error dispatcher is supported by Node's fetch
-//                 dispatcher: agent,
-//             });
-//         } catch (e: any) {
-//             const code = e?.cause?.code;
-//             if (i === tries - 1 || !["EPIPE", "ECONNRESET", "UND_ERR_SOCKET"].includes(code)) throw e;
-//         }
-//     }
-// }
 
 const MOCKED_DATA_DIR = './data/inference_response';
 

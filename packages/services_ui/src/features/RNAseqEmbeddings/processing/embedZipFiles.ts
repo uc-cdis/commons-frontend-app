@@ -1,10 +1,11 @@
 import JSZip from 'jszip';
 import type { HttpMethod } from '@gen3/core';
-import {fetchJSONDataFromURL } from '@gen3/core';
+// import {fetchJSONDataFromURL } from '@gen3/core';
 import { EMBEDDING_MAX_WORKERS } from '../../../core/constants';
 import { isOsMetadata } from '../isOsMetadata';
 import { debugError, debugLog, previewJson } from '../../../utils/debugLog';
 import { EMBEDDING_MODEL_ENDPOINT } from '../../../core/constants';
+import { fetchJSONDataFromURL} from "../../../utils/fetch";
 
 export interface EmbeddingResult {
     fileName: string;
