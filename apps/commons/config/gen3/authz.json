@@ -15,6 +15,9 @@
     "/Models": {
       "loginRequired": true
     },
+    "/Embeddings": {
+      "loginRequired": true
+    },
     "/RNASequenceEmbeddings": {
       "loginRequired": true
     },

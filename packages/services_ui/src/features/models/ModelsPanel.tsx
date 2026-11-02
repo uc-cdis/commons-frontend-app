@@ -11,8 +11,8 @@ export const ModelsPanel = ({ models }: ModelsPanelProps) => {
   return (
     <Stack classNames={{ root: 'w-full h-full p-2 bg-base-lighter' }}>
       <Stack>
-        <Text fw="bold" size="lg">
-          Models
+        <Text fw="bold" size="lg" className="ml-2 uppercase tracking-wide">
+          Model Repository
         </Text>
         <p>Here you can see all the models available to you.</p>
       </Stack>

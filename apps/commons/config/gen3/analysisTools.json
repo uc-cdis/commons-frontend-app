@@ -1,0 +1,14 @@
+{
+  "tools": [
+    {
+      "title": "Embeddings Comparison",
+      "type": "application",
+      "icon": "/images/apps/icons/ai_spark.svg",
+      "image": "/images/apps/gdc_qag.png",
+      "description": "Map embeddings of raw gene expression files using the Gen3 Embedding Service's similarity search to find each sample's nearest neighbors across all TCGA cancer types.",
+      "loginRequired": true,
+      "href": "/RNASequenceEmbeddings",
+      "btnText": "Run"
+    }
+  ]
+}

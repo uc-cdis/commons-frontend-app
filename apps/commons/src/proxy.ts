@@ -9,6 +9,7 @@ export const config = {
   "/Profile",
   "/Chat",
   "/Models",
+  "/Embeddings",
   "/RNASequenceEmbeddings",
   "/Login"
 ],

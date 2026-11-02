@@ -1,10 +1,10 @@
 import React from "react";
 import  EmbeddingsPanel from "./EmbeddingsPanel";
-import { useGetEmbeddingsQuery} from '../../core/embeddingsApi'
+import { useGetAvailableEmbeddingsQuery} from '../../core/embeddingsApi'
 
 const EmbeddingsCatalog = () => {
 
-    const { data, isFetching, isError  } = useGetEmbeddingsQuery();
+    const { data, isFetching, isError  } = useGetAvailableEmbeddingsQuery('expr');
 
     console.log("EmbeddingsCatalog", data)
     return <EmbeddingsPanel />
