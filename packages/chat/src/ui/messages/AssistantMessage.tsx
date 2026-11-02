@@ -5,6 +5,7 @@ import { Box, Stack } from "@mantine/core";
 import type { ChatMessage, Timings, ToolCall, ToolResultMessage } from "../../core";
 import { AnswerCard } from "./AnswerCard";
 import { MarkdownContent } from "./MarkdownContent";
+import { QuestionCard } from "./QuestionCard";
 import { ToolCallPanel } from "./ToolCallPanel";
 import { hasToolCard, ToolResultCard } from "../tools";
 import { argsSummary } from "./argsSummary";
@@ -39,6 +40,8 @@ export function AssistantMessage({
   isStreaming,
 }: AssistantMessageProps) {
   const [openedCallId, setOpenedCallId] = useState<string | null>(null);
+  if (message.isQuestion) return <QuestionCard content={message.content} />;
+
   const toolCalls = message.toolCalls ?? [];
   // text that comes with tool calls is the agent's reason for them: a step, not the answer
   const isStep = toolCalls.length > 0;

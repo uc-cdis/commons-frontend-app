@@ -35,6 +35,7 @@
   --chat-tint: var(--chat-surface);
   --chat-tint-light: var(--chat-surface-light);
   --chat-answer-line: var(--chat-navy);
+  --chat-question-line: var(--chat-accent);
   /* 4.57:1 on its tint, only just over 4.5:1 */
   --chat-success: var(--chat-green);
   --chat-success-tint: var(--chat-green-tint);
@@ -108,7 +109,8 @@ div:has(> main > [data-chat-shell]) {
 .chat-markdown :is(strong, b, th) {
   font-weight: 600;
 }
-.chat-answer .chat-headline {
+.chat-answer .chat-headline,
+.chat-question .chat-headline {
   color: var(--chat-title);
 }
 /* a long URL or inline JSON has no break points and would run past the answer card */
@@ -153,12 +155,16 @@ div:has(> main > [data-chat-shell]) {
   font-size: 0.95em;
 }
 
-.chat-answer {
+.chat-answer,
+.chat-question {
   padding: var(--mantine-spacing-lg);
   border: 1px solid var(--chat-rule);
   border-left: 3px solid var(--chat-answer-line);
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-body);
+}
+.chat-question {
+  border-left-color: var(--chat-question-line);
 }
 .chat-answer[data-streaming] {
   border-color: transparent;

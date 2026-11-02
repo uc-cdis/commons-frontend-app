@@ -20,6 +20,8 @@ export type ChatMessage =
       role: "assistant";
       content: string;
       toolCalls?: ToolCall[];
+      /** The agent asking instead of answering. */
+      isQuestion?: boolean;
     }
   | {
       id: string;

@@ -57,7 +57,7 @@ you press Send
   3. the run finishes with "success", so the whole chat is saved again
 ```
 
-If your question is unclear (for example, "mutations" could mean SSM or CNV), the agent asks you first. That question is a normal answer, and you reply with a normal message.
+If your question is unclear (for example, "mutations" could mean SSM or CNV), the agent asks you first. It ends its turn with an `ask_user` call holding the question and, when there are a few, the readings to choose between. It then sends the question as a text message whose id starts with `gdc-question-`: the question in bold, then the readings as a list. `toChatMessage` hides `ask_user` and marks that message as a question (`isQuestion`), by its id alone. You reply with a normal message, and the next run reads it as your answer to the question.
 
 ## What you see
 
@@ -65,7 +65,8 @@ If your question is unclear (for example, "mutations" could mean SSM or CNV), th
 - **Answers** in Markdown, with tables and math.
 - **Reasoning**, when the model shares it: open while it thinks, then folded under "Thought for Xs". A click opens or closes it.
 - **Steps**: before each tool call the agent writes one short reason. It shows in smaller grey text, above the tool panels it explains.
-- **The final answer** shows in a card, with a Copy button under it once it has finished. With the new agent, the model's last step is a `final_result` call holding one sentence, which the agent checks and may send back for a rewrite; the agent then builds the answer from the tool results and sends it as a text message. `toChatMessage` hides `final_result`, so only that message shows. Its first line, the one sentence in bold, shows in navy. Copy puts the answer's Markdown on the clipboard, with download links made absolute so they still work when pasted.
+- **The final answer** shows in a card, with a Copy button under it once it has finished. With the new agent, the model's last step is a `final_result` call holding one sentence, which the agent checks and may send back for a rewrite; the agent then builds the answer from the tool results and sends it as a text message. `toChatMessage` hides `final_result` (and `ask_user`, the agent's other way to end a turn), so only that message shows. Its first line, the one sentence in bold, shows in navy. Copy puts the answer's Markdown on the clipboard, with download links made absolute so they still work when pasted.
+- **A question from the agent** shows in its own card (`ui/messages/QuestionCard.tsx`): "NEEDS YOUR INPUT" over it, an orange line down its side where an answer's is navy, and no Copy button. Inside it is the agent's own Markdown: the question in bold, then any readings as a list. You type your reply.
 - **One panel per tool call**: the tool name, how long it took, and a status:
   - ✓: the tool returned a result (a tick, so only problems show a coloured pill)
   - Error: the tool failed, or it got bad arguments and the agent will retry. No card shows under it.
@@ -75,7 +76,7 @@ If your question is unclear (for example, "mutations" could mean SSM or CNV), th
   Click a panel to see its inputs (ARGUMENTS) and its output (RESULT, or ERROR), with JSON in colour. Calls to one tool that the agent makes together in one step share a row, such as "search_fields ×4"; its status is the worst of its calls ("1 error"), and it opens to its calls as numbered rows under it, each named by its arguments (`query: TCGA-CHOL`). Tools with a card are never grouped. pydantic-ai marks a failed call in a separate event after its result; `toChatMessage` in `core/utils.ts` reads it.
 
 - **Download links** in answers (a file manifest as TSV, a cohort filter as JSON, a survival curve as JSON or CSV). A link on its own line, as the new agent writes them, shows as a download button with the link's text; a link inside a sentence stays a link (`ui/messages/markdownParagraph.ts`). Clicking either saves the file and keeps you on the chat page. The agent keeps each file for about 3 hours after it was last used. After that the link fails, and you ask again.
-- **A survival card** under `get_survival_data`: the curve, the number of donors and the yearly survival estimates, joined to its tool call. Once the curve has expired, the card says so; ask again.
+- **A survival card** under `get_survival_data`: the curve, the number of donors and the yearly survival estimates, joined to its tool call. Once the curve has expired, the card says so; ask again. The card is titled with the cohort the agent names in the result, in short (`cohort_short`, so "Overall survival · TCGA-LUAD · female"). When the short form cut a long list ("project id: 7 values"), hovering the title shows the whole cohort. For a result from an older agent, which names none, it falls back to the curve's project (`readCohortLabel` in `ui/tools/survival/readResult.ts`).
 - **Downloads live in the answer.** The new agent links every file under the result it belongs to, so the cards don't repeat them. `CARD_DOWNLOADS` in `ui/tools/downloads.ts` switches that: `true` brings back a filter card under `create_filter` (Download JSON), a manifest card under `get_file_manifest` (Download TSV) and the survival card's Download JSON and CSV. Turn it on if the chat goes back to the old agent, whose answers carry links only when the model writes them. With it off, a run that ends without an answer (Stop, or an error) offers no download.
 - **A header** with the open chat's title, as "Chat / title". Its menu renames or deletes the chat. The model picker is commented out in `ui/ChatHeader.tsx` while the agent offers one model; the names in `core/models.ts` must match the agent's `model-config.yaml` exactly.
 - **A sidebar** with your chats, newest first, grouped into recent sessions (today), yesterday and earlier. You can search them by title, start a new chat, rename one, or delete one. You can't delete the chat that is running, and the other chats wait until it ends or you press Stop. A search always keeps the open chat in the list. On a computer, the arrow at its top folds it into a thin strip (new chat, search) and back; the browser remembers which. On a phone, the menu button opens it.
@@ -98,7 +99,7 @@ you press Stop
 
 ## What is saved
 
-Chats are saved **in your browser only** (IndexedDB), in a database called `gdc-chat`. Nothing is saved on a server, so a chat does not follow you to another browser or computer.
+Chats are saved **in your browser only** (IndexedDB), in a database called `gdc-chat`. No server keeps a lasting copy, so a chat does not follow you to another browser or computer. (The portal server does hold a short-lived one in memory: see [A second copy, on the portal server](#a-second-copy-on-the-portal-server).)
 
 | Table      | One row per chat | Holds                                                                           |
 | ---------- | ---------------- | ------------------------------------------------------------------------------- |
@@ -119,6 +120,26 @@ The title is your first question, until you rename it. A question longer than 80
 Why: the agent rebuilds its memory from the chat we send with every new question. A half-finished turn, such as a tool call with no result, can make the next question fail.
 
 Old chats from the previous agent (QAG) are still in your browser, in a database called `QAG-chat`. The app no longer reads it, and nothing deletes it.
+
+### A second copy, on the portal server
+
+To check later; left as is for now. Every run sends the whole chat: browser → `/chat-runtime` → agent `/agui`. The agent stores nothing. pydantic-ai rebuilds the conversation from the request each time, so the browser's copy is the one that counts. Along the way, though, the portal's CopilotKit runtime keeps a copy of its own:
+
+- **Where:** `CopilotRuntime` in `server/index.ts` sets no `runner`, so CopilotKit uses its default, `InMemoryAgentRunner`. It keeps a table in the Next.js process's memory, keyed by chat id. It is not a file or a database.
+- **Whose:** every user's. One portal server process serves everyone, so the table holds the chats of every user who ran something on it, not just yours.
+- **Limits:**
+  - At most 1,000 chats, 100 runs each, 512 MB in total. Past that it drops the least recently used chats, and a chat's oldest runs.
+  - Lost on a restart, and not shared between replicas.
+- **Two parts:** each chat's entry has a part that is live while an answer runs and a part that keeps finished runs.
+  - **The live part is used today:** whether an answer is running, the connection to the agent, and the events so far.
+    - **Stop** finds the run here to cancel it.
+    - **One run per chat:** a second run in a chat that is already running is refused. That is why Retry after a reload fails until the old run ends ([Known limits](#known-limits)).
+    - **It outlives your page:** a run keeps going on the server when the page goes away.
+  - **The finished runs are the redundant copy.** Only CopilotKit's `connect` reads them, to replay a chat to a browser that reconnects to the same chat id. `useChat` calls `connectAgent` on mount, but a fresh page load starts with a new chat id, and opening a saved chat changes the id without reconnecting. Probably nothing reads them today (not tested).
+- **Why keep it:** "resume an answer after a reload" in [Known limits](#known-limits) would go through `connect`, which replays the finished runs and then follows the live one.
+- **To drop the redundant part:** keep the runner, so Stop and the one-run-per-chat check still work, and stop it keeping finished runs. CopilotKit has no switch for that. `maxRunsPerThread: 1` would keep only the last run, and a small custom runner could keep none.
+
+Not a duplicate, but also kept by a server: the MCP server holds the case sets, filters and curves that tool results point to, for about 3 hours after last use. A follow-up in an older chat can hit an expired one, and the agent then has to build it again.
 
 ## Login and security
 

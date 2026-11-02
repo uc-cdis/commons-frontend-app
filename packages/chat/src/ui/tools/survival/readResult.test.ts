@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { readSurvivalSummary } from "./readResult";
+import { readCohortLabel, readSurvivalSummary } from "./readResult";
 
 // a real get_survival_data result, captured from the live agent
 const realResult = readFileSync(
@@ -41,5 +41,43 @@ describe("readSurvivalSummary", () => {
     ["donors that aren't a number", JSON.stringify({ overall_survival: [{ donors: "48" }] })],
   ])("returns null for a result with %s, rather than throwing", (_case, result) => {
     expect(readSurvivalSummary(result)).toBeNull();
+  });
+});
+
+describe("readCohortLabel", () => {
+  const withCohort = (cohort: unknown, cohortShort?: unknown) =>
+    JSON.stringify({ case_set_id: "cs_1", cohort, cohort_short: cohortShort });
+
+  it("joins the cohort, with no full form when nothing was cut", () => {
+    const result = withCohort(["TCGA-LUAD", "female"], ["TCGA-LUAD", "female"]);
+    expect(readCohortLabel(result)).toEqual({ short: "TCGA-LUAD · female" });
+  });
+
+  it("cuts a long clause short, and keeps the whole cohort", () => {
+    const projects = "TCGA-COAD or TCGA-READ or TCGA-STAD or TCGA-ESCA or TCGA-LIHC or TCGA-PAAD";
+    const result = withCohort([projects, "female"], ["project id: 6 values", "female"]);
+    expect(readCohortLabel(result)).toEqual({
+      short: "project id: 6 values · female",
+      full: `${projects} · female`,
+    });
+  });
+
+  it.each([
+    ["is missing", undefined],
+    ["has a different length", ["project id: 6 values"]],
+    ["holds something other than strings", [6, "female"]],
+  ])("falls back to the full cohort when the short one %s", (_case, cohortShort) => {
+    const result = withCohort(["TCGA-LUAD", "female"], cohortShort);
+    expect(readCohortLabel(result)).toEqual({ short: "TCGA-LUAD · female" });
+  });
+
+  it.each([
+    ["from before the agent named cohorts", realResult],
+    ["whose case set the agent couldn't trace", withCohort(null, null)],
+    ["with an empty cohort", withCohort([], [])],
+    ["with a cohort that isn't strings", withCohort([1, 2])],
+    ["that isn't JSON", "Error: GDC API timed out"],
+  ])("returns null for a result %s", (_case, result) => {
+    expect(readCohortLabel(result)).toBeNull();
   });
 });

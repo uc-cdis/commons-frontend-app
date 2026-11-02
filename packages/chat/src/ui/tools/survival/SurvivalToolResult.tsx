@@ -7,7 +7,7 @@ import { DownloadButton } from "../DownloadButton";
 import { CARD_DOWNLOADS, findDownload } from "../downloads";
 import { useDownload } from "../useDownload";
 import type { DownloadFailure } from "../loadDownload";
-import { readSurvivalSummary, type SurvivalSummary } from "./readResult";
+import { readCohortLabel, readSurvivalSummary, type SurvivalSummary } from "./readResult";
 import { parseSurvivalResult, projectLabel, type SurvivalData } from "./parse";
 import { MINIMUM_CASES, SurvivalPlot } from "./SurvivalPlot";
 
@@ -82,6 +82,7 @@ function Card({ children }: { children: ReactNode }) {
 
 function SurvivalToolResultImpl({ result }: ToolRendererProps) {
   const summary = useMemo(() => (result ? readSurvivalSummary(result) : null), [result]);
+  const cohort = useMemo(() => (result ? readCohortLabel(result) : null), [result]);
   // the curve's own link, as the agent wrote it; only links the portal serves come back
   const curveLink = useMemo(() => findDownload(result, "survival"), [result]);
   // Unconditional: a null url just idles the hook.
@@ -106,7 +107,8 @@ function SurvivalToolResultImpl({ result }: ToolRendererProps) {
     );
   }
 
-  const project = parsed?.ok ? projectLabel(parsed.data.curves) : null;
+  // no cohort (an older agent, or a set it couldn't trace): the curve's projects
+  const label = cohort?.short ?? (parsed?.ok ? projectLabel(parsed.data.curves) : null);
   const failure = loaded && !loaded.ok ? loaded.reason : null;
   // an expired handle or an ended login would only make the buttons fail too
   const canDownload = CARD_DOWNLOADS && curveLink && failure !== "expired" && failure !== "login";
@@ -114,9 +116,11 @@ function SurvivalToolResultImpl({ result }: ToolRendererProps) {
   return (
     <Card>
       <Stack gap="sm">
-        <Text fw={700} c="var(--chat-title)">
-          Overall survival{project ? ` · ${project}` : ""}
-        </Text>
+        <Tooltip label={cohort?.full} disabled={!cohort?.full} multiline maw={480}>
+          <Text fw={700} c="var(--chat-title)" w="fit-content">
+            Overall survival{label ? ` · ${label}` : ""}
+          </Text>
+        </Tooltip>
 
         {curveLink && !loaded && <Skeleton height={HEIGHT} radius="sm" />}
         {failure && (
