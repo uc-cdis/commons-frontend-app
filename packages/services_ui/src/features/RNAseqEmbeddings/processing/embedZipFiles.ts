@@ -3,7 +3,7 @@ import type { HttpMethod } from '@gen3/core';
 import {fetchJSONDataFromURL } from '@gen3/core';
 import { EMBEDDING_MAX_WORKERS } from '../../../core/constants';
 import { isOsMetadata } from '../isOsMetadata';
-import { debugError, debugLog } from '../../../utils/debugLog';
+import { debugError, debugLog, previewJson } from '../../../utils/debugLog';
 
 const EMBEDDING_MODEL_ENDPOINT = '/api/inference'
 
@@ -19,7 +19,7 @@ interface EmbedContext {
 
 const embed = async (tsv: string, fileName: string, signal: AbortSignal): Promise<Record<string, any>> => {
    const url = EMBEDDING_MODEL_ENDPOINT;
-   const resp = await fetchJSONDataFromURL<Record<string, any>>(url, false, 'POST' as HttpMethod, JSON.stringify({ tsv: tsv, sample_id: fileName }), signal);
+   const resp = await fetchJSONDataFromURL<Record<string, any>>(url, true, 'POST' as HttpMethod, JSON.stringify({ tsv: tsv, sample_id: fileName }), signal);
     if (!resp)
         throw new Error(`null response`);
     return resp;
@@ -67,10 +67,18 @@ export const embedZipFiles = async (
                 try {
                     result = await embed(tsv, fileName, signal);
                 } catch (error) {
-                    debugError('embedZipFiles', 'embedding failed', error, { index, fileName, ms: Date.now() - fileStarted });
+                    debugError('embedZipFiles', 'embedding failed', error, {
+                        index,
+                        fileName,
+                        ms: Date.now() - fileStarted,
+                        // fetchJSONDataFromURL parses the body of an error response as JSON, so a plain-text
+                        // error (e.g. "failed csrf check") surfaces as a SyntaxError instead of an HTTP status
+                        ...(error instanceof SyntaxError ? { hint: 'response was not JSON; likely a plain-text HTTP error' } : {}),
+                    });
                     throw error;
                 }
                 debugLog('embedZipFiles', 'file embedded', { index, fileName, keys: Object.keys(result ?? {}), ms: Date.now() - fileStarted });
+                debugLog('embedZipFiles', `response for ${fileName}:\n${previewJson(result)}`);
                 results[index] = { fileName, result };
                 completed += 1;
                 onProgress(5 + Math.floor((completed / entries.length) * 90), `Embedding (${completed} of ${entries.length})`);

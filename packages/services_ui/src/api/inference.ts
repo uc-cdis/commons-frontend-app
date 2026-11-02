@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { readFile } from 'fs/promises';
-import { debugError, debugLog } from "../utils/debugLog";
+import { debugError, debugLog, previewJson } from "../utils/debugLog";
 import { GEN3_INFERENCE_SERVICE } from "../core/constants";
 // import { Agent } from "undici";
 //
@@ -107,6 +107,7 @@ export default async function handler(
                 keys: Object.keys(body ?? {}),
                 ms: Date.now() - started,
             });
+            debugLog('api/inference', `response for ${sample_id}:\n${previewJson(body)}`);
             return res.status(200).json(body);
         } catch (e: unknown) {
             debugError('api/inference', 'inference request failed', e, {

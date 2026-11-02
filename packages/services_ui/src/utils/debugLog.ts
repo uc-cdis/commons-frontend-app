@@ -15,6 +15,29 @@ export const describeError = (error: unknown): Record<string, unknown> => {
     };
 };
 
+const MAX_PREVIEW_LINES = 25;
+const MAX_INLINE_ARRAY = 8;
+
+/**
+ * Pretty-printed JSON limited to the first 25 lines. Long arrays (embedding vectors) are collapsed to a
+ * one-line preview first, so they don't use up the whole budget.
+ */
+export const previewJson = (value: unknown, maxLines: number = MAX_PREVIEW_LINES): string => {
+    const text =
+        JSON.stringify(
+            value,
+            (_key, v) =>
+                Array.isArray(v) && v.length > MAX_INLINE_ARRAY
+                    ? `[${v.length} items: ${v.slice(0, 3).map((x) => JSON.stringify(x)).join(', ')}, ...]`
+                    : v,
+            2,
+        ) ?? String(value);
+    const lines = text.split('\n');
+    return lines.length <= maxLines
+        ? text
+        : [...lines.slice(0, maxLines), `... (${lines.length - maxLines} more lines)`].join('\n');
+};
+
 export const debugLog = (scope: string, message: string, details?: Record<string, unknown>) =>
     console.log(`${PREFIX} ${new Date().toISOString()} ${scope}: ${message}`, ...(details ? [details] : []));
 

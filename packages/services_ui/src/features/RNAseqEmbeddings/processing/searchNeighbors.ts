@@ -3,7 +3,7 @@ import { fetchJSONDataFromURL } from '@gen3/core';
 import { EMBEDDING_MAX_WORKERS, GEN3_EMBEDDINGS_SERVICE } from '../../../core/constants';
 import { mapConcurrent } from './mapConcurrent';
 import { TOP_K } from './nearestNeighbors';
-import { debugError, debugLog } from '../../../utils/debugLog';
+import { debugError, debugLog, previewJson } from '../../../utils/debugLog';
 
 const COLLECTION = 'expr';
 const SEARCH_ENDPOINT = `${GEN3_EMBEDDINGS_SERVICE}/${COLLECTION}/search`;
@@ -41,6 +41,7 @@ export const searchEmbeddings = async (
             topSimilarity: resp.embeddings?.[0]?.value,
             ms: Date.now() - started,
         });
+        debugLog('searchEmbeddings', `response:\n${previewJson(resp)}`);
         return resp.embeddings.map((hit) => ({ similarity: hit.value, ...hit.embedding.info.metadata }));
     } catch (error) {
         // HTTPError from @gen3/core carries the status and the response body
