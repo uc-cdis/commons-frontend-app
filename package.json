@@ -12,14 +12,14 @@
   "scripts": {
     "dev": "npm run dev:app",
     "dev:app": "npm run dev -w @gen3/commons-portal-app-base",
-    "build": "npm run build -w @gen3/chat && npm run build -w @gen3/commons-portal-app-base",
+    "build": "npm run build -w @gen3/chat && npm run build -w @gen3/services_ui && npm run build -w @gen3/commons-portal-app-base",
     "lint": "oxlint .",
-    "typecheck": "npm run typecheck -w @gen3/chat && tsc --noEmit -p apps/commons",
+    "typecheck": "npm run typecheck -w @gen3/chat && npm run typecheck -w @gen3/services_ui && tsc --noEmit -p apps/commons",
     "test": "npm run test -w @gen3/chat && npm run test -w @gen3/commons-portal-app-base",
     "lint-fix": "oxlint --fix .",
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",
-    "build:turbopack": "npm run build -w @gen3/chat && npm run build:turbopack -w @gen3/commons-portal-app-base",
+    "build:turbopack": "npm run build -w @gen3/chat && npm run build -w @gen3/services_ui && npm run build:turbopack -w @gen3/commons-portal-app-base",
     "dev:webpack": "npm run dev:app:webpack",
     "dev:app:webpack": "npm run dev:webpack -w @gen3/commons-portal-app-base",
     "storybook": "npm run storybook -w @gen3/commons-portal-app-base"
