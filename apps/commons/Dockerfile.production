@@ -2,7 +2,7 @@
 # docker run -p 3000:3000 -it gen3:gac
 # Build from the repo root, not this folder: npm workspaces need the root lockfile
 # Dependency stage
-FROM --platform=$BUILDPLATFORM node:24.18.1-alpine3.23 AS deps
+FROM --platform=$BUILDPLATFORM node:24.22.1-alpine3.23 AS deps
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
@@ -14,6 +14,7 @@ WORKDIR /gen3
 COPY package.json package-lock.json ./
 COPY apps/commons/package.json ./apps/commons/
 COPY packages/chat/package.json ./packages/chat/
+COPY packages/services_ui/package.json ./packages/services_ui/
 
 # Install ALL dependencies once (including dev deps for build)
 RUN npm config set fetch-retries 5 && \
@@ -64,19 +65,22 @@ COPY apps/commons/.env.production ./apps/commons/
 # Copy source files
 COPY packages/chat/tsconfig.build.json ./packages/chat/
 COPY packages/chat/src ./packages/chat/src
+COPY packages/services_ui/tsconfig.build.json ./packages/services_ui/
+COPY packages/services_ui/src ./packages/services_ui/src
 COPY apps/commons/src ./apps/commons/src
 COPY apps/commons/public ./apps/commons/public
 COPY apps/commons/config ./apps/commons/config
 COPY apps/commons/start.sh ./apps/commons/
 
-# The app imports @gen3/chat from dist/, so build it first
+# The app imports @gen3/chat and @gen3/services_ui from dist/, so build them first
 RUN npm run build -w @gen3/chat
+RUN npm run build -w @gen3/services_ui
 
 # Build
 RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build -w @gen3/commons-portal-app-base
 
 # Production stage
-FROM node:24.18.1-alpine3.23 AS runner
+FROM node:24.22.1-alpine3.23 AS runner
 
 WORKDIR /gen3
 
