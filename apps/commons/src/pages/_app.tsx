@@ -26,9 +26,9 @@ import "../styles/globals.css";
 import "@gen3/chat/styles.css";
 import "@fontsource/montserrat";
 import "@fontsource/source-sans-pro/index.css";
-import "@fontsource/poppins";
-import "@fontsource/poppins/600.css";
-import "@fontsource/poppins/700.css";
+import "@fontsource/arimo";
+import "@fontsource/arimo/600.css";
+import "@fontsource/arimo/700.css";
 
 import drsHostnames from "../../config/drsHostnames.json";
 import { loadContent } from "@/lib/content/loadContent";
@@ -156,9 +156,9 @@ Gen3App.getInitialProps = async (context: AppContext): Promise<Gen3AppProps & Ap
     ],
     colors: {},
     fonts: {
-      heading: ["Poppins", "sans-serif"],
-      content: ["Poppins", "sans-serif"],
-      fontFamily: "Poppins",
+      heading: ["Arimo", "sans-serif"],
+      content: ["Arimo", "sans-serif"],
+      fontFamily: "Arimo",
     },
     modalsConfig: {},
     sessionConfig: {},
