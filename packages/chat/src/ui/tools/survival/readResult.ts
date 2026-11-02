@@ -30,3 +30,28 @@ export function readSurvivalSummary(result: string): SurvivalSummary | null {
   estimates.sort((a, b) => a.years - b.years);
   return { donors: first.donors, estimates };
 }
+
+const isStringList = (v: unknown): v is string[] =>
+  Array.isArray(v) && v.every((s) => typeof s === "string");
+
+export interface CohortLabel {
+  /** for the title, `TCGA-LUAD · female` */
+  short: string;
+  /** the whole cohort, only when `short` cut something */
+  full?: string;
+}
+
+/**
+ * The curve's cohort: `cohort_short`, or `cohort` when the two don't line up (as `_headings` in
+ * gdc-mcp-demo agent/answer.py does). Null when the agent sent none.
+ */
+export function readCohortLabel(result: string): CohortLabel | null {
+  const parsed = parseJson(result);
+  if (!isRecord(parsed)) return null;
+  const { cohort, cohort_short: cohortShort } = parsed;
+  if (!isStringList(cohort) || cohort.length === 0) return null;
+  const full = cohort.join(" · ");
+  const linedUp = isStringList(cohortShort) && cohortShort.length === cohort.length;
+  const short = linedUp ? cohortShort.join(" · ") : full;
+  return short === full ? { short } : { short, full };
+}

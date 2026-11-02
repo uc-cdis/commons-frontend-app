@@ -117,9 +117,58 @@ describe("toChatMessage", () => {
     ]);
   });
 
+  const askUser = {
+    id: "t8",
+    type: "function" as const,
+    function: {
+      name: "ask_user",
+      arguments: '{"question": "SSMs, CNVs, or both?", "options": ["SSMs", "CNVs", "Both"]}',
+    },
+  };
+
+  it("drops a message that only holds the agent's ask_user call", () => {
+    expect(
+      toChatMessage({ id: "a1", role: "assistant", content: "", toolCalls: [askUser] }),
+    ).toEqual([]);
+  });
+
+  it("keeps the other tool calls beside ask_user", () => {
+    const message: Message = {
+      id: "a1",
+      role: "assistant",
+      content: "",
+      toolCalls: [
+        { id: "t1", type: "function", function: { name: "search_fields", arguments: "{}" } },
+        askUser,
+      ],
+    };
+    expect(toChatMessage(message)).toEqual([
+      {
+        id: "a1",
+        role: "assistant",
+        content: "",
+        toolCalls: [{ id: "t1", name: "search_fields", args: {} }],
+      },
+    ]);
+  });
+
   it("drops empty user and assistant messages", () => {
     expect(toChatMessage({ id: "u1", role: "user", content: "" })).toEqual([]);
     expect(toChatMessage({ id: "a1", role: "assistant", content: "" })).toEqual([]);
+  });
+
+  it("marks the message a run that asks ends with as a question", () => {
+    const content = "**SSMs, CNVs, or both?**\n\n- SSMs\n- CNVs\n- Both";
+    expect(toChatMessage({ id: "gdc-question-1", role: "assistant", content })).toEqual([
+      { id: "gdc-question-1", role: "assistant", content, toolCalls: [], isQuestion: true },
+    ]);
+  });
+
+  it("leaves the answer, and any other text, unmarked", () => {
+    for (const id of ["gdc-answer-1", "a1"]) {
+      const [shown] = toChatMessage({ id, role: "assistant", content: "**51 cases.**" });
+      expect(shown).not.toHaveProperty("isQuestion");
+    }
   });
 });
 
