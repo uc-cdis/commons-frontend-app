@@ -99,7 +99,7 @@ you press Stop
 
 ## What is saved
 
-Chats are saved **in your browser only** (IndexedDB), in a database called `gdc-chat`. Nothing is saved on a server, so a chat does not follow you to another browser or computer.
+Chats are saved **in your browser only** (IndexedDB), in a database called `gdc-chat`. No server keeps a lasting copy, so a chat does not follow you to another browser or computer. (The portal server does hold a short-lived one in memory: see [A second copy, on the portal server](#a-second-copy-on-the-portal-server).)
 
 | Table      | One row per chat | Holds                                                                           |
 | ---------- | ---------------- | ------------------------------------------------------------------------------- |
@@ -120,6 +120,26 @@ The title is your first question, until you rename it. A question longer than 80
 Why: the agent rebuilds its memory from the chat we send with every new question. A half-finished turn, such as a tool call with no result, can make the next question fail.
 
 Old chats from the previous agent (QAG) are still in your browser, in a database called `QAG-chat`. The app no longer reads it, and nothing deletes it.
+
+### A second copy, on the portal server
+
+To check later; left as is for now. Every run sends the whole chat: browser → `/chat-runtime` → agent `/agui`. The agent stores nothing. pydantic-ai rebuilds the conversation from the request each time, so the browser's copy is the one that counts. Along the way, though, the portal's CopilotKit runtime keeps a copy of its own:
+
+- **Where:** `CopilotRuntime` in `server/index.ts` sets no `runner`, so CopilotKit uses its default, `InMemoryAgentRunner`. It keeps a table in the Next.js process's memory, keyed by chat id. It is not a file or a database.
+- **Whose:** every user's. One portal server process serves everyone, so the table holds the chats of every user who ran something on it, not just yours.
+- **Limits:**
+  - At most 1,000 chats, 100 runs each, 512 MB in total. Past that it drops the least recently used chats, and a chat's oldest runs.
+  - Lost on a restart, and not shared between replicas.
+- **Two parts:** each chat's entry has a part that is live while an answer runs and a part that keeps finished runs.
+  - **The live part is used today:** whether an answer is running, the connection to the agent, and the events so far.
+    - **Stop** finds the run here to cancel it.
+    - **One run per chat:** a second run in a chat that is already running is refused. That is why Retry after a reload fails until the old run ends ([Known limits](#known-limits)).
+    - **It outlives your page:** a run keeps going on the server when the page goes away.
+  - **The finished runs are the redundant copy.** Only CopilotKit's `connect` reads them, to replay a chat to a browser that reconnects to the same chat id. `useChat` calls `connectAgent` on mount, but a fresh page load starts with a new chat id, and opening a saved chat changes the id without reconnecting. Probably nothing reads them today (not tested).
+- **Why keep it:** "resume an answer after a reload" in [Known limits](#known-limits) would go through `connect`, which replays the finished runs and then follows the live one.
+- **To drop the redundant part:** keep the runner, so Stop and the one-run-per-chat check still work, and stop it keeping finished runs. CopilotKit has no switch for that. `maxRunsPerThread: 1` would keep only the last run, and a small custom runner could keep none.
+
+Not a duplicate, but also kept by a server: the MCP server holds the case sets, filters and curves that tool results point to, for about 3 hours after last use. A follow-up in an older chat can hit an expired one, and the agent then has to build it again.
 
 ## Login and security
 
