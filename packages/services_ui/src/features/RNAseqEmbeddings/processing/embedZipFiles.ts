@@ -19,7 +19,7 @@ interface EmbedContext {
 
 const embed = async (tsv: string, fileName: string, signal: AbortSignal): Promise<Record<string, any>> => {
    const url = EMBEDDING_MODEL_PROXY_ENDPOINT;
-   const resp = await fetchJSONDataFromURL<Record<string, any>>(url, false, 'POST' as HttpMethod, JSON.stringify({ tsv: tsv, sample_id: fileName }), signal);
+   const resp = await fetchJSONDataFromURL<Record<string, any>>(url, true, 'POST' as HttpMethod, JSON.stringify({ tsv: tsv, sample_id: fileName }), signal);
     if (!resp)
         throw new Error(`null response`);
     return resp;

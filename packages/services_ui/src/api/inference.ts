@@ -81,7 +81,6 @@ export default async function handler(
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
-                    Connection: "close",
                 },
                 body: JSON.stringify({ tsv, sample_id }),
             });
