@@ -3,6 +3,7 @@ import { GEN3_COMMONS_NAME } from '@gen3/core';
 import type { TenStringArray } from '@gen3/frontend';
 import { createMantineTheme } from '@gen3/frontend';
 
+// @ts-ignore
 const allThemeColors = import.meta.glob(
   '../config/*/themeColors.json',
   { eager: true, import: 'default' },

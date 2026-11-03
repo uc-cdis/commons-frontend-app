@@ -53,7 +53,7 @@ const ModelCard = ({
   ];
 
   return (
-    <div className="flex flex-col items-start gap-2 bg-base-max border border-solid border-base-light px-4 py-[11px] text-base-contrast">
+    <div className="flex flex-col items-start gap-2 bg-base-max border border-solid border-base px-4 py-[11px] text-base-contrast">
       <div className="flex flex-col justify-center w-full">
         <div className="flex items-start gap-1">
           <Icon
