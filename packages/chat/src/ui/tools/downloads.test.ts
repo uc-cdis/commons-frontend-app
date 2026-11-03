@@ -36,7 +36,6 @@ describe("findDownload", () => {
 
   it.each([
     ["on another website", "https://example.com/download/filter/flt_1"],
-    ["of a kind the portal doesn't serve", "/download/case-set/cs_1"],
     ["of another kind than its field", "/download/manifest/fs_1"],
     ["with a handle the portal wouldn't accept", "/download/filter/../secret"],
   ])("refuses a link %s, so a result can't point the browser elsewhere", (_case, url) => {

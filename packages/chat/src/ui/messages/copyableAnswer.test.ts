@@ -15,7 +15,7 @@ describe("copyableAnswer", () => {
   it.each([
     ["an external link", "[GDC](https://portal.gdc.cancer.gov/projects/TCGA-CHOL)"],
     ["a footnote", "see [1](#user-content-fn-1)"],
-    ["a /download link the portal wouldn't serve", "[x](/download/case-set/cs_1)"],
+    ["a /download link the portal wouldn't serve", "[x](/download/manifest/../secret)"],
     ["text that only mentions a path", "files are under /download/manifest/fs_1 for 3 hours"],
   ])("leaves %s as it is", (_case, markdown) => {
     expect(copyableAnswer(markdown, ORIGIN)).toBe(markdown);
