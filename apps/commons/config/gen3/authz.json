@@ -21,6 +21,9 @@
     "/RNASequenceEmbeddings": {
       "loginRequired": true
     },
+    "/Analysis": {
+      "loginRequired": true
+    },
     "*": {
       "loginRequired": false
     }
