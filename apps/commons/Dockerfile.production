@@ -112,7 +112,8 @@ RUN mkdir -p $APP/.next/cache/images && \
     rm -rf $APP/config && \
     ln -s "$(pwd)/config" $APP/config && \
     ln -s "$(pwd)/public" $APP/public && \
-    ln -s "$(pwd)/jupyter-workspaces" $APP/jupyter-workspaces
+    ln -s "$(pwd)/jupyter-workspaces" $APP/jupyter-workspaces && \
+    ln -s "$(pwd)/jupyter-workspaces/assets/free" "$(pwd)/public/jupyter"
 
 USER nextjs:nextjs
 

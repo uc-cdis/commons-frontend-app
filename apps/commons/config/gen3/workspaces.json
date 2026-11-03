@@ -11,25 +11,16 @@
         "label": "Local Browser Environment",
         "description": "Running via JupyterLite"
       }
-    },
-    "remote": {
-      "label": "Remote Kernel Runtime",
-      "tier": "remote",
-      "tierLabel": "remote",
-      "description": " Attach to remote compute for longer sessions and larger workloads.",
-      "features": ["Persistent sessions and gateway routing", "Designed for heavier workloads"],
-      "buttonLabel": "Launch Remote Workspace",
-      "baseColor": "#42f5d422",
-      "runningLabel": {
-        "label": "Remote Compute Environment",
-        "description": "Running via Remote Kernels"
-      }
     }
   },
   "tierConfiguration": {
     "free": {
       "dataAndTools": {
+        "enabled": false,
         "width": 340
+      },
+      "settings": {
+        "enabled": false
       },
       "toolbar": {
         "tierLabel": "lite"
