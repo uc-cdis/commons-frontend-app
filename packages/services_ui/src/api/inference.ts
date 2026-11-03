@@ -8,6 +8,14 @@ const MOCKED_DATA_DIR = './data/inference_response';
 const GEN3_INFERENCE_SERVICE =
     process.env.GEN3_INFERENCE_SERVICE || 'http://conduit-server.default.svc.cluster.local:8080';
 
+/**
+ * The Gen3 session token from the request cookies. `access_token` is httpOnly, so only the server can read it.
+ * In development, "credentials login" stores it in `credentials_token` instead.
+ */
+const getAccessToken = (req: NextApiRequest): string | undefined =>
+    req.cookies.access_token ||
+    (process.env.NODE_ENV === 'development' ? req.cookies.credentials_token : undefined);
+
 const USE_MOCK = process.env.GEN3_MOCK_INFERENCE_SERVICE || false;
 
 export default async function handler(
@@ -60,11 +68,21 @@ export default async function handler(
             debugLog('api/inference', 'no inference service URL configured');
             return res.status(500).json({ message: 'Inference service is not configured' });
         }
+        const accessToken = getAccessToken(req);
+        if (!accessToken) {
+            debugLog('api/inference', 'rejected: no access token cookie', { sample_id });
+            return res.status(401).json({ message: 'Not logged in' });
+        }
         try {
-            debugLog('api/inference', 'calling inference service', { url: inferenceApi, sample_id });
+            // the token itself is never logged
+            debugLog('api/inference', 'calling inference service', { url: inferenceApi, sample_id, hasAccessToken: true });
             const response = await fetch(inferenceApi, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', Connection: "close" },
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                    Connection: "close",
+                },
                 body: JSON.stringify({ tsv, sample_id }),
             });
 
