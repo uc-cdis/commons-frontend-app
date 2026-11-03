@@ -49,6 +49,10 @@ RUN LITE_DIR=node_modules/@gen3/workspaces/dist/jupyterlite-builds/remote-privat
       curl -fsSL "$URL" | tar -xj -C "$WASM_ENV"; \
     done
 
+# Sample notebooks for the free tier. jupyter-lite build picks up <lite-dir>/files as
+# contents and generates the contents index, so they show in the file browser
+COPY apps/commons/data/free_files node_modules/@gen3/workspaces/dist/jupyterlite-builds/free-private/files
+
 # Build JupyterLite static assets
 # Run from apps/commons so builds/ and jupyter-workspaces/ both end up there
 RUN cd apps/commons && npm run build:jupyterlite
