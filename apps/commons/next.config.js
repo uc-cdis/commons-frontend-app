@@ -129,6 +129,11 @@ const nextConfig = {
         source: "/chat-runtime",
         destination: "/api/chat-runtime",
       },
+      // same reason: the RNA-seq embeddings proxy (src/pages/api/inference.ts)
+      {
+        source: "/inference-runtime",
+        destination: "/api/inference",
+      },
       // the agent writes its download links as /download/<kind>/<handle>; serve them here.
       // known limits (see packages/chat/README.md): BASE_PATH or an agent --root-path breaks this
       {
