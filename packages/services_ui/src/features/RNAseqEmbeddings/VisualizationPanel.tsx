@@ -8,6 +8,8 @@ import {useProcessing} from "./core/ProcessingContext";
 import { metadataFieldLabel } from "./utils";
 import { filterPlotData, getFilterableFields } from "./processing/filterPlotData";
 
+const showFilters = false;
+
 const VisPanel = () => {
 
   const { plotData, metadataFilter, setMetadataFilter, neighbors } = useVisualization();
@@ -31,7 +33,7 @@ const VisPanel = () => {
       {isProcessingError && (
         <Text c="red">Processing failed. See the console for details.</Text>
       )}
-      {plotData && (
+      {plotData && showFilters && (
         <Group align="flex-end" className="border-1 border-base-light p-2">
           <Select
             label="Filter by"
