@@ -8,29 +8,27 @@
       "icon": "data-disabled:opacity-50"
     },
     "logo": {
-      "src": "/icons/GAC-Text-RGB.svg",
-      "width": 120,
-      "height": 80,
+      "src": "/icons/gic-logo.svg",
+      "width": 218,
+      "height": 57,
       "href": "/"
     },
     "items": [
       {
-        "icon": "gen3:dictionary",
-        "href": "/DataDictionary",
-        "name": "Dictionary",
-        "tooltip": "The Data Dictionary serves to inform the data model and is updated as new data is ingested."
+        "icon": "gen3:icon-mis",
+        "href": "/Models",
+        "name": "Models"
       },
       {
-        "icon": "gen3:aisearch",
+        "icon": "gen3:eos-icons-genomic",
         "href": "/Chat",
         "name": "Genomics Explorer",
         "tooltip": "Ask questions about harmonized GDC data: cohorts, mutations, gene expression, survival and files."
       },
       {
-        "icon": "gen3:workspace",
-        "href": "/Workspace",
-        "name": "Workspace",
-        "tooltip": "Gen3 workspaces are secure data analysis environments in the cloud that can access data from one or more data resources."
+        "icon": "gen3:apps",
+        "href": "/resource-browser",
+        "name": "Apps"
       },
       {
         "icon": "gen3:profile",

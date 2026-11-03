@@ -11,9 +11,11 @@ import icons from "./loadIcons";
 import "../src/styles/globals.css";
 import "@fontsource/montserrat";
 // source-sans-pro is frozen at a fontsource build that ships no `types`/`exports`,
-// unlike montserrat/poppins — import the stylesheet directly so it type-resolves.
+// unlike montserrat/arimo — import the stylesheet directly so it type-resolves.
 import "@fontsource/source-sans-pro/index.css";
-import "@fontsource/poppins";
+import "@fontsource/arimo";
+import "@fontsource/arimo/600.css";
+import "@fontsource/arimo/700.css";
 /*
  * Initializes MSW
  * See https://github.com/mswjs/msw-storybook-addon#configuring-msw
