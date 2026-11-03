@@ -25,6 +25,26 @@ describe("readParagraph", () => {
     });
   });
 
+  it("makes a case list a small link, so the main files' buttons stand out", () => {
+    const node = p([
+      link("/download/case-set/cs_x?format=txt", "Download the 470 cohort cases (TXT)"),
+    ]);
+    expect(readParagraph(node)).toEqual({
+      kind: "download-link",
+      href: "/download/case-set/cs_x?format=txt",
+      label: "Download the 470 cohort cases (TXT)",
+    });
+  });
+
+  it.each(["filter/flt_x", "survival/cs_x?format=csv", "manifest/fs_x", "a-kind-added-later/x_1"])(
+    "keeps /download/%s a button",
+    (path) => {
+      expect(readParagraph(p([link(`/download/${path}`, "Download")]))).toMatchObject({
+        kind: "download",
+      });
+    },
+  );
+
   it("reads the label through nested formatting and ignores blank text around the link", () => {
     const node = p([
       text("\n"),
