@@ -8,20 +8,20 @@
       "icon": "data-disabled:opacity-50"
     },
     "logo": {
-      "src": "/icons/GAC-Text-RGB.svg",
-      "width": 120,
-      "height": 80,
+      "src": "/icons/gic-logo.svg",
+      "width": 218,
+      "height": 57,
       "href": "/"
     },
     "items": [
       {
-        "icon": "gen3:ai-models",
+        "icon": "gen3:icon-mis",
         "href": "/Models",
         "name": "Model Repository",
         "tooltip": "Explore the models repository."
       },
       {
-        "icon": "gen3:aisearch",
+        "icon": "gen3:eos-icons-genomic",
         "href": "/Chat",
         "name": "Genomics Explorer",
         "tooltip": "Ask questions about harmonized GDC data: cohorts, mutations, gene expression, survival and files."
