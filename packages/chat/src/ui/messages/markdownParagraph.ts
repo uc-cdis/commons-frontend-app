@@ -1,4 +1,4 @@
-import { isAgentDownloadLink } from "../../core/downloadLinks";
+import { agentDownloadKind } from "../../core/downloadLinks";
 
 // the parts of a hast node (what react-markdown hands its components) read here
 export interface MarkdownNode {
@@ -11,7 +11,7 @@ export interface MarkdownNode {
 }
 
 export type Paragraph =
-  | { kind: "download"; href: string; label: string }
+  | { kind: "download" | "download-link"; href: string; label: string }
   | { kind: "headline" }
   | { kind: "text" };
 
@@ -26,8 +26,12 @@ export function readParagraph(node: MarkdownNode | undefined): Paragraph {
   if (!only || rest.length > 0 || only.type !== "element") return { kind: "text" };
 
   const href = only.properties?.href;
-  if (only.tagName === "a" && typeof href === "string" && isAgentDownloadLink(href))
-    return { kind: "download", href, label: textOf(only).trim() };
+  if (only.tagName === "a" && typeof href === "string") {
+    const file = agentDownloadKind(href);
+    const label = textOf(only).trim();
+    // one case list per count: links, so the main files' buttons still stand out
+    if (file) return { kind: file === "case-set" ? "download-link" : "download", href, label };
+  }
   if (only.tagName === "strong" && node?.position?.start.offset === 0) return { kind: "headline" };
   return { kind: "text" };
 }

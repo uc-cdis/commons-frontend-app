@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { Typography } from "@mantine/core";
+import { IconDownload } from "@tabler/icons-react";
 import { isAgentDownloadLink } from "../../core/downloadLinks";
 import { DownloadButton } from "../tools/DownloadButton";
 import { readParagraph } from "./markdownParagraph";
@@ -23,6 +24,15 @@ const components: Components = {
       return (
         <p {...props} className="chat-download-row">
           <DownloadButton href={paragraph.href} label={paragraph.label} />
+        </p>
+      );
+    if (paragraph.kind === "download-link")
+      return (
+        <p {...props} className="chat-download-link">
+          <a href={paragraph.href} download>
+            <IconDownload size={14} />
+            {paragraph.label}
+          </a>
         </p>
       );
     return (

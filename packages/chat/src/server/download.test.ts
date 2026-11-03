@@ -24,10 +24,10 @@ describe("fetchDownload", () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 
-  it("refuses with 404 when the link isn't one the agent serves", async () => {
+  it("refuses with 404 when the link could reach more than the agent's downloads", async () => {
     const fetch = agentReplying(tsv, { status: 200 });
     const res = await fetchDownload(
-      { kind: "manifest", handle: "fs_1", format: "csv" },
+      { kind: "manifest", handle: "../x" },
       { verifyToken: loggedIn, agentBaseUrl: AGENT, fetch },
     );
     expect(res.status).toBe(404);

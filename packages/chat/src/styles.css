@@ -104,6 +104,17 @@ div:has(> main > [data-chat-shell]) {
 .chat-markdown :not(.chat-download-row) > a {
   color: var(--chat-link);
 }
+/* -12px collapses with the 20px paragraph gap to 8px, so a count and its case lists read as
+   one group */
+.chat-markdown .chat-download-link {
+  margin-top: -12px;
+  font-size: var(--mantine-font-size-sm);
+}
+.chat-markdown .chat-download-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
 /* Poppins 700 is nearly twice as thick as its 400, and the answer's first line is a whole bold
    sentence; 600, which the portal loads, still reads as bold */
 .chat-markdown :is(strong, b, th) {
