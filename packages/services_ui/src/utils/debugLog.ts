@@ -38,11 +38,13 @@ export const previewJson = (value: unknown, maxLines: number = MAX_PREVIEW_LINES
         : [...lines.slice(0, maxLines), `... (${lines.length - maxLines} more lines)`].join('\n');
 };
 
-export const debugLog = (scope: string, message: string, details?: Record<string, unknown>) =>
-    console.log(`${PREFIX} ${new Date().toISOString()} ${scope}: ${message}`, ...(details ? [details] : []));
+// oxlint-disable-next-line no-unused-vars
+export const debugLog = (scope: string, message: string, details?: Record<string, unknown>) => null;
+   // console.log(`${PREFIX} ${new Date().toISOString()} ${scope}: ${message}`, ...(details ? [details] : []));
 
-export const debugError = (scope: string, message: string, error: unknown, details?: Record<string, unknown>) =>
-    console.error(`${PREFIX} ${new Date().toISOString()} ${scope}: ${message}`, {
-        ...details,
-        ...describeError(error),
-    });
+// oxlint-disable-next-line no-unused-vars
+export const debugError = (scope: string, message: string, error: unknown, details?: Record<string, unknown>) => null;
+    // console.error(`${PREFIX} ${new Date().toISOString()} ${scope}: ${message}`, {
+    //     ...details,
+    //     ...describeError(error),
+    // });

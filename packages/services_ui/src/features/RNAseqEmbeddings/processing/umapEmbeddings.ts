@@ -1,10 +1,8 @@
 import { UMAP } from "umap-js";
 import type { PlotPoint } from "../types";
-// ---- Types matching the API / mock JSON shape ----
-export interface EmbeddingRecord {
-  vector: number[];
-  info: { metadata: Record<string, any> };
-}
+import type { EmbeddingRecord} from "../core/types"
+import type { GroundEmbeddings } from "./extractAllEmbeddings";
+
 
 export interface EmbeddingResponse {
   available_embeddings_count?: number;
@@ -37,6 +35,24 @@ export async function loadUmapInputs(tcga: EmbeddingResponse, input: EmbeddingRe
   };
 }
 
+
+/**
+ * Same result as loadUmapInputs, built from GroundEmbeddings (typed-array vectors with parallel metadata)
+ * instead of API-shaped records. umap-js and cosine take plain number[] rows, so each vector is copied.
+ */
+export function groundToUmapInputs(tcga: GroundEmbeddings, input: GroundEmbeddings) {
+  const tcgaVectors = tcga.vectors.map((v) => Array.from(v));
+  const inputVectors = input.vectors.map((v) => Array.from(v));
+
+  return {
+    // equivalent of np.concatenate([X_tcga, X_input])
+    matrix: [...tcgaVectors, ...inputVectors],
+    nTcga: tcgaVectors.length,
+    tcgaMetadata: tcga.metadata,
+    inputMetadata: input.metadata,
+  };
+}
+
 // ---- Cosine distance + seeded RNG (see earlier answer) ----
 export function cosine(a: number[], b: number[]): number {
   let dot = 0, na = 0, nb = 0;
@@ -63,13 +79,27 @@ export interface UmapComparison {
   input: PlotPoint[];
 }
 
-// ---- Run UMAP and rebuild the "points" table from your Python code ----
 export async function runUmap(
   tcga: EmbeddingResponse,
   input: EmbeddingResponse,
   onProgress?: (epoch: number) => void
 ): Promise<UmapComparison> {
-  const { matrix, nTcga, tcgaMetadata, inputMetadata } = await loadUmapInputs(tcga, input);
+  return fitUmap(await loadUmapInputs(tcga, input), onProgress);
+}
+
+/** runUmap for GroundEmbeddings inputs. */
+export function runUmapGround(
+  tcga: GroundEmbeddings,
+  input: GroundEmbeddings,
+  onProgress?: (epoch: number) => void
+): Promise<UmapComparison> {
+  return fitUmap(groundToUmapInputs(tcga, input), onProgress);
+}
+
+async function fitUmap(
+  { matrix, nTcga, tcgaMetadata, inputMetadata }: ReturnType<typeof groundToUmapInputs>,
+  onProgress?: (epoch: number) => void
+): Promise<UmapComparison> {
 
   const umap = new UMAP({
     nComponents: 2,

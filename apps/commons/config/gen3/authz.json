@@ -24,6 +24,9 @@
     "/Analysis": {
       "loginRequired": true
     },
+    "/notebook/(.*)": {
+      "loginRequired": true
+    },
     "*": {
       "loginRequired": false
     }

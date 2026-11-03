@@ -59,7 +59,7 @@ const VisPanel = () => {
       {plotData && (
         <div className="relative flex-1 min-h-[1024px] w-full">
           <LoadingOverlay visible={isProcessing}  />
-          <UMAPComparisonPlot data={plotData} metadataFilter={metadataFilter} />
+          <UMAPComparisonPlot data={plotData} metadataFilter={metadataFilter} neighbors={neighbors} />
         </div>
       )}
       {neighbors && <NeighborsTable rows={neighbors} />}

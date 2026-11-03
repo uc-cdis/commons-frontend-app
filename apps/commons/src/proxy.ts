@@ -12,6 +12,7 @@ export const config = {
   "/Embeddings",
   "/RNASequenceEmbeddings",
   "/Analysis",
+  "/notebook/(.*)",
   "/Login"
 ],
 };

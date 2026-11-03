@@ -4,9 +4,8 @@ import { useGetEmbeddingsQuery} from '../../core/embeddingsApi'
 
 const EmbeddingsCatalog = () => {
 
+    // oxlint-disable-next-line no-unused-vars
     const { data, isFetching, isError  } = useGetEmbeddingsQuery();
-
-    console.log("EmbeddingsCatalog", data)
     return <EmbeddingsPanel />
 };
 
