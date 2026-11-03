@@ -77,7 +77,7 @@ ENV NODE_ENV=test
 RUN npm run build -w @gen3/chat
 
 # Build
-RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build -w @gen3/commons-portal-app-base
+RUN NODE_OPTIONS="--max-old-space-size=6144" npm run build -w @gen3/commons-portal-app-base
 
 # Production stage
 FROM node:24.22.1-alpine3.23 AS runner
