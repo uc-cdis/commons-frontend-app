@@ -22,6 +22,8 @@ export type ChatMessage =
       toolCalls?: ToolCall[];
       /** The agent asking instead of answering. */
       isQuestion?: boolean;
+      /** The agent's checked answer, which ends the run. */
+      isAnswer?: boolean;
     }
   | {
       id: string;

@@ -91,17 +91,34 @@ describe("toChatMessage", () => {
     function: { name: "final_result", arguments: '{"answer": "51 cases."}' },
   };
 
+  const askUser = {
+    id: "t8",
+    type: "function" as const,
+    function: {
+      name: "ask_user",
+      arguments: '{"question": "SSMs, CNVs, or both?", "options": ["SSMs", "CNVs", "Both"]}',
+    },
+  };
+
   it("drops a message that only holds the agent's final_result call", () => {
     expect(
       toChatMessage({ id: "a1", role: "assistant", content: "", toolCalls: [finalResult] }),
     ).toEqual([]);
   });
 
-  it("keeps the other tool calls beside final_result", () => {
+  it.each([
+    ["final_result", finalResult],
+    ["ask_user", askUser],
+  ])("drops the reason beside a lone %s call: what it ends with shows next", (_name, call) => {
+    const content = "I'll report the 1-year survival estimate.";
+    expect(toChatMessage({ id: "a1", role: "assistant", content, toolCalls: [call] })).toEqual([]);
+  });
+
+  it("keeps the other tool calls beside final_result, and their reason", () => {
     const message: Message = {
       id: "a1",
       role: "assistant",
-      content: "",
+      content: "Counting the cases.",
       toolCalls: [
         { id: "t1", type: "function", function: { name: "get_cases", arguments: "{}" } },
         finalResult,
@@ -111,20 +128,11 @@ describe("toChatMessage", () => {
       {
         id: "a1",
         role: "assistant",
-        content: "",
+        content: "Counting the cases.",
         toolCalls: [{ id: "t1", name: "get_cases", args: {} }],
       },
     ]);
   });
-
-  const askUser = {
-    id: "t8",
-    type: "function" as const,
-    function: {
-      name: "ask_user",
-      arguments: '{"question": "SSMs, CNVs, or both?", "options": ["SSMs", "CNVs", "Both"]}',
-    },
-  };
 
   it("drops a message that only holds the agent's ask_user call", () => {
     expect(
@@ -164,11 +172,14 @@ describe("toChatMessage", () => {
     ]);
   });
 
-  it("leaves the answer, and any other text, unmarked", () => {
-    for (const id of ["gdc-answer-1", "a1"]) {
-      const [shown] = toChatMessage({ id, role: "assistant", content: "**51 cases.**" });
-      expect(shown).not.toHaveProperty("isQuestion");
-    }
+  it("marks the run's answer, and leaves any other text unmarked", () => {
+    const content = "**51 cases.**";
+    expect(toChatMessage({ id: "gdc-answer-1", role: "assistant", content })).toEqual([
+      { id: "gdc-answer-1", role: "assistant", content, toolCalls: [], isAnswer: true },
+    ]);
+    const [other] = toChatMessage({ id: "a1", role: "assistant", content });
+    expect(other).not.toHaveProperty("isQuestion");
+    expect(other).not.toHaveProperty("isAnswer");
   });
 });
 

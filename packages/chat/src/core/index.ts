@@ -3,6 +3,7 @@ export type { ChatProviderProps } from "./ChatProvider";
 
 export { useChat } from "./useChat";
 export type { UseChatApi } from "./useChat";
+export type { ModelsFailure } from "./useChatModels";
 
 export type { ChatMessage, ChatRole, Timings, ToolCall, ToolResultMessage } from "./types";
 

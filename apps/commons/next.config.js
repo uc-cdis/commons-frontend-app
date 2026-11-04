@@ -134,6 +134,10 @@ const nextConfig = {
         source: "/inference-runtime",
         destination: "/api/inference",
       },
+      {
+        source: "/chat-models",
+        destination: "/api/chat-models",
+      },
       // the agent writes its download links as /download/<kind>/<handle>; serve them here.
       // known limits (see packages/chat/README.md): BASE_PATH or an agent --root-path breaks this
       {
