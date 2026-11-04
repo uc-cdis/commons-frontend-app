@@ -9,6 +9,22 @@ export function formatDuration(ms: number): string {
   return ms < 1000 ? `${Math.round(ms)}ms` : `${(ms / 1000).toFixed(1)}s`;
 }
 
+// a whole line in bold, which some models start each thinking summary with; bold inside a
+// sentence isn't a heading
+const HEADING_LINE = /^\*\*([^*\n]+)\*\*$/gm;
+// a full stop inside a name, as in cases.project.project_id, has no space after it
+const SENTENCE_BREAK = /[.!?]\s+/g;
+
+/** What the model is thinking about now: its latest heading if it writes them, else the sentence it's on. */
+export function currentThought(content: string): string | undefined {
+  const heading = [...content.matchAll(HEADING_LINE)].at(-1)?.[1].trim();
+  if (heading) return heading;
+  const line = content.trimEnd().split("\n").at(-1) ?? "";
+  let start = 0;
+  for (const match of line.matchAll(SENTENCE_BREAK)) start = match.index + match[0].length;
+  return line.slice(start).replaceAll("**", "").trim() || undefined;
+}
+
 export interface JsonToken {
   kind: "key" | "string" | "number" | "literal" | "punctuation";
   text: string;

@@ -43,8 +43,9 @@ export function AssistantMessage({
   if (message.isQuestion) return <QuestionCard content={message.content} />;
 
   const toolCalls = message.toolCalls ?? [];
-  // text that comes with tool calls is the agent's reason for them: a step, not the answer
-  const isStep = toolCalls.length > 0;
+  // text that comes with tool calls is the agent's reason for them: a step, not the answer.
+  // Still streaming, text alone may be a reason whose tool call hasn't arrived yet
+  const isStep = toolCalls.length > 0 || (isStreaming && !message.isAnswer);
 
   const resultOf = (tc: ToolCall) => toolResults.get(tc.id)?.content ?? null;
   const failedOf = (tc: ToolCall) => toolResults.get(tc.id)?.failed ?? false;
