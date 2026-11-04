@@ -28,7 +28,7 @@ export const searchEmbeddings = async (
     try {
         const resp = await fetchJSONDataFromURL<SearchResponse>(
             SEARCH_ENDPOINT,
-            false,
+            true,
             'POST' as HttpMethod,
             JSON.stringify({ input: Array.from(queryVector), top_k: topK, distance_metric: 'cosine_similarity' }),
             signal,

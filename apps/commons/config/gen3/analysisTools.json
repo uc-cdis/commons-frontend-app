@@ -4,11 +4,29 @@
       "title": "Embeddings Comparison",
       "type": "application",
       "icon": "/images/apps/icons/ai_spark.svg",
-      "image": "/images/apps/gdc_qag.png",
+      "image": "/images/apps/rna_seq_notebook.png",
       "description": "Map embeddings of raw gene expression files using the Gen3 Embedding Service's similarity search to find each sample's nearest neighbors across all TCGA cancer types.",
       "loginRequired": true,
       "href": "/RNASequenceEmbeddings",
-      "btnText": "Run"
+      "btnText": "Run Application"
+    },
+    {
+      "title": "Embedding-based Lung Cancer Classification",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.svg",
+      "image": "/images/apps/alt1_contour_network.png",
+      "description": "Explore two ways to use embeddings to classify non-small cell lung cancer (NSCLC) subtypes, specifically lung adenocarcinoma vs lung squamous cell carcinoma.",
+      "loginRequired": true,
+      "href": "/notebook/lung-cancer-classification.ipynb"
+    },
+    {
+      "title": "Multimodal Cancer Modeling in the Age of Foundation Model Embeddings",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.svg",
+      "image": "/images/apps/gdc_qag.png",
+      "description": "Investigate the ability to train classical machine learning models over multimodal, zero-shot FM embeddings of cancer data",
+      "loginRequired": true,
+      "href": "/notebook/tcga-cancer-survival.ipynb"
     }
   ]
 }

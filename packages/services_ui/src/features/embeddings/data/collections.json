@@ -1,0 +1,36 @@
+{
+"collections": [
+  {
+    "id": 67,
+    "collection_name": "expr",
+    "description": "TCGA RNAseq Expression data",
+    "dimensions": 256,
+    "vector_type": "vector",
+    "created_at": "2026-10-26T14:51:28.254541Z",
+    "updated_at": "2026-10-26T14:51:28.254541Z",
+    "self": "/vectorstore/collections/expr"
+  },
+  {
+    "id": 38,
+    "collection_name": "hist",
+    "description": "TCGA histology data",
+    "dimensions": 2560,
+    "vector_type": "halfvec",
+    "created_at": "2026-10-23T19:44:19.531800Z",
+    "updated_at": "2026-10-23T19:44:19.531800Z",
+    "self": "/vectorstore/collections/hist"
+  },
+  {
+    "id": 37,
+    "collection_name": "summ",
+    "description": "TCGA summary data",
+    "dimensions": 768,
+    "vector_type": "vector",
+    "created_at": "2026-10-23T15:38:39.275378Z",
+    "updated_at": "2026-10-23T15:38:39.275378Z",
+    "self": "/vectorstore/collections/summ"
+  }
+],
+"page": 1,
+"page_size": 100
+}

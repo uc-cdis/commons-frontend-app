@@ -24,15 +24,6 @@ export default async function handler(
 ) {
 
     const started = Date.now();
-    debugLog('api/inference', 'request received', {
-        method: req.method,
-        contentType: req.headers['content-type'],
-        bodyType: typeof req.body,
-        useMock: Boolean(USE_MOCK),
-        inferenceService: GEN3_INFERENCE_SERVICE,
-        nodeEnv: process.env.NODE_ENV,
-    });
-
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method not allowed' });
     }

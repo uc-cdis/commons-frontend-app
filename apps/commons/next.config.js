@@ -201,7 +201,7 @@ const nextConfig = {
         {
           source: "/ai/:path*",
           destination: `${GEN3_TARGET}/ai/:path*`,
-        },
+        }
       ];
     } else {
       return [...workspaceApiRewrite, ...chatRuntimeRewrite];

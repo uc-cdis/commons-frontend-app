@@ -16,6 +16,8 @@ interface ProcessingStates {
   [ProcessingStep.IDLE]: ProcessingState;
   [ProcessingStep.INFERENCE]: ProcessingState;
   [ProcessingStep.MAPPING]: ProcessingState;
+  [ProcessingStep.NEIGHBORHOOD]: ProcessingState;
+  [ProcessingStep.EXTRACT_ALL]: ProcessingState;
   [ProcessingStep.READY]: ProcessingState;
   [ProcessingStep.UNINITIALIZED]: ProcessingState;
 }
@@ -32,6 +34,14 @@ const PROCESSING_STATE_DESCRIPTIONS : ProcessingStates = {
   [ProcessingStep.MAPPING]: {
     name: 'Mapping',
     description: 'Mapping the embeddings to the original files.',
+  },
+  [ProcessingStep.NEIGHBORHOOD]: {
+    name: 'Nearest',
+    description: 'Using embedding to to find closest patients.',
+  },
+  [ProcessingStep.EXTRACT_ALL]: {
+    name: 'Connecting Input',
+    description: 'Connecting input to TCGA patients.',
   },
   [ProcessingStep.READY]: {
     name: 'Ready',

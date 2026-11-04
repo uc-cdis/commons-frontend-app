@@ -1,10 +1,12 @@
 import type { EmbeddingResult } from './embedZipFiles';
 import { embedZipFiles } from './embedZipFiles';
 import type { EmbeddingResponse, UmapComparison } from './umapEmbeddings';
-import { runUmap } from './umapEmbeddings';
+import { runUmap, runUmapGround } from './umapEmbeddings';
+import type { GroundEmbeddings } from './extractAllEmbeddings';
 import type { NeighborRow } from './nearestNeighbors';
 import { findNearestNeighbors, toNeighborRow } from './nearestNeighbors';
 import { searchAllEmbeddings } from './searchNeighbors';
+// only for mocking
 import tcga from '../data/full_tcga_embeddings.json';
 import input from '../data/full_input_embeddings.json';
 
@@ -24,6 +26,14 @@ export const runUmapStep = (onProgress: (percent: number) => void): Promise<Umap
     runUmap(tcga as unknown as EmbeddingResponse, input, (epoch) =>
         onProgress(Math.trunc((epoch / UMAP_PROGRESS_STEPS) * 100)),
     );
+
+/** Projects the downloaded TCGA (`ground`) and the input embeddings into 2D. `onProgress` receives 0 - 100. */
+export const runUmapGroundStep = (
+    ground: GroundEmbeddings,
+    input: GroundEmbeddings,
+    onProgress: (percent: number) => void,
+): Promise<UmapComparison> =>
+    runUmapGround(ground, input, (epoch) => onProgress(Math.trunc((epoch / UMAP_PROGRESS_STEPS) * 100)));
 
 /** Nearest TCGA neighbors of every input sample. */
 export const runNeighborsStep = (): NeighborRow[] =>
