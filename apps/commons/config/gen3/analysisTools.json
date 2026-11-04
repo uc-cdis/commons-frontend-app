@@ -15,7 +15,7 @@
       "type": "notebook",
       "icon": "/images/apps/icons/jupyter.svg",
       "image": "/images/apps/alt1_contour_network.png",
-      "description": "explore two ways to use embeddings to classify non-small cell lung cancer (NSCLC) subtypes, specifically lung adenocarcinoma vs lung squamous cell carcinoma.",
+      "description": "Explore two ways to use embeddings to classify non-small cell lung cancer (NSCLC) subtypes, specifically lung adenocarcinoma vs lung squamous cell carcinoma.",
       "loginRequired": true,
       "href": "/notebook/lung-cancer-classification.ipynb"
     },
@@ -27,15 +27,6 @@
       "description": "Investigate the ability to train classical machine learning models over multimodal, zero-shot FM embeddings of cancer data",
       "loginRequired": true,
       "href": "/notebook/tcga-cancer-survival.ipynb"
-    },
-    {
-      "title": "Embedding Your Own RNA-seq Data with the Gen3 Inference Service",
-      "type": "notebook",
-      "icon": "/images/apps/icons/jupyter.svg",
-      "image": "/images/apps/alt1_contour_network.png",
-      "description": "Bring your own RNA-seq data to the Genomic Intelligence Commons",
-      "loginRequired": true,
-      "href": "/notebook/rna_seq_notebook.png"
     }
   ]
 }
