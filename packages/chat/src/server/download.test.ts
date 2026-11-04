@@ -44,6 +44,8 @@ describe("fetchDownload", () => {
     const [url, init] = fetch.mock.calls[0];
     expect(url).toBe("http://gdc-agent/download/survival/cs_1?format=csv");
     expect(new Headers(init?.headers).get("authorization")).toBe("Bearer token-123");
+    // a large manifest can take minutes to stream
+    expect(init?.signal).toBeUndefined();
   });
 
   it("passes the file through with what to save it as, and nothing else", async () => {

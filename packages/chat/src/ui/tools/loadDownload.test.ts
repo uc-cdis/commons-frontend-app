@@ -38,7 +38,7 @@ describe("loadDownload", () => {
 
   it.each([
     ["the agent is down (502)", portalReplying("The agent is unavailable.", { status: 502 })],
-    ["the portal errors (500)", portalReplying('{"error":"Download failed."}', { status: 500 })],
+    ["the portal errors (500)", portalReplying('{"error":"Request failed."}', { status: 500 })],
     [
       "the network drops",
       vi.fn(async () => {

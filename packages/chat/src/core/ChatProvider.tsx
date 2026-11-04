@@ -2,16 +2,19 @@
 
 import type { ReactNode } from "react";
 import { CopilotKit } from "@copilotkit/react-core/v2";
+import { ModelsUrlContext } from "./useChatModels";
 
 const NO_HEADERS: Record<string, string> = {};
 
 export interface ChatProviderProps {
   runtimeUrl: string;
+  /** returns { models }, the agent's model names; without it there is no model picker */
+  modelsUrl?: string;
   headers?: Record<string, string>;
   children: ReactNode;
 }
 
-export function ChatProvider({ runtimeUrl, headers, children }: ChatProviderProps) {
+export function ChatProvider({ runtimeUrl, modelsUrl, headers, children }: ChatProviderProps) {
   const inspectorEnabled =
     process.env.NODE_ENV !== "production" &&
     typeof window !== "undefined" &&
@@ -24,7 +27,7 @@ export function ChatProvider({ runtimeUrl, headers, children }: ChatProviderProp
       useSingleEndpoint
       enableInspector={inspectorEnabled}
     >
-      {children}
+      <ModelsUrlContext value={modelsUrl}>{children}</ModelsUrlContext>
     </CopilotKit>
   );
 }
