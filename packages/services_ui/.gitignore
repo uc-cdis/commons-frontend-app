@@ -1,0 +1,3 @@
+# tsc output - rebuilt by `npm run build -w @gen3/services_ui`, never committed.
+dist/
+*.tsbuildinfo
