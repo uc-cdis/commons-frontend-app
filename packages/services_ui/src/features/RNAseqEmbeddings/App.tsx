@@ -7,14 +7,16 @@ import { ProcessingProvider } from "./core/ProcessingContext";
 interface AppProps {
   /** process the files as soon as they are loaded, hiding the Process All button */
   autoRun?: boolean;
+  /** link to a shared folder with demo .zip and .csv files */
+  demoFilesUrl?: string;
 }
 
-const App = ({ autoRun = true }: AppProps) => {
+const App = ({ autoRun = true, demoFilesUrl }: AppProps) => {
   return (
     <MetadataProvider>
       <VisualizationProvider>
         <ProcessingProvider autoRun={autoRun}>
-          <AppPanel />
+          <AppPanel demoFilesUrl={demoFilesUrl} />
         </ProcessingProvider>
       </VisualizationProvider>
     </MetadataProvider>

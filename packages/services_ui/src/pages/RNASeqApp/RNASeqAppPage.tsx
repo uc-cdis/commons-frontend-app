@@ -19,7 +19,7 @@ const RNASeqAppPage = ({
         ...(configuration?.headerMetadata ? configuration.headerMetadata : {}),
       }}
     >
-      <RNASeqEmbeddingsApp />
+      <RNASeqEmbeddingsApp demoFilesUrl={configuration?.demoFilesUrl} />
     </FixedNavPageLayout>
   );
 };

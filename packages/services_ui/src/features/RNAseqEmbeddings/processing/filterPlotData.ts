@@ -12,7 +12,7 @@ export const EMPTY_FILTER: MetadataFilter = { field: null, values: [] };
 const MAX_FILTER_VALUES = 50;
 const MISSING_LABEL = '(missing)';
 
-const valueKey = (value: unknown): string => (value == null ? MISSING_LABEL : String(value));
+export const valueKey = (value: unknown): string => (value == null ? MISSING_LABEL : String(value));
 
 /**
  * Metadata fields that can be filtered on, mapped to their sorted distinct values.

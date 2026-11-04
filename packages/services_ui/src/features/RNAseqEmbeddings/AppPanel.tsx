@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs } from "@mantine/core";
+import { Anchor, Text, Tabs } from "@mantine/core";
 import LoadedFiles from "./LoadedFiles";
 import DropZone from "./DropZone";
 import { PiGraphLight } from "react-icons/pi";
@@ -10,12 +10,25 @@ import VisPanel from "./VisualizationPanel";
 import EmbeddingsSummaryPanel from "./EmbeddingsSummaryPanel";
 import { Icon } from "@iconify-icon/react";
 
-const App = () => {
+interface AppPanelProps {
+  /** link to a shared folder with demo .zip and .csv files; hidden when unset */
+  demoFilesUrl?: string;
+}
+
+const App = ({ demoFilesUrl }: AppPanelProps) => {
   return (
     <div className="flex nowrap w-full h-full">
       <div className="flex flex-col w-1/4 min-w-[300px]">
         <LoadedFiles />
         <DropZone />
+        {demoFilesUrl && (
+          <Text size="sm" className="mx-4">
+            No files to try?{" "}
+            <Anchor href={demoFilesUrl} target="_blank" rel="noopener noreferrer">
+              Download the demo .zip and .csv files
+            </Anchor>
+          </Text>
+        )}
       </div>
       <div className="flex flex-col w-3/4 h-full">
         <ProcessAllPanel />

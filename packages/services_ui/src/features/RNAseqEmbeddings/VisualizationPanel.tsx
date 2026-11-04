@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Group, LoadingOverlay, MultiSelect, Select, Text} from "@mantine/core";
 import NeighborsTable from "./NeighborsTable";
 import UMAPComparisonPlot from "./charts/UMAPComparisonPlot";
@@ -7,6 +7,8 @@ import {useProcessing} from "./core/ProcessingContext";
 
 import { metadataFieldLabel } from "./utils";
 import { filterPlotData, getFilterableFields } from "./processing/filterPlotData";
+import { getColorValues, NO_COLORING, TCGA_COLOR_FIELDS } from "./processing/colorTcga";
+import type { TcgaColorField, TcgaColoring } from "./processing/colorTcga";
 
 const showFilters = false;
 
@@ -14,6 +16,12 @@ const VisPanel = () => {
 
   const { plotData, metadataFilter, setMetadataFilter, neighbors } = useVisualization();
   const { isProcessing, isProcessingError } = useProcessing();
+  const [tcgaColoring, setTcgaColoring] = useState<TcgaColoring>(NO_COLORING);
+
+  const colorValues = useMemo(
+    () => (plotData ? getColorValues(plotData.tcga, tcgaColoring.field) : []),
+    [plotData, tcgaColoring.field],
+  );
 
   const fields = useMemo(() => (plotData ? getFilterableFields(plotData) : {}), [plotData]);
   const filteredData = useMemo(
@@ -59,9 +67,32 @@ const VisPanel = () => {
         </Group>
       )}
       {plotData && (
+        <Group align="flex-end" className="border-1 border-base-light p-2">
+          <Select
+            label="Color TCGA samples by"
+            placeholder="Single color"
+            data={Object.entries(TCGA_COLOR_FIELDS).map(([value, label]) => ({ value, label }))}
+            value={tcgaColoring.field}
+            onChange={(field) => setTcgaColoring({ field: field as TcgaColorField | null, values: [] })}
+            clearable
+          />
+          <MultiSelect
+            label="Highlight"
+            placeholder={tcgaColoring.field ? (tcgaColoring.values.length ? undefined : "All values; pick some to gray out the rest") : "Choose a field first"}
+            data={colorValues}
+            value={tcgaColoring.values}
+            onChange={(values) => setTcgaColoring({ ...tcgaColoring, values })}
+            disabled={!tcgaColoring.field}
+            clearable
+            searchable
+            className="flex-1"
+          />
+        </Group>
+      )}
+      {plotData && (
         <div className="relative flex-1 min-h-[1024px] w-full">
           <LoadingOverlay visible={isProcessing}  />
-          <UMAPComparisonPlot data={plotData} metadataFilter={metadataFilter} neighbors={neighbors} />
+          <UMAPComparisonPlot data={plotData} metadataFilter={metadataFilter} tcgaColoring={tcgaColoring} />
         </div>
       )}
       {neighbors && <NeighborsTable rows={neighbors} />}
