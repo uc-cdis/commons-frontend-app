@@ -67,7 +67,7 @@ const ModelCard = ({
       </div>
       <Divider className="w-full" color="#e1e1e1" />
       {description ? (
-        <p className="m-0 w-full text-sm leading-[22px] text-base-contrast]">
+        <p className="m-0 w-full text-sm leading-[22px] text-base-contrast">
           {description}
         </p>
       ) : null}
