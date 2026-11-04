@@ -63,7 +63,7 @@
     }
   ],
   "metadata": {
-    "namespace": "RNAseq",
+    "namespace": "GIC RNAseq",
     "repo": "repo",
     "description": "GIC RNA-seq embedding model",
     "tags": ["RNASeq", "embeddings"],

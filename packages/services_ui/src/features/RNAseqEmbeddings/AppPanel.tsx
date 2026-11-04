@@ -1,5 +1,6 @@
 import React from "react";
-import { Anchor, Text, Tabs } from "@mantine/core";
+import { Button, Text, Tabs } from "@mantine/core";
+import { Download } from "lucide-react";
 import LoadedFiles from "./LoadedFiles";
 import DropZone from "./DropZone";
 import { PiGraphLight } from "react-icons/pi";
@@ -22,12 +23,23 @@ const App = ({ demoFilesUrl }: AppPanelProps) => {
         <LoadedFiles />
         <DropZone />
         {demoFilesUrl && (
-          <Text size="sm" className="mx-4">
-            No files to try?{" "}
-            <Anchor href={demoFilesUrl} target="_blank" rel="noopener noreferrer">
-              Download the demo .zip and .csv files
-            </Anchor>
-          </Text>
+          <div className="flex flex-col gap-1 mx-4">
+            <Text size="sm" c="dimmed">
+              No files to try?
+            </Text>
+            <Button
+              component="a"
+              href={demoFilesUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="light"
+              size="compact-sm"
+              fullWidth
+              leftSection={<Download size={14} />}
+            >
+              Download demo .zip and .csv files
+            </Button>
+          </div>
         )}
       </div>
       <div className="flex flex-col w-3/4 h-full">

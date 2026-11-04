@@ -30,7 +30,7 @@
         "icon": "gen3:analysis",
         "href": "/Analysis",
         "name": "Analysis",
-        "tooltip": "GAC Analysis Tools"
+        "tooltip": "GIC Analysis Tools"
       },
       {
         "icon": "gen3:workspace",
