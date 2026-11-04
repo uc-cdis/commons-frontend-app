@@ -52,7 +52,7 @@ const SamplePage = ({ headerProps, footerProps }: NavPageLayoutProps) => {
               </div>
               <Group>
                 <LandingPageButton href="/Chat">Query Genomics Explorer</LandingPageButton>
-                <LandingPageButton href="/resource-browser">Run Analyses</LandingPageButton>
+                <LandingPageButton href="/Analysis">Run Analyses</LandingPageButton>
                 <LandingPageButton href="/Models">Browse Models</LandingPageButton>
               </Group>
             </div>
