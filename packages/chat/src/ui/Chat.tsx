@@ -9,6 +9,7 @@ import { Box, Stack } from "@mantine/core";
 import { EmptyState } from "./EmptyState";
 import { ErrorBanner } from "./ErrorBanner";
 import { MessageList } from "./messages";
+import { MODEL_ROW_HEIGHT, ModelPicker, ModelsUnavailable } from "./ModelPicker";
 import { CHAT_MAX_WIDTH } from "./util";
 
 export interface ChatProps {
@@ -36,6 +37,8 @@ export function Chat({ agentId }: ChatProps) {
     editableMessageId,
     editAndRerun,
     models,
+    modelsFailure,
+    modelsLoading,
     model,
     setModel,
   } = useChat({ agentId });
@@ -51,9 +54,6 @@ export function Chat({ agentId }: ChatProps) {
           deleteDisabled={isRunning}
           onRename={(title) => renameChat(chatId, title)}
           onDelete={() => deleteChat(chatId)}
-          models={models}
-          model={model}
-          onModelChange={setModel}
         />
       }
       sidebar={(state) => (
@@ -99,6 +99,14 @@ export function Chat({ agentId }: ChatProps) {
               onStop={stopRun}
               placeholder="Ask me a question about GDC data ..."
             />
+            {models.length > 0 ? (
+              <ModelPicker models={models} model={model} onModelChange={setModel} />
+            ) : modelsFailure ? (
+              <ModelsUnavailable failure={modelsFailure} />
+            ) : (
+              // the picker's row, kept while the list loads, so the question box doesn't jump
+              modelsLoading && <Box h={MODEL_ROW_HEIGHT} />
+            )}
           </Stack>
         </Box>
       </Stack>

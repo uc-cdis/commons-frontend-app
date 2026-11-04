@@ -14,9 +14,7 @@ export function AnswerCard({ content, isStreaming }: { content: string; isStream
 
   return (
     <Stack gap="xs">
-      {/* text streams in before it's clear whether it's the answer or a step's reason (that shows
-          once a tool call arrives), so the frame and Copy wait until it's done */}
-      <Box className="chat-answer" data-streaming={isStreaming || undefined}>
+      <Box className="chat-answer">
         <MarkdownContent content={content} />
       </Box>
       {!isStreaming && (

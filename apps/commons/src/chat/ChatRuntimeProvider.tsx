@@ -11,8 +11,8 @@ const ChatProvider = dynamic(() => import("@gen3/chat").then((m) => m.ChatProvid
   loading: () => <Loading />,
 });
 
-// supplies the Gen3 bits @gen3/chat must not know about: the runtime url, the CSRF
-// header, and ssr:false so CopilotKit never reaches the server bundle.
+// supplies the Gen3 bits @gen3/chat must not know about: its urls, the CSRF header,
+// and ssr:false so CopilotKit never reaches the server bundle.
 export function ChatRuntimeProvider({ children }: { children: ReactNode }) {
   const { basePath } = useRouter();
   const { data } = useGetCSRFQuery();
@@ -24,7 +24,11 @@ export function ChatRuntimeProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <ChatProvider runtimeUrl={`${basePath}/chat-runtime`} headers={headers}>
+    <ChatProvider
+      runtimeUrl={`${basePath}/chat-runtime`}
+      modelsUrl={`${basePath}/chat-models`}
+      headers={headers}
+    >
       {children}
     </ChatProvider>
   );

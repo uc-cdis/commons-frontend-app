@@ -21,8 +21,12 @@ export function toChatMessage(message: Message): ChatMessage[] {
       }));
 
     if (!text && toolCalls.length === 0) return [];
+    // every call was final_result or ask_user: the text is only the reason for the answer or
+    // question that follows
+    if (toolCalls.length === 0 && (message.toolCalls?.length ?? 0) > 0) return [];
 
     const isQuestion = message.id.startsWith(QUESTION_MESSAGE_PREFIX);
+    const isAnswer = message.id.startsWith(ANSWER_MESSAGE_PREFIX);
     return [
       {
         id: message.id,
@@ -30,6 +34,7 @@ export function toChatMessage(message: Message): ChatMessage[] {
         content: text,
         toolCalls,
         ...(isQuestion && { isQuestion }),
+        ...(isAnswer && { isAnswer }),
       },
     ];
   }
@@ -65,8 +70,9 @@ export function toChatMessage(message: Message): ChatMessage[] {
 // version follows as a text message, and that is what shows
 const OUTPUT_TOOLS = new Set(["final_result", "ask_user"]);
 
-// the question's text message id (QUESTION_MESSAGE_PREFIX in gdc-mcp-demo agent/agent.py)
+// the text message ids of a run's question and answer (gdc-mcp-demo agent/agent.py)
 const QUESTION_MESSAGE_PREFIX = "gdc-question-";
+const ANSWER_MESSAGE_PREFIX = "gdc-answer-";
 
 // TOOL_CALL_RESULT has no outcome, so pydantic-ai sends a failed call's outcome in a
 // REASONING_ENCRYPTED_VALUE event under its own key, which @ag-ui/client copies onto the message

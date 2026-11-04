@@ -4,7 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAgent, useCopilotKit } from "@copilotkit/react-core/v2";
 import type { ChatMessage, Timings } from "./types";
 import { toChatMessage, lastUserIndex } from "./utils";
-import { CHAT_MODELS, DEFAULT_CHAT_MODEL } from "./models";
+import { modelToSend } from "./models";
+import { useChatModels, type ModelsFailure } from "./useChatModels";
 import { useChatTimings } from "./useChatTimings";
 import { useChatPersistence } from "./useChatPersistence";
 import { useChatList } from "./useChatList";
@@ -23,10 +24,14 @@ export interface UseChatApi {
   /** True once the user stops a run, until the next run or chat switch. */
   stopped: boolean;
   timings: Timings;
-  /** model aliases the agent accepts - /ui reads them here, not from models.ts */
+  /** the model names the agent accepts; none until they load, or if they can't */
   models: readonly string[];
-  /** Sent as forwardedProps.model on every run. */
-  model: string;
+  /** why the model list couldn't be loaded; it's retried until it loads */
+  modelsFailure: ModelsFailure | null;
+  /** true until the first answer about the model list */
+  modelsLoading: boolean;
+  /** What each run sends as forwardedProps.model (see modelToSend); undefined sends none. */
+  model: string | undefined;
   setModel: (model: string) => void;
   /** The prompt Retry and Edit act on, or null when neither is allowed. */
   editableMessageId: string | null;
@@ -41,6 +46,24 @@ export interface UseChatApi {
   deleteAllChats: () => Promise<void>;
 }
 
+// one pick per browser, shared by every chat
+const MODEL_KEY = "gdc-chat-model";
+
+// storage can be blocked (some private windows); then a pick lasts until the page reloads
+function readSavedModel(): string | undefined {
+  try {
+    return localStorage.getItem(MODEL_KEY) ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function saveModel(model: string): void {
+  try {
+    localStorage.setItem(MODEL_KEY, model);
+  } catch {}
+}
+
 // headless facade for the chat UI - /ui imports this and ChatMessage, nothing else
 export function useChat({ agentId = "default" }: { agentId?: string }): UseChatApi {
   // unthrottled, every streamed token re-renders the chat and re-parses the whole answer
@@ -51,8 +74,13 @@ export function useChat({ agentId = "default" }: { agentId?: string }): UseChatA
   const [stopped, setStopped] = useState(false);
   // re-runs the messages memo after our own addMessage, which only pushes
   const [bufferRevision, setBufferRevision] = useState(0);
-  // not persisted on purpose - not worth it while CHAT_MODELS is hardcoded
-  const [model, setModel] = useState(DEFAULT_CHAT_MODEL);
+  const { models, failure: modelsFailure, loading: modelsLoading } = useChatModels();
+  const [choice, setChoice] = useState(readSavedModel);
+  const setModel = useCallback((next: string) => {
+    setChoice(next);
+    saveModel(next);
+  }, []);
+  const model = modelToSend(models, choice);
 
   // registered before the hooks below so it cannot miss what they report on mount
   useEffect(() => subscribeToChatErrors(setError), []);
@@ -215,7 +243,9 @@ export function useChat({ agentId = "default" }: { agentId?: string }): UseChatA
     clearError,
     stopped,
     timings,
-    models: CHAT_MODELS,
+    models,
+    modelsFailure,
+    modelsLoading,
     model,
     setModel,
     editableMessageId,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ChatRecord } from "../core";
-import { groupChatsByDay, isSubmitEnter, jsonTokens, searchChats } from "./util";
+import { currentThought, groupChatsByDay, isSubmitEnter, jsonTokens, searchChats } from "./util";
 
 // clocks went forward here on 9 March 2025, so the midnight test means something on CI too
 process.env.TZ = "America/New_York";
@@ -86,6 +86,50 @@ describe("isSubmitEnter", () => {
     ["another key", key("a")],
   ])("doesn't send on %s", (_case, event) => {
     expect(isSubmitEnter(event)).toBe(false);
+  });
+});
+
+describe("currentThought", () => {
+  it("gives the heading of the summary being written now", () => {
+    const content =
+      "**Searching project fields**\n\nI’m looking.\n\n**Finding relevant records**\n\nI need";
+    expect(currentThought(content)).toBe("Finding relevant records");
+  });
+
+  it("keeps the last finished heading while the next one streams in", () => {
+    expect(currentThought("**Searching project fields**\n\nI’m looking.\n\n**Finding rel")).toBe(
+      "Searching project fields",
+    );
+  });
+
+  it.each([
+    [
+      "the sentence still being written",
+      "We need 1-year survival estimate for TCGA-CHOL. Likely project TCGA-CHOL. Need surv",
+      "Need surv",
+    ],
+    [
+      "the last sentence, past a blank line at the end",
+      "Field cases.project.project_id contains TCGA-CHOL.\n\nNow need create filter.\n\n",
+      "Now need create filter.",
+    ],
+    [
+      "a name with full stops in it, whole",
+      "Field cases.project.project_id contains TCGA-CHOL.",
+      "Field cases.project.project_id contains TCGA-CHOL.",
+    ],
+    [
+      "bold inside a sentence, without its asterisks",
+      "There are **51** cases.",
+      "There are 51 cases.",
+    ],
+    ["a heading still streaming in, as typed so far", "**Searching proj", "Searching proj"],
+  ])("without a heading, gives %s", (_case, content, thought) => {
+    expect(currentThought(content)).toBe(thought);
+  });
+
+  it.each(["", "\n\n  "])("gives none for no text (%j)", (content) => {
+    expect(currentThought(content)).toBeUndefined();
   });
 });
 

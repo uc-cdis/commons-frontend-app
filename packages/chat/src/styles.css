@@ -177,10 +177,6 @@ div:has(> main > [data-chat-shell]) {
 .chat-question {
   border-left-color: var(--chat-question-line);
 }
-.chat-answer[data-streaming] {
-  border-color: transparent;
-  background: none;
-}
 
 /* Steps are read, not skimmed, so they keep full contrast while still reading as grey. */
 .chat-step {

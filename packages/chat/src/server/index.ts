@@ -5,7 +5,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { CopilotRuntime } from "@copilotkit/runtime/v2";
 import { createCopilotNodeListener } from "@copilotkit/runtime/v2/node";
 import { HttpAgent } from "@ag-ui/client";
-import { fetchDownload, type VerifyToken } from "./download";
+import type { VerifyToken } from "./agent";
+import { fetchDownload } from "./download";
+import { fetchModels } from "./models";
 
 export interface ChatHandlerOptions {
   verifyToken: VerifyToken;
@@ -87,20 +89,15 @@ export const createChatHandler = ({ verifyToken, endpoint, agentBaseUrl }: ChatH
   };
 };
 
-export interface DownloadHandlerOptions {
+export interface AgentRouteOptions {
   verifyToken: VerifyToken;
   /** the agent's root url, e.g. http://gdc-agent */
   agentBaseUrl: string;
 }
 
-const firstValue = (value: string | string[] | undefined): string =>
-  (Array.isArray(value) ? value[0] : value) ?? "";
-
-/** GET /download/<kind>/<handle>: the agent's download links, after a login check. */
-export const createDownloadHandler = ({ verifyToken, agentBaseUrl }: DownloadHandlerOptions) => {
-  const deps = { verifyToken, agentBaseUrl: withoutTrailingSlash(agentBaseUrl) };
-
-  return async (req: NextApiRequest, res: NextApiResponse) => {
+const createGetHandler =
+  (name: string, respond: (req: NextApiRequest) => Promise<Response>) =>
+  async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== "GET") {
       res.setHeader("Allow", "GET");
       res.status(405).end();
@@ -108,18 +105,9 @@ export const createDownloadHandler = ({ verifyToken, agentBaseUrl }: DownloadHan
     }
 
     try {
-      const response = await fetchDownload(
-        {
-          kind: firstValue(req.query.kind),
-          handle: firstValue(req.query.handle),
-          format: firstValue(req.query.format) || undefined,
-          cookie: req.headers.cookie,
-        },
-        deps,
-      );
-
+      const response = await respond(req);
       res.status(response.status);
-      response.headers.forEach((value, name) => res.setHeader(name, value));
+      response.headers.forEach((value, key) => res.setHeader(key, value));
       if (!response.body) {
         res.end();
         return;
@@ -130,12 +118,41 @@ export const createDownloadHandler = ({ verifyToken, agentBaseUrl }: DownloadHan
     } catch (error) {
       // the user closed the tab or cancelled mid-download: normal, not an error
       if ((error as NodeJS.ErrnoException).code === "ERR_STREAM_PREMATURE_CLOSE") return;
-      console.error("[chat-download] handler threw:", error);
+      console.error(`[${name}] handler threw:`, error);
       if (!res.headersSent) {
-        res.status(500).json({ error: "Download failed." });
+        res.status(500).json({ error: "Request failed." });
         return;
       }
       res.end();
     }
   };
+
+const firstValue = (value: string | string[] | undefined): string =>
+  (Array.isArray(value) ? value[0] : value) ?? "";
+
+const agentDeps = ({ verifyToken, agentBaseUrl }: AgentRouteOptions) => ({
+  verifyToken,
+  agentBaseUrl: withoutTrailingSlash(agentBaseUrl),
+});
+
+/** GET /download/<kind>/<handle>: the agent's download links, after a login check. */
+export const createDownloadHandler = (options: AgentRouteOptions) => {
+  const deps = agentDeps(options);
+  return createGetHandler("chat-download", (req) =>
+    fetchDownload(
+      {
+        kind: firstValue(req.query.kind),
+        handle: firstValue(req.query.handle),
+        format: firstValue(req.query.format) || undefined,
+        cookie: req.headers.cookie,
+      },
+      deps,
+    ),
+  );
+};
+
+/** GET /chat-models: the model names the agent accepts, as { models }. */
+export const createModelsHandler = (options: AgentRouteOptions) => {
+  const deps = agentDeps(options);
+  return createGetHandler("chat-models", (req) => fetchModels(req.headers.cookie, deps));
 };

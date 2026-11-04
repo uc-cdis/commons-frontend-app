@@ -33,11 +33,12 @@ This file describes how the chat works today. The move from the old QAG agent to
 packages/chat/src/
   core/     no UI: hooks, saving chats, talking to the agent
   ui/       the screens, built with Mantine
-  server/   handlers for the portal's chat and download routes
+  server/   handlers for the portal's chat, download and model-list routes
 apps/commons/
   src/pages/Chat.tsx              the /Chat page
   src/pages/api/chat-runtime.ts   wires the chat handler to the portal's login check and agent url
   src/pages/api/chat-download/    the same for downloads
+  src/pages/api/chat-models.ts    the same for the model list
   src/lib/chat/                   the login check (auth.ts) and the agent url (agent.ts)
 ```
 
@@ -49,7 +50,7 @@ Rule: `apps/commons` uses `@gen3/chat`. `@gen3/chat` never imports from the app.
 you press Send
   1. your question is saved in the browser
   2. the agent works, and the screen updates as events arrive:
-       reasoning      "Thinking..." (only if the model shares its thoughts)
+       reasoning      "Thinking: Finding relevant records" (only if the model shares its thoughts)
        a short reason "Looking up the field for lung cancer."
        a tool call    search_fields  Completed
        ... more reasons and tool calls ...
@@ -63,9 +64,9 @@ If your question is unclear (for example, "mutations" could mean SSM or CNV), th
 
 - **Example questions** on the empty screen. Click one to send it.
 - **Answers** in Markdown, with tables and math.
-- **Reasoning**, when the model shares it: open while it thinks, then folded under "Thought for Xs". A click opens or closes it.
-- **Steps**: before each tool call the agent writes one short reason. It shows in smaller grey text, above the tool panels it explains.
-- **The final answer** shows in a card, with a Copy button under it once it has finished. With the new agent, the model's last step is a `final_result` call holding one sentence, which the agent checks and may send back for a rewrite; the agent then builds the answer from the tool results and sends it as a text message. `toChatMessage` hides `final_result` (and `ask_user`, the agent's other way to end a turn), so only that message shows. Its first line, the one sentence in bold, shows in navy. Copy puts the answer's Markdown on the clipboard, with download links made absolute so they still work when pasted.
+- **Reasoning**, when the model shares it: folded, even while it thinks, so the page doesn't move under you. Its one-line label says what it's on: the latest heading, a whole line in bold, if the model writes them (GPT-6 Luna does), else the sentence it's writing (`currentThought` in `ui/util.ts`); then "Thought for Xs". A click opens it: the text with its line breaks and bold, not as Markdown, so links in a draft can't be clicked.
+- **Steps**: before each tool call the agent writes one short reason. It shows in smaller grey text, above the tool panels it explains. While a message streams, text on its own shows as a step too, since its tool call may not have arrived yet; only the answer (below) streams as an answer.
+- **The final answer** shows in a card, with a Copy button under it once it has finished. With the new agent, the model's last step is a `final_result` call holding one sentence, which the agent checks and may send back for a rewrite; the agent then builds the answer from the tool results and sends it as a text message whose id starts with `gdc-answer-` (`toChatMessage` marks it `isAnswer`). `toChatMessage` hides `final_result` (and `ask_user`, the agent's other way to end a turn), so only that message shows. Text a model writes beside a lone `final_result` or `ask_user` call (GPT-6 Luna does) is dropped too: it is only the reason for the answer or question that follows. An older agent's answer, without that id, shows as a step until the run ends. Its first line, the one sentence in bold, shows in navy. Copy puts the answer's Markdown on the clipboard, with download links made absolute so they still work when pasted.
 - **A question from the agent** shows in its own card (`ui/messages/QuestionCard.tsx`): "NEEDS YOUR INPUT" over it, an orange line down its side where an answer's is navy, and no Copy button. Inside it is the agent's own Markdown: the question in bold, then any readings as a list. You type your reply.
 - **One panel per tool call**: the tool name, how long it took, and a status:
   - ✓: the tool returned a result (a tick, so only problems show a coloured pill)
@@ -78,7 +79,8 @@ If your question is unclear (for example, "mutations" could mean SSM or CNV), th
 - **Download links** in answers (a file manifest as TSV, a cohort filter as JSON, a survival curve as JSON or CSV, a case list as TXT). A link on its own line, as the new agent writes them, shows as a download button with the link's text. A case list (one per count) shows as a small link instead, so the main files stand out. A link inside a sentence stays a link (`ui/messages/markdownParagraph.ts`). Clicking either saves the file and keeps you on the chat page. The agent keeps each file for about 3 hours after it was last used. After that the link fails, and you ask again.
 - **A survival card** under `get_survival_data`: the curve, the number of donors and the yearly survival estimates, joined to its tool call. Once the curve has expired, the card says so; ask again. The card is titled with the cohort the agent names in the result, in short (`cohort_short`, so "Overall survival · TCGA-LUAD · female"). When the short form cut a long list ("project id: 7 values"), hovering the title shows the whole cohort. For a result from an older agent, which names none, it falls back to the curve's project (`readCohortLabel` in `ui/tools/survival/readResult.ts`).
 - **Downloads live in the answer.** The new agent links every file under the result it belongs to, so the cards don't repeat them. `CARD_DOWNLOADS` in `ui/tools/downloads.ts` switches that: `true` brings back a filter card under `create_filter` (Download JSON), a manifest card under `get_file_manifest` (Download TSV) and the survival card's Download JSON and CSV. Turn it on if the chat goes back to the old agent, whose answers carry links only when the model writes them. With it off, a run that ends without an answer (Stop, or an error) offers no download.
-- **A header** with the open chat's title, as "Chat / title". Its menu renames or deletes the chat. The model picker is commented out in `ui/ChatHeader.tsx` while the agent offers one model; the names in `core/models.ts` must match the agent's `model-config.yaml` exactly.
+- **A header** with the open chat's title, as "Chat / title". Its menu renames or deletes the chat.
+- **A model picker** under the question box (`ui/ModelPicker.tsx`), shown once the agent's list has loaded. Its list is the agent's own (`/chat-models` → the agent's `/endpoint/health`), and the first model is the default. This browser remembers your pick (localStorage `gdc-chat-model`), for every chat; if the agent stops offering it, the first model is used. Until the list loads, or if it can't, a run sends your saved pick unchecked (or none), and the agent falls back to its first model. The pick is sent as `forwardedProps.model`, which the agent reads since gdc-mcp-demo PR #21; an older agent runs every question on its first model. If the list can't be loaded, a note in its place says so ("The agent isn't available right now." when the portal couldn't get the list from the agent, which it waits 10 seconds for), and the list is retried every 30 seconds.
 - **A sidebar** with your chats, newest first, grouped into recent sessions (today), yesterday and earlier. You can search them by title, start a new chat, rename one, or delete one. You can't delete the chat that is running, and the other chats wait until it ends or you press Stop. A search always keeps the open chat in the list. On a computer, the arrow at its top folds it into a thin strip (new chat, search) and back; the browser remembers which. On a phone, the menu button opens it.
 - **A "Scroll to latest" button**, centred at the bottom of the chat, when you scroll up while an answer streams.
 - **An error banner**, "Something went wrong. Please try again." The details are in the browser console, as `[chat-core:<source>]`.
@@ -148,6 +150,7 @@ Not a duplicate, but also kept by a server: the MCP server holds the case sets, 
 - The server passes your token on to the agent.
 - Downloads go through the portal too: `/download/<kind>/<handle>` → `pages/api/chat-download` → the agent. They need a login, and the portal checks only each link's shape (`core/downloadLinks.ts`); the agent decides which kinds and formats exist.
   - Known limits: this needs the revproxy to keep sending `/download/*` to the portal (it does today). It breaks if the portal gets a `BASE_PATH`, or if the agent runs with `--root-path`, because the agent's links then start with that path.
+- The model list (`/chat-models` → `pages/api/chat-models`) needs a login too.
 - CopilotKit's usage telemetry is turned off (`COPILOTKIT_TELEMETRY_DISABLED=true`).
 
 ## Settings
@@ -212,8 +215,6 @@ The move from the old QAG agent to the GDC agent happens in phases:
 | 8     | Status pills, blue tool panels, sidebar fold and the last colours from the mockup              | done   |
 | 8     | Steps list from the mockup; spacing                                                            | next   |
 | Later | One agent per chat (background runs), then resume an answer after a reload                     | later  |
-
-The model picker works only after the agent reads the chosen model from `forwardedProps.model`. That is a separate change in the agent repo.
 
 ## Words used here
 
