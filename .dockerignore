@@ -4,3 +4,17 @@ builds
 .idea
 .swc
 .github
+
+.git
+a_bunch_of_files
+.storybook
+*.log
+.env*.local
+tsconfig.tsbuildinfo
+.jupyterlite.doit.db
+.DS_Store
+public/book
+public/jupyter
+public/canine
+
+jupyter-workspaces
