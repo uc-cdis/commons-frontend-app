@@ -4,3 +4,12 @@ builds
 .idea
 .swc
 .github
+
+.git
+a_bunch_of_files
+.storybook
+*.log
+.env*.local
+tsconfig.tsbuildinfo
+.jupyterlite.doit.db
+.DS_Store
