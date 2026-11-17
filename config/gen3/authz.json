@@ -5,14 +5,35 @@
     },
     "/Workspace": {
       "loginRequired": true,
-      "authz": ["/workspace"]
+      "authz": [
+        {
+          "resource": "/workspace",
+          "service": "jupyterhub",
+          "method": "access"
+        }
+      ],
+      "redirect403": "/WorkspaceRequestAccess"
     },
     "/Workspaces": {
       "loginRequired": true,
-      "authz": ["/workspace"]
+      "authz": [
+        {
+          "resource": "/workspace",
+          "service": "jupyterhub",
+          "method": "access"
+        }
+      ],
+      "redirect403": "/WorkspaceRequestAccess"
     },
     "/WorkspaceRequestAccess": {
-      "loginRequired": true
+      "loginRequired": true,
+      "authz": [
+        {
+          "resource": "/workspace",
+          "service": "requestor",
+          "method": "create"
+        }
+      ]
     },
     "/Profile": {
       "loginRequired": true

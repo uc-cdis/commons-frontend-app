@@ -2,7 +2,8 @@
  * Frontend server side api to extract the frontend-protected resources
  */
 import { GEN3_COMMONS_NAME } from '@gen3/core/server';
-import { ContentSource, type AuthorizedRoutesConfig } from '@gen3/frontend/server';
+import type { AuthorizedRoutesConfig } from '@gen3/frontend/server';
+import { ContentSource, parseAuthzConfig } from '@gen3/frontend/server';
 
 let cachedConfig: AuthorizedRoutesConfig | null = null;
 
@@ -22,9 +23,10 @@ export async function getRouteConfig(): Promise<AuthorizedRoutesConfig> {
 
   let config: AuthorizedRoutesConfig;
   try {
-    config = await ContentSource.getContentDatabase().get<AuthorizedRoutesConfig>(
+    const tempConfig = await ContentSource.getContentDatabase().get<AuthorizedRoutesConfig>(
       `${GEN3_COMMONS_NAME}/authz.json`,
     );
+    config = parseAuthzConfig(tempConfig); // validates; handles ESM default export
   } catch (e) {
     console.error(
       `Failed to load ${GEN3_COMMONS_NAME}/authz.json, ensure you have the authz.json file in your commons config directory`,
