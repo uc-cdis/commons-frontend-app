@@ -1,4 +1,5 @@
 import {
+  type AuthzMapping,
   type AuthzResourceResponse,
   GEN3_AUTHZ_API,
   GEN3_AUTHZ_SERVICE,
@@ -35,4 +36,32 @@ export async function fetchArboristResources(
   }
   const data = (await res.json()) as AuthzResourceResponse;
   return data.resources ?? [];
+}
+
+/**
+ * Fetch the user's Arborist auth mapping ({resource: [{service, method}]}).
+ * Cached for a short TTL; services re-check on every request, so staleness
+ * only affects UX gating.
+ */
+export async function fetchArboristMapping(
+  accessToken: string | null,
+  useService: boolean = false,
+  revalidate: number = DEFAULT_TTL_SECONDS,
+): Promise<AuthzMapping> {
+  const headers: Record<string, string> = accessToken
+    ? { Authorization: `Bearer ${accessToken}` }
+    : {};
+  const url = useService
+    ? `${GEN3_AUTHZ_SERVICE}/auth/mapping`
+    : `${GEN3_AUTHZ_API}/mapping`;
+  const res = await fetch(url, { headers, next: { revalidate } });
+  if (!res.ok) {
+    console.error(
+      'commons:fetchArboristMapping Arborist /mapping failed:',
+      res.status,
+      await res.text(),
+    );
+    return {};
+  }
+  return (await res.json()) as AuthzMapping;
 }

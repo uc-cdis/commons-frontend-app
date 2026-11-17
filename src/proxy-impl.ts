@@ -2,30 +2,12 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { getRouteConfig } from './lib/auth/arboristConfig';
 import { getLoginStatus, type LoginStatus } from './lib/auth/getLoginStatus';
-import { fetchArboristResources } from './lib/auth/fetchAuthz';
-import type { RouteConfig } from '@gen3/frontend/server';
-import { getAccessToken } from '@gen3/frontend/server';
-
-const WILDCARD_ROUTE_KEY = '*';
-
-function getRouteRuleForPath(pathname: string, routeConfig: RouteConfig) {
-  // handle wildcards
-  // get subdirectory
-  const pathParts = pathname.split('/');
-  // has subdirectory
-  if (pathParts.length > 2) {
-    const startsWithPath = `/${pathParts[1]}`;
-    // look through config for subdirectory
-    const routeConfigMatch = Object.keys(routeConfig).find((key) =>
-      key.startsWith(startsWithPath),
-    );
-    // check if subdirectory ends with wildcard
-    if (routeConfigMatch?.endsWith('(.*)')) {
-      return routeConfig?.[routeConfigMatch];
-    }
-  }
-  return routeConfig?.[pathname] ?? routeConfig?.[WILDCARD_ROUTE_KEY];
-}
+import { fetchArboristMapping } from './lib/auth/fetchAuthz';
+import {
+  checkRuleAccess,
+  getAccessToken,
+  resolveRoute,
+} from '@gen3/frontend/server';
 
 function isLoggedIn(loginStatus: LoginStatus) {
   return loginStatus.status === 'issued';
@@ -34,7 +16,7 @@ function isLoggedIn(loginStatus: LoginStatus) {
 export async function proxy(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   const { routes: routeConfig } = await getRouteConfig();
-  let rule = getRouteRuleForPath(pathname, routeConfig);
+  const rule = resolveRoute(routeConfig, pathname);
   const loginStatus = await getLoginStatus(req.headers.get('Cookie') || '');
   const loggedIn = isLoggedIn(loginStatus);
 
@@ -47,60 +29,42 @@ export async function proxy(req: NextRequest) {
     }
   }
 
-  // check if there is a wildcard route
-  if (!rule) {
-    rule = getRouteRuleForPath('*', routeConfig);
-  }
-
   // Public route: not listed in Arborist config
   if (!rule) {
     return NextResponse.next();
   }
 
-  const loginRequired = rule.loginRequired ?? true;
+  const needsAuthz = Array.isArray(rule.authz) && rule.authz.length > 0;
 
-  if (!loginRequired) {
+  // Only hit Arborist when the route actually has authz entries. The cached
+  // mapping is enough here: services re-check on every request.
+  let mapping;
+  if (needsAuthz && loggedIn) {
+    const token = getAccessToken(req.headers.get('Cookie') || '') ?? null;
+    mapping = await fetchArboristMapping(
+      token,
+      process.env.NODE_ENV === 'production',
+    );
+  }
+
+  const access = checkRuleAccess(rule, { isLoggedIn: loggedIn, mapping });
+
+  if (access === 'allowed') {
     return NextResponse.next();
   }
 
-
-  // Enforce login if required
-  if (!loggedIn) {
+  if (access === 'loginRequired') {
     const loginUrl = req.nextUrl.clone();
     loginUrl.pathname = '/Login';
     loginUrl.searchParams.set('referer', pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  const needsAuthz = Array.isArray(rule?.authz) && rule?.authz.length > 0;
-
-  // If no authz resources configured, login is enough
-  if (!needsAuthz) {
-    return NextResponse.next();
+  // forbidden: logged in but lacks the required service/method on the resource
+  if (rule.redirect403) {
+    return NextResponse.redirect(new URL(rule.redirect403, req.url));
   }
-
-  // Authz is enabled, AND route has authzResources → check Arborist resources
-  const tokenFromCookie =
-    getAccessToken(req.headers.get('Cookie') || '') ?? null;
-
-  // Let the server-side helper resolve resources using the active Gen3 session.
-  const resources = await fetchArboristResources(
-    tokenFromCookie,
-    process.env.NODE_ENV === 'production',
-  );
-
-  const allowed = rule?.authz!.some((needed) => resources.includes(needed));
-  if (!allowed) {
-    // Already logged in if required; they just lack authz for this resource
-    const forbiddenUrl = req.nextUrl.clone();
-    // Ceck for 403 redirect
-    if (rule?.redirect403 ) {
-      return NextResponse.redirect(new URL(rule.redirect403, req.url));
-    }
-
-    forbiddenUrl.pathname = '/403';
-    return NextResponse.rewrite(forbiddenUrl);
-  }
-
-  return NextResponse.next();
+  const forbiddenUrl = req.nextUrl.clone();
+  forbiddenUrl.pathname = '/403';
+  return NextResponse.rewrite(forbiddenUrl);
 }
